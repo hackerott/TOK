@@ -48,14 +48,14 @@ utc0 = int(utc1)					#
 ##		json de resposta							#
 											#
 def json_out (dia, cor, valor1, valor2, var1, maxx):					#
-	resposta = np.empty((maxx+1,1))							#
+	out = np.empty((maxx+1,1))							#
 	for i in range(iz, maxx):							#
 		if valor2==0:								#
-			resposta[i] = var1, dia[i], cor[i], valor1[i]			#
+			out[i] = var1, dia[i], cor[i], valor1[i]			#
 		else:									#
-			resposta[i] = var1, dia[i], cor[i], valor1[i], valor2[i]	#
+			out[i] = var1, dia[i], cor[i], valor1[i], valor2[i]	#
 											#
-	return(resposta)								#
+	return(out)								#
 											#
 #########################################################################################
 ###########################################################################################################################
@@ -63,27 +63,27 @@ def json_out (dia, cor, valor1, valor2, var1, maxx):					#
 def calendario_out(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, var1, iz, ixCFS, iyCFS, date0, utc0, token_novo):
 	if var1 == 'vento':
 		dia, cor, valor_max, dire, maxx = variaveis.vento.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
-		resposta = json_out(dia, cor, valor_max, dire, var1, maxx, token_novo)
-		print json.dumps(resposta)
+		out = json_out(dia, cor, valor_max, dire, var1, maxx, token_novo)
+		print json.dumps(out)
 
 	elif var1 == 'temperatura' :
 		dia, cor, valor_min, valor_max, maxx = variaveis.temperatura.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
-		resposta = json_out(dia, cor, valor_max, valor_min, var1, maxx, token_novo)
-		print json.dumps(resposta)
+		out = json_out(dia, cor, valor_max, valor_min, var1, maxx, token_novo)
+		print json.dumps(out)
 
 	elif var1 == 'umidade' :
 		dia, cor, valor_min, maxx = variaveis.umidade.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
-		resposta = json_out(dia, cor, valor_min, 0, var1, maxx, token_novo)
-		print json.dumps(resposta)
+		out = json_out(dia, cor, valor_min, 0, var1, maxx, token_novo)
+		print json.dumps(out)
 	elif var1 == 'chuva' :	
 		dia, cor, valor, maxx = variaveis.chuva.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
-		resposta = json_out(dia, cor, valor, 0, var1, maxx, token_novo)
-		print json.dumps(resposta)
+		out = json_out(dia, cor, valor, 0, var1, maxx, token_novo)
+		print json.dumps(out)
 
 	elif var1 == 'radiacao' :
 		dia, cor, valor, maxx = variaveis.radiacao.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
-		resposta = json_out(dia, cor, valor, 0, var1, maxx, token_novo)
-		print json.dumps(resposta)
+		out = json_out(dia, cor, valor, 0, var1, maxx, token_novo)
+		print json.dumps(out)
 ###########################################################################################################################
 #execucao
 #########################################################################################
@@ -152,8 +152,8 @@ if arquivo != False:
 	ixCFS, iyCFS = lat_lon.CFS_get(latCFS, lonCFS, lat0, lon0)
 #chama o calendario
 	if tipo1 == True:
-		resposta = calendario_out(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, var1, iz, ixCFS, iyCFS, date0, utc0, token_novo)
-		print json.dumps(resposta)
+		out = calendario_out(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, var1, iz, ixCFS, iyCFS, date0, utc0, token_novo)
+		print json.dumps(out)
 #erro no login
 	elif tipo1 == error:					
 		print json.dumps(""" Erro de autenticação """)	
