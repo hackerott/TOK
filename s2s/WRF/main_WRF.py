@@ -14,14 +14,14 @@ import json
 import base64
 
 import lat_lon
-import variaveis
+import variables
 import mysql_access
 
 from math import pi
 from numpy import cos, sin, arccos, power, sqrt, exp, arctan2, argmin, argmax, arctan
 
 #########################################
-##      leitura do form                 #
+##      Reading form                    #
                                         #
 form = cgi.FieldStorage()               #
                                         #
@@ -30,142 +30,141 @@ lon1 = form.getvalue("lon")             #
 utc1 = form.getvalue("utc")             #
 var1 = form.getvalue("var")             #
 date1 = form.getvalue("data")           #
-tipo1 = form.getvalue("tipo")           #
+type1 = form.getvalue("tipo")           #
 token1 = form.getvalue("token")         #
 id1 = form.getvalue("id")               #
 ip1  = os.environ["REMOTE_ADDR"]        #
                                         #
 #########################################
 #########################################################
-##	variaveis iniciais				#
+##	init vars   					#
 date0 = datetime.datetime.strptime(date1, '%Y%m%d')	#
 lat0 = float(lat1)					#
 lon0 = float(lon1)					#
 utc0 = int(utc1)					#
 #########################################################
 #################################################################################################
-##		json de resposta								#
+##		output jason									#
 												#
-def json_out (dia, cor, valor1, valor2, var1, maxx, token_novo):				#
-	resposta = np.empty((maxx+1,1))								#
+def json_out (day, color, val1, val2, var1, maxx, token_new):					#
+	output = np.empty((maxx+1,1))								#
 	for i in range(iz, maxx):								#
-		if valor2==0:									#
-			resposta[i] = var1, dia[i], cor[i], valor1[i], token_novo		#
+		if val2==0:									#
+			output[i] = var1, day[i], color[i], val1[i], token_new			#
 		else:										#
-			resposta[i] = var1, dia[i], cor[i], valor1[i], valor2[i], token_novo	#
+			output[i] = var1, day[i], color[i], val1[i], val2[i], token_new		#
 												#
-	return(resposta)									#
+	return(output)										#
 												#
 #################################################################################################
 ###########################################################################################################################
-##	Calendario
-def tabela_out (WRF_nc, var1, iz, ixWRF, iyWRF, date0, utc0, token_novo):
+##	Calendar
+def table_out (WRF_nc, var1, iz, ixWRF, iyWRF, date0, utc0, token_new):
 	WRFfile = netCDF4.Dataset(WRF_nc, 'r')
-	if var1 == 'vento':
-		dia, cor, valor_max, dire, maxx = variaveis.vento.calendario(WRFfile, iz, ixWRF, iyWRF, date0, utc0) 
-		resposta = json_out(dia, cor, valor_max, dire, var1, maxx, token_novo)
-	elif var1 == 'temperatura' :
-		dia, cor, valor_min, valor_max, maxx = variaveis.temperatura.calendario(WRFfile, iz, ixWRF, iyWRF, date0, utc0) 
-		resposta = json_out(dia, cor, valor_max, valor_min, var1, maxx, token_novo)
-	elif var1 == 'umidade' :
-		dia, cor, valor_min, maxx = variaveis.umidade.calendario(WRFfile, iz, ixWRF, iyWRF, date0, utc0) 
- 		resposta = json_out(dia, cor, valor_min, 0, var1, maxx, token_novo)
-	elif var1 == 'chuva' :	
-		dia, cor, valor, maxx = variaveis.chuva.calendario(WRFfile, iz, ixWRF, iyWRF, date0, utc0) 
-		resposta = json_out(dia, cor, valor, 0, var1, maxx, token_novo)
-	elif var1 == 'radiacao' :
-		dia, cor, valor, maxx = variaveis.radiacao.calendario(WRFfile, iz, ixWRF, iyWRF, date0, utc0) 
-		resposta = json_out(dia, cor, valor, 0, var1, maxx, token_novo)
-	return(resposta)
+	if var1 == 'wind':
+		dia, color, val_max, dire, maxx = variables.wind.calendar(WRFfile, iz, ixWRF, iyWRF, date0, utc0) 
+		output = json_out(dia, color, val_max, dire, var1, maxx, token_new)
+	elif var1 == 'temperature' :
+		dia, color, val_min, val_max, maxx = variables.temperature.calendar(WRFfile, iz, ixWRF, iyWRF, date0, utc0) 
+		output = json_out(dia, color, val_max, val_min, var1, maxx, token_new)
+	elif var1 == 'humidity' :
+		dia, color, val_min, maxx = variables.humidity.calendar(WRFfile, iz, ixWRF, iyWRF, date0, utc0) 
+ 		output = json_out(dia, color, val_min, 0, var1, maxx, token_new)
+	elif var1 == 'rain' :	
+		dia, color, val, maxx = variables.rain.calendar(WRFfile, iz, ixWRF, iyWRF, date0, utc0) 
+		output = json_out(dia, color, val, 0, var1, maxx, token_new)
+	elif var1 == 'radiation' :
+		dia, color, val, maxx = variables.radiation.calendar(WRFfile, iz, ixWRF, iyWRF, date0, utc0) 
+		output = json_out(dia, color, val, 0, var1, maxx, token_new)
+	return(output)
 ###########################################################################################################################
-##	Tabela
-def tabela_out (WRF_nc, var1, iz, ixWRF, iyWRF, date0, utc0, token_novo):
+##	table
+def table_out (WRF_nc, var1, iz, ixWRF, iyWRF, date0, utc0, token_new):
 	WRFfile = netCDF4.Dataset(WRF_nc, 'r')
-	if var1 == 'vento':
-		dia, cor, valor, dire, maxx = variaveis.vento.tabela(WRFfile, iz, ixWRF, iyWRF, date0, utc0) 
-		resposta = json_out(dia, cor, valor_max, dire, var1, maxx, token_novo)
-	elif var1 == 'temperatura' :
-		dia, cor, valor, maxx = variaveis.temperatura.tabela(WRFfile, iz, ixWRF, iyWRF, date0, utc0) 
-		resposta = json_out(dia, cor, valor, 0, var1, maxx, token_novo)
-	elif var1 == 'umidade' :
-		dia, cor, valor, maxx = variaveis.umidade.tabela(WRFfile, iz, ixWRF, iyWRF, date0, utc0) 
-		resposta = json_out(dia, cor, valor, 0, var1, maxx, token_novo)
-	elif var1 == 'chuva' :	
-		dia, cor, valor, maxx = variaveis.chuva.tabela(WRFfile, iz, ixWRF, iyWRF, date0, utc0) 
-		resposta = json_out(dia, cor, valor, 0, var1, maxx, token_novo)
-	elif var1 == 'radiacao' :
-		dia, cor, valor, maxx = variaveis.radiacao.tabela(WRFfile, iz, ixWRF, iyWRF, date0, utc0) 
-		resposta = json_out(dia, cor, valor, 0, var1, maxx, token_novo)
-	return(resposta)
+	if var1 == 'wind':
+		dia, color, val, dire, maxx = variables.wind.table(WRFfile, iz, ixWRF, iyWRF, date0, utc0) 
+		output = json_out(dia, color, val_max, dire, var1, maxx, token_new)
+	elif var1 == 'temperature' :
+		dia, color, val, maxx = variables.temperature.table(WRFfile, iz, ixWRF, iyWRF, date0, utc0) 
+		output = json_out(dia, color, val, 0, var1, maxx, token_new)
+	elif var1 == 'humidity' :
+		dia, color, val, maxx = variables.humidity.table(WRFfile, iz, ixWRF, iyWRF, date0, utc0) 
+		output = json_out(dia, color, val, 0, var1, maxx, token_new)
+	elif var1 == 'rain' :	
+		dia, color, val, maxx = variables.rain.table(WRFfile, iz, ixWRF, iyWRF, date0, utc0) 
+		output = json_out(dia, color, val, 0, var1, maxx, token_new)
+	elif var1 == 'radiation' :
+		dia, color, val, maxx = variables.radiation.table(WRFfile, iz, ixWRF, iyWRF, date0, utc0) 
+		output = json_out(dia, color, val, 0, var1, maxx, token_new)
+	return(output)
 ###########################################################################################################################
 
 #########################################################################################
-##	verifica o token e o id da requisição						#
+##	Check the request token and id							#
 token_db, id_db = mysql_access.token_get(id1)						#
 if token1 != token_db or id1 != id_db :							#
-	tipo1 == error									#
-	data_erro = datetime.datetime.now()						#
-	print >> error.log, "%s tentou acessar a api WRF, %s" % (ip1, data_erro)	#
+	type1 == error									#
+	date_error = datetime.datetime.now()						#
+	print >> error.log, "%s tried to access the API WRF, %s" % (ip1, date_error)	#
 #########################################################################################
 #########################################################################################
-##	gera o novo token e guardo no banco						#
-else:											#
+##	Generates new token and store							#
 	hash0 = os.urandom(16)								#
 	hash1 = base64.b64encode(hash0).decode('utf-8')					#
 	token_status = mysql_access.token_update(hash1, id1)				#
 	if token_status != true:							#
-		data_erro = datetime.datetime.now()					#
-		token_novo = token1							#
-		print >> error.log, "Falha na atualização do token, %s" (data_erro)	#
+		date_error = datetime.datetime.now()					#
+		token_new = token1							#
+		print >> error.log, "Token update failed, %s" (date_error)		#
  	else:										#
-		token_novo = hash1							#
+		token_new = hash1							#
 #########################################################################################
 #########################################################################################
-##	Checa a existencia do arquivo .nc						#
+##	Check if .nc file exists							#
 											#
-arquivo = "/var/www/html/processamento/WRFD20101"+date1+"00.nc"				#
-arquivo1 = arquivo									#
-while os.path.isfile(arquivo) != True:							#
+file_name = "/var/www/html/processamento/WRFD20101"+date1+"00.nc"			#
+file_name1 = file_name									#
+while os.path.isfile(file_name) != True:						#
 		date1 = date1 + datetime.timedelta(days = -1)				#
-		arquivo = "/var/www/html/processamento/WRFD20101"+date1+"00.nc"		#	
+		file_name = "/var/www/html/processamento/WRFD20101"+date1+"00.nc"	#	
 		iz += 24								#
 		brk +=1									#
 		if brk == 3:								#
-			arquivo = False							#
+			file_name = False						#
 			break								#
 #########################################################################################
 #################################################
-if arquivo != False:				#
-	WRF_nc = arquivo			#	
+if file_name != False:				#
+	WRF_nc = file_name			#	
 	WRFfile = netCDF4.Dataset(WRF_nc, 'r')	#
 	latWRF = WRFfile.variables['XLAT']	#	
 	lonWRF = WRFfile.variables['XLONG']	#
 #################################################
 #################################################################################
-##	localiza lat e lon							#	
+##	find lat and lon							#	
 	izWRF, ixWRF, iyWRF = lat_lon.WRF_get(latWRF, lonWRF, lat0, lon0)	#
 #################################################################################
 #########################################################################################################
-##	separa e chama 											#
-	if tipo1 == True:										#
-		resposta = calendario_out(WRF_nc, var1, iz, ixWRF, iyWRF, date0, utc0, token_novo)	#
-		print json.dumps(resposta)								#
-	elif tipo1 == False:										#
-		resposta = tabela_out(WRF_nc, var1, iz, ixWRF, iyWRF, date0, utc0, token_novo)		#
-		print json.dumps(resposta)								#
+##	separate and call										#
+	if type1 == True:										#
+		output = calendar_out(WRF_nc, var1, iz, ixWRF, iyWRF, date0, utc0, token_new)		#
+		print json.dumps(output)								#
+	elif type1 == False:										#
+		output = table_out(WRF_nc, var1, iz, ixWRF, iyWRF, date0, utc0, token_new)		#
+		print json.dumps(output)								#
 ##	Erro de login											#
-	elif tipo1 == Error:										#
-		print json.dumps(""" Erro de autenticação """)					#
+	elif type1 == Error:										#
+		print json.dumps(""" Authentication error """)						#
 #########################################################################################################
 #########################################################################################
 else:											#
-	data_erro = datetime.datetime.now()						#
-	print >> error.log, "%s arquivo nao existe %s" % (data_erro, arquivo1)		#	
-	print json.dumps(""" Erro modelo indisponivel """)				#
+	date_error = datetime.datetime.now()						#
+	print >> error.log, "%s file does not exist %s" % (date_error, file_name1)	#	
+	print json.dumps(""" Error model unavailable """)				#
 	exit()										#
 #########################################################################################
 #################################
-##	guarda os tokens gerados#
+##	Save the generated token#
 token = open('token', 'r+')	#
 token.write(hash1)		#
 token.close()			#
