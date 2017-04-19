@@ -1,0 +1,29 @@
+{
+  "WRF": {
+    "latitude": "-22.44",
+    "longitude": "-44.4",
+    "utc": "-3",
+    "data": "20160915",
+    "variavel": "vento",
+    "tipo": {
+      "calendario": "true",
+      "tabela": "false"
+    }
+  },
+  "GFS": {
+    "latitude": "-22.44",
+    "longitude": "-44.4",
+    "utc": "-3",
+    "data": "20160915",
+    "variavel": "vento",
+    "tipo": {
+      "calendario": "true",
+      "tabela": "false"
+    }
+  },
+  "Cliente": {
+    "id": "1",
+    "nome": "joao"
+  }
+}
+
