@@ -34,27 +34,27 @@ def unidade(var1):
 #################################################################################
 #################################################################################
 ##		json de resposta						#
-def json_out (dia, cor, valor1, valor2, var1, maxx, token):
-	resposta = []
+def json_out (day, color, value1, value2, var1, maxx, token):
+	output = []
 	mes_v	 = []
-	dias_v	 = []
-	final	 = len(dia) - 2
+	days_v	 = []
+	final	 = len(day) - 2
 	unit	 = unidade(var1)
-	for j in range(dia[0].month, dia[final].month + 1):
+	for j in range(day[0].month, day[final].month + 1):
 		for i in range(0, maxx):
-			if dia[i].month == j:
-				dias_d = {'Day'   :dia[i].day,
-					  'DOW'   :dia[i].weekday(),
-					  'Prob'  :float(valor2[i]),
-					  'Valor' :float(valor1[i]),
-					  'Cor'   :float(cor[i])
+			if day[i].month == j:
+				days_d = {'Day'   :day[i].day,
+					  'DOW'   :day[i].weekday(),
+					  'Prob'  :float(value2[i]),
+					  'value' :float(value1[i]),
+					  'color'   :float(color[i])
 					 }
-				dias_v.append(dias_d)
-		mes_d = {'year' :dia[j].year,
+				days_v.append(days_d)
+		mes_d = {'year' :day[j].year,
  			 'month':j,
-			 'days' :dias_v
+			 'days' :days_v
 			 }
-		dias_v = []
+		days_v = []
 		mes_v.append(mes_d)
 	dic = { 'sucess'        :1,
 		'message'       :"CFS OK",
@@ -63,27 +63,27 @@ def json_out (dia, cor, valor1, valor2, var1, maxx, token):
 		'months'      :mes_v
 				 }
 		}
-	resposta = dic 
-	return(resposta)
+	output = dic 
+	return(output)
 #################################################################################
 #################################################################################
-##	separa e chama as variaveis						#
-def calendario_out(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, var1, iz, ixCFS, iyCFS, date0, utc0, token_novo):
+##	calls all variables						#
+def calendario_out(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, var1, iz, ixCFS, iyCFS, date0, utc0, token_new):
 	if var1 == 'vento':
-		dia, valor_min, cor, valor_max, maxx = variaveis.vento.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
-		resposta = json_out(dia, cor, valor_max, valor_min, var1, maxx, token_novo)
+		day, value_min, color, value_max, maxx = variaveis.vento.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
+		output = json_out(day, color, value_max, value_min, var1, maxx, token_new)
 	elif var1 == 'temperatura' :
-		dia, valor_min, cor, valor_max, maxx = variaveis.temperatura.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
-		resposta = json_out(dia, cor, valor_max, valor_min, var1, maxx, token_novo)
+		day, value_min, color, value_max, maxx = variaveis.temperatura.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
+		output = json_out(day, color, value_max, value_min, var1, maxx, token_new)
 	elif var1 == 'umidade' :
-		dia, valor_min, cor, valor_max, maxx = variaveis.umidade.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
-		resposta = json_out(dia, cor, valor_max, valor_min, var1, maxx, token_novo)
+		day, value_min, color, value_max, maxx = variaveis.umidade.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
+		output = json_out(day, color, value_max, value_min, var1, maxx, token_new)
 	elif var1 == 'chuva' :	
-		dia, valor_min, cor, valor_max, maxx = variaveis.chuva.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
-		resposta = json_out(dia, cor, valor_max, valor_min, var1, maxx, token_novo)
+		day, value_min, color, value_max, maxx = variaveis.chuva.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
+		output = json_out(day, color, value_max, value_min, var1, maxx, token_new)
 	elif var1 == 'radiacao' :
-		dia, valor_min, cor, valor_max, maxx = variaveis.radiacao.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
-		resposta = json_out(dia, cor, valor_max, valor_min, var1, maxx, token_novo)
+		day, value_min, color, value_max, maxx = variaveis.radiacao.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
+		output = json_out(day, color, value_max, value_min, var1, maxx, token_new)
 #	print "🌡 ☁️ 🌁 🌫 ☂ 💧 ⛅ ☀️ 🌀 🍃 💨"
-	return(resposta)
+	return(output)
 #################################################################################

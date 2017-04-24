@@ -30,18 +30,18 @@ def calendario(CFS_E1, CFS_E2, CFS_E3, CFS_E4, CFS_E5, CFS_E6, CFS_E7, CFS_E8, i
 		b = iz
 	c = b
 	d = a	
-	radiacao_e1 = ens1.variables['dswrfsfc']
-	radiacao_e2 = ens2.variables['dswrfsfc']
-	radiacao_e3 = ens3.variables['dswrfsfc']
-	radiacao_e4 = ens4.variables['dswrfsfc']
-	radiacao_e5 = ens5.variables['dswrfsfc']
-	radiacao_e6 = ens6.variables['dswrfsfc']
-	radiacao_e7 = ens7.variables['dswrfsfc']
-	radiacao_e8 = ens8.variables['dswrfsfc']
+	radiation_e1 = ens1.variables['dswrfsfc']
+	radiation_e2 = ens2.variables['dswrfsfc']
+	radiation_e3 = ens3.variables['dswrfsfc']
+	radiation_e4 = ens4.variables['dswrfsfc']
+	radiation_e5 = ens5.variables['dswrfsfc']
+	radiation_e6 = ens6.variables['dswrfsfc']
+	radiation_e7 = ens7.variables['dswrfsfc']
+	radiation_e8 = ens8.variables['dswrfsfc']
 
 	max_j = max_i // 4
-	dia = iz // 4
-	data = []
+	day = iz // 4
+	date = []
 	rad_e1 = []
 	rad_e2 = []
 	rad_e3 = []
@@ -50,31 +50,31 @@ def calendario(CFS_E1, CFS_E2, CFS_E3, CFS_E4, CFS_E5, CFS_E6, CFS_E7, CFS_E8, i
 	rad_e6 = []
 	rad_e7 = []
 	rad_e8 = []
-	for i in range(dia, max_j):
-		rad_e1.append(sum(radiacao_e1[b:a, ixCFS, iyCFS]))
-		rad_e2.append(sum(radiacao_e2[b:a, ixCFS, iyCFS]))
-		rad_e3.append(sum(radiacao_e3[b:a, ixCFS, iyCFS]))
-		rad_e4.append(sum(radiacao_e4[b:a, ixCFS, iyCFS]))
-		rad_e5.append(sum(radiacao_e5[c:d, ixCFS, iyCFS]))
-		rad_e6.append(sum(radiacao_e6[c:d, ixCFS, iyCFS]))
-		rad_e7.append(sum(radiacao_e7[c:d, ixCFS, iyCFS]))
-		rad_e8.append(sum(radiacao_e8[c:d, ixCFS, iyCFS]))
+	for i in range(day, max_j):
+		rad_e1.append(sum(radiation_e1[b:a, ixCFS, iyCFS]))
+		rad_e2.append(sum(radiation_e2[b:a, ixCFS, iyCFS]))
+		rad_e3.append(sum(radiation_e3[b:a, ixCFS, iyCFS]))
+		rad_e4.append(sum(radiation_e4[b:a, ixCFS, iyCFS]))
+		rad_e5.append(sum(radiation_e5[c:d, ixCFS, iyCFS]))
+		rad_e6.append(sum(radiation_e6[c:d, ixCFS, iyCFS]))
+		rad_e7.append(sum(radiation_e7[c:d, ixCFS, iyCFS]))
+		rad_e8.append(sum(radiation_e8[c:d, ixCFS, iyCFS]))
 
-		if (sum(radiacao_e1[b:a, ixCFS, iyCFS])) < 5:
+		if (sum(radiation_e1[b:a, ixCFS, iyCFS])) < 5:
 			rad_e1.append(0)	
-		if (sum(radiacao_e2[b:a, ixCFS, iyCFS])) < 5:
+		if (sum(radiation_e2[b:a, ixCFS, iyCFS])) < 5:
 			rad_e2.append(0)	
-		if (sum(radiacao_e3[b:a, ixCFS, iyCFS])) < 5:
+		if (sum(radiation_e3[b:a, ixCFS, iyCFS])) < 5:
 			rad_e3.append(0)
-		if (sum(radiacao_e4[b:a, ixCFS, iyCFS])) < 5:
+		if (sum(radiation_e4[b:a, ixCFS, iyCFS])) < 5:
 			rad_e4.append(0)
-		if (sum(radiacao_e5[b:a, ixCFS, iyCFS])) < 5:
+		if (sum(radiation_e5[b:a, ixCFS, iyCFS])) < 5:
 			rad_e5.append(0)
-		if (sum(radiacao_e6[b:a, ixCFS, iyCFS])) < 5:
+		if (sum(radiation_e6[b:a, ixCFS, iyCFS])) < 5:
 			rad_e6.append(0)
-		if (sum(radiacao_e7[b:a, ixCFS, iyCFS])) < 5:
+		if (sum(radiation_e7[b:a, ixCFS, iyCFS])) < 5:
 			rad_e7.append(0)
-		if (sum(radiacao_e8[b:a, ixCFS, iyCFS])) < 5:
+		if (sum(radiation_e8[b:a, ixCFS, iyCFS])) < 5:
 			rad_e8.append(0)
 		a += 4
 		b += 4
@@ -89,9 +89,9 @@ def calendario(CFS_E1, CFS_E2, CFS_E3, CFS_E4, CFS_E5, CFS_E6, CFS_E7, CFS_E8, i
 	val_r	= [0] * max_j
 	val_g	= [0] * max_j
 	val	= [0] * max_j
-	cor	= [0] * max_j
+	color	= [0] * max_j
 	for i in range(dia, max_j):
-	## dia 1
+	## day 1
 		if 500 <= rad_e1[i] < 750:
 			prob_y[i] += 0.175
 			val_y[i] += (0.175 * rad_e1[i])
@@ -130,7 +130,7 @@ def calendario(CFS_E1, CFS_E2, CFS_E3, CFS_E4, CFS_E5, CFS_E6, CFS_E7, CFS_E8, i
 		elif rad_e4[i] >= 750: 
 			prob_g[i] += 0.175 #verde
 			val_g[i] += (0.175 * rad_e4[i])
-## dia 2
+## day 2
 		if 500 <= rad_e5[i] < 750:
 			prob_y[i] += 0.075
 			val_y[i] += (0.075 * rad_e5[i])
@@ -172,54 +172,54 @@ def calendario(CFS_E1, CFS_E2, CFS_E3, CFS_E4, CFS_E5, CFS_E6, CFS_E7, CFS_E8, i
 			val_g[i] += (0.075 * rad_e8[i])	
 
 		d1 = date0 + datetime.timedelta(hours = 6) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0) + datetime.timedelta(days = 10)
-		data.append(d1)
+		date.append(d1)
 
-	for i in range(dia, max_j):
+	for i in range(day, max_j):
 		if   prob_y[i] > prob_r[i] and prob_y[i] > prob_g[i]:
-			cor[i] = 2 
+			color[i] = 2 
 			prob[i] = prob_y[i]
 			val[i] = val_y[i]/prob_y[i]
 		elif prob_r[i] > prob_y[i] and prob_r[i] > prob_g[i]:
-			cor[i] = 3
+			color[i] = 3
 			prob[i] = prob_r[i]
 			val[i] = val_r[i]/prob_r[i] 
 		elif prob_g[i] > prob_y[i] and prob_g[i] > prob_r[i]:
-			cor[i] = 1
+			color[i] = 1
 			prob[i] = prob_g[i]
 			val[i] = val_g[i]/prob_g[i]
 		elif prob_y[i] == prob_r[i] and prob_y[i] > prob_g[i]:
-			cor[i] = 2
+			color[i] = 2
 			prob[i] = prob_y[i] + pro_g[i]/2
 			val[i] = (2.5*(val_y[i]/prob_y[i]) + 0.5*(val_g[i]/prob_g[i]))/3
 		elif prob_r[i] == prob_g[i] and prob_r[i] > prob_y[i]:
-			cor[i] = 3
+			color[i] = 3
 			prob[i] = prob_r[i] + prob_y[i]/2
 			val[i] = (2.5*(val_r[i]/prob_r[i]) + 0.5*(val_y[i]/prob_y[i]))/3
 		elif prob_g[i]  == prob_y[i] and prob_g[i] > prob_r[i]:
-			cor[i] = 1
+			color[i] = 1
 			prob[i] = prob_g[i] + prob_r[i]/2
 			val[i] = (2.5*(val_g[i]/prob_g[i]) + 0.5*(val_r[i]/prob_r[i]))/3
 		elif prob_y[i] == prob_r[i] and prob_y[i] < prob_g[i]:
-			cor[i] = 1
+			color[i] = 1
 			prob[i] = prob_g[i] + prob_y[i]/2
 			val[i] = (2.5*(val_g[i]/prob_g[i]) + 0.5*(val_y[i]/prob_y[i]))/3			
 		elif prob_r[i] == prob_g[i] and prob_r[i] < prob_y[i]:
-			cor[i] = 2
+			color[i] = 2
 			prob[i] =  prob_y[i] + prob_r/2
 			val[i] = (2.5*(val_y[i]/prob_y[i]) + 0.5*(val_r[i]/prob_r[i]))/3
 		elif prob_g[i]  == prob_y[i] and prob_g[i] < prob_r[i]:
-			cor[i] = 3
+			color[i] = 3
 			prob[i] = prob_r[i] + prob_g[i]/2
 			val[i] = (2.5*(val_r[i]/prob_r[i]) + 0.5*(val_g[i]/prob_g[i]))/3
 		else:
 			val[i] = (val_r[i] + val_g[i] + val_y[i])/3
 			if val[i] < 500:			
-				cor[i] = 3
+				color[i] = 3
 				prob[i] = 0.3
 			elif val[i] >= 750:
-				cor[i] = 1
+				color[i] = 1
 				prob[i] = 0.3
 			else:
-				cor[i] = 2
+				color[i] = 2
 				prob[i] = 0.3
-	return(data, prob, cor, val, max_j)
+	return(date, prob, color, val, max_j)
