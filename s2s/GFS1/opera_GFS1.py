@@ -23,8 +23,8 @@ from math import pi
 from numpy import cos, sin, arccos, power, sqrt, exp, arctan2, argmin, argmax, arctan
 
 #################################################################################
-##		Determina as unidades						#
-def unidade(var1):
+##		Determina as units						#
+def unit(var1):
 	return {
 		'chuva'		: 'mm',
 		'temperatura'	: 'C',
@@ -33,140 +33,140 @@ def unidade(var1):
 		'vento'		: 'm/s'
 		}.get(var1, 'Null')	
 #################################################################################
-##              json de resposta						#
-def json_out (dia, cor, valor1, valor2, var1, maxx, token, tipo):
-	unit = unidade(var1)
-        resposta = []
-	final =  len(dia) - 2
-	dias_v = []
-	mes_v = []
+##              json de output						#
+def json_out (day, color, value1, value2, var1, maxx, token, tipo):
+	unit = unit(var1)
+        output = []
+	final =  len(day) - 2
+	days_v = []
+	month_v = []
 
 	if tipo == True:
-                for j in range(dia[0].month, dia[final].month + 1):
+                for j in range(day[0].month, day[final].month + 1):
                         for i in range(0, maxx):
-                                if dia[i].month == j:
-					dias_d = {'Day'   :dia[i].day,
-       		                                  'DOW'   :dia[i].weekday(),
-               		                          'Min'   :float(valor2[i]),
-                       		                  'Max'   :float(valor1[i]),
-                               		          'Cor'   :float(cor[i])
+                                if day[i].month == j:
+					days_d = {'Day'   :day[i].day,
+       		                                  'DOW'   :day[i].weekday(),
+               		                          'Min'   :float(value2[i]),
+                       		                  'Max'   :float(value1[i]),
+                               		          'Cor'   :float(color[i])
                                        		  }
-                                	dias_v.append(dias_d)
-                        mes_d = {'year' :dia[j].year,
+                                	days_v.append(days_d)
+                        month_d = {'year' :day[j].year,
 				 'month':j,
-				 'days' :dias_v
+				 'days' :days_v
 				 }
-			dias_v = []
-                        mes_v.append(mes_d)
+			days_v = []
+                        month_v.append(month_d)
                 dic = { 'sucess'        :1,
                         'message'       :"GFS OK",
                         'token'         :token,
                         'data'          :{'unity'       :unit,
-                                          'months'      :mes_v}}
+                                          'months'      :month_v}}
 #################################################################################
 
 	else:
-		hora_v = []
-		mes_v  = []
-		dias_v = []
+		hour_v = []
+		month_v  = []
+		days_v = []
 		for i in range(0, maxx):
-			hora_d = { str(dia[i].hour): {
-	                                        'Prob'  : float(valor2[i]),
-	                                        'Valor' : float(valor1[i]),
-	                                        'Cor'   : int(cor[i])}}
-			hora_v.append(hora_d)
+			hour_d = { str(day[i].hour): {
+	                                        'Prob'  : float(value2[i]),
+	                                        'Valor' : float(value1[i]),
+	                                        'Cor'   : int(color[i])}}
+			hour_v.append(hour_d)
 		a = 0
 		b = 24
-		for j in range(dia[0].month, dia[final].month + 1):
+		for j in range(day[0].month, day[final].month + 1):
 			for i in range(0, maxx):
-				if dia[i].month == j:
-					dias_d = {'Day'   :dia[a].day,
-       		                                  'DOW'   :dia[a].weekday(),
-						  'Horas' :hora_v[a-b] 	
+				if day[i].month == j:
+					days_d = {'Day'   :day[a].day,
+       		                                  'DOW'   :day[a].weekday(),
+						  'hours' :hour_v[a-b] 	
                                        		  }
-                                	dias_v.append(dias_d)
+                                	days_v.append(days_d)
 					if a < (maxx-(5*8)):
 						a = b
 						b += 24
 					else:
 						a = b
 						b += 8
-                        mes_d = {'year' :dia[j].year,
+                        month_d = {'year' :day[j].year,
 				 'month':j,
-				 'days' :dias_v
+				 'days' :days_v
 				 }
 
-			dias_v = []
-                        mes_v.append(mes_d)
+			days_v = []
+                        month_v.append(month_d)
                 dic = { 'sucess'        :1,
                         'message'       :"GFS OK",
                         'token'         :token,
                         'data'          :{'unity'       :unit,
-                                          'months'      :mes_v}}		
+                                          'months'      :month_v}}		
 
 
 
-for j in range(dia[0].month, dia[final].month + 1): 
+for j in range(day[0].month, day[final].month + 1): 
 			for i in range(0, maxx):
 				if a > maxx:
 					break
-				dias_d = {'Month' : dia[a].month,
-					  'Day'   : dia[a].day,
-					  'DOW'   : dia[a].weekday(),
-					  'Uni'	  : unidade,
-					  'Hora'  : hora_v[a-b]}}}
-				dias_v.append(dias_d)
+				days_d = {'Month' : day[a].month,
+					  'Day'   : day[a].day,
+					  'DOW'   : day[a].weekday(),
+					  'Uni'	  : unit,
+					  'Hora'  : hour_v[a-b]}}}
+				days_v.append(days_d)
 
 		dic = { 'sucess'        :1,
 			'message'       :"GFS Tabela OK",
 			'token'         :token,
-			'data'          :{'unity'       :unit,
-					  'months'     	:dias_v}}
+			'data'          :{'unidade'       :unit,
+					  'months'     	:days_v}}
 
 #################################################################################
-        resposta = dic
-        return(resposta)
+        output = dic
+        return(output)
 
 #################################################################################
 #################################################################################
 ##	Calendario								#
-def calendario_out (GFS_nc, var1, iz, ixGFS, iyGFS, date0, utc0, token_novo):
+def calendario_out (GFS_nc, var1, iz, ixGFS, iyGFS, date0, utc0, token_new):
 	GFSfile = netCDF4.Dataset(GFS_nc, 'r')					
 	if var1 == 'vento':							
-		dia, cor, valor_max, dire, maxx = variaveis.vento.calendario(GFSfile, iz, ixGFS, iyGFS, date0, utc0) 		#
-		resposta = json_out(dia, cor, valor_max, dire, var1, maxx, token_novo, True)
+		day, color, value_max, dire, maxx = variaveis.vento.calendario(GFSfile, iz, ixGFS, iyGFS, date0, utc0) 		#
+		output = json_out(day, color, value_max, dire, var1, maxx, token_new, True)
 	elif var1 == 'temperatura' :							
-		dia, cor, valor_min, valor_max, maxx = variaveis.temperatura.calendario(GFSfile, iz, ixGFS, iyGFS, date0, utc0)
-		resposta = json_out(dia, cor, valor_max, valor_min, var1, maxx, token_novo, True)
+		day, color, value_min, value_max, maxx = variaveis.temperatura.calendario(GFSfile, iz, ixGFS, iyGFS, date0, utc0)
+		output = json_out(day, color, value_max, value_min, var1, maxx, token_new, True)
 	elif var1 == 'umidade' :								
-		dia, cor, valor_min, valor_max, maxx = variaveis.umidade.calendario(GFSfile, iz, ixGFS, iyGFS, date0, utc0)
-		resposta = json_out(dia, cor, valor_max, valor_min, var1, maxx, token_novo, True)
+		day, color, value_min, value_max, maxx = variaveis.umidade.calendario(GFSfile, iz, ixGFS, iyGFS, date0, utc0)
+		output = json_out(day, color, value_max, value_min, var1, maxx, token_new, True)
 	elif var1 == 'chuva' :									
-		dia, cor, valor_min, valor_max, maxx = variaveis.chuva.calendario(GFSfile, iz, ixGFS, iyGFS, date0, utc0)
-		resposta = json_out(dia, cor, valor_max, valor_min, var1, maxx, token_novo, True)
+		day, color, value_min, value_max, maxx = variaveis.chuva.calendario(GFSfile, iz, ixGFS, iyGFS, date0, utc0)
+		output = json_out(day, color, value_max, value_min, var1, maxx, token_new, True)
 	elif var1 == 'radiacao' :								
-		dia, cor, valor_min, valor_max, maxx = variaveis.radiacao.calendario(GFSfile, iz, ixGFS, iyGFS, date0, utc0)
-		resposta = json_out(dia, cor, valor_max, valor_min, var1, maxx, token_novo, True)
-	return(resposta)							
+		day, color, value_min, value_max, maxx = variaveis.radiacao.calendario(GFSfile, iz, ixGFS, iyGFS, date0, utc0)
+		output = json_out(day, color, value_max, value_min, var1, maxx, token_new, True)
+	return(output)							
 #################################################################################
 #################################################################################
-# Tabela									#
-def tabela_out (GFS_nc, var1, iz, ixGFS, iyGFS, date0, utc0, token_novo):	
+# Detailed table									#
+def tabela_out (GFS_nc, var1, iz, ixGFS, iyGFS, date0, utc0, token_new):	
 	GFSfile = netCDF4.Dataset(GFS_nc, 'r')					
 	if var1 == 'vento':							
-		dia, cor, valor, dire, maxx = variaveis.vento.tabela(GFSfile, iz, ixGFS, iyGFS, date0, utc0)
-		resposta = json_out(dia, cor, valor, dire, var1, maxx, token_novo, False)
+		day, color, value, dire, maxx = variaveis.vento.tabela(GFSfile, iz, ixGFS, iyGFS, date0, utc0)
+		output = json_out(day, color, value, dire, var1, maxx, token_new, False)
 	elif var1 == 'temperatura' :
-		dia, cor, valor, maxx = variaveis.temperatura.tabela(GFSfile, iz, ixGFS, iyGFS, date0, utc0)
-		resposta = json_out(dia, cor, valor, 0, var1, maxx, token_novo, False)
+		day, color, value, maxx = variaveis.temperatura.tabela(GFSfile, iz, ixGFS, iyGFS, date0, utc0)
+		output = json_out(day, color, value, 0, var1, maxx, token_new, False)
 	elif var1 == 'umidade' :
-		dia, cor, valor, maxx = variaveis.umidade.tabela(GFSfile, iz, ixGFS, iyGFS, date0, utc0)
-		resposta = json_out(dia, cor, valor, 0, var1, maxx, token_novo, False)
+		day, color, value, maxx = variaveis.umidade.tabela(GFSfile, iz, ixGFS, iyGFS, date0, utc0)
+		output = json_out(day, color, value, 0, var1, maxx, token_new, False)
 	elif var1 == 'chuva' :
-		dia, cor, valor, maxx = variaveis.chuva.tabela(GFSfile, iz, ixGFS, iyGFS, date0, utc0)
-		resposta = json_out(dia, cor, valor, 0, var1, maxx, token_novo, False)
+		day, color, value, maxx = variaveis.chuva.tabela(GFSfile, iz, ixGFS, iyGFS, date0, utc0)
+		output = json_out(day, color, value, 0, var1, maxx, token_new, False)
 	elif var1 == 'radiacao' :							
-		dia, cor, valor, maxx = variaveis.radiacao.tabela(GFSfile, iz, ixGFS, iyGFS, date0, utc0)
-		resposta = json_out(dia, cor, valor, 0, var1, maxx, token_novo)
-	return(resposta)							
+		day, color, value, maxx = variaveis.radiacao.tabela(GFSfile, iz, ixGFS, iyGFS, date0, utc0)
+		output = json_out(day, color, value, 0, var1, maxx, token_new)
+	return(output)							
 #################################################################################
