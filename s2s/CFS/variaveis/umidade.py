@@ -55,61 +55,61 @@ def calendario(CFS_E1, CFS_E2, CFS_E3, CFS_E4, CFS_E5, CFS_E6, CFS_E7, CFS_E8, i
 	p2_e7 = ens7.variables['pressfc']
 	p2_e8 = ens8.variables['pressfc']
  
-	umidade_e1 = []
-	umidade_e2 = []
-	umidade_e3 = []
-	umidade_e4 = []
-	umidade_e5 = []
-	umidade_e6 = []
-	umidade_e7 = []
-	umidade_e8 = []
+	rh2_e1 = []
+	rh2_e2 = []
+	rh2_e3 = []
+	rh2_e4 = []
+	rh2_e5 = []
+	rh2_e6 = []
+	rh2_e7 = []
+	rh2_e8 = []
 	for i in range(0, max_i):
-		umidade_e1.append(100*(q2_e1[i, ixCFS, iyCFS]/(379.90516/p2_e1[i, ixCFS, iyCFS] * exp(17.29*((t2_e1[i, ixCFS, iyCFS] - 273.15)/(t2_e1[i, ixCFS, iyCFS] - 35.86))))))
-		umidade_e2.append(100*(q2_e2[i, ixCFS, iyCFS]/(379.90516/p2_e2[i, ixCFS, iyCFS] * exp(17.29*((t2_e2[i, ixCFS, iyCFS] - 273.15)/(t2_e2[i, ixCFS, iyCFS] - 35.86))))))
-		umidade_e3.append(100*(q2_e3[i, ixCFS, iyCFS]/(379.90516/p2_e3[i, ixCFS, iyCFS] * exp(17.29*((t2_e3[i, ixCFS, iyCFS] - 273.15)/(t2_e3[i, ixCFS, iyCFS] - 35.86))))))
-		umidade_e4.append(100*(q2_e4[i, ixCFS, iyCFS]/(379.90516/p2_e4[i, ixCFS, iyCFS] * exp(17.29*((t2_e4[i, ixCFS, iyCFS] - 273.15)/(t2_e4[i, ixCFS, iyCFS] - 35.86))))))
-		umidade_e5.append(100*(q2_e5[i, ixCFS, iyCFS]/(379.90516/p2_e5[i, ixCFS, iyCFS] * exp(17.29*((t2_e5[i, ixCFS, iyCFS] - 273.15)/(t2_e5[i, ixCFS, iyCFS] - 35.86))))))
-		umidade_e6.append(100*(q2_e6[i, ixCFS, iyCFS]/(379.90516/p2_e6[i, ixCFS, iyCFS] * exp(17.29*((t2_e6[i, ixCFS, iyCFS] - 273.15)/(t2_e6[i, ixCFS, iyCFS] - 35.86))))))
-		umidade_e7.append(100*(q2_e7[i, ixCFS, iyCFS]/(379.90516/p2_e7[i, ixCFS, iyCFS] * exp(17.29*((t2_e7[i, ixCFS, iyCFS] - 273.15)/(t2_e7[i, ixCFS, iyCFS] - 35.86))))))
-		umidade_e8.append(100*(q2_e8[i, ixCFS, iyCFS]/(379.90516/p2_e8[i, ixCFS, iyCFS] * exp(17.29*((t2_e8[i, ixCFS, iyCFS] - 273.15)/(t2_e8[i, ixCFS, iyCFS] - 35.86))))))
+		rh2_e1.append(100*(q2_e1[i, ixCFS, iyCFS]/(379.90516/p2_e1[i, ixCFS, iyCFS] * exp(17.29*((t2_e1[i, ixCFS, iyCFS] - 273.15)/(t2_e1[i, ixCFS, iyCFS] - 35.86))))))
+		rh2_e2.append(100*(q2_e2[i, ixCFS, iyCFS]/(379.90516/p2_e2[i, ixCFS, iyCFS] * exp(17.29*((t2_e2[i, ixCFS, iyCFS] - 273.15)/(t2_e2[i, ixCFS, iyCFS] - 35.86))))))
+		rh2_e3.append(100*(q2_e3[i, ixCFS, iyCFS]/(379.90516/p2_e3[i, ixCFS, iyCFS] * exp(17.29*((t2_e3[i, ixCFS, iyCFS] - 273.15)/(t2_e3[i, ixCFS, iyCFS] - 35.86))))))
+		rh2_e4.append(100*(q2_e4[i, ixCFS, iyCFS]/(379.90516/p2_e4[i, ixCFS, iyCFS] * exp(17.29*((t2_e4[i, ixCFS, iyCFS] - 273.15)/(t2_e4[i, ixCFS, iyCFS] - 35.86))))))
+		rh2_e5.append(100*(q2_e5[i, ixCFS, iyCFS]/(379.90516/p2_e5[i, ixCFS, iyCFS] * exp(17.29*((t2_e5[i, ixCFS, iyCFS] - 273.15)/(t2_e5[i, ixCFS, iyCFS] - 35.86))))))
+		rh2_e6.append(100*(q2_e6[i, ixCFS, iyCFS]/(379.90516/p2_e6[i, ixCFS, iyCFS] * exp(17.29*((t2_e6[i, ixCFS, iyCFS] - 273.15)/(t2_e6[i, ixCFS, iyCFS] - 35.86))))))
+		rh2_e7.append(100*(q2_e7[i, ixCFS, iyCFS]/(379.90516/p2_e7[i, ixCFS, iyCFS] * exp(17.29*((t2_e7[i, ixCFS, iyCFS] - 273.15)/(t2_e7[i, ixCFS, iyCFS] - 35.86))))))
+		rh2_e8.append(100*(q2_e8[i, ixCFS, iyCFS]/(379.90516/p2_e8[i, ixCFS, iyCFS] * exp(17.29*((t2_e8[i, ixCFS, iyCFS] - 273.15)/(t2_e8[i, ixCFS, iyCFS] - 35.86))))))
 
 	max_j = max_i // 4
 	dia = iz // 4
 	data = []
-	umi_e1 = []
-	umi_e2 = []
-	umi_e3 = []
-	umi_e4 = []
-	umi_e5 = []
-	umi_e6 = []
-	umi_e7 = []
-	umi_e8 = []
+	rh_e1 = []
+	rh_e2 = []
+	rh_e3 = []
+	rh_e4 = []
+	rh_e5 = []
+	rh_e6 = []
+	rh_e7 = []
+	rh_e8 = []
 	for i in range(dia, max_j):
-		umi_e1.append(umidade_e1[argmin(umidade_e1[b:a]) + b])
-		umi_e2.append(umidade_e2[argmin(umidade_e2[b:a]) + b])
-		umi_e3.append(umidade_e3[argmin(umidade_e3[b:a]) + b])
-		umi_e4.append(umidade_e4[argmin(umidade_e4[b:a]) + b])
-		umi_e5.append(umidade_e5[argmin(umidade_e5[b:a]) + b])
-		umi_e6.append(umidade_e6[argmin(umidade_e6[b:a]) + b])
-		umi_e7.append(umidade_e7[argmin(umidade_e7[b:a]) + b])
-		umi_e8.append(umidade_e8[argmin(umidade_e8[b:a]) + b])
+		rh_e1.append(rh2_e1[argmin(rh2_e1[b:a]) + b])
+		rh_e2.append(rh2_e2[argmin(rh2_e2[b:a]) + b])
+		rh_e3.append(rh2_e3[argmin(rh2_e3[b:a]) + b])
+		rh_e4.append(rh2_e4[argmin(rh2_e4[b:a]) + b])
+		rh_e5.append(rh2_e5[argmin(rh2_e5[b:a]) + b])
+		rh_e6.append(rh2_e6[argmin(rh2_e6[b:a]) + b])
+		rh_e7.append(rh2_e7[argmin(rh2_e7[b:a]) + b])
+		rh_e8.append(rh2_e8[argmin(rh2_e8[b:a]) + b])
 
-		if umidade_e1[argmin(umidade_e1[b:a]) + b] < 1.5:
-			umi_e1.append(0)	
-		if umidade_e2[argmin(umidade_e2[b:a]) + b] < 1.5:
-			umi_e2.append(0)	
-		if umidade_e3[argmin(umidade_e3[b:a]) + b] < 1.5:
-			umi_e3.append(0)
-		if umidade_e4[argmin(umidade_e4[b:a]) + b] < 1.5:
-			umi_e4.append(0)
-		if umidade_e5[argmin(umidade_e5[b:a]) + b] < 1.5:
-			umi_e5.append(0)
-		if umidade_e6[argmin(umidade_e6[b:a]) + b] < 1.5:
-			umi_e6.append(0)
-		if umidade_e7[argmin(umidade_e7[b:a]) + b] < 1.5:
-			umi_e7.append(0)
-		if umidade_e8[argmin(umidade_e8[b:a]) + b] < 1.5:
-			umi_e8.append(0)
+		if rh2_e1[argmin(rh2_e1[b:a]) + b] < 1.5:
+			rh_e1.append(0)	
+		if rh2_e2[argmin(rh2_e2[b:a]) + b] < 1.5:
+			rh_e2.append(0)	
+		if rh2_e3[argmin(rh2_e3[b:a]) + b] < 1.5:
+			rh_e3.append(0)
+		if rh2_e4[argmin(rh2_e4[b:a]) + b] < 1.5:
+			rh_e4.append(0)
+		if rh2_e5[argmin(rh2_e5[b:a]) + b] < 1.5:
+			rh_e5.append(0)
+		if rh2_e6[argmin(rh2_e6[b:a]) + b] < 1.5:
+			rh_e6.append(0)
+		if rh2_e7[argmin(rh2_e7[b:a]) + b] < 1.5:
+			rh_e7.append(0)
+		if rh2_e8[argmin(rh2_e8[b:a]) + b] < 1.5:
+			rh_e8.append(0)
 		a += 4
 		b += 4
 		c += 4
@@ -126,84 +126,84 @@ def calendario(CFS_E1, CFS_E2, CFS_E3, CFS_E4, CFS_E5, CFS_E6, CFS_E7, CFS_E8, i
 	cor	= [0] * max_j
 	for i in range(dia, max_j):
 	## dia 1
-		if 80 < umi_e1[i] <= 90:
+		if 80 < rh_e1[i] <= 90:
 			prob_y[i] += 0.175
-			val_y[i] += (0.175 * umi_e1[i])
-		elif umi_e1[i] > 90:
+			val_y[i] += (0.175 * rh_e1[i])
+		elif rh_e1[i] > 90:
 			prob_r[i] += 0.175 #vermelho
-			val_r[i] += (0.175 * umi_e1[i])
-		elif umi_e1[i]<= 80: 
+			val_r[i] += (0.175 * rh_e1[i])
+		elif rh_e1[i]<= 80: 
 			prob_g[i] += 0.175 #verde
-			val_g[i] += (0.175 * umi_e1[i])
+			val_g[i] += (0.175 * rh_e1[i])
 
-		if 80 < umi_e2[i] <= 90:
+		if 80 < rh_e2[i] <= 90:
 			prob_y[i] += 0.175
-			val_y[i] += (0.175 * umi_e2[i])
-		elif umi_e2[i] > 90:
+			val_y[i] += (0.175 * rh_e2[i])
+		elif rh_e2[i] > 90:
 			prob_r[i] += 0.175 #vermelho
-			val_r[i] += (0.175 * umi_e2[i])
-		elif umi_e2[i]<= 80: 
+			val_r[i] += (0.175 * rh_e2[i])
+		elif rh_e2[i]<= 80: 
 			prob_g[i] += 0.175 #verde
-			val_g[i] += (0.175 * umi_e2[i])		
+			val_g[i] += (0.175 * rh_e2[i])		
 
-		if 80 < umi_e3[i] <= 90:
+		if 80 < rh_e3[i] <= 90:
 			prob_y[i] += 0.175
-			val_y[i] += (0.175 * umi_e3[i])
-		elif umi_e3[i] > 90:
+			val_y[i] += (0.175 * rh_e3[i])
+		elif rh_e3[i] > 90:
 			prob_r[i] += 0.175 #vermelho
-			val_r[i] += (0.175 * umi_e3[i])
-		elif umi_e3[i]<= 80: 
+			val_r[i] += (0.175 * rh_e3[i])
+		elif rh_e3[i]<= 80: 
 			prob_g[i] += 0.175 #verde
 	
-		if 80 < umi_e4[i] <= 90:
+		if 80 < rh_e4[i] <= 90:
 			prob_y[i] += 0.175
-			val_y[i] += (0.175 * umi_e4[i])
-		elif umi_e4[i] > 90:
+			val_y[i] += (0.175 * rh_e4[i])
+		elif rh_e4[i] > 90:
 			prob_r[i] += 0.175 #vermelho
-			val_r[i] += (0.175 * umi_e4[i])
-		elif umi_e4[i]<= 80: 
+			val_r[i] += (0.175 * rh_e4[i])
+		elif rh_e4[i]<= 80: 
 			prob_g[i] += 0.175 #verde
-			val_g[i] += (0.175 * umi_e4[i])
+			val_g[i] += (0.175 * rh_e4[i])
 ## dia 2
-		if 80 < umi_e5[i] <= 90:
+		if 80 < rh_e5[i] <= 90:
 			prob_y[i] += 0.075
-			val_y[i] += (0.075 * umi_e5[i])
-		elif umi_e5[i] > 90:
+			val_y[i] += (0.075 * rh_e5[i])
+		elif rh_e5[i] > 90:
 			prob_r[i] += 0.075 #vermelho
-			val_r[i] += (0.075 * umi_e5[i])
-		elif umi_e5[i]<= 80: 
+			val_r[i] += (0.075 * rh_e5[i])
+		elif rh_e5[i]<= 80: 
 			prob_g[i] += 0.075 #verde
-			val_g[i] += (0.075 * umi_e5[i])
+			val_g[i] += (0.075 * rh_e5[i])
 	
-		if 80 < umi_e6[i] <= 90:
+		if 80 < rh_e6[i] <= 90:
 			prob_y[i] += 0.075
-			val_y[i] += (0.075 * umi_e6[i])
-		elif umi_e6[i] > 90:
+			val_y[i] += (0.075 * rh_e6[i])
+		elif rh_e6[i] > 90:
 			prob_r[i] += 0.075 #vermelho
-			val_r[i] += (0.075 * umi_e6[i])
-		elif umi_e6[i]<= 80: 
+			val_r[i] += (0.075 * rh_e6[i])
+		elif rh_e6[i]<= 80: 
 			prob_g[i] += 0.075 #verde
-			val_g[i] += (0.075 * umi_e6[i])
+			val_g[i] += (0.075 * rh_e6[i])
 		
-		if 80 < umi_e7[i] <= 90:
+		if 80 < rh_e7[i] <= 90:
 			prob_y[i] += 0.075
-			val_y[i] += (0.075 * umi_e7[i])
-		elif umi_e7[i] > 90:
+			val_y[i] += (0.075 * rh_e7[i])
+		elif rh_e7[i] > 90:
 			prob_r[i] += 0.075 #vermelho
-			val_r[i] += (0.075 * umi_e7[i])
-		elif umi_e7[i]<= 80: 
+			val_r[i] += (0.075 * rh_e7[i])
+		elif rh_e7[i]<= 80: 
 			prob_g[i] += 0.075 #verde
-			val_g[i] += (0.075 * umi_e7[i])
+			val_g[i] += (0.075 * rh_e7[i])
 		
-		if 80 < umi_e8[i] <= 90:
+		if 80 < rh_e8[i] <= 90:
 			prob_y[i] += 0.075
-			val_y[i] += (0.075 * umi_e8[i])
-		elif umi_e8[i] > 90:
+			val_y[i] += (0.075 * rh_e8[i])
+		elif rh_e8[i] > 90:
 			prob_r[i] += 0.075 #vermelho
-			val_r[i] += (0.075 * umi_e8[i])
-		elif umi_e8[i]<= 80: 
+			val_r[i] += (0.075 * rh_e8[i])
+		elif rh_e8[i]<= 80: 
 			prob_g[i] += 0.075 #verde
-			val_g[i] += (0.075 * umi_e8[i])	
+			val_g[i] += (0.075 * rh_e8[i])	
 
 		d1 = date0 + datetime.timedelta(hours = 6) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0) + datetime.timedelta(days = 10)
 		data.append(d1)
