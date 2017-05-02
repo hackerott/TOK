@@ -53,7 +53,7 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4):
 #	size_r, size_b, color_b, color_r  = get_RMSE_plot(rain_wrf, rain_station)
 	color_b, color_r  = get_RMSE_plot(rain_wrf, rain_station)
 	rmse = np.mean(color_r)
-	bias = np.mena(color_b)
+	bias = np.mean(color_b)
 	print "Setting basemaps..."
 	file_name_map = '%s/map_rmse_bias.png' % (path4)
 	file_name_scatter = '%s/scatter_obs_sim.png' % (path4)
