@@ -52,6 +52,8 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4):
 	print "Setting RMSE and BIAS scale..."
 #	size_r, size_b, color_b, color_r  = get_RMSE_plot(rain_wrf, rain_station)
 	color_b, color_r  = get_RMSE_plot(rain_wrf, rain_station)
+	rmse = np.mean(color_r)
+	bias = np.mena(color_b)
 	print "Setting basemaps..."
 	file_name_map = '%s/map_rmse_bias.png' % (path4)
 	file_name_scatter = '%s/scatter_obs_sim.png' % (path4)
@@ -69,6 +71,9 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4):
 	plt.ylim(0, max(max(rain_wrf), max(rain_station)))
 	plt.scatter(rain_wrf, rain_station, c='black', marker='o', linewidth=0)
 	plt.plot(index, index, c='grey')
+	x_box = (len(index)/16) * 14
+	y_box = (len(index)/8) * 6
+	plt.figtext(x_box, y_box, "\bStatistical indicators:\n\n Relative error: %s \n Absolute error: %s \n  " % (rmse, bias) ,bbox={'facecolor':'lightgray', 'alpha':0.5, 'pad':10}, multialignment = 'left')
 	plt.savefig(file_name_scatter, dpi=300, pad_inches=0)
 
 ##RMSE
