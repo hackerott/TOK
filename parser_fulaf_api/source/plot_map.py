@@ -59,9 +59,8 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4):
 	file_name_scatter = '%s/scatter_obs_sim.png' % (path4)
 	file_name = '%s/model_simulation.png' % (path4)
 
-##SCATTER
+##SCATTER plot
 	print "Drawing Obs X Sim..."
-	index = np.arange(len(rain_station))
 	diference = np.subtract(rain_station, rain_wrf)
 	fig3 = plt.figure("SCATTER",figsize=(16, 9))
 	plt.ylabel('Observation [mm]')
@@ -70,20 +69,17 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4):
 	plt.xlim(0, max(max(rain_wrf), max(rain_station)))
 	plt.ylim(0, max(max(rain_wrf), max(rain_station)))
 	plt.scatter(rain_wrf, rain_station, c='black', marker='o', linewidth=0)
-	plt.plot(index, index, c='grey')
-	x_box = (len(index)/16) * 14
-	y_box = (len(index)/8) * 6
-	plt.figtext(x_box, y_box, "\bStatistical indicators:\n\n Relative error: %s \n Absolute error: %s \n  " % (rmse, bias) ,bbox={'facecolor':'lightgray', 'alpha':0.5, 'pad':10}, multialignment = 'left')
+	plt.plot(rain_station, rain_station, c='gray')
+	plt.figtext(0.73, 0.73, "Statistical indicators:\n\n Relative error: %.3f \n Absolute error: %.3f \n  " % (bias, rmse) ,bbox={'facecolor':'lightgray', 'alpha':0.5, 'pad':10}, fontsize=15, multialignment = 'left')
 	plt.savefig(file_name_scatter, dpi=300, pad_inches=0)
 
-##RMSE
+##RMSE Map
 	fig = plt.figure("RMSE/BIAS SCATTER",figsize=(16, 9))
 	ax = fig.add_subplot(121)
 	ax.set_title("Absolute error (|sim - obs|) [mm]")
 	map1 = Basemap(projection='merc',llcrnrlat=lc[0], urcrnrlat=rc[0], llcrnrlon=lc[1], urcrnrlon=rc[1],resolution='h')
 	map1.drawcoastlines()
 	map1.drawcountries(linewidth=0.5, linestyle='solid', color='k', antialiased=1, ax=None, zorder=None)
-#	map1.drawstates(color='k')
 	map1.fillcontinents(color='lightgray', zorder=0)
 	print "Drawing RMSE..."	
 	map1.scatter(lon, lat, c=color_r, s=30, marker='o', latlon=True, linewidth=0, )
@@ -92,7 +88,7 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4):
 	map1.drawparallels(np.arange(lc[0],rc[0]+2.5,2.5), labels=[1,0,0,1])
 	map1.drawmeridians(np.arange(lc[1],rc[1]+5,5.), labels=[1,0,0,1])
 
-##BIAS
+##BIAS Map
 	color_b.append(1.0)
 	color_b.append(-1.0)
 	lat.append(0) 
@@ -104,7 +100,6 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4):
 	map2 = Basemap(projection='merc',llcrnrlat=lc[0], urcrnrlat=rc[0], llcrnrlon=lc[1], urcrnrlon=rc[1],resolution='h')
 	map2.drawcoastlines()
 	map2.drawcountries(linewidth=0.5, linestyle='solid', color='k', antialiased=1, ax=None, zorder=None)
-#	map2.drawstates(color='k')
 	map2.fillcontinents(color='lightgray', zorder=0)
 	print "Drawing BIAS..."
 	map2.scatter(lon, lat, c=color_b, s=30, marker='o', latlon=True, linewidth=0, )
@@ -121,14 +116,13 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4):
 	rain_wrf.append(b)
 	rain_station.append(b)
 
-##Model
+##Model Map
 	fig2 = plt.figure("MODEL SIMULATION SCATTER",figsize=(16, 9))
 	ax = fig2.add_subplot(121)
 	ax.set_title("Model [mm]")
 	map3 = Basemap(projection='merc',llcrnrlat=lc[0], urcrnrlat=rc[0], llcrnrlon=lc[1], urcrnrlon=rc[1],resolution='h')
 	map3.drawcoastlines()
 	map3.drawcountries(linewidth=0.5, linestyle='solid', color='k', antialiased=1, ax=None, zorder=None)
-#	map3.drawstates(color='k')
 	map3.fillcontinents(color='lightgray', zorder=0)
 	print "Drawing Model..."
 	map3.scatter(lon, lat, c=rain_wrf, s=30, marker='o', latlon=True, linewidth=0, )
@@ -137,13 +131,12 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4):
 	map3.drawparallels(np.arange(lc[0],rc[0]+2.5,2.5), labels=[1,0,0,1])
 	map3.drawmeridians(np.arange(lc[1],rc[1]+5,5.), labels=[1,0,0,1])
 
-##Station
+##Station Map
 	ax = fig2.add_subplot(122)
 	ax.set_title("Station [mm]")
 	map4 = Basemap(projection='merc',llcrnrlat=lc[0], urcrnrlat=rc[0], llcrnrlon=lc[1], urcrnrlon=rc[1],resolution='h')
 	map4.drawcoastlines()
 	map4.drawcountries(linewidth=0.5, linestyle='solid', color='k', antialiased=1, ax=None, zorder=None)
-#	map4.drawstates(color='k')
 	map4.fillcontinents(color='lightgray', zorder=0)
 	print "Drawing Observations..."
 	map4.scatter(lon, lat, c=rain_station, s=30, marker='o', latlon=True, linewidth=0, )
