@@ -14,8 +14,8 @@ def _get_NCVAR(var):
 		'chuva'		: 'pratesfc',
 		'temperatura'	: 'tmp2m',
 		'radiacao'	: 'dswrfsfc',
-		'umidade'	: 'spfh2m', 'tmp2m', 'pressfc', 
-		'vento'		: 'ugrd10m', 'vgrd10m'
+		'umidade'	: ['spfh2m', 'tmp2m', 'pressfc'], 
+		'vento'		: ['ugrd10m', 'vgrd10m']
 		}.get(var, 'Null')
 
 #######################################
@@ -39,7 +39,7 @@ def _get_Prob(var_raw, ix, iy, max_i, top_lim, bot_lim):
 
 #######################################	
 # return the final values of prob for each member
-def _get_AREA(ncfile, var, ix, iy, top_lim, bot_lim):
+def _get_AREAP(ncfile, var, ix, iy, top_lim, bot_lim):
 	time = ncfile.variables['time']
 	max_i = len(time)
 	top_lim =
