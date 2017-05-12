@@ -18,6 +18,8 @@ import variaveis.temperatura
 import variaveis.vento
 import variaveis.radiacao
 import variaveis.umidade
+import prob_area
+import prob_time
 
 from math import pi
 from numpy import cos, sin, arccos, power, sqrt, exp, arctan2, argmin, argmax, arctan
@@ -32,18 +34,12 @@ def unidade(var1):
 		'vento'		: 'm/s'
 		}.get(var1, 'Null')
 #################################################################################
+
 #################################################################################
-<<<<<<< HEAD
-##		json de output						#
+##		json de output							#
 def json_out (day, color, value1, value2, var1, maxx, token):
 	output = []
 	month_v	 = []
-=======
-##		json de resposta						#
-def json_out (day, color, value1, value2, var1, maxx, token):
-	output = []
-	mes_v	 = []
->>>>>>> f8ed1d5d4bfcc0dfe079134f4be0d03f0a6c3dfe
 	days_v	 = []
 	final	 = len(day) - 2
 	unit	 = unidade(var1)
@@ -57,20 +53,13 @@ def json_out (day, color, value1, value2, var1, maxx, token):
 					  'color'   :float(color[i])
 					 }
 				days_v.append(days_d)
-<<<<<<< HEAD
+
 		month_d = {'year' :day[j].year,
-=======
-		mes_d = {'year' :day[j].year,
->>>>>>> f8ed1d5d4bfcc0dfe079134f4be0d03f0a6c3dfe
  			 'month':j,
 			 'days' :days_v
 			 }
 		days_v = []
-<<<<<<< HEAD
 		month_v.append(month_d)
-=======
-		mes_v.append(mes_d)
->>>>>>> f8ed1d5d4bfcc0dfe079134f4be0d03f0a6c3dfe
 	dic = { 'sucess'        :1,
 		'message'       :"CFS OK",
 		'token'         :token,
@@ -81,6 +70,7 @@ def json_out (day, color, value1, value2, var1, maxx, token):
 	output = dic 
 	return(output)
 #################################################################################
+
 #################################################################################
 ##	calls all variables						#
 def calendario_out(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, var1, iz, ixCFS, iyCFS, date0, utc0, token_new):
