@@ -56,6 +56,11 @@ def _get_TIMEP(ncfile1, ncfile2, var, ix, iy, top_lim, bot_lim):
 	top_lim =
 	bot_lim =
 	var_nc = _get_NCVAR(var)
+###
+#ERROR MANAGEMENT
+	if var_nc == 'Null':  
+		exit(1)
+
 	if len(var_nc) == 1:
 		var_raw1 = ncfile1.variables[var_nc] #single variable from nc
 		var_raw2 = ncfile2.variables[var_nc] #single variable from nc

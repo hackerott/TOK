@@ -45,6 +45,14 @@ def _get_AREAP(ncfile, var, ix, iy, top_lim, bot_lim):
 	top_lim =
 	bot_lim =
 	var_nc = _get_NCVAR(var)
+###
+#ERROR MANAGEMENT
+	if var_nc == 'Null':  
+		exit(1)
+'''
+Add here (or in other script) proper error management, need to create a error table
+'''
+###
 	if len(var_nc) == 1:
 		var_raw = ncfile.variables[var_nc] #single variable from nc
 
