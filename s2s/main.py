@@ -52,9 +52,7 @@ wrf_iz	= 0						#
 gfs_iz	= 0						#
 cfs_iz	= 0						#
 #########################################################
-
-print """
-"""
+print "Content-type: application/json\n\n"
 #########################################################################################
 ##	verifica o token e o id da requisição						#
 token_db, id_db = mysql_access.token_get(id1)						#
@@ -125,6 +123,9 @@ while os.path.isfile(ens1) != True:								#
 	ens6 = "/var/www/html/processamento/CFSD10001E2"+date2.strftime('%Y%m%d')+"00.nc"	#
 	ens7 = "/var/www/html/processamento/CFSD10001E3"+date2.strftime('%Y%m%d')+"00.nc"	#
 	ens8 = "/var/www/html/processamento/CFSD10001E4"+date2.strftime('%Y%m%d')+"00.nc"	#
+	if os.path.isfile(ens5) != True:							#
+		ens1 = False									#
+		break										#
 	brk +=1											#
 	if brk >= 3:										#	
 		ens1 = False									#
@@ -147,7 +148,7 @@ elif id_db  == 3:										#
 	cfs_file = False									#
 else:												#
 	print json.dumps(""" Erro modelo indisponivel/falha de autentiucacao  """)		#	
-	exit()											#
+	exit(1)											#
 #################################################################################################
 
 resposta = []
@@ -162,16 +163,16 @@ if wrf_file == False and gfs_file != False and ens1 != False:
 		resposta.append(resposta1)
 		resposta.append(resposta2)
 		print json.dumps(resposta)		
-		exit()
+		exit(0)
 
 	elif tipo1 == 'Table':
 		resposta = GFS1.opera_GFS1.tabela_out(gfs_file, var1, gfs_iz, gfs_ix, gfs_iy, dateG, utc0, token_novo)
 		print json.dumps(resposta)				
-		exit()
+		exit(0)
 	else:	
 		resposta  = """ Erro de autenticação """
 		print json.dumps(resposta)
-		exit()
+		exit(1)
 
 #sem GFS
 elif gfs_file == False and wrf_file != False and ens1 != False:		           
@@ -183,15 +184,15 @@ elif gfs_file == False and wrf_file != False and ens1 != False:
 		resposta.append(resposta1)
 		resposta.append(resposta2)
 		print json.dumps(resposta)		
-		exit()
+		exit(0)
 	elif tipo1 == 'Table':
 		resposta = WRF.opera_WRF.tabela_out(wrf_file, var1, wrf_iz, wrf_ix, wrf_iy, dateW, utc0, token_novo)
 		print json.dumps(resposta)				
-		exit()
+		exit(0)
 	else:	
 		resposta  = """ Erro de autenticação """
 		print json.dumps(resposta)
-		exit()
+		exit(1)
 
 #sem CFS
 elif ens1 == False and gfs_file != False and wrf_file != False:
@@ -203,18 +204,18 @@ elif ens1 == False and gfs_file != False and wrf_file != False:
 		resposta.append(resposta1)
 		resposta.append(resposta2)
 		print json.dumps(resposta)
-		exit()
+		exit(0)
 	elif tipo1 == 'Table':
 		resposta1 = WRF.opera_WRF.tabela_out(wrf_file, var1, wrf_iz, wrf_ix, wrf_iy, dateW, utc0, token_novo)
 		resposta2 = GFS1.opera_GFS1.tabela_out(gfs_file, var1, gfs_iz, gfs_ix, gfs_iy, dateG, utc0, token_novo)
 		resposta.append(resposta1)
 		resposta.append(resposta2)
 		print json.dumps(resposta)
-		exit()
+		exit(0)
 	else:	
 		resposta  = """ Erro de autenticação """
 		print json.dumps(resposta)
-		exit()
+		exit(1)
 
 # completo 
 elif ens1 != False and gfs_file != False and wrf_file != False:
@@ -229,18 +230,18 @@ elif ens1 != False and gfs_file != False and wrf_file != False:
 		resposta.append(resposta2)
 		resposta.append(resposta3)
 		print json.dumps(resposta)
-		exit()
+		exit(0)
 	elif tipo1 == 'Table':
 		resposta1 = WRF.opera_WRF.tabela_out(wrf_file, var1, wrf_iz, wrf_ix, wrf_iy, dateW, utc0, token_novo)
 		resposta2 = GFS1.opera_GFS1.tabela_out(gfs_file, var1, gfs_iz, gfs_ix, gfs_iy, dateG, utc0, token_novo)
 		resposta.append(resposta1)
 		resposta.append(resposta2)
 		print json.dumps(resposta)
-		exit()
+		exit(0)
 	else:	
 		resposta  = """ Erro de autenticação """
 		print json.dumps(resposta)
-		exit()
+		exit(1)
 
 # so GFS'
 elif ens1 == False and gfs_file != False and wrf_file == False:
@@ -248,15 +249,15 @@ elif ens1 == False and gfs_file != False and wrf_file == False:
 	if tipo1 == 'Calendar':
 		resposta = GFS1.opera_GFS1.calendario_out(gfs_file, var1, gfs_iz, gfs_ix, gfs_iy, dateG, utc0, token_novo)
 		print json.dumps(resposta)
-		exit()
+		exit(0)
 	elif tipo1 == 'Table':
 		resposta = GFS1.opera_GFS1.tabela_out(gfs_file, var1, gfs_iz, gfs_ix, gfs_iy, dateG, utc0, token_novo)
 		print json.dumps(resposta)
-		exit()
+		exit(0)
 	else:	
 		resposta  = """ Erro de autenticação """
 		print json.dumps(resposta)
-		exit()
+		exit(1)
 
 # so WRF
 elif ens1 == False and gfs_file == False and wrf_file != False:
@@ -264,15 +265,15 @@ elif ens1 == False and gfs_file == False and wrf_file != False:
 	if tipo1 == 'Calendar':
 		resposta = WRF.opera_WRF.calendario_out(wrf_file, var1, wrf_iz, wrf_ix, wrf_iy, dateW, utc0, token_novo)
 		print json.dumps(resposta)
-		exit()
+		exit(0)
 	elif tipo1 == 'Table':
 		resposta = WRF.opera_WRF.tabela_out(wrf_file, var1, wrf_iz, wrf_ix, wrf_iy, dateW, utc0, token_novo)
 		print json.dumps(resposta)
-		exit()
+		exit(0)
 	else:	
 		resposta  = """ Erro de autenticação """
 		print json.dumps(resposta)
-		exit()
+		exit(1)
 
 # so CFS
     elif ens1 != False and gfs_file == False and wrf_file == False:
@@ -280,18 +281,18 @@ elif ens1 == False and gfs_file == False and wrf_file != False:
 	if tipo1 == 'Calendar':
 		resposta = CFS.opera_CFS.calendario_out(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, var1, cfs_iz, cfs_ix, cfs_iy, dateC, utc0, token_novo)
 		print json.dumps(resposta)
-		exit()
+		exit(0)
 	else:	
 		resposta  = """ Erro de autenticação """
 		print json.dumps(resposta)
-		exit()
+		exit(1)
 
 # sem nenhum		
 else:	
 	data_erro = datetime.datetime.now()						
 	print "%s arquivo nao existe WRF=%s GFS=%s CFS=%s" % (data_erro, wrf_file, gfs_file, ens1)	
 	print json.dumps(""" Erro modelo indisponivel !""")				
-	exit()		
+	exit(1)		
 
 
 								
