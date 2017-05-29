@@ -47,12 +47,12 @@ def calendario(CFS_E1, CFS_E2, CFS_E3, CFS_E4, CFS_E5, CFS_E6, CFS_E7, CFS_E8, i
 	prob_a_g3, prob_a_r3, prob_a_y3, value_a3, max_a3, min_a3 = prob_area._get_AREAP(ens1, VAR, ixCFS, iyCFS, TOP, BOT)
 	prob_a_g4, prob_a_r4, prob_a_y4, value_a4, max_a4, min_a4 = prob_area._get_AREAP(ens1, VAR, ixCFS, iyCFS, TOP, BOT)
 
-	max_v = max(max_t1, max_t2, max_t3, max_t4, max_a1, max_a2, max_a3, max_a4)
-	min_v = min(min_t1, min_t2, min_t3, min_t4, min_a1, min_a2, min_a3, min_a4)
-
 	a = 0
 	b = 4
 	for i in range(0, max_i//4):
+		max_v = max(max_t1[a:b], max_t2[a:b], max_t3[a:b], max_t4[a:b], max_a1[a:b], max_a2[a:b], max_a3[a:b], max_a4[a:b])
+		min_v = min(min_t1[a:b], min_t2[a:b], min_t3[a:b], min_t4[a:b], min_a1[a:b], min_a2[a:b], min_a3[a:b], min_a4[a:b])
+
 		prob_a_g = (np.mean(prob_a_g1[a:b]) + np.mean(prob_a_g2[a:b]) + np.mean(prob_a_g3[a:b]) + np.mean(prob_a_g4[a:b]))/4
 		prob_t_g = (np.mean(prob_t_g1[a:b]) + np.mean(prob_t_g2[a:b]) + np.mean(prob_t_g3[a:b]) + np.mean(prob_t_g4[a:b]))/4
 
@@ -68,19 +68,26 @@ def calendario(CFS_E1, CFS_E2, CFS_E3, CFS_E4, CFS_E5, CFS_E6, CFS_E7, CFS_E8, i
 		prob_g = ((2*prob_t_g + prob_a_g)/3)
 		prob_r = ((2*prob_t_r + prob_a_r)/3)
 		prob_y = ((2*prob_t_y + prob_a_y)/3)
-		value.append((2*value_t  +  value_a)/3)
 
 		prob_c = [prob_g, prob_r, prob_y]
-
 ### needs a condition if argmax(prob_c) < PRO:  and a elif 
 
-		color.append((argmax(prob_c) + 1))
+
+		if prob_c[argmax(prob_c)] < PRO:
+			color.append(2)
+			value.append((((2*value_t  +  value_a)/3) + (max(max_v) + min(min_v)))/3)
+			
+		else:
+			color.append((argmax(prob_c) + 1))
+			value.append((2*value_t  +  value_a)/3)
 		prob.append(prob_c[argmax(prob_c)])		
+		maxi.append(max(max_v))
+		mini.append(min(min_v))
 		a += 4
 		b += 4
 
 
-return(date, prob, color, val, max_v)
+return(date, prob, color, value, max_v, min_v)
 
 
 
