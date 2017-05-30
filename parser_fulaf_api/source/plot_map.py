@@ -14,7 +14,7 @@ import calc_stat
 
 ################################################################################
 ## create the necessary variables for ploting
-def DATA_get(rain_station, rain_wrf, lat, lon):
+def DATA_get(rain_station, rain_wrf, lat, lon, area_error):
 #	lat_max = max(lat) + 1 # for dinamic setting cornners
 #	lat_min = min(lat) - 1
 #	lon_max = max(lon) + 1
@@ -24,7 +24,7 @@ def DATA_get(rain_station, rain_wrf, lat, lon):
 	lc = [56, 4]	
 	rc = [65, 15]
 	
-	return(rain_wrf, rain_station, lat, lon, lc, rc )	
+	return(rain_wrf, rain_station, lat, lon, lc, rc, area_error)	
 ################################################################################
 ## calculate the RMSE
 def _get_rmse(rain_station, rain_wrf):

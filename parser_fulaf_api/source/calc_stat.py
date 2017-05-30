@@ -6,7 +6,6 @@ import pandas as pd
 import sys
 import datetime
 
-
 ################################################################################
 ## Calculate RMSE
 def get_RMSE(station, model):
@@ -26,6 +25,15 @@ def get_BIAS(station, model):
 	return(bias)
 
 ################################################################################
+## AREA ERROR
+def get_AREA(data):
+	area = []
+	for i in range( 0, len(data)):
+		area.append(min(data[i]))
+	area = np.mean(area)
+	return(area)
+
+################################################################################
 ## Organize the data arrays
 def ARRAY_split(variable):
 	var = []
@@ -41,7 +49,7 @@ def ARRAY_split(variable):
 
 ################################################################################
 ## Organize the data by date and location before running statiscs
-def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w, lon_w, date_tgt):
+def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w, lon_w, date_tgt, ampl_error):
 	max_w = len(data_wrf)
 	max_s = len(data_station)
 	max_i = min(max_w, max_s)
@@ -50,6 +58,7 @@ def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w
 	raw_station	= []
 	raw_lat		= []
 	raw_lon		= []
+	raw_err		= []
 	print "Syncing locations..."
 	for j in range(0, max_w):
 		for i in range(0, max_s):
@@ -62,6 +71,7 @@ def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w
 							raw_wrf.append(data_wrf[j])
 							raw_lat.append(lat_w[j])
 							raw_lon.append(lon_w[j])
+							raw_err.append(ampl_error[j])
 	max_r	= len(raw_date)
 	rmse	= []
 	bias	= []
@@ -70,6 +80,7 @@ def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w
 	sta	= []
 	lat	= [] 
 	lon	= []
+	err	= []
 #	good	= []
 	print "Syncing dates..."
 	date_tgt =  datetime.datetime.strptime(date_tgt, '%Y%m%d%H')
@@ -79,6 +90,7 @@ def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w
 			wrf.append(raw_wrf[i])
 			lat.append(raw_lat[i])
 			lon.append(raw_lon[i])
+			err.append(raw_err[i])
 			out_d.append('%s,%s,%s,%s,%s' %(raw_date[i],raw_wrf[i],raw_station[i],raw_lat[i],raw_lon[i]))
 #			if rmse[i]/raw_station[i] < 0.2:
 #				good.append(1)	
@@ -96,8 +108,9 @@ def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w
 	mean_wrf	= np.mean(raw_wrf)
 	rmse		= get_RMSE(raw_station, raw_wrf)
 	bias		= get_BIAS(raw_station, raw_wrf)
-	out 		= '%s, %s, %s, %s, %s, %s, %s'  % (std_wrf, mean_wrf, std_station, mean_station, R[0], rmse, bias) 
-	return(out, out_d, sta, wrf, lat, lon)
+	area_error	= get_AREA(err)
+	out 		= '%s, %s, %s, %s, %s, %s, %s, %s'  % (std_wrf, mean_wrf, std_station, mean_station, R[0], rmse, bias, area_error) #line to be printed
+	return(out, out_d, sta, wrf, lat, lon, err)
 
 ################################################################################
 ## Parallel pre processing
@@ -114,5 +127,7 @@ def DATA_get_paralel(data_out, date_tgt):
 	lat_station 	= ARRAY_split(data_np[:, 6])
 	lon_station 	= ARRAY_split(data_np[:, 7])
 
-	out, out_raw, raw_station, raw_wrf, raw_lat, raw_lon = DATA_get(data_wrf, data_station, date_wrf, date_station, lat_station, lon_station, lat_wrf, lon_wrf, date_tgt)
-	return(out, out_raw, raw_station, raw_wrf, raw_lat, raw_lon)
+	ampl_error	= (data_np[:, 8])
+
+	out, out_raw, raw_station, raw_wrf, raw_lat, raw_lon, raw_area = DATA_get(data_wrf, data_station, date_wrf, date_station, lat_station, lon_station, lat_wrf, lon_wrf, date_tgt, ampl_error)
+	return(out, out_raw, raw_station, raw_wrf, raw_lat, raw_lon, raw_area)

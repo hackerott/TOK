@@ -18,8 +18,8 @@ import variaveis.temperatura
 import variaveis.vento
 import variaveis.radiacao
 import variaveis.umidade
-import prob_area
-import prob_time
+import ../prob_area
+import ../prob_time
 
 from math import pi
 from numpy import cos, sin, arccos, power, sqrt, exp, arctan2, argmin, argmax, arctan
@@ -37,7 +37,7 @@ def unidade(var1):
 
 #################################################################################
 ##		json de output							#
-def json_out (day, color, value1, value2, var1, maxx, token):
+def _json_out (day, color, value1, value2, var1, maxx, token):
 	output = []
 	month_v	 = []
 	days_v	 = []
@@ -76,35 +76,24 @@ def json_out (day, color, value1, value2, var1, maxx, token):
 def calendario_out(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, var1, iz, ixCFS, iyCFS, date0, utc0, token_new):
 	if var1 == 'vento':
 		day, value_min, color, value_max, maxx = variaveis.vento.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
-<<<<<<< HEAD
-		output = json_out(day, color, value_max, value_min, var1, maxx, token_novo)
+		output = _json_out(day, color, value_max, value_min, var1, maxx, token_new)
 	elif var1 == 'temperatura' :
 		day, value_min, color, value_max, maxx = variaveis.temperatura.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
-		output = json_out(day, color, value_max, value_min, var1, maxx, token_novo)
+		output = _json_out(day, color, value_max, value_min, var1, maxx, token_new)
 	elif var1 == 'umidade' :
 		day, value_min, color, value_max, maxx = variaveis.umidade.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
-		output = json_out(day, color, value_max, value_min, var1, maxx, token_novo)
+		output = _json_out(day, color, value_max, value_min, var1, maxx, token_new)
 	elif var1 == 'chuva' :	
 		day, value_min, color, value_max, maxx = variaveis.chuva.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
-		output = json_out(day, color, value_max, value_min, var1, maxx, token_novo)
+		output = _json_out(day, color, value_max, value_min, var1, maxx, token_new)
 	elif var1 == 'radiacao' :
 		day, value_min, color, value_max, maxx = variaveis.radiacao.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
-		output = json_out(day, color, value_max, value_min, var1, maxx, token_novo)
-=======
-		output = json_out(day, color, value_max, value_min, var1, maxx, token_new)
-	elif var1 == 'temperatura' :
-		day, value_min, color, value_max, maxx = variaveis.temperatura.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
-		output = json_out(day, color, value_max, value_min, var1, maxx, token_new)
-	elif var1 == 'umidade' :
-		day, value_min, color, value_max, maxx = variaveis.umidade.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
-		output = json_out(day, color, value_max, value_min, var1, maxx, token_new)
-	elif var1 == 'chuva' :	
-		day, value_min, color, value_max, maxx = variaveis.chuva.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
-		output = json_out(day, color, value_max, value_min, var1, maxx, token_new)
-	elif var1 == 'radiacao' :
-		day, value_min, color, value_max, maxx = variaveis.radiacao.calendario(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0) 
-		output = json_out(day, color, value_max, value_min, var1, maxx, token_new)
->>>>>>> f8ed1d5d4bfcc0dfe079134f4be0d03f0a6c3dfe
+		output = _json_out(day, color, value_max, value_min, var1, maxx, token_new)
 #	print "🌡 ☁️ 🌁 🌫 ☂ 💧 ⛅ ☀️ 🌀 🍃 💨"
 	return(output)
 #################################################################################
+
+
+
+
+

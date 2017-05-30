@@ -70,6 +70,7 @@ def calendario(CFS_E1, CFS_E2, CFS_E3, CFS_E4, CFS_E5, CFS_E6, CFS_E7, CFS_E8, i
 		prob_y = ((2*prob_t_y + prob_a_y)/3)
 
 		prob_c = [prob_g, prob_r, prob_y]
+
 ### needs a condition if argmax(prob_c) < PRO:  and a elif 
 
 

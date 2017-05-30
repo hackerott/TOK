@@ -16,6 +16,7 @@ import lat_lon
 import calc_stat
 import output
 import plot_map
+import calc_area
 
 #######################################
 # Terminal imputs
@@ -57,9 +58,10 @@ def DATA_get(station):
 		ix, iy = lat_lon.STATION_get(path3, path2, station)
 		data_wrf, date_wrf, lat_wrf, lon_wrf = parser_wrf.DATA_get(path2, ix, iy, date_self) 
 		output.RAW_out(path4, station, date_tgt, date_wrf, data_station, data_wrf)
-		return(data_station, data_wrf, date_station, date_wrf, lat_wrf, lon_wrf, lat_station, lon_station)
+		ampl_error = calc_area.DATA_get(path2, ix, iy,  data_station, date_self, date_tgt, date_station)
+		return(data_station, data_wrf, date_station, date_wrf, lat_wrf, lon_wrf, lat_station, lon_station, ampl_error)
 	else:
-		return(np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan)	
+		return(np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan)	
 
 ################################################################################
 ## For parallel processing
@@ -70,7 +72,7 @@ data_out = (Parallel(n_jobs=treads, verbose=5)(delayed(DATA_get)(station) for st
 print "#######################################"
 print "\nData aquisition finished, starting statistics...\n"
 print "#######################################"
-out, out_raw, raw_station, raw_wrf, raw_lat, raw_lon = calc_stat.DATA_get_paralel(data_out, date_tgt)
+out, out_raw, raw_station, raw_wrf, raw_lat, raw_lon, raw_area = calc_stat.DATA_get_paralel(data_out, date_tgt)
 
 ################################################################################
 ##Plots
@@ -78,8 +80,8 @@ print "#######################################"
 print "\nStatistics finished, rendering plots...\n"
 print "#######################################"
 
-rain_wrf, rain_station, lat, lon, lc, rc = plot_map.DATA_get(raw_station, raw_wrf, raw_lat, raw_lon)
-plot_map.DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4)
+rain_wrf, rain_station, lat, lon, lc, rc, area_erro = plot_map.DATA_get(raw_station, raw_wrf, raw_lat, raw_lon, raw_area)
+plot_map.DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro)
 
 eof = output.STAT_out(path4, date_tgt, out, out_raw)
 
