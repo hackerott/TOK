@@ -1,11 +1,11 @@
-#Operation:
+# Operation:
 	To run the API, execute on terminal the main.pyc file contained inside run folder, with WRFout, list of stations(control file), stations data, output path, forecast start date and analises date as arguments. There is no need to create the output folder, but is necessary that the user whom's folder belongs run the code.
 
 ```bash
 $: python main.pyc /path/to/24hrprecip-201411.txt /path/to/WRFout.nc4 /path/to/stationlist.csv /path/to/output/folder YYYYMMDDHH YYYYMMDDHH
 ```
 
-#Dependencies:
+# Dependencies:
 	-python 2.7
 		-NumPy
 		-OS
@@ -18,8 +18,8 @@ $: python main.pyc /path/to/24hrprecip-201411.txt /path/to/WRFout.nc4 /path/to/s
 		-Joblib
 		-Mpl_toolkits
 		-Scipy
-#Details:
-
+# Details:
+ 
 	- main.py:
 >	Receive the terminal inputs, reads a control file containing a list with all stations and locations, execute all other services 
 	
@@ -46,7 +46,7 @@ $: python main.pyc /path/to/24hrprecip-201411.txt /path/to/WRFout.nc4 /path/to/s
 
 	
 ## TOK
-###TEMPOOK repository
+### TEMPOOK repository
 
 
-######Gustavo Beneduzi
+###### Gustavo Beneduzi
