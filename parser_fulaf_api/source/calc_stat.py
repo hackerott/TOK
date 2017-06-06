@@ -64,14 +64,15 @@ def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w
 		for i in range(0, max_s):
 			if np.invert(np.isnan(data_wrf[j])): 
 				if np.invert(np.isnan(data_station[i])): 
-					if date_station[i] == date_wrf[j]:
- 						if lat_s[i] == lat_w[j] and lon_s[i] == lon_w[j]:
-							raw_station.append(data_station[i])
-							raw_date.append(date_station[i])
-							raw_wrf.append(data_wrf[j])
-							raw_lat.append(lat_w[j])
-							raw_lon.append(lon_w[j])
-							raw_err.append(ampl_error[j])
+					if np.invert(np.isnan(ampl_error[j])): 
+						if date_station[i] == date_wrf[j]:
+	 						if lat_s[i] == lat_w[j] and lon_s[i] == lon_w[j]:
+								raw_station.append(data_station[i])
+								raw_date.append(date_station[i])
+								raw_wrf.append(data_wrf[j])
+								raw_lat.append(lat_w[j])
+								raw_lon.append(lon_w[j])
+								raw_err.append(ampl_error[j])
 #							print raw_station[-1], raw_wrf[-1] 
 	max_r	= len(raw_wrf)
 	rmse	= []
@@ -82,7 +83,7 @@ def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w
 	lat	= [] 
 	lon	= []
 	err	= []
-	raw_err = ampl_error
+
 #	good	= []
 	print "Syncing dates..."
 	date_tgt =  datetime.datetime.strptime(date_tgt, '%Y%m%d%H')
@@ -93,7 +94,7 @@ def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w
 			lat.append(raw_lat[i])
 			lon.append(raw_lon[i])
 			err.append(raw_err[i])
-			out_d.append('%s,%s,%s,%s,%s' %(raw_date[i],raw_wrf[i],raw_station[i],raw_lat[i],raw_lon[i]))
+			out_d.append('%s,%s,%s,%s,%s,%s' %(raw_date[i],raw_wrf[i],raw_station[i],raw_err[i], raw_lat[i],raw_lon[i]))
 #			print wrf[-1], sta[-1]
 #			if rmse[i]/raw_station[i] < 0.2:
 #				good.append(1)	
@@ -112,8 +113,7 @@ def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w
 	rmse		= get_RMSE(raw_station, raw_wrf)
 	bias		= get_BIAS(raw_station, raw_wrf)
 	area_error	= get_AREA(err)
-#	area_error	= get_AREA(ampl_error)
-#	area_error	= get_AREA(ampl_error)
+
 	out 		= '%s, %s, %s, %s, %s, %s, %s, %s'  % (std_wrf, mean_wrf, std_station, mean_station, R[0], rmse, bias, area_error) #line to be printed
 	return(out, out_d, sta, wrf, lat, lon, err)
 

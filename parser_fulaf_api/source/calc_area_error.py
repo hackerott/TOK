@@ -42,8 +42,10 @@ def _get_area_error(wrf, station, jz, iz, ix, iy, search):
 					rain = _get_accumulated_rain(wrf, iz, i, j)
 					error_a = (np.divide(np.absolute(rain - station[jz]), max_)) 
 					error_d = np.sqrt(((i-ix)**2 + (j-iy)**2)) / search
-					error.append(0.5*error_a + 0.5*error_d)
-#	print error
+					if np.invert(np.isnan(error_d)): 
+						if np.invert(np.isnan(error_a)): 
+							error.append(0.5*error_a + 0.5*error_d)
+#							print error[-1]
 	return(error)
 
 ################################################################################

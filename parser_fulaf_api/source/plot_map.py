@@ -200,6 +200,11 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	map6.drawmeridians(np.arange(lc[1],rc[1]+5,5.), labels=[1,0,0,1])
 	plt.savefig(file_name_map2, dpi=300, pad_inches=0)
 
-
+#	print len(color_a), len(color_r), len(area_error), len(lat), len(lon)
+#	for i in range(0, len(lat)):
+#		try:
+#			print lat[i], lon[i], area_error[i], color_a[i]
+#		except:
+#			break
 	return()
 
