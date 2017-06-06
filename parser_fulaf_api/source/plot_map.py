@@ -23,7 +23,6 @@ def DATA_get(rain_station, rain_wrf, lat, lon, area_error):
 #	rc = [lat_max, lon_max] # upper right cornner
 	lc = [56, 4]	
 	rc = [65, 15]
-	
 	return(rain_wrf, rain_station, lat, lon, lc, rc, area_error)	
 ################################################################################
 ## calculate the RMSE
@@ -84,7 +83,7 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 ##SCATTER plot
 	print "Drawing Obs X Sim..."
 	diference = np.subtract(rain_station, rain_wrf)
-	fig3 = plt.figure("SCATTER",figsize=(16, 9))
+	fig1 = plt.figure("SCATTER",figsize=(16, 9))
 	plt.ylabel('Observation [mm]')
 	plt.xlabel('Simulation [mm]')
 #	plt.title('Obs X Sim')
@@ -96,8 +95,8 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	plt.savefig(file_name_scatter, dpi=300, pad_inches=0)
 
 ##Absolute Error Map
-	fig = plt.figure("RMSE/BIAS SCATTER",figsize=(16, 9))
-	ax = fig.add_subplot(121)
+	fig2 = plt.figure("RMSE/BIAS SCATTER",figsize=(16, 9))
+	ax = fig2.add_subplot(121)
 	ax.set_title("Absolute error (|sim - obs|) [mm]")
 	map1 = Basemap(projection='merc',llcrnrlat=lc[0], urcrnrlat=rc[0], llcrnrlon=lc[1], urcrnrlon=rc[1],resolution='h')
 	map1.drawcoastlines()
@@ -117,7 +116,7 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	lon.append(0)
 	lat.append(0)
 	lon.append(0)
-	ax = fig.add_subplot(122)
+	ax = fig2.add_subplot(122)
 	ax.set_title("Relative error (sim-obs)/max(obs)")
 	map2 = Basemap(projection='merc',llcrnrlat=lc[0], urcrnrlat=rc[0], llcrnrlon=lc[1], urcrnrlon=rc[1],resolution='h')
 	map2.drawcoastlines()
@@ -139,8 +138,8 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	rain_station.append(b)
 
 ##Model Map
-	fig2 = plt.figure("MODEL SIMULATION SCATTER",figsize=(16, 9))
-	ax = fig2.add_subplot(121)
+	fig3 = plt.figure("MODEL SIMULATION SCATTER",figsize=(16, 9))
+	ax = fig3.add_subplot(121)
 	ax.set_title("Model [mm]")
 	map3 = Basemap(projection='merc',llcrnrlat=lc[0], urcrnrlat=rc[0], llcrnrlon=lc[1], urcrnrlon=rc[1],resolution='h')
 	map3.drawcoastlines()
@@ -154,7 +153,7 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	map3.drawmeridians(np.arange(lc[1],rc[1]+5,5.), labels=[1,0,0,1])
 
 ##Station Map
-	ax = fig2.add_subplot(122)
+	ax = fig3.add_subplot(122)
 	ax.set_title("Station [mm]")
 	map4 = Basemap(projection='merc',llcrnrlat=lc[0], urcrnrlat=rc[0], llcrnrlon=lc[1], urcrnrlon=rc[1],resolution='h')
 	map4.drawcoastlines()
@@ -169,7 +168,7 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	plt.savefig(file_name, dpi=300, pad_inches=0)
 
 ##Area Error Map
-	fig3 = plt.figure("RMSE/BIAS SCATTER",figsize=(16, 9))
+	fig4 = plt.figure("SATTER Relative/Area",figsize=(16, 9))
 	ax = fig3.add_subplot(121)
 	ax.set_title("Relative error (sim-obs)/max(obs)")
 	map5 = Basemap(projection='merc',llcrnrlat=lc[0], urcrnrlat=rc[0], llcrnrlon=lc[1], urcrnrlon=rc[1],resolution='h')
@@ -185,7 +184,9 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	plt.savefig(file_name_map2, dpi=300, pad_inches=0)
 
 
-	ax = fig3.add_subplot(122)
+	area_error.append(0)
+	area_error.append(1)
+	ax = fig4.add_subplot(122)
 	ax.set_title("Relative area error |(sim-obs)|/max(obs, sim) + d/D")
 	map6 = Basemap(projection='merc',llcrnrlat=lc[0], urcrnrlat=rc[0], llcrnrlon=lc[1], urcrnrlon=rc[1],resolution='h')
 	map6.drawcoastlines()

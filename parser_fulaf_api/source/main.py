@@ -16,7 +16,7 @@ import lat_lon
 import calc_stat
 import output
 import plot_map
-import calc_area
+import calc_area_error
 
 #######################################
 # Terminal imputs
@@ -24,7 +24,7 @@ path1 = (sys.argv[1]) #station_file
 path2 = (sys.argv[2]) #wrf_file
 path3 = (sys.argv[3]) #lat_lon_file
 path4 = (sys.argv[4]) #output_path
-date_self = (sys.argv[5]) #model initial date
+date_start = (sys.argv[5]) #model initial date
 date_tgt  = (sys.argv[6]) #analises date
 #######################################
 # File read
@@ -53,12 +53,17 @@ out		= []
 ################################################################################
 ## Call other func to obtain data per station  
 def DATA_get(station):
-	data_station, date_station, lat_station, lon_station = parser_station.DATA_get(path1, station, path2, path3)	
+	data_station, date_station, lat_station, lon_station = parser_station.DATA_get(path1, station, path2, path3, date_tgt)
+
 	if data_station:
 		ix, iy = lat_lon.STATION_get(path3, path2, station)
-		data_wrf, date_wrf, lat_wrf, lon_wrf = parser_wrf.DATA_get(path2, ix, iy, date_self) 
+		data_wrf, date_wrf, lat_wrf, lon_wrf = parser_wrf.DATA_get(path2, ix, iy, date_start, date_tgt) 
 		output.RAW_out(path4, station, date_tgt, date_wrf, data_station, data_wrf)
-		ampl_error = calc_area.DATA_get(path2, ix, iy,  data_station, date_self, date_tgt, date_station)
+		ampl_error = calc_area_error.DATA_get(path2, ix, iy,  data_station, date_start, date_tgt, date_station)
+#		print "#####"
+#		print "%s sta; %s" % (len(data_station), data_station[-1])
+#		print "%s wrf; %s" % (len(data_wrf), data_wrf[-1])	
+
 		return(data_station, data_wrf, date_station, date_wrf, lat_wrf, lon_wrf, lat_station, lon_station, ampl_error)
 	else:
 		return(np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan)	
@@ -81,6 +86,8 @@ print "\nStatistics finished, rendering plots...\n"
 print "#######################################"
 
 rain_wrf, rain_station, lat, lon, lc, rc, area_erro = plot_map.DATA_get(raw_station, raw_wrf, raw_lat, raw_lon, raw_area)
+
+ 
 plot_map.DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro)
 
 eof = output.STAT_out(path4, date_tgt, out, out_raw)
@@ -113,5 +120,5 @@ else:
 
 ##out, out_raw= calc_stat.DATA_get(data_wrf, data_station, date_wrf, date_station)
 ##out.append('%s;%s;%s;%s' % (out_std, out_bias, out_mean, out_rmse))
-##eof = output.STAT_out(path4, date_self, out)
+##eof = output.STAT_out(path4, date_start, out)
 ################################################################################

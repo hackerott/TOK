@@ -27,10 +27,10 @@ def get_BIAS(station, model):
 ################################################################################
 ## AREA ERROR
 def get_AREA(data):
-	area = []
-	for i in range( 0, len(data)):
-		area.append(min(data[i]))
-	area = np.mean(area)
+#	area = []
+#	for i in range( 0, len(data)):
+#		area.append(min(data[i]))
+	area = np.nanmean(data)
 	return(area)
 
 ################################################################################
@@ -50,8 +50,8 @@ def ARRAY_split(variable):
 ################################################################################
 ## Organize the data by date and location before running statiscs
 def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w, lon_w, date_tgt, ampl_error):
-	max_w = len(data_wrf)
-	max_s = len(data_station)
+	max_w = len(data_wrf) - 1 
+	max_s = len(data_station) - 1
 	max_i = min(max_w, max_s)
 	raw_date	= []
 	raw_wrf		= []
@@ -72,7 +72,8 @@ def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w
 							raw_lat.append(lat_w[j])
 							raw_lon.append(lon_w[j])
 							raw_err.append(ampl_error[j])
-	max_r	= len(raw_date)
+#							print raw_station[-1], raw_wrf[-1] 
+	max_r	= len(raw_wrf)
 	rmse	= []
 	bias	= []
 	out_d 	= []
@@ -81,6 +82,7 @@ def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w
 	lat	= [] 
 	lon	= []
 	err	= []
+	raw_err = ampl_error
 #	good	= []
 	print "Syncing dates..."
 	date_tgt =  datetime.datetime.strptime(date_tgt, '%Y%m%d%H')
@@ -92,6 +94,7 @@ def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w
 			lon.append(raw_lon[i])
 			err.append(raw_err[i])
 			out_d.append('%s,%s,%s,%s,%s' %(raw_date[i],raw_wrf[i],raw_station[i],raw_lat[i],raw_lon[i]))
+#			print wrf[-1], sta[-1]
 #			if rmse[i]/raw_station[i] < 0.2:
 #				good.append(1)	
 #			else:
@@ -103,12 +106,14 @@ def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w
 	std_station	= np.std(raw_station)
 	std_wrf		= np.std(raw_wrf)
 	pearsoncor	= np.corrcoef(raw_station, raw_wrf)
-	R		= pearsoncor[1]
+	R		= pearsoncor[0]
 	mean_station	= np.mean(raw_station)
 	mean_wrf	= np.mean(raw_wrf)
 	rmse		= get_RMSE(raw_station, raw_wrf)
 	bias		= get_BIAS(raw_station, raw_wrf)
 	area_error	= get_AREA(err)
+#	area_error	= get_AREA(ampl_error)
+#	area_error	= get_AREA(ampl_error)
 	out 		= '%s, %s, %s, %s, %s, %s, %s, %s'  % (std_wrf, mean_wrf, std_station, mean_station, R[0], rmse, bias, area_error) #line to be printed
 	return(out, out_d, sta, wrf, lat, lon, err)
 
@@ -126,8 +131,8 @@ def DATA_get_paralel(data_out, date_tgt):
 	lon_wrf 	= ARRAY_split(data_np[:, 5])
 	lat_station 	= ARRAY_split(data_np[:, 6])
 	lon_station 	= ARRAY_split(data_np[:, 7])
-
-	ampl_error	= (data_np[:, 8])
+	ampl_error	= ARRAY_split(data_np[:, 8])
+	ampl_error	= ARRAY_split(ampl_error)
 
 	out, out_raw, raw_station, raw_wrf, raw_lat, raw_lon, raw_area = DATA_get(data_wrf, data_station, date_wrf, date_station, lat_station, lon_station, lat_wrf, lon_wrf, date_tgt, ampl_error)
 	return(out, out_raw, raw_station, raw_wrf, raw_lat, raw_lon, raw_area)

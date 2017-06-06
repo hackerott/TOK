@@ -10,10 +10,9 @@ import lat_lon
 
 ################################################################################
 ##Creates the array with all data and dates from station files 
-def DATA_get(station_file, station, path2, path3):
-
+def DATA_get(station_file, station, path2, path3, date1):
 	raw_data = np.genfromtxt(station_file, delimiter=";",skip_header=500, skip_footer=11)
-
+	date1 = datetime.datetime.strptime(str(date1), '%Y%m%d%H')
 	station_self	= raw_data[:,0]
 	year		= raw_data[:,1]
 	month		= raw_data[:,2]
@@ -37,7 +36,18 @@ def DATA_get(station_file, station, path2, path3):
 			date.append(datetime.datetime.strptime(date_self, '%Y%m%d%H'))			
 			lat.append(lat_raw)
 			lon.append(lon_raw)
-	return(out, date, lat, lon)
+	out_f	= []
+	date_f	= []
+	lat_f	= []
+	lon_f	= []
+	for i in range(0, len(out)):
+		if date[i] == date1:
+			out_f.append(out[i])
+			date_f.append(date[i])
+			lat_f.append(lat[i])
+			lon_f.append(lon[i])
+#			print out_f[-1], date_f[-1], lat_f[-1], lon_f[-1]
+	return(out_f, date_f, lat_f, lon_f)
 
 ################################################################################
 ## Not used, for interpolation off station data to a grid 

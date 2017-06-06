@@ -50,7 +50,7 @@ def TIME_out(path2, station_self):
 	start = timeit.default_timer()
 
 	ix_self, iy_self = lat_lon.WRF_get(path2, 10, 10)
-	data_wrf_self, date_wrf_self, lat_self, lon_self = parser_wrf.DATA_get(path2, ix_self, iy_self, 20161122)
+	data_wrf_self, date_wrf_self, lat_self, lon_self = parser_wrf.DATA_get(path2, ix_self, iy_self, 20161122, 20161122)
 	stop = timeit.default_timer()
 	total_runs = len(station_self) 
 	run_time = (stop - start) * (total_runs)
