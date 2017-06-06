@@ -71,6 +71,7 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 
 	mae = np.mean(color_a)
 	mre = np.mean(color_r)
+	mea = np.mean(area_error)
 	rmse = _get_rmse(rain_station, rain_wrf)
 	bias = _get_bias(rain_station, rain_wrf)
 
@@ -91,7 +92,7 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	plt.ylim(0, max(max(rain_wrf), max(rain_station)))
 	plt.scatter(rain_wrf, rain_station, c='black', marker='o', linewidth=0)
 	plt.plot(rain_station, rain_station, c='gray')
-	plt.figtext(0.73, 0.70, "Statistical indicators:\n\n MRE: %.3f\n MAE: %.3f\n Bias: %.3f\n RMSE: %.3f" % (mre, mae, bias, rmse) ,bbox={'facecolor':'lightgray', 'alpha':0.5, 'pad':10}, fontsize=15, multialignment = 'left')
+	plt.figtext(0.73, 0.70, "Statistical indicators:\n\n MRE: %.3f\n MAE: %.3f\n Bias: %.3f\n RMSE: %.3f\n AREA_E: %.3f " % (mre, mae, bias, rmse, mea) ,bbox={'facecolor':'lightgray', 'alpha':0.5, 'pad':10}, fontsize=15, multialignment = 'left')
 	plt.savefig(file_name_scatter, dpi=300, pad_inches=0)
 
 ##Absolute Error Map
