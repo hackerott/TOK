@@ -169,7 +169,7 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 
 ##Area Error Map
 	fig4 = plt.figure("SATTER Relative/Area",figsize=(16, 9))
-	ax = fig3.add_subplot(121)
+	ax = fig4.add_subplot(121)
 	ax.set_title("Relative error (sim-obs)/max(obs)")
 	map5 = Basemap(projection='merc',llcrnrlat=lc[0], urcrnrlat=rc[0], llcrnrlon=lc[1], urcrnrlon=rc[1],resolution='h')
 	map5.drawcoastlines()
