@@ -34,7 +34,8 @@ def _get_area_error(wrf, station, jz, iz, ix, iy, search):
 	max_sta = max(station)
 	max_wrf = max(wrf[:, ix, iy])
 	max_	= max(max_sta, max_wrf)
-	error = []	
+	er = []
+	ed = []
 	if (ix + search) <= ix_max and (ix - search) >= ix_min:
 		if (iy + search) <= iy_max and (iy - search) >= iy_min:
 			for i in range(int(ix - search), int(ix + search)):
@@ -44,9 +45,13 @@ def _get_area_error(wrf, station, jz, iz, ix, iy, search):
 					error_d = np.sqrt(((i-ix)**2 + (j-iy)**2)) / search
 					if np.invert(np.isnan(error_d)): 
 						if np.invert(np.isnan(error_a)): 
-							error.append(0.5*error_a + 0.5*error_d)
-#							print error[-1]
-	return(error)
+							er.append(error_a)
+							ed.append(error_d)
+	r = min(er)
+	d = ed[np.argmin(er)]
+	rd = (r + d) / 2 
+
+	return(rd)
 
 ################################################################################
 ##
@@ -70,6 +75,6 @@ def DATA_get(wrf_file, ix, iy, station, date0, date1, date_station):
 			d2 = date_station[j]
 			if d1 == date1 and d2 == date1:
 				erro = _get_area_error(WRF_rain_ncu, station, j, i, ix, iy, search)
-				error.append(min(erro))
-
+#				error.append(min(erro))
+				error.append(erro)	
 	return(error)

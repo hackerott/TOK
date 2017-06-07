@@ -13,7 +13,7 @@ import parser_wrf
 def RAW_out(path4, station, date_self, date_wrf, data_station, data_wrf):
 	header = '%s\n date; WRF; Station\n\n' % station
 	out = []
-	for i in range(0, len(data_wrf)):
+	for i in range(0, len(data_wrf)+1):
 		if len(data_station) <= 1 or len(data_wrf) <= 1 or len(date_wrf) <= 1:
 			break
 		out.append('%s; %s; %s' %(date_wrf[i], data_station[i], data_wrf[i])) 
@@ -30,7 +30,7 @@ def RAW_out(path4, station, date_self, date_wrf, data_station, data_wrf):
 
 def STAT_out(path4, date_self, out, out_raw):
 #	header		= "\n WRF_STD; Station_STD; WRF_Mean; Station_Mean; Bias; Error\n" 
-	header		= "\n std_wrf, mean_wrf, std_station, mean_station, R, rmse, bias\n"
+	header		= "\n std_wrf, mean_wrf, std_station, mean_station, R, rmse, bias, Er+d/D\n"
 	file_name_stat	= "%s/%s_stat.csv" % (path4, date_self) #file name and path 
 	file_stat	= open(file_name_stat, 'a+')
 	file_stat.write(header)

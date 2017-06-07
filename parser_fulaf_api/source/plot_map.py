@@ -42,6 +42,16 @@ def _get_bias(rain_station, rain_wrf):
 		n += 1
 	return sum(b)/n
 ################################################################################
+## calculate the Er
+def _get_er(rain_station, rain_wrf):
+	er = []
+	max_v = max(max(rain_station), max(rain_wrf))
+	for i in range(0, len(rain_station)):
+		er.append(np.absolute((rain_wrf[i] - rain_station[i]))/max_v)
+	if max(er) > 1:
+		er[np.argmax(er)] = 1 
+	return (er)
+################################################################################
 ## create scatter size and color scheme
 def get_SCATTER_plot(rain_wrf, rain_station):
 #	size_r	= []
@@ -68,6 +78,7 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	print "Setting RMSE and BIAS scale..."
 #	size_r, size_b, color_b, color_r  = get_RMSE_plot(rain_wrf, rain_station)
 	color_r, color_a  = get_SCATTER_plot(rain_wrf, rain_station)
+	norm_error = _get_er(rain_station, rain_wrf)
 
 	mae = np.mean(color_a)
 	mre = np.mean(color_r)
@@ -169,15 +180,17 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	plt.savefig(file_name, dpi=300, pad_inches=0)
 
 ##Area Error Map
+	norm_error.append(0)
+	norm_error.append(1)
 	fig4 = plt.figure("SATTER Relative/Area",figsize=(16, 9))
 	ax = fig4.add_subplot(121)
-	ax.set_title("Relative error (sim-obs)/max(obs)")
+	ax.set_title("Er  (|sim-obs|/max(obs, sim))")
 	map5 = Basemap(projection='merc',llcrnrlat=lc[0], urcrnrlat=rc[0], llcrnrlon=lc[1], urcrnrlon=rc[1],resolution='h')
 	map5.drawcoastlines()
 	map5.drawcountries(linewidth=0.5, linestyle='solid', color='k', antialiased=1, ax=None, zorder=None)
 	map5.fillcontinents(color='lightgray', zorder=0)
-	print "Drawing Relative error..."
-	map5.scatter(lon, lat, c=color_r, s=30, marker='o', latlon=True, linewidth=0, )
+	print "Drawing normalized Er..."
+	map5.scatter(lon, lat, c=norm_error, s=30, marker='o', latlon=True, linewidth=0)
 	map5.colorbar(location='right', size='5%', pad='2%')
 	map5.drawmapscale(lc[1]+1.3, lc[0]+0.6, lc[1]+10, lc[0]+8, 250, barstyle='fancy', fontsize = 11) 
 	map5.drawparallels(np.arange(lc[0],rc[0]+2.5,2.5), labels=[1,0,0,1])
@@ -187,25 +200,22 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 
 	area_error.append(0)
 	area_error.append(1)
+	for i in range(0, len(area_error)):
+		if area_error[i] > 1:
+			area_error[i] = 1 
 	ax = fig4.add_subplot(122)
-	ax.set_title("Relative area error |(sim-obs)|/max(obs, sim) + d/D")
+	ax.set_title("Er + Ed (|(sim-obs)|/max(obs, sim) + d/D)")
 	map6 = Basemap(projection='merc',llcrnrlat=lc[0], urcrnrlat=rc[0], llcrnrlon=lc[1], urcrnrlon=rc[1],resolution='h')
 	map6.drawcoastlines()
 	map6.drawcountries(linewidth=0.5, linestyle='solid', color='k', antialiased=1, ax=None, zorder=None)
 	map6.fillcontinents(color='lightgray', zorder=0)
 	print "Drawing area error..."
-	map6.scatter(lon, lat, c=area_error, s=30, marker='o', latlon=True, linewidth=0, )
+	map6.scatter(lon, lat, c=area_error, s=30, marker='o', latlon=True, linewidth=0)
 	map6.colorbar(location='right', size='5%', pad='2%')
 	map6.drawmapscale(lc[1]+1.3, lc[0]+0.6, lc[1]+10, lc[0]+8, 250, barstyle='fancy', fontsize = 11) 
 	map6.drawparallels(np.arange(lc[0],rc[0]+2.5,2.5), labels=[1,0,0,1])
 	map6.drawmeridians(np.arange(lc[1],rc[1]+5,5.), labels=[1,0,0,1])
 	plt.savefig(file_name_map2, dpi=300, pad_inches=0)
 
-#	print len(color_a), len(color_r), len(area_error), len(lat), len(lon)
-#	for i in range(0, len(lat)):
-#		try:
-#			print lat[i], lon[i], area_error[i], color_a[i]
-#		except:
-#			break
 	return()
 
