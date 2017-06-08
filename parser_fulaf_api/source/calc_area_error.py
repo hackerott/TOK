@@ -30,10 +30,15 @@ def _get_area_error(wrf, station, jz, iz, ix, iy, search):
 	iy_max = wrf.shape[2]
 	ix_min = 0
 	iy_min = 0
-
-	max_sta = max(station)
-	max_wrf = max(wrf[:, ix, iy])
-	max_	= max(max_sta, max_wrf)
+	a = int(search) + ix
+	try:
+		max_wrf = max(wrf[iz, ix:a, iy:a])
+	except:
+		max_wrf = np.amax(wrf[iz, ix:a, iy:a])	
+	try:
+		max_	= max(station[jz], max_wrf)
+	except:
+		max_	= station[jz] 
 	er = []
 	ed = []
 	if (ix + search) <= ix_max and (ix - search) >= ix_min:
@@ -47,11 +52,16 @@ def _get_area_error(wrf, station, jz, iz, ix, iy, search):
 						if np.invert(np.isnan(error_a)): 
 							er.append(error_a)
 							ed.append(error_d)
+	
 	r = min(er)
 	d = ed[np.argmin(er)]
-	rd = (r + d) / 2 
-
-	return(rd)
+	out = (r + d) / 2 
+	rain_ = _get_accumulated_rain(wrf, iz, ix, iy)
+	error_a = (np.divide(np.absolute(rain_ - station[jz]), max_))
+	if out >= error_a:
+		out = error_a
+	out = np.subtract(1, out)
+	return(out)
 
 ################################################################################
 ##

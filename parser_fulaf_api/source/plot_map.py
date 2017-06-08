@@ -45,17 +45,15 @@ def _get_bias(rain_station, rain_wrf):
 ## calculate the Er
 def _get_er(rain_station, rain_wrf):
 	er = []
-	max_v = max(max(rain_station), max(rain_wrf))
 	for i in range(0, len(rain_station)):
-		er.append(np.absolute((rain_wrf[i] - rain_station[i]))/max_v)
-	if max(er) > 1:
-		er[np.argmax(er)] = 1 
+		max_v = max(rain_station[i], rain_wrf[i])
+		er.append(1 - (np.absolute((rain_wrf[i] - rain_station[i]))/max_v))
+		if er[-1] < 0:
+			er[-1] = 0 
 	return (er)
 ################################################################################
 ## create scatter size and color scheme
 def get_SCATTER_plot(rain_wrf, rain_station):
-#	size_r	= []
-#	size_b	= []
 	color_a	= []
 	color_r	= []
 	mrs = max(rain_station)
@@ -67,45 +65,39 @@ def get_SCATTER_plot(rain_wrf, rain_station):
 		color_r.append(relative_e)
 
 	return(color_r, color_a)
-
-#		size_r.append(10 + np.absolute(rmse/mrs)*10)
-#		size_b.append(10 + np.absolute(bias/mrs)*10)
-#	return(size_r, size_b, color_b, color_r)
-
 ################################################################################
 ## create and plot RMSE scatter  
 def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_error):
 	print "Setting RMSE and BIAS scale..."
-#	size_r, size_b, color_b, color_r  = get_RMSE_plot(rain_wrf, rain_station)
 	color_r, color_a  = get_SCATTER_plot(rain_wrf, rain_station)
 	norm_error = _get_er(rain_station, rain_wrf)
+	rmse = _get_rmse(rain_station, rain_wrf)
+	bias = _get_bias(rain_station, rain_wrf)
 
 	mae = np.mean(color_a)
 	mre = np.mean(color_r)
 	mea = np.mean(area_error)
-	rmse = _get_rmse(rain_station, rain_wrf)
-	bias = _get_bias(rain_station, rain_wrf)
+	mne = np.mena(morm_error)
 
 	print "Setting basemaps..."
 	file_name_map = '%s/map_mae_mre.png' % (path4)
 	file_name_map2 = '%s/map_area_error.png' % (path4)
 	file_name_scatter = '%s/scatter_obs_sim.png' % (path4)
 	file_name = '%s/model_simulation.png' % (path4)
-
+#plot1
 ##SCATTER plot
 	print "Drawing Obs X Sim..."
 	diference = np.subtract(rain_station, rain_wrf)
 	fig1 = plt.figure("SCATTER",figsize=(16, 9))
 	plt.ylabel('Observation [mm]')
 	plt.xlabel('Simulation [mm]')
-#	plt.title('Obs X Sim')
 	plt.xlim(0, max(max(rain_wrf), max(rain_station)))
 	plt.ylim(0, max(max(rain_wrf), max(rain_station)))
 	plt.scatter(rain_wrf, rain_station, c='black', marker='o', linewidth=0)
 	plt.plot(rain_station, rain_station, c='gray')
-	plt.figtext(0.73, 0.70, "Statistical indicators:\n\n MRE: %.3f\n MAE: %.3f\n Bias: %.3f\n RMSE: %.3f\n AREA_E: %.3f " % (mre, mae, bias, rmse, mea) ,bbox={'facecolor':'lightgray', 'alpha':0.5, 'pad':10}, fontsize=15, multialignment = 'left')
+	plt.figtext(0.73, 0.70, "Statistical indicators:\n\n MRE: %.3f\n MAE: %.3f\n Bias: %.3f\n RMSE: %.3f\n AREA_E : %.3f\n NORM_E :%.3f" % (mre, mae, bias, rmse, mea, mne) ,bbox={'facecolor':'lightgray', 'alpha':0.5, 'pad':10}, fontsize=15, multialignment = 'left')
 	plt.savefig(file_name_scatter, dpi=300, pad_inches=0)
-
+#plot 2
 ##Absolute Error Map
 	fig2 = plt.figure("RMSE/BIAS SCATTER",figsize=(16, 9))
 	ax = fig2.add_subplot(121)
@@ -141,14 +133,13 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	map2.drawparallels(np.arange(lc[0],rc[0]+2.5,2.5), labels=[1,0,0,1])
 	map2.drawmeridians(np.arange(lc[1],rc[1]+5,5.), labels=[1,0,0,1])
 	plt.savefig(file_name_map, dpi=300, pad_inches=0)
-
+#plot 3
 	a =  max(max(rain_wrf), max(rain_station)) # max lim of scale
 	b =  min(min(rain_wrf), min(rain_station)) # min lim of scale
 	rain_wrf.append(a) 
 	rain_station.append(a)
 	rain_wrf.append(b)
 	rain_station.append(b)
-
 ##Model Map
 	fig3 = plt.figure("MODEL SIMULATION SCATTER",figsize=(16, 9))
 	ax = fig3.add_subplot(121)
@@ -163,7 +154,6 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	map3.drawmapscale(lc[1]+1.3, lc[0]+0.6, lc[1]+10, lc[0]+8, 250, barstyle='fancy', fontsize = 11) 
 	map3.drawparallels(np.arange(lc[0],rc[0]+2.5,2.5), labels=[1,0,0,1])
 	map3.drawmeridians(np.arange(lc[1],rc[1]+5,5.), labels=[1,0,0,1])
-
 ##Station Map
 	ax = fig3.add_subplot(122)
 	ax.set_title("Station [mm]")
@@ -178,8 +168,8 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	map4.drawparallels(np.arange(lc[0],rc[0]+2.5,2.5), labels=[1,0,0,1])
 	map4.drawmeridians(np.arange(lc[1],rc[1]+5,5.), labels=[1,0,0,1])
 	plt.savefig(file_name, dpi=300, pad_inches=0)
-
-##Area Error Map
+#plot 4
+## Normalized Error
 	norm_error.append(0)
 	norm_error.append(1)
 	fig4 = plt.figure("SATTER Relative/Area",figsize=(16, 9))
@@ -197,12 +187,12 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	map5.drawmeridians(np.arange(lc[1],rc[1]+5,5.), labels=[1,0,0,1])
 	plt.savefig(file_name_map2, dpi=300, pad_inches=0)
 
-
 	area_error.append(0)
 	area_error.append(1)
 	for i in range(0, len(area_error)):
-		if area_error[i] > 1:
-			area_error[i] = 1 
+		if area_error[i] < 0:
+			area_error[i] = 0 
+##Area Error Map
 	ax = fig4.add_subplot(122)
 	ax.set_title("Er + Ed (|(sim-obs)|/max(obs, sim) + d/D)")
 	map6 = Basemap(projection='merc',llcrnrlat=lc[0], urcrnrlat=rc[0], llcrnrlon=lc[1], urcrnrlon=rc[1],resolution='h')
