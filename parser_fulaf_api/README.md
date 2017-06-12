@@ -5,6 +5,8 @@
 
 ```bash
 $: python main.pyc /path/to/24hrprecip-201411.txt /path/to/WRFout.nc4 /path/to/stationlist.csv /path/to/output/folder YYYYMMDDHH YYYYMMDDHH
+
+python source/main.py data/station/24hrprecip-201411.txt data/nc/rav2-12km-wrfout_d01_2014-11-22_00_surface_reduced.nc4 data/station/stationlist.csv out/12km 2014112206 2014112306
 ```
 
 # Dependencies:

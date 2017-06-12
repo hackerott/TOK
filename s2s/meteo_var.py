@@ -19,12 +19,12 @@ Each variable should have botton and top limits to calculate the alert level, as
  
 
 """
-VAR = 'chuva'
-TOP = 
-BOT = 
-PRO = 
+#VAR = 'chuva'
+#TOP = 
+#BOT = 
+#PRO = 
 
-def calendario(CFS_E1, CFS_E2, CFS_E3, CFS_E4, CFS_E5, CFS_E6, CFS_E7, CFS_E8, iz, ixCFS, iyCFS, date0, utc0):
+def calendario(CFS_E1, CFS_E2, CFS_E3, CFS_E4, CFS_E5, CFS_E6, CFS_E7, CFS_E8, iz, ixCFS, iyCFS, date0, utc0, VAR, TOP, BOT, PRO):
 	ens1 = netCDF4.Dataset(CFS_E1, 'r')
 	ens2 = netCDF4.Dataset(CFS_E2, 'r')
 	ens3 = netCDF4.Dataset(CFS_E3, 'r')

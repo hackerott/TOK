@@ -18,8 +18,9 @@ import variaveis.temperatura
 import variaveis.vento
 import variaveis.radiacao
 import variaveis.umidade
-import ../prob_area
-import ../prob_time
+#import ../prob_area as prob_area
+#import ../prob_time as prob_time
+import ../meteo_var as meteo_var
 
 from math import pi
 from numpy import cos, sin, arccos, power, sqrt, exp, arctan2, argmin, argmax, arctan
@@ -92,6 +93,33 @@ def calendario_out(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, var1, iz, ixC
 #	print "🌡 ☁️ 🌁 🌫 ☂ 💧 ⛅ ☀️ 🌀 🍃 💨"
 	return(output)
 #################################################################################
+def calendario_stat_out(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, var1, iz, ixCFS, iyCFS, date0, utc0, token_new, ):
+	if var1 == 'vento':
+		top_lim, bot_lim, prob_lim = variaveis.vento.prob_limits()
+		day, value_min, color, value_max, maxx = meteo_var.calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0, var1, top_lim, bot_lim, prob_lim) 
+		output = _json_out(day, color, value_max, value_min, var1, maxx, token_new)
+	elif var1 == 'temperatura' :
+		top_lim, bot_lim, prob_lim = variaveis.temeperatura.prob_limits()
+		day, value_min, color, value_max, maxx = meteo_var.calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0, var1, top_lim, bot_lim, prob_lim) 
+		output = _json_out(day, color, value_max, value_min, var1, maxx, token_new)
+	elif var1 == 'umidade' :
+		top_lim, bot_lim, prob_lim = variaveis.umidade.prob_limits()
+		day, value_min, color, value_max, maxx = meteo_var.calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0, var1, top_lim, bot_lim, prob_lim) 
+		output = _json_out(day, color, value_max, value_min, var1, maxx, token_new)
+	elif var1 == 'chuva' :	
+		top_lim, bot_lim, prob_lim = variaveis.chuva.prob_limits()
+		day, value_min, color, value_max, maxx = meteo_var.calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0, var1, top_lim, bot_lim, prob_lim) 
+		output = _json_out(day, color, value_max, value_min, var1, maxx, token_new)
+	elif var1 == 'radiacao' :
+		top_lim, bot_lim, prob_lim = variaveis.radiacao.prob_limits()
+		day, value_min, color, value_max, maxx = meteo_var.calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0, var1, top_lim, bot_lim, prob_lim) 
+		output = _json_out(day, color, value_max, value_min, var1, maxx, token_new)
+#	print "🌡 ☁️ 🌁 🌫 ☂ 💧 ⛅ ☀️ 🌀 🍃 💨"
+	return(output)
+#################################################################################
+
+
+
 
 
 
