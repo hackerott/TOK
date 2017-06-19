@@ -10,6 +10,13 @@ import datetime
 from math import pi
 from numpy import cos, sin, arccos, power, sqrt, exp, arctan2, argmin, argmax, arctan, mean
 
+def prob_limits():
+	TOP = 
+	BOT = 
+	PRO = 
+	
+	return(TOP, BOT, PRO)
+
 def calendario(CFS_E1, CFS_E2, CFS_E3, CFS_E4, CFS_E5, CFS_E6, CFS_E7, CFS_E8, iz, ixCFS, iyCFS, date0, utc0):
 	ens1 = netCDF4.Dataset(CFS_E1, 'r')
 	ens2 = netCDF4.Dataset(CFS_E2, 'r')

@@ -24,8 +24,9 @@ path1 = (sys.argv[1]) #station_file
 path2 = (sys.argv[2]) #wrf_file
 path3 = (sys.argv[3]) #lat_lon_file
 path4 = (sys.argv[4]) #output_path
-date_start = (sys.argv[5]) #model initial date
-date_tgt  = (sys.argv[6]) #analises date
+date_start	= (sys.argv[5]) #model initial date
+date_tgt	= (sys.argv[6]) #analises date
+gaus_test	= (sys.argv[7]) #True or False to execute the tes with gaussian output from forecast
 #######################################
 # File read
 raw_stations_name = np.genfromtxt(path3, delimiter= ", " ,skip_header=1, dtype=str)
@@ -52,25 +53,42 @@ out		= []
 
 ################################################################################
 ## Call other func to obtain data per station  
-def DATA_get(station):
-	data_station, date_station, lat_station, lon_station = parser_station.DATA_get(path1, station, path2, path3, date_tgt)
+def DATA_get(station, gaus_test):
+	if gaus_test == False:
+		data_station, date_station, lat_station, lon_station = parser_station.DATA_get(path1, station, path2, path3, date_tgt)
 
-	if data_station:
-		ix, iy = lat_lon.STATION_get(path3, path2, station)
-		data_wrf, date_wrf, lat_wrf, lon_wrf = parser_wrf.DATA_get(path2, ix, iy, date_start, date_tgt) 
-		output.RAW_out(path4, station, date_tgt, date_wrf, data_station, data_wrf)
-		ampl_error = calc_area_error.DATA_get(path2, ix, iy,  data_station, date_start, date_tgt, date_station)
-#		print "#####"
-#		print "%s sta; %s" % (len(data_station), data_station[-1])
-#		print "%s wrf; %s" % (len(data_wrf), data_wrf[-1])	
+		if data_station:
+			ix, iy = lat_lon.STATION_get(path3, path2, station)
+			data_wrf, date_wrf, lat_wrf, lon_wrf = parser_wrf.DATA_get(path2, ix, iy, date_start, date_tgt)
+			output.RAW_out(path4, station, date_tgt, date_wrf, data_station, data_wrf)
+			ampl_error = calc_area_error.DATA_get(path2, ix, iy,  data_station, date_start, date_tgt, date_station)
+			return(data_station, data_wrf, date_station, date_wrf, lat_wrf, lon_wrf, lat_station, lon_station, ampl_error)
+		else:
+			return(np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan)	
 
-		return(data_station, data_wrf, date_station, date_wrf, lat_wrf, lon_wrf, lat_station, lon_station, ampl_error)
-	else:
-		return(np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan)	
+
+	else:		
+		data_station, date_station, lat_station, lon_station = parser_station.DATA_get(path1, station, path2, path3, date_tgt)
+#		data_station, date_station, lat_station, lon_station = parser_gaus_station.DATA_get(date_tgt)
+		ampl = 15
+		center = [100, 100]
+		sig_x = 10
+		sig_y = 10
+		theta = 0
+		
+		if data_station:
+			ix, iy = lat_lon.STATION_get(path3, path2, station)
+			rain_c, WRF_lat, WRF_lon = parser_gaus._get_gaus_wrf(path2, theta, sig_x, sig_y, ampl, center)
+			data_wrf, date_wrf, lat_wrf, lon_wrf = parser_gaus.DATA_get_wrf(rain_c, ix, iy, date_start, date_tgt, WRF_lat, WRF_lon)
+			output.RAW_out(path4, station, date_tgt, date_wrf, data_station, data_wrf)
+			ampl_error = calc_area_error.DATA_get(path2, ix, iy,  data_station, date_start, date_tgt, date_station)
+			return(data_station, data_wrf, date_station, date_wrf, lat_wrf, lon_wrf, lat_station, lon_station, ampl_error)
+		else:
+			return(np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan)	
 
 ################################################################################
 ## For parallel processing
-data_out = (Parallel(n_jobs=treads, verbose=5)(delayed(DATA_get)(station) for station in station_self))
+data_out = (Parallel(n_jobs=treads, verbose=5)(delayed(DATA_get)(station, gaus_test) for station in station_self))
 
 ################################################################################
 ##Statistics
@@ -107,7 +125,7 @@ else:
 ###### For serial processing 
 
 ##for station in station_self:
-##	data_s, date_s, data_w, date_w = DATA_get(station)
+##	data_s, date_s, data_w, date_w = DATA_get(station, gaus_test)
 ##	for i in range(0, len(date_w)):
 ##		data_wrf.append(data_w[i])
 ##		date_wrf.append(date_w[i])
