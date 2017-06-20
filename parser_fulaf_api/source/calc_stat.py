@@ -64,7 +64,7 @@ def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w
 		for i in range(0, max_s):
 			if np.invert(np.isnan(data_wrf[j])): 
 				if np.invert(np.isnan(data_station[i])): 
-					if np.invert(np.isnan(ampl_error[j])): 
+					if np.invert(np.isnan(ampl_error[i])): 
 						if date_station[i] == date_wrf[j]:
 	 						if lat_s[i] == lat_w[j] and lon_s[i] == lon_w[j]:
 								raw_station.append(data_station[i])
@@ -72,7 +72,7 @@ def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w
 								raw_wrf.append(data_wrf[j])
 								raw_lat.append(lat_w[j])
 								raw_lon.append(lon_w[j])
-								raw_err.append(ampl_error[j])
+								raw_err.append(ampl_error[i])
 #							print raw_station[-1], raw_wrf[-1] 
 	max_r	= len(raw_wrf)
 	rmse	= []
@@ -94,7 +94,7 @@ def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w
 			lat.append(raw_lat[i])
 			lon.append(raw_lon[i])
 			err.append(raw_err[i])
-			out_d.append('%s,%s,%s,%s,%s,%s' %(raw_date[i],raw_wrf[i],raw_station[i],raw_err[i], raw_lat[i],raw_lon[i]))
+			out_d.append('%s,%s,%s,%s,%s' %(raw_lat[i], raw_lon[i], raw_wrf[i], raw_station[i], raw_err[i]))
 #			print wrf[-1], sta[-1]
 #			if rmse[i]/raw_station[i] < 0.2:
 #				good.append(1)	
@@ -103,11 +103,12 @@ def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w
 
 ## Statistics
 	print "Preparing results..."
-	out_d		= np.unique(out_d)
+#	out_d		= np.unique(out_d)
 	std_station	= np.std(raw_station)
 	std_wrf		= np.std(raw_wrf)
-	pearsoncor	= np.corrcoef(raw_station, raw_wrf)
-	R		= pearsoncor[0]
+	# pearsoncor	= np.corrcoef(raw_station, raw_wrf)
+	# R		= pearsoncor[0]
+	R = [np.nan, 0]
 	mean_station	= np.mean(raw_station)
 	mean_wrf	= np.mean(raw_wrf)
 	rmse		= get_RMSE(raw_station, raw_wrf)

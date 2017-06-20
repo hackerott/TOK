@@ -56,3 +56,22 @@ def TIME_out(path2, station_self):
 	run_time = (stop - start) * (total_runs)
 	return(run_time, total_runs)
 
+def RAW_out_gaus(path4, station, date_self, area):
+	# header = '%s\n lat; lon; WRF; Station; error_abs; erro_area; distance\n\n' % station
+	out = []
+	for i in range(0, len(area)+1):
+		try:
+			a = "%s;%s" %(station, area[i])
+		except:
+			a = "%s;%s" %(station, area)	
+		out.append(a)
+	folder_path = '%s/%s' % (path4, date_self)
+	if os.path.isdir(folder_path) == False:
+		os.makedirs(folder_path)
+	file_name_raw	= "%s/%s/%s_gaus.csv" % (path4, date_self, date_self) #file name and path
+	file_raw	= open(file_name_raw, 'a+')		
+#	file_raw.write("\n".join(out))
+	file_raw.write("\n".join(area))
+	file_raw.close()
+	eof = []
+	return()

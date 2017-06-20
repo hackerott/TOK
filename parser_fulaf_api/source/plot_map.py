@@ -40,7 +40,7 @@ def _get_bias(rain_station, rain_wrf):
 	for i in range(0, len(rain_station)):
 		b.append(rain_station[i] - rain_wrf[i])
 		n += 1
-	return sum(b)/n
+	return np.divide(sum(b),n)
 ################################################################################
 ## calculate the Er
 def _get_er(rain_station, rain_wrf):
@@ -56,8 +56,12 @@ def _get_er(rain_station, rain_wrf):
 def get_SCATTER_plot(rain_wrf, rain_station):
 	color_a	= []
 	color_r	= []
-	mrs = max(rain_station)
-	n = len(rain_station)
+	try:
+		mrs = max(rain_station)
+		n = len(rain_station)
+	except:
+		mrs = rain_station
+		n = 1.0
 	for i in range(len(rain_wrf)):
 		absolute_e = np.absolute((rain_wrf[i] - rain_station[i]))
  		relative_e = (rain_wrf[i]- rain_station[i])/mrs 
@@ -77,7 +81,7 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	mae = np.mean(color_a)
 	mre = np.mean(color_r)
 	mea = np.mean(area_error)
-	mne = np.mena(morm_error)
+	mne = np.mean(norm_error)
 
 	print "Setting basemaps..."
 	file_name_map = '%s/map_mae_mre.png' % (path4)
@@ -91,8 +95,11 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	fig1 = plt.figure("SCATTER",figsize=(16, 9))
 	plt.ylabel('Observation [mm]')
 	plt.xlabel('Simulation [mm]')
-	plt.xlim(0, max(max(rain_wrf), max(rain_station)))
-	plt.ylim(0, max(max(rain_wrf), max(rain_station)))
+	try:
+		plt.xlim(0, max(max(rain_wrf), max(rain_station)))
+	except:	
+		plt.ylim(0, max(rain_wrf, rain_station))
+
 	plt.scatter(rain_wrf, rain_station, c='black', marker='o', linewidth=0)
 	plt.plot(rain_station, rain_station, c='gray')
 	plt.figtext(0.73, 0.70, "Statistical indicators:\n\n MRE: %.3f\n MAE: %.3f\n Bias: %.3f\n RMSE: %.3f\n AREA_E : %.3f\n NORM_E :%.3f" % (mre, mae, bias, rmse, mea, mne) ,bbox={'facecolor':'lightgray', 'alpha':0.5, 'pad':10}, fontsize=15, multialignment = 'left')
@@ -134,8 +141,13 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	map2.drawmeridians(np.arange(lc[1],rc[1]+5,5.), labels=[1,0,0,1])
 	plt.savefig(file_name_map, dpi=300, pad_inches=0)
 #plot 3
-	a =  max(max(rain_wrf), max(rain_station)) # max lim of scale
-	b =  min(min(rain_wrf), min(rain_station)) # min lim of scale
+	try:
+		a =  max(max(rain_wrf), max(rain_station)) # max lim of scale
+		b =  min(min(rain_wrf), min(rain_station)) # min lim of scale
+	except:
+		a = max(rain_wrf, rain_station)
+		b = min(rain_wrf, rain_station)	
+
 	rain_wrf.append(a) 
 	rain_station.append(a)
 	rain_wrf.append(b)

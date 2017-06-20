@@ -12,6 +12,7 @@ from joblib import Parallel, delayed
 #######################################
 import parser_station
 import parser_wrf
+import parser_gaus
 import lat_lon
 import calc_stat
 import output
@@ -54,7 +55,8 @@ out		= []
 ################################################################################
 ## Call other func to obtain data per station  
 def DATA_get(station, gaus_test):
-	if gaus_test == False:
+	if gaus_test == "False":
+		# print "#####\nFALSE\n#####"
 		data_station, date_station, lat_station, lon_station = parser_station.DATA_get(path1, station, path2, path3, date_tgt)
 
 		if data_station:
@@ -67,9 +69,9 @@ def DATA_get(station, gaus_test):
 			return(np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan)	
 
 
-	else:		
+	else:
+		# print "#####\nTRUE\n#####"		
 		data_station, date_station, lat_station, lon_station = parser_station.DATA_get(path1, station, path2, path3, date_tgt)
-#		data_station, date_station, lat_station, lon_station = parser_gaus_station.DATA_get(date_tgt)
 		ampl = 15
 		center = [100, 100]
 		sig_x = 10
@@ -77,11 +79,12 @@ def DATA_get(station, gaus_test):
 		theta = 0
 		
 		if data_station:
+			# print station
 			ix, iy = lat_lon.STATION_get(path3, path2, station)
 			rain_c, WRF_lat, WRF_lon = parser_gaus._get_gaus_wrf(path2, theta, sig_x, sig_y, ampl, center)
-			data_wrf, date_wrf, lat_wrf, lon_wrf = parser_gaus.DATA_get_wrf(rain_c, ix, iy, date_start, date_tgt, WRF_lat, WRF_lon)
-			output.RAW_out(path4, station, date_tgt, date_wrf, data_station, data_wrf)
-			ampl_error = calc_area_error.DATA_get(path2, ix, iy,  data_station, date_start, date_tgt, date_station)
+			data_wrf, rainc, date_wrf, lat_wrf, lon_wrf = parser_gaus.DATA_get_wrf(rain_c, ix, iy, date_start, date_tgt, WRF_lat, WRF_lon)
+			ampl_error, out_area = calc_area_error.DATA_get_gaus(rainc, path2, ix, iy, data_station, date_start, date_tgt, date_station)
+			output.RAW_out_gaus(path4, station, date_tgt, out_area)
 			return(data_station, data_wrf, date_station, date_wrf, lat_wrf, lon_wrf, lat_station, lon_station, ampl_error)
 		else:
 			return(np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan)	

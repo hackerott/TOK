@@ -47,6 +47,7 @@ def DATA_get(station_file, station, path2, path3, date1):
 			lat_f.append(lat[i])
 			lon_f.append(lon[i])
 #			print out_f[-1], date_f[-1], lat_f[-1], lon_f[-1]
+
 	return(out_f, date_f, lat_f, lon_f)
 
 ################################################################################
