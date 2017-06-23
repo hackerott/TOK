@@ -11,6 +11,7 @@
 		- card.py: generate daily card, with figures and max/min values
 		- lat_lon.py: locate the closest grid point, to be used in further calculations
 		- json_output.py: single script to genarate json objects to be printed/saved as final output   
+		- XXX_var.py: all the variables names/keys, as also limits for alert levels.
 		
 #TOK
 

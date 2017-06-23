@@ -13,18 +13,14 @@ from math import pi
 #######################################
 import prob_area
 import prob_time
+import figure
 #######################################
 """
 Each variable should have botton and top limits to calculate the alert level, as also the limit for indecision, where the alert color should be truncated (ex: whem max prob is below X%, set color to y).
  
-
 """
-#VAR = 'chuva'
-#TOP = 
-#BOT = 
-#PRO = 
 
-def calendario(CFS_E1, CFS_E2, CFS_E3, CFS_E4, CFS_E5, CFS_E6, CFS_E7, CFS_E8, iz, ixCFS, iyCFS, date0, utc0, VAR, TOP, BOT, PRO):
+def DATA_cfs_calendar(CFS_E1, CFS_E2, CFS_E3, CFS_E4, CFS_E5, CFS_E6, CFS_E7, CFS_E8, iz, ixCFS, iyCFS, date0, utc0, VAR, TOP, BOT, PRO):
 	ens1 = netCDF4.Dataset(CFS_E1, 'r')
 	ens2 = netCDF4.Dataset(CFS_E2, 'r')
 	ens3 = netCDF4.Dataset(CFS_E3, 'r')
@@ -46,6 +42,13 @@ def calendario(CFS_E1, CFS_E2, CFS_E3, CFS_E4, CFS_E5, CFS_E6, CFS_E7, CFS_E8, i
 	prob_a_g2, prob_a_r2, prob_a_y2, value_a2, max_a2, min_a2 = prob_area._get_AREAP(ens1, VAR, ixCFS, iyCFS, TOP, BOT)
 	prob_a_g3, prob_a_r3, prob_a_y3, value_a3, max_a3, min_a3 = prob_area._get_AREAP(ens1, VAR, ixCFS, iyCFS, TOP, BOT)
 	prob_a_g4, prob_a_r4, prob_a_y4, value_a4, max_a4, min_a4 = prob_area._get_AREAP(ens1, VAR, ixCFS, iyCFS, TOP, BOT)
+
+	color	= []
+	value	= []
+	prob	= []
+	date	= []
+	mini	= []
+	maxi	= []
 
 	a = 0
 	b = 4
@@ -71,9 +74,9 @@ def calendario(CFS_E1, CFS_E2, CFS_E3, CFS_E4, CFS_E5, CFS_E6, CFS_E7, CFS_E8, i
 
 		prob_c = [prob_g, prob_r, prob_y]
 
+		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
+
 ### needs a condition if argmax(prob_c) < PRO:  and a elif 
-
-
 		if prob_c[argmax(prob_c)] < PRO:
 			color.append(2)
 			value.append((((2*value_t  +  value_a)/3) + (max(max_v) + min(min_v)))/3)
@@ -84,12 +87,14 @@ def calendario(CFS_E1, CFS_E2, CFS_E3, CFS_E4, CFS_E5, CFS_E6, CFS_E7, CFS_E8, i
 		prob.append(prob_c[argmax(prob_c)])		
 		maxi.append(max(max_v))
 		mini.append(min(min_v))
+		date.append(d1)
 		a += 4
 		b += 4
 
 
-return(date, prob, color, value, max_v, min_v)
+	return(date, prob, color, value, maxi, mini, fig)
 
 
+def DATA_wrf_calendar()
 
-
+	return(date, prob, color, value, maxi, mini)	
