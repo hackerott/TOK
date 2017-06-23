@@ -20,6 +20,8 @@ Each variable should have botton and top limits to calculate the alert level, as
  
 """
 
+###############################################################################
+#CFS
 def DATA_cfs_calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0, VAR, TOP, BOT, PRO):
 	time = ens1.variables['time']
 	max_i = len(time)
@@ -89,6 +91,8 @@ def DATA_cfs_calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS,
 
 	return(date, prob, color, value, maxi, mini, fig)
 
+###############################################################################
+#GFS
 def DATA_gfs_calendar(ens1, ens2, iz, ixGFS, iyGFS, date0, utc0, VAR, TOP, BOT, PRO)
 	time = ens1.variables['time']
 	max_i = len(time)
@@ -109,20 +113,26 @@ def DATA_gfs_calendar(ens1, ens2, iz, ixGFS, iyGFS, date0, utc0, VAR, TOP, BOT, 
 	b = 24
 	for i in range(0, max_i//24):
 
-		max_v		= 
-		min_v		= 
-		prob_a_g	=
-		prob_t_g 	=
-		prob_a_r 	=
-		prob_t_r	=
-		prob_a_y	=
-		prob_t_y	=
-		value_a		=
-		value_t 	=
-		prob_g 		=
-		prob_r 		=
-		prob_y 		=	
-		prob_c 		=
+		max_v		= max(max_t1[a:b], max_t2[a:b])
+		min_v		= min(min_t1[a:b], min_t2[a:b])
+
+		prob_a_g	= (np.mean(prob_a_g1[a:b]) + np.mean(prob_a_g2[a:b]))/2
+		prob_t_g 	= (np.mean(prob_t_g1[a:b]) + np.mean(prob_t_g2[a:b]))/2
+
+		prob_a_r 	= (np.mean(prob_a_r1[a:b]) + np.mean(prob_a_r2[a:b]))/2
+		prob_t_r	= (np.mean(prob_t_r1[a:b]) + np.mean(prob_t_r2[a:b]))/2
+
+		prob_a_y	= (np.mean(prob_a_y1[a:b]) + np.mean(prob_a_y2[a:b]))/2
+		prob_t_y	= (np.mean(prob_t_y1[a:b]) + np.mean(prob_t_y2[a:b]))/2
+
+		value_a		= (np.mean(value_a1[a:b]) + np.mean(value_a2[a:b]))/2
+		value_t 	= (np.mean(value_t1[a:b]) + np.mean(value_t2[a:b]))/2
+
+		prob_g	= ((2*prob_t_g + prob_a_g)/3)
+		prob_r	= ((2*prob_t_r + prob_a_r)/3)
+		prob_y	= ((2*prob_t_y + prob_a_y)/3)
+
+		prob_c	= [prob_g, prob_r, prob_y]
 
 		if prob_c[argmax(prob_c)] < PRO:
 			color.append(2)
@@ -138,12 +148,16 @@ def DATA_gfs_calendar(ens1, ens2, iz, ixGFS, iyGFS, date0, utc0, VAR, TOP, BOT, 
 		mini.append(min(min_v))
 		date.append(d1)
 		fig.append(f1)
-		a += 24
-		b += 24
-
+		if b <= max_i - 24:
+			a += 24
+			b += 24
+		else:
+			a += 6	
+			b += 6	
 	return(date, prob, color, value, maxi, mini, fig)	
 
-
+###############################################################################
+#WRF
 def DATA_wrf_calendar(ens1, ens2, iz, ixWRF, iyWRF, date0, utc0, VAR, TOP, BOT, PRO)
 	ens1 = netCDF4.Dataset(WRF_E1, 'r')	
 	ens2 = netCDF4.Dataset(WRF_E2, 'r')
@@ -167,20 +181,26 @@ def DATA_wrf_calendar(ens1, ens2, iz, ixWRF, iyWRF, date0, utc0, VAR, TOP, BOT, 
 	b = 24
 	for i in range(0, max_i//24):
 
-		max_v		= 
-		min_v		= 
-		prob_a_g	=
-		prob_t_g 	=
-		prob_a_r 	=
-		prob_t_r	=
-		prob_a_y	=
-		prob_t_y	=
-		value_a		=
-		value_t 	=
-		prob_g 		=
-		prob_r 		=
-		prob_y 		=	
-		prob_c 		=
+		max_v		= max(max_t1[a:b], max_t2[a:b])
+		min_v		= min(min_t1[a:b], min_t2[a:b])
+
+		prob_a_g	= (np.mean(prob_a_g1[a:b]) + np.mean(prob_a_g2[a:b]))/2
+		prob_t_g 	= (np.mean(prob_t_g1[a:b]) + np.mean(prob_t_g2[a:b]))/2
+
+		prob_a_r 	= (np.mean(prob_a_r1[a:b]) + np.mean(prob_a_r2[a:b]))/2
+		prob_t_r	= (np.mean(prob_t_r1[a:b]) + np.mean(prob_t_r2[a:b]))/2
+
+		prob_a_y	= (np.mean(prob_a_y1[a:b]) + np.mean(prob_a_y2[a:b]))/2
+		prob_t_y	= (np.mean(prob_t_y1[a:b]) + np.mean(prob_t_y2[a:b]))/2
+
+		value_a		= (np.mean(value_a1[a:b]) + np.mean(value_a2[a:b]))/2
+		value_t 	= (np.mean(value_t1[a:b]) + np.mean(value_t2[a:b]))/2
+
+		prob_g	= ((2*prob_t_g + prob_a_g)/3)
+		prob_r	= ((2*prob_t_r + prob_a_r)/3)
+		prob_y	= ((2*prob_t_y + prob_a_y)/3)
+
+		prob_c	= [prob_g, prob_r, prob_y]
 
 		if prob_c[argmax(prob_c)] < PRO:
 			color.append(2)
@@ -200,3 +220,5 @@ def DATA_wrf_calendar(ens1, ens2, iz, ixWRF, iyWRF, date0, utc0, VAR, TOP, BOT, 
 		b += 24
 
 	return(date, prob, color, value, maxi, mini, fig)	
+
+###############################################################################
