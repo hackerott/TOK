@@ -22,7 +22,7 @@ Each variable should have botton and top limits to calculate the alert level, as
 
 ###############################################################################
 #CFS
-def DATA_cfs_calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0, VAR, TOP, BOT, PRO):
+def DATA_cfs_calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS, iyCFS, date0, utc0, TOP, BOT, PRO):
 	time = ens1.variables['time']
 	max_i = len(time)
 	
@@ -93,7 +93,7 @@ def DATA_cfs_calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, iz, ixCFS,
 
 ###############################################################################
 #GFS
-def DATA_gfs_calendar(ens1, ens2, iz, ixGFS, iyGFS, date0, utc0, VAR, TOP, BOT, PRO)
+def DATA_gfs_calendar(ens1, ens2, iz, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO)
 	time = ens1.variables['time']
 	max_i = len(time)
 
@@ -158,7 +158,7 @@ def DATA_gfs_calendar(ens1, ens2, iz, ixGFS, iyGFS, date0, utc0, VAR, TOP, BOT, 
 
 ###############################################################################
 #WRF
-def DATA_wrf_calendar(ens1, ens2, iz, ixWRF, iyWRF, date0, utc0, VAR, TOP, BOT, PRO)
+def DATA_wrf_calendar(ens1, ens2, iz, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO)
 	ens1 = netCDF4.Dataset(WRF_E1, 'r')	
 	ens2 = netCDF4.Dataset(WRF_E2, 'r')
 
