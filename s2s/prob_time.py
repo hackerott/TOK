@@ -50,38 +50,8 @@ def _get_Prob(var_raw1, var_raw2, ix, iy, max_i, top_lim, bot_lim):
 	return (var1, prob_g, prob_r, prob_y)
 #######################################	
 # return the final values of prob for each member
-def _get_TIMEP(ncfile1, ncfile2, var, ix, iy, top_lim, bot_lim):
-	time = ncfile.variables['time']
+def _get_TIMEP(var_raw1, var_raw2, ix, iy, top_lim, bot_lim):
 	max_i = len(time)
-	top_lim =
-	bot_lim =
-	var_nc = _get_NCVAR(var)
-###
-#ERROR MANAGEMENT
-	if var_nc == 'Null':  
-		exit(1)
-
-	if len(var_nc) == 1:
-		var_raw1 = ncfile1.variables[var_nc] #single variable from nc
-		var_raw2 = ncfile2.variables[var_nc] #single variable from nc
-	elif len(var_nc) == 2:
-		var_rawa = ncfile.variables[var_nc[0]] 		
-		var_rawb = ncfile.variables[var_nc[1]] 		
-		var_rawc = ncfile.variables[var_nc[0]] 		
-		var_rawd = ncfile.variables[var_nc[1]] 		
-		var_raw1 = np.sqrt(np.add(np.power(var_rawa, 2), np.power(var_rawb, 2))) # wind intensity
-		var_raw2 = np.sqrt(np.add(np.power(var_rawc, 2), np.power(var_rawd, 2))) # wind intensity
-
-	elif len(var_nc) == 3:
-		var_rawa = ncfile1.variables[var_nc[0]] 		
-		var_rawb = ncfile1.variables[var_nc[1]] 		
-		var_rawc = ncfile1.variables[var_nc[2]]
-		var_rawd = ncfile2.variables[var_nc[0]] 		
-		var_rawe = ncfile2.variables[var_nc[1]] 		
-		var_rawf = ncfile2.variables[var_nc[2]]
-		var_raw1 = np.multiply(np.multiply(100, np.divide(var_rawa, np.divide(379.90516, var_rawc))), np.exp(np.multiply(17.29, np.divide(np.add(var_rawb, -273.15), np.add(var_rawb, -35.86))))) # relative humidity
-		var_raw2 = np.multiply(np.multiply(100, np.divide(var_rawd, np.divide(379.90516, var_rawf))), np.exp(np.multiply(17.29, np.divide(np.add(var_rawe, -273.15), np.add(var_rawe, -35.86))))) # relative humidity
-
 
 	value, prob_g, prob_r, prob_y = _get_Prob(var_raw1, var_raw2, ix, iy, max_i, top_lim, bot_lim)
 	max_value = np.mean(value) + np.std(value)

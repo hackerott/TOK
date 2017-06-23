@@ -39,33 +39,12 @@ def _get_Prob(var_raw, ix, iy, max_i, top_lim, bot_lim):
 
 #######################################	
 # return the final values of prob for each member
-def _get_AREAP(ncfile, var, ix, iy, top_lim, bot_lim, ):
-	time = ncfile.variables['time']
+def _get_AREAP(var_raw, time, ix, iy, top_lim, bot_lim, ):
+
 	max_i = len(time)
 	top_lim =
 	bot_lim =
 	var_nc = _get_NCVAR(var)
-###
-#ERROR MANAGEMENT
-	if var_nc == 'Null':  
-		exit(1)
-'''
-Add here (or in other script) proper error management, need to create a error table
-'''
-###
-	if len(var_nc) == 1:
-		var_raw = ncfile.variables[var_nc] #single variable from nc
-
-	elif len(var_nc) == 2:
-		var_raw1 = ncfile.variables[var_nc[0]] 		
-		var_raw2 = ncfile.variables[var_nc[1]] 		
-		var_raw = np.sqrt(np.add(np.power(var_raw1, 2), np.power(var_raw2, 2))) # wind intensity
-
-	elif len(var_nc) == 3:
-		var_raw1 = ncfile.variables[var_nc[0]] 		
-		var_raw2 = ncfile.variables[var_nc[1]] 		
-		var_raw3 = ncfile.variables[var_nc[2]]
-		var_raw = np.multiply(np.multiply(100, np.divide(var_raw1, np.divide(379.90516, var_raw3))), np.exp(np.multiply(17.29, np.divide(np.add(var_raw2, -273.15), np.add(var_raw2, -35.86))))) # relative humidity
 
 #	prob	= [0]*max_i 
 	prob_r	= [0]*max_i 
