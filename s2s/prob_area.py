@@ -8,17 +8,6 @@ import netCDF4
 #######################################
 
 #######################################
-## return the nc var_names for each variable
-def _get_NCVAR(var):
-	return {
-		'chuva'		: 'pratesfc',
-		'temperatura'	: 'tmp2m',
-		'radiacao'	: 'dswrfsfc',
-		'umidade'	: ['spfh2m', 'tmp2m', 'pressfc'], 
-		'vento'		: ['ugrd10m', 'vgrd10m']
-		}.get(var, 'Null')
-
-#######################################
 ## return the probabilitys for each alert level
 def _get_Prob(var_raw, ix, iy, max_i, top_lim, bot_lim):
 	prob_y = [0]*max_i
@@ -42,11 +31,11 @@ def _get_Prob(var_raw, ix, iy, max_i, top_lim, bot_lim):
 def _get_AREAP(var_raw, time, ix, iy, top_lim, bot_lim, ):
 
 	max_i = len(time)
-	top_lim =
-	bot_lim =
-	var_nc = _get_NCVAR(var)
+	# top_lim =
+	# bot_lim =
+	# var_nc = _get_NCVAR(var)
 
-#	prob	= [0]*max_i 
+	# prob	= [0]*max_i 
 	prob_r	= [0]*max_i 
 	prob_g	= [0]*max_i 
 	prob_y	= [0]*max_i 

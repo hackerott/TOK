@@ -47,6 +47,7 @@ def _get_humidity(var, ncfile):
 	var_rawc = ncfile1.variables[var_nc[2]]
 	
 	var_raw1 = np.multiply(np.multiply(100, np.divide(var_rawa, np.divide(379.90516, var_rawc))), np.exp(np.multiply(17.29, np.divide(np.add(var_rawb, -273.15), np.add(var_rawb, -35.86))))) 
+	return (var_raw1)
 
 def _get_all(var, ncfile):
 	rain				= _get_rain('chuva', ncfile)

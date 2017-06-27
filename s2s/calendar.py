@@ -32,9 +32,9 @@ def DATA_cfs_calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, iz, 
 
 
 	prob_a_g1, prob_a_r1, prob_a_y1, value_a1, max_a1, min_a1 = prob_area._get_AREAP(ens1, time, VAR, ixCFS, iyCFS, TOP, BOT)
-	prob_a_g2, prob_a_r2, prob_a_y2, value_a2, max_a2, min_a2 = prob_area._get_AREAP(ens1, time, VAR, ixCFS, iyCFS, TOP, BOT)
-	prob_a_g3, prob_a_r3, prob_a_y3, value_a3, max_a3, min_a3 = prob_area._get_AREAP(ens1, time, VAR, ixCFS, iyCFS, TOP, BOT)
-	prob_a_g4, prob_a_r4, prob_a_y4, value_a4, max_a4, min_a4 = prob_area._get_AREAP(ens1, time, VAR, ixCFS, iyCFS, TOP, BOT)
+	prob_a_g2, prob_a_r2, prob_a_y2, value_a2, max_a2, min_a2 = prob_area._get_AREAP(ens2, time, VAR, ixCFS, iyCFS, TOP, BOT)
+	prob_a_g3, prob_a_r3, prob_a_y3, value_a3, max_a3, min_a3 = prob_area._get_AREAP(ens3, time, VAR, ixCFS, iyCFS, TOP, BOT)
+	prob_a_g4, prob_a_r4, prob_a_y4, value_a4, max_a4, min_a4 = prob_area._get_AREAP(ens4, time, VAR, ixCFS, iyCFS, TOP, BOT)
 
 	color	= []
 	value	= []
@@ -139,7 +139,7 @@ def DATA_gfs_calendar(ens1, ens2, time, iz, ixGFS, iyGFS, date0, utc0, TOP, BOT,
 		else:
 			color.append((argmax(prob_c) + 1))
 			value.append((2*value_t  +  value_a)/3)
-
+		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
 		f1 = figure._get_calendar(value[i], CFS)
 		prob.append(prob_c[argmax(prob_c)])		
 		maxi.append(max(max_v))
@@ -203,7 +203,7 @@ def DATA_wrf_calendar(ens1, ens2, time, iz, ixWRF, iyWRF, date0, utc0, TOP, BOT,
 		else:
 			color.append((argmax(prob_c) + 1))
 			value.append((2*value_t  +  value_a)/3)
-
+		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
 		f1 = figure._get_calendar(value[i], CFS)
 		prob.append(prob_c[argmax(prob_c)])		
 		maxi.append(max(max_v))
