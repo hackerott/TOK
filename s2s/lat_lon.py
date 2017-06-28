@@ -74,4 +74,3 @@ def WRF_grab(wrf_file, lat0, lon0):
     lonWRF = GFSfile.variables['XLON']	
 	minindexZ, minindexX, minindexY = _get_WRF(latWRF,lonWRF,lat0,lon0))
     return(minindexX, minindexY)
-
