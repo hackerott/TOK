@@ -2,10 +2,11 @@
 # coding: utf-8
 
 import numpy as np
-import thread
 import netCDF4
+# import thread
 
 #######################################
+## S2S imports
 
 #######################################
 ## return the nc var_names for each variable
@@ -51,7 +52,7 @@ def _get_Prob(var_raw1, var_raw2, ix, iy, max_i, top_lim, bot_lim):
 #######################################	
 # return the final values of prob for each member
 def _get_TIMEP(var_raw1, var_raw2, ix, iy, top_lim, bot_lim):
-	max_i = len(time)
+	max_i = len(var_raw1[:, ix, iy])
 
 	value, prob_g, prob_r, prob_y = _get_Prob(var_raw1, var_raw2, ix, iy, max_i, top_lim, bot_lim)
 	max_value = np.mean(value) + np.std(value)
@@ -59,3 +60,9 @@ def _get_TIMEP(var_raw1, var_raw2, ix, iy, top_lim, bot_lim):
 
 	return(prob_g, prob_r, prob_y, value, max_value, min_value)
 
+def _get_FIG(var_raw1, var_raw2, ix, iy)
+	max_i = len(var_raw1[:, ix, iy])
+
+	value, prob_g, prob_r, prob_y = _get_Prob(var_raw1, var_raw2, ix, iy, max_i, 1, 1)
+
+	return(value)

@@ -2,10 +2,10 @@
 #-*- coding:utf-8 -*-
 
 import numpy as np
-import netCDF4
-import math
-import sys
-import datetime
+# import netCDF4
+# import math
+# import sys
+# import datetime
 
 from math import pi
 #from numpy import cos, sin, arccos, power, sqrt, exp, arctan2, argmin, argmax, arctan, mean
@@ -22,19 +22,18 @@ Each variable should have botton and top limits to calculate the alert level, as
 
 ###############################################################################
 #CFS
-def DATA_cfs_calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, iz, ixCFS, iyCFS, date0, utc0, TOP, BOT, PRO):
+def DATA_cfs_calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, iyCFS, date0, utc0, TOP, BOT, PRO):
 	max_i = len(time)
 	
-	prob_t_g1, prob_t_r1, prob_t_y1, value_t1, max_t1, min_t1 = prob_time._get_TIMEP(ens1, ens5, time, VAR, ixCFS, iyCFS, TOP, BOT) 
-	prob_t_g2, prob_t_r2, prob_t_y2, value_t2, max_t2, min_t2 = prob_time._get_TIMEP(ens2, ens6, time, VAR, ixCFS, iyCFS, TOP, BOT)
-	prob_t_g3, prob_t_r3, prob_t_y3, value_t3, max_t3, min_t3 = prob_time._get_TIMEP(ens3, ens7, time, VAR, ixCFS, iyCFS, TOP, BOT)
-	prob_t_g4, prob_t_r4, prob_t_y4, value_t4, max_t4, min_t4 = prob_time._get_TIMEP(ens4, ens8, time, VAR, ixCFS, iyCFS, TOP, BOT)
+	prob_t_g1, prob_t_r1, prob_t_y1, value_t1, max_t1, min_t1 = prob_time._get_TIMEP(ens1, ens5, ixCFS, iyCFS, TOP, BOT) 
+	prob_t_g2, prob_t_r2, prob_t_y2, value_t2, max_t2, min_t2 = prob_time._get_TIMEP(ens2, ens6, ixCFS, iyCFS, TOP, BOT)
+	prob_t_g3, prob_t_r3, prob_t_y3, value_t3, max_t3, min_t3 = prob_time._get_TIMEP(ens3, ens7, ixCFS, iyCFS, TOP, BOT)
+	prob_t_g4, prob_t_r4, prob_t_y4, value_t4, max_t4, min_t4 = prob_time._get_TIMEP(ens4, ens8, ixCFS, iyCFS, TOP, BOT)
 
-
-	prob_a_g1, prob_a_r1, prob_a_y1, value_a1, max_a1, min_a1 = prob_area._get_AREAP(ens1, time, VAR, ixCFS, iyCFS, TOP, BOT)
-	prob_a_g2, prob_a_r2, prob_a_y2, value_a2, max_a2, min_a2 = prob_area._get_AREAP(ens2, time, VAR, ixCFS, iyCFS, TOP, BOT)
-	prob_a_g3, prob_a_r3, prob_a_y3, value_a3, max_a3, min_a3 = prob_area._get_AREAP(ens3, time, VAR, ixCFS, iyCFS, TOP, BOT)
-	prob_a_g4, prob_a_r4, prob_a_y4, value_a4, max_a4, min_a4 = prob_area._get_AREAP(ens4, time, VAR, ixCFS, iyCFS, TOP, BOT)
+	prob_a_g1, prob_a_r1, prob_a_y1, value_a1, max_a1, min_a1 = prob_area._get_AREAP(ens1, ixCFS, iyCFS, TOP, BOT)
+	prob_a_g2, prob_a_r2, prob_a_y2, value_a2, max_a2, min_a2 = prob_area._get_AREAP(ens2, ixCFS, iyCFS, TOP, BOT)
+	prob_a_g3, prob_a_r3, prob_a_y3, value_a3, max_a3, min_a3 = prob_area._get_AREAP(ens3, ixCFS, iyCFS, TOP, BOT)
+	prob_a_g4, prob_a_r4, prob_a_y4, value_a4, max_a4, min_a4 = prob_area._get_AREAP(ens4, ixCFS, iyCFS, TOP, BOT)
 
 	color	= []
 	value	= []
@@ -78,21 +77,21 @@ def DATA_cfs_calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, iz, 
 			color.append((argmax(prob_c) + 1))
 			value.append((2*value_t  +  value_a)/3)
 
-		f1 = figure._get_calendar(value[i], CFS)
+		#f1 = figure._get_calendar(value[i], CFS)
 		prob.append(prob_c[argmax(prob_c)])		
 		maxi.append(max(max_v))
 		mini.append(min(min_v))
 		date.append(d1)
-		fig.append(f1)
+		#fig.append(f1)
 		a += 4
 		b += 4
-
+	fig = figure._get_CFS()	
 
 	return(date, prob, color, value, maxi, mini, fig)
 
 ###############################################################################
 #GFS
-def DATA_gfs_calendar(ens1, ens2, time, iz, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO)
+def DATA_gfs_calendar(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO)
 	max_i = len(time)
 
 	prob_t_g1, prob_t_r1, prob_t_y1, value_t1, max_t1, min_t1 = prob_time._get_TIMEP(ens1, ens2, time, VAR, ixGFS, iyGFS, TOP, BOT)

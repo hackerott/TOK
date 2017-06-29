@@ -1,5 +1,10 @@
+#!/usr/bin/env python
+#-*- coding:utf-8 -*-
+
 import numpy as np
 import netCDF4
+import os
+import datetime
 
 #######################################
 ## return the nc var_names for each variable
@@ -10,6 +15,8 @@ def _get_NCVAR(var):
 		'temp'		: 'tmp2m',
 		'radiacao'	: 'dswrfsfc',
 		'umidade'	: ['spfh2m', 'tmp2m', 'pressfc'], 
+		'nuvem'		: 'tcdcclm',
+		'time'		: 'times'
 		}.get(var, 'Null')
 #######################################
 ## return ID for each var
@@ -34,8 +41,40 @@ def _get_LIM(var):
 		}
 	out =  DIC.get(var, ['Null', 'Null', 'Null'])
 	return(out[0], out[1], out[2])
-#######################################
+##############################################################################
+## Checkin nc files
+def _get_FILE(dateC, date2, model)
+	ens1 = "/var/www/html/processamento/CFSD10001E1"+dateC.strftime('%Y%m%d')+"00.nc"
+	ens2 = "/var/www/html/processamento/CFSD10001E2"+dateC.strftime('%Y%m%d')+"00.nc"
+	ens3 = "/var/www/html/processamento/CFSD10001E3"+dateC.strftime('%Y%m%d')+"00.nc"
+	ens4 = "/var/www/html/processamento/CFSD10001E4"+dateC.strftime('%Y%m%d')+"00.nc"
+	ens5 = "/var/www/html/processamento/CFSD10001E1"+date2.strftime('%Y%m%d')+"00.nc"
+	ens6 = "/var/www/html/processamento/CFSD10001E2"+date2.strftime('%Y%m%d')+"00.nc"
+	ens7 = "/var/www/html/processamento/CFSD10001E3"+date2.strftime('%Y%m%d')+"00.nc"
+	ens8 = "/var/www/html/processamento/CFSD10001E4"+date2.strftime('%Y%m%d')+"00.nc"
+	while os.path.isfile(ens1) != True:
+		dateC = dateC - datetime.timedelta(days = 1)
+		date2 = date2 - datetime.timedelta(days = 1)
+		ens1 = "/var/www/html/processamento/CFSD10001E1"+dateC.strftime('%Y%m%d')+"00.nc"
+		ens2 = "/var/www/html/processamento/CFSD10001E2"+dateC.strftime('%Y%m%d')+"00.nc"
+		ens3 = "/var/www/html/processamento/CFSD10001E3"+dateC.strftime('%Y%m%d')+"00.nc"
+		ens4 = "/var/www/html/processamento/CFSD10001E4"+dateC.strftime('%Y%m%d')+"00.nc"
+		ens5 = "/var/www/html/processamento/CFSD10001E1"+date2.strftime('%Y%m%d')+"00.nc"
+		ens6 = "/var/www/html/processamento/CFSD10001E2"+date2.strftime('%Y%m%d')+"00.nc"
+		ens7 = "/var/www/html/processamento/CFSD10001E3"+date2.strftime('%Y%m%d')+"00.nc"
+		ens8 = "/var/www/html/processamento/CFSD10001E4"+date2.strftime('%Y%m%d')+"00.nc"
+		if os.path.isfile(ens5) != True:
+			ens1 = False
+			break
+		brk +=1	
+		if brk >= 3:
+			ens1 = False
+			success = json_out._get_ERROR('file', 'CFS') 			
+			exit(1)	
 
+	return(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8)
+##############################################################################
+# Variables
 def _get_rain(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
@@ -84,6 +123,15 @@ def _get_humidity(var, ncfile):
 		var_raw1 = np.nan
 	return (var_raw1)
 
+def _get_cloud(var, ncfile):
+	try:
+		var_nc = _get_NCVAR(var)
+		var_raw1 = ncfile.variables[var_nc]
+	except:
+		var_raw1 = np.nan
+	return(var_raw1)
+#######################################
+# Return all vars
 def _get_all(var, ncfile):
 	rain				= _get_rain('chuva', ncfile)
 	speed, direction	= _get_wind('vento', ncfile)			
