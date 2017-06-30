@@ -3,8 +3,8 @@
 
 import numpy as np
 import netCDF4
-import math
-import sys
+#import math
+#import sys
 import datetime
 
 from math import pi
@@ -44,6 +44,7 @@ def DATA_cfs_card(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, iz, ixCF
 	fig		= []
 	a = 0
 	b = 4
+	tgt_day = datetime.datetime.now()
 	for i in range(0, max_i//4):
 		max_v = max(max_t1[a:b], max_t2[a:b], max_t3[a:b], max_t4[a:b], max_a1[a:b], max_a2[a:b], max_a3[a:b], max_a4[a:b])
 		min_v = min(min_t1[a:b], min_t2[a:b], min_t3[a:b], min_t4[a:b], min_a1[a:b], min_a2[a:b], min_a3[a:b], min_a4[a:b])
@@ -67,15 +68,18 @@ def DATA_cfs_card(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, iz, ixCF
 		else:
 			color.append((argmax(prob_c) + 1))
 			value.append((2*value_t  +  value_a)/3)
-		f1 = figure._get_card(value[i], CFS)
+	#	f1 = figure._get_card(value[i], CFS)
 		prob.append(prob_c[argmax(prob_c)])		
 		maxi.append(max(max_v))
 		mini.append(min(min_v))
 		date.append(d1)
-		fig.append(f1)
+	#	fig.append(f1)
 		a += 4
 		b += 4
-
+		if date[i].day == tgt_day.day:
+			c = i
+			return(date[c], prob[c], color[c], value[c], maxi[c], mini[c], fig[c])
+			break
 
 	return(date, prob, color, value, maxi, mini, fig)
 
@@ -94,7 +98,8 @@ def DATA_gfs_card(ens1, ens2, time, iz, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO
 	fig		= []
 	a = 0
 	b = 24
-	for i in range(0, max_i//24):
+	tgt_day = datetime.datetime.now()
+	for i in range(0, (max_i//24)+4):
 		max_v		= max(max_t1[a:b], max_t2[a:b])
 		min_v		= min(min_t1[a:b], min_t2[a:b])
 		prob_a_g	= (np.mean(prob_a_g1[a:b]) + np.mean(prob_a_g2[a:b]))/2
@@ -116,19 +121,27 @@ def DATA_gfs_card(ens1, ens2, time, iz, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO
 		else:
 			color.append((argmax(prob_c) + 1))
 			value.append((2*value_t  +  value_a)/3)
-		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
-		f1 = figure._get_card(value[i], CFS)
+	#	d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i*24) + datetime.timedelta(hours = utc0)
+	#	f1 = figure._get_card(value[i], CFS)
 		prob.append(prob_c[argmax(prob_c)])		
 		maxi.append(max(max_v))
 		mini.append(min(min_v))
-		date.append(d1)
-		fig.append(f1)
+	#	date.append(d1)
+	#	fig.append(f1)
 		if b <= max_i - 24:
+			d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i*24) + datetime.timedelta(hours = utc0)
 			a += 24
 			b += 24
 		else:
+			d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i*24) + datetime.timedelta(hours = utc0)
 			a += 6	
-			b += 6	
+			b += 6
+		date.append(d1)		
+		if date[i].day == tgt_day.day:
+			c = i
+			return(date[c], prob[c], color[c], value[c], maxi[c], mini[c], fig[c])
+			break
+
 	return(date, prob, color, value, maxi, mini, fig)	
 
 ###############################################################################
@@ -146,6 +159,7 @@ def DATA_wrf_card(ens1, ens2, time, iz, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO
 	fig		= []
 	a = 0
 	b = 24
+	tgt_day = datetime.datetime.now()
 	for i in range(0, max_i//24):
 		max_v		= max(max_t1[a:b], max_t2[a:b])
 		min_v		= min(min_t1[a:b], min_t2[a:b])
@@ -169,14 +183,18 @@ def DATA_wrf_card(ens1, ens2, time, iz, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO
 			color.append((argmax(prob_c) + 1))
 			value.append((2*value_t  +  value_a)/3)
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
-		f1 = figure._get_card(value[i], CFS)
+	#	f1 = figure._get_card(value[i], CFS)
 		prob.append(prob_c[argmax(prob_c)])		
 		maxi.append(max(max_v))
 		mini.append(min(min_v))
 		date.append(d1)
-		fig.append(f1)
+	#	fig.append(f1)
 		a += 24
 		b += 24
+		if date[i].day == tgt_day.day:
+			c = i
+			return(date[c], prob[c], color[c], value[c], maxi[c], mini[c], fig[c])
+			break
 	return(date, prob, color, value, maxi, mini, fig)	
 
 ###############################################################################

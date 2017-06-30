@@ -41,8 +41,8 @@ model 	= form.getvalue("tipo")
 #######################################
 ##Form treatment
 #ip  	= os.environ["REMOTE_ADDR"]
-date0	= datetime.datetime.strptime(date, '%Y%m%d')
-date1	= date0 - datetime.timedelta(days =1)
+date0	= datetime.datetime.strptime(date, '%Y%m%d') #add diference from now_date to start_date 
+date1	= date0 - datetime.timedelta(days =1) #add diference from now_date to start_date
 lat0	= float(lat)
 lon0	= float(lon)
 utc0	= int(utc)

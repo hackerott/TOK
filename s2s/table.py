@@ -22,12 +22,12 @@ Each variable should have botton and top limits to calculate the alert level, as
 
 ###############################################################################
 #GFS
-def DATA_gfs_table(ens1, ens2, time, iz, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO)
+def DATA_gfs_table(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 	max_i = len(time)
 
-	prob_t_g1, prob_t_r1, prob_t_y1, value_t1, max_t1, min_t1 = prob_time._get_TIMEP(ens1, ens2, time, VAR, ixGFS, iyGFS, TOP, BOT)
+	prob_t_g1, prob_t_r1, prob_t_y1, value_t1, max_t1, min_t1 = prob_time._get_TIMEP(ens1, ens2, time, 24, ixGFS, iyGFS, TOP, BOT)
 
-	prob_a_g1, prob_a_r1, prob_a_y1, value_a1, max_a1, min_a1 = prob_area._get_AREAP(ens1, time, VAR, ixGFS, iyGFS, TOP, BOT)
+	prob_a_g1, prob_a_r1, prob_a_y1, value_a1, max_a1, min_a1 = prob_area._get_AREAP(ens1, time, ixGFS, iyGFS, TOP, BOT)
 
 	color	= []
 	value	= []
@@ -94,12 +94,12 @@ def DATA_gfs_table(ens1, ens2, time, iz, ixGFS, iyGFS, date0, utc0, TOP, BOT, PR
 
 ###############################################################################
 #WRF
-def DATA_wrf_table(ens1, ens2, time, iz, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO)
+def DATA_wrf_table(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO):
 	max_i = len(time)
 
-	prob_t_g1, prob_t_r1, prob_t_y1, value_t1, max_t1, min_t1 = prob_time._get_TIMEP(ens1, ens2, time, VAR, ixWRF, iyWRF, TOP, BOT)
+	prob_t_g1, prob_t_r1, prob_t_y1, value_t1, max_t1, min_t1 = prob_time._get_TIMEP(ens1, ens2, time, 24, ixWRF, iyWRF, TOP, BOT)
 
-	prob_a_g1, prob_a_r1, prob_a_y1, value_a1, max_a1, min_a1 = prob_area._get_AREAP(ens1, time, VAR, ixWRF, iyWRF, TOP, BOT)
+	prob_a_g1, prob_a_r1, prob_a_y1, value_a1, max_a1, min_a1 = prob_area._get_AREAP(ens1, time, ixWRF, iyWRF, TOP, BOT)
 
 	color	= []
 	value	= []
