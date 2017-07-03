@@ -43,13 +43,13 @@ def _get_LIM(var):
 ##############################################################################
 ## Checkin nc files
 def _get_FILE(dateC, date2):
-	ens1 = "/var/www/html/processamento/WRFD10001"+dateC.strftime('%Y%m%d')+"00.nc"
-	ens2 = "/var/www/html/processamento/WRFD10001"+date2.strftime('%Y%m%d')+"00.nc"
+	ens1 = "/var/www/html/processamento/WRFD10001"+dateC.strftime('%Y%m%d%H')+".nc"
+	ens2 = "/var/www/html/processamento/WRFD10001"+date2.strftime('%Y%m%d%H')+".nc"
 	while os.path.isfile(ens1) != True:
-		dateC = dateC - datetime.timedelta(days = 1)
-		date2 = date2 - datetime.timedelta(days = 1)
-		ens1 = "/var/www/html/processamento/WRFD10001"+dateC.strftime('%Y%m%d')+"00.nc"
-		ens2 = "/var/www/html/processamento/WRFD10001"+date2.strftime('%Y%m%d')+"00.nc"
+		dateC = dateC - datetime.timedelta(hours = 12)
+		date2 = date2 - datetime.timedelta(hours = 12)
+		ens1 = "/var/www/html/processamento/WRFD10001"+dateC.strftime('%Y%m%d%H')+".nc"
+		ens2 = "/var/www/html/processamento/WRFD10001"+date2.strftime('%Y%m%d%H')+".nc"
 		if os.path.isfile(ens2) != True:
 			ens1 = False
 			break

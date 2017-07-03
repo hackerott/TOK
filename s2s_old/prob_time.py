@@ -84,8 +84,13 @@ def _get_TIMEP(ncfile1, ncfile2, var, ix, iy, top_lim, bot_lim):
 
 
 	value, prob_g, prob_r, prob_y = _get_Prob(var_raw1, var_raw2, ix, iy, max_i, top_lim, bot_lim)
-	max_value = np.mean(value) + np.std(value)
-	min_value = np.mean(value) - np.std(value)
-
+	# max_value = np.mean(value) + np.std(value)
+	# min_value = np.mean(value) - np.std(value)
+	std_value = np.std(value)
+	max_value = []
+	min_value = []
+	for i in range(0, len(value)):
+		max_value.append((value[i]+std_value))
+		min_value.append((value[i]-std_value))
 	return(prob_g, prob_r, prob_y, value, max_value, min_value)
 

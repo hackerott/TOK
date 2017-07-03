@@ -80,9 +80,15 @@ def _get_AREAP(var_raw, time, ix, iy, top_lim, bot_lim, ):
 
 	value	= np.add(np.divide(v_1, 2), np.add(np.divide(np.add(np.add(np.add(v_2, v_3), np.add(v_4, v_5)), np.add(np.add(v_6, v_7), np.add(v_8, v_9))), 3), np.divide(np.add(np.add(np.add(np.add(v_10, v_11), np.add(v_12, v_13)), np.add(np.add(v_14, v_15), np.add(v_16, v_17))), np.add(np.add(np.add(v_18, v_19), np.add(v_20, v_21)), np.add(np.add(v_22, v_23), np.add(v_24, v_25)))), 6)))
 
-	max_value = np.mean(value) + np.std(value)
-	min_value = np.mean(value) - np.std(value)
+	# max_value = np.mean(value) + np.std(value)
+	# min_value = np.mean(value) - np.std(value)
+	std_value = np.std(value)
 
+	max_value = []
+	min_value = []
+	for i in range(0, len(value)):
+		max_value.append((value[i]+std_value))
+		min_value.append((value[i]-std_value))
 	# array	= [v_1, v_2, v_3, v_4, v_5, v_6, v_7, v_8, v_9, v_10, v_11, v_12, v_13, v_14, v_15, v_16, v_17, v_18, v_19, v_20, v_21, v_22, v_23, v_24, v_25] 
 	# max_index = np.divide((np.mean(array) + np.std(array)), max(array).any)
 	# min_index = np.divide((np.mean(array) - np.std(array)), min(array).any)
