@@ -42,13 +42,17 @@ def _get_LIM(var):
 	return(out[0], out[1], out[2])
 ##############################################################################
 ## Checkin nc files
-def _get_FILE(dateC, date2):
-	ens1 = "/var/www/html/processamento/GFSD10001"+dateC.strftime('%Y%m%d')+"00.nc"
+def _get_FILE():
+	# date = datetime.datetime.now()
+	# if date.hour >= 12:
+	date1 = date.replace(hour=00)
+	date2 = date1  - datetime.timedelta(days = 1)
+	ens1 = "/var/www/html/processamento/GFSD10001"+date1.strftime('%Y%m%d')+"00.nc"
 	ens2 = "/var/www/html/processamento/GFSD10001"+date2.strftime('%Y%m%d')+"00.nc"
 	while os.path.isfile(ens1) != True:
-		dateC = dateC - datetime.timedelta(days = 1)
+		date1 = date1 - datetime.timedelta(days = 1)
 		date2 = date2 - datetime.timedelta(days = 1)
-		ens1 = "/var/www/html/processamento/GFSD10001"+dateC.strftime('%Y%m%d')+"00.nc"
+		ens1 = "/var/www/html/processamento/GFSD10001"+date1.strftime('%Y%m%d')+"00.nc"
 		ens2 = "/var/www/html/processamento/GFSD10001"+date2.strftime('%Y%m%d')+"00.nc"
 		if os.path.isfile(ens2) != True:
 			ens1 = False

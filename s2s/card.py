@@ -27,14 +27,14 @@ This is exctly the same as calendar.
 #CFS
 def DATA_cfs_card(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, iz, ixCFS, iyCFS, date0, utc0, TOP, BOT, PRO):
 	max_i = len(time)
-	prob_t_g1, prob_t_r1, prob_t_y1, value_t1, max_t1, min_t1 = prob_time._get_TIMEP(ens1, ens5, time, VAR, ixCFS, iyCFS, TOP, BOT) 
-	prob_t_g2, prob_t_r2, prob_t_y2, value_t2, max_t2, min_t2 = prob_time._get_TIMEP(ens2, ens6, time, VAR, ixCFS, iyCFS, TOP, BOT)
-	prob_t_g3, prob_t_r3, prob_t_y3, value_t3, max_t3, min_t3 = prob_time._get_TIMEP(ens3, ens7, time, VAR, ixCFS, iyCFS, TOP, BOT)
-	prob_t_g4, prob_t_r4, prob_t_y4, value_t4, max_t4, min_t4 = prob_time._get_TIMEP(ens4, ens8, time, VAR, ixCFS, iyCFS, TOP, BOT)
-	prob_a_g1, prob_a_r1, prob_a_y1, value_a1, max_a1, min_a1 = prob_area._get_AREAP(ens1, time, VAR, ixCFS, iyCFS, TOP, BOT)
-	prob_a_g2, prob_a_r2, prob_a_y2, value_a2, max_a2, min_a2 = prob_area._get_AREAP(ens2, time, VAR, ixCFS, iyCFS, TOP, BOT)
-	prob_a_g3, prob_a_r3, prob_a_y3, value_a3, max_a3, min_a3 = prob_area._get_AREAP(ens3, time, VAR, ixCFS, iyCFS, TOP, BOT)
-	prob_a_g4, prob_a_r4, prob_a_y4, value_a4, max_a4, min_a4 = prob_area._get_AREAP(ens4, time, VAR, ixCFS, iyCFS, TOP, BOT)
+	prob_t_g1, prob_t_r1, prob_t_y1, value_t1, max_t1, min_t1 = prob_time._get_TIMEP(ens1, ens5, time, 4, ixCFS, iyCFS, TOP, BOT) 
+	prob_t_g2, prob_t_r2, prob_t_y2, value_t2, max_t2, min_t2 = prob_time._get_TIMEP(ens2, ens6, time, 4, ixCFS, iyCFS, TOP, BOT)
+	prob_t_g3, prob_t_r3, prob_t_y3, value_t3, max_t3, min_t3 = prob_time._get_TIMEP(ens3, ens7, time, 4, ixCFS, iyCFS, TOP, BOT)
+	prob_t_g4, prob_t_r4, prob_t_y4, value_t4, max_t4, min_t4 = prob_time._get_TIMEP(ens4, ens8, time, 4, ixCFS, iyCFS, TOP, BOT)
+	prob_a_g1, prob_a_r1, prob_a_y1, value_a1, max_a1, min_a1 = prob_area._get_AREAP(ens1, time, ixCFS, iyCFS, TOP, BOT)
+	prob_a_g2, prob_a_r2, prob_a_y2, value_a2, max_a2, min_a2 = prob_area._get_AREAP(ens2, time, ixCFS, iyCFS, TOP, BOT)
+	prob_a_g3, prob_a_r3, prob_a_y3, value_a3, max_a3, min_a3 = prob_area._get_AREAP(ens3, time, ixCFS, iyCFS, TOP, BOT)
+	prob_a_g4, prob_a_r4, prob_a_y4, value_a4, max_a4, min_a4 = prob_area._get_AREAP(ens4, time, ixCFS, iyCFS, TOP, BOT)
 	color	= []
 	value	= []
 	prob	= []
@@ -76,19 +76,20 @@ def DATA_cfs_card(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, iz, ixCF
 	#	fig.append(f1)
 		a += 4
 		b += 4
-		if date[i].day == tgt_day.day:
-			c = i
-			return(date[c], prob[c], color[c], value[c], maxi[c], mini[c], fig[c])
-			break
+	for i in range(0, max_i):
+		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i) + datetime.timedelta(hours = utc0)
+		if d1.day == tgt_day.day:
+				c = i
+				v1 = ((2*value_t1[i]  +  value_a1[i])/3)
 
-	return(date, prob, color, value, maxi, mini, fig)
-
+	return(date[c//4], prob[c//4], color[c//4], v1, maxi[c//4], mini[c//4], fig[c//4])
+		
 ###############################################################################
 #GFS
 def DATA_gfs_card(ens1, ens2, time, iz, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO)
 	max_i = len(time)
-	prob_t_g1, prob_t_r1, prob_t_y1, value_t1, max_t1, min_t1 = prob_time._get_TIMEP(ens1, ens2, time, VAR, ixGFS, iyGFS, TOP, BOT)
-	prob_a_g1, prob_a_r1, prob_a_y1, value_a1, max_a1, min_a1 = prob_area._get_AREAP(ens1, time, VAR, ixGFS, iyGFS, TOP, BOT)
+	prob_t_g1, prob_t_r1, prob_t_y1, value_t1, max_t1, min_t1 = prob_time._get_TIMEP(ens1, ens2, time, 24, ixGFS, iyGFS, TOP, BOT)
+	prob_a_g1, prob_a_r1, prob_a_y1, value_a1, max_a1, min_a1 = prob_area._get_AREAP(ens1, time, ixGFS, iyGFS, TOP, BOT)
 	color	= []
 	value	= []
 	prob	= []
@@ -136,20 +137,23 @@ def DATA_gfs_card(ens1, ens2, time, iz, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO
 			d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i*24) + datetime.timedelta(hours = utc0)
 			a += 6	
 			b += 6
-		date.append(d1)		
-		if date[i].day == tgt_day.day:
-			c = i
-			return(date[c], prob[c], color[c], value[c], maxi[c], mini[c], fig[c])
-			break
+		date.append(d1)
 
-	return(date, prob, color, value, maxi, mini, fig)	
+	for i in range(0, max_i):
+		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i) + datetime.timedelta(hours = utc0)
+		if d1.day == tgt_day.day:
+			if d1.hour  == tgt_day.hour:
+				c = i
+				v1 = ((2*value_t1[i]  +  value_a1[i])/3)
+
+	return(date[c//24], prob[c//24], color[c//24], v1, maxi[c//24], mini[c//24], fig[c//24])
 
 ###############################################################################
 #WRF
 def DATA_wrf_card(ens1, ens2, time, iz, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO)
 	max_i = len(time)
-	prob_t_g1, prob_t_r1, prob_t_y1, value_t1, max_t1, min_t1 = prob_time._get_TIMEP(ens1, ens2, time, VAR, ixWRF, iyWRF, TOP, BOT)
-	prob_a_g1, prob_a_r1, prob_a_y1, value_a1, max_a1, min_a1 = prob_area._get_AREAP(ens1, time, VAR, ixWRF, iyWRF, TOP, BOT)
+	prob_t_g1, prob_t_r1, prob_t_y1, value_t1, max_t1, min_t1 = prob_time._get_TIMEP(ens1, ens2, time, 12, ixWRF, iyWRF, TOP, BOT)
+	prob_a_g1, prob_a_r1, prob_a_y1, value_a1, max_a1, min_a1 = prob_area._get_AREAP(ens1, time, ixWRF, iyWRF, TOP, BOT)
 	color	= []
 	value	= []
 	prob	= []
@@ -191,11 +195,15 @@ def DATA_wrf_card(ens1, ens2, time, iz, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO
 	#	fig.append(f1)
 		a += 24
 		b += 24
-		if date[i].day == tgt_day.day:
-			c = i
-			return(date[c], prob[c], color[c], value[c], maxi[c], mini[c], fig[c])
-			break
-	return(date, prob, color, value, maxi, mini, fig)	
+
+	for i in range(0, max_i):
+		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i) + datetime.timedelta(hours = utc0)
+		if d1.day == tgt_day.day:
+			if d1.hour  == tgt_day.hour:
+				c = i
+				v1 = ((2*value_t1[i]  +  value_a1[i])/3)
+
+	return(date[c//24], prob[c//24], color[c//24], v1, maxi[c//24], mini[c//24], fig[c//24])
 
 ###############################################################################
 """

@@ -19,7 +19,6 @@ import figure
 Each variable should have botton and top limits to calculate the alert level, as also the limit for indecision, where the alert color should be truncated (ex: whem max prob is below X%, set color to y).
  
 """
-
 ###############################################################################
 #GFS
 def DATA_gfs_table(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
@@ -42,8 +41,8 @@ def DATA_gfs_table(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 	b = 0
 	for i in range(0, max_i):
 
-		max_v		= max(max_t1[i], max_t2[i])
-		min_v		= min(min_t1[i], min_t2[i])
+		max_v		= max(max_t1[i], max_a1[i])
+		min_v		= min(min_t1[i], min_a1[i])
 
 		prob_a_g	= (np.mean(prob_a_g1[i]) + np.mean(prob_a_g2[i]))/2
 		prob_t_g 	= (np.mean(prob_t_g1[i]) + np.mean(prob_t_g2[i]))/2
@@ -113,8 +112,8 @@ def DATA_wrf_table(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO):
 #	b = 24
 	for i in range(0, max_i//24):
 
-		max_v		= max(max_t1[i], max_t2[i])
-		min_v		= min(min_t1[i], min_t2[i])
+		max_v		= max(max_t1[i], max_a1[i])
+		min_v		= min(min_t1[i], min_a1[i])
 
 		prob_a_g	= (np.mean(prob_a_g1[i]) + np.mean(prob_a_g2[i]))/2
 		prob_t_g 	= (np.mean(prob_t_g1[i]) + np.mean(prob_t_g2[i]))/2

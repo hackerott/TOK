@@ -41,8 +41,7 @@ model 	= form.getvalue("tipo")
 #######################################
 ##Form treatment
 #ip  	= os.environ["REMOTE_ADDR"]
-date0	= datetime.datetime.strptime(date, '%Y%m%d') #add diference from now_date to start_date 
-date1	= date0 - datetime.timedelta(days =1) #add diference from now_date to start_date
+##ate1	= date0 - datetime.timedelta(days =1) #add diference from now_date to start_date
 lat0	= float(lat)
 lon0	= float(lon)
 utc0	= int(utc)
@@ -56,7 +55,7 @@ Validation will be inserted after, using flask to genarete a session token
 
 ###############################################################################
 ## get files, lat_lon, id and limits
-ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8 = cfs_var._get_FILE(date0, date1)
+ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8 = cfs_var._get_FILE()
 ix_cfs, iy_cfs = lat_lon.CFS_grab(ens1, lat, lon)
 var_id = cfs_var._get_ID(var)
 PRO, TOP, BOT = cfs_var._get_LIM(var)
@@ -93,8 +92,12 @@ elif var_id == 2:
 	time  	 = cfs_var._get_time('time', ens1)
 	if model == "calendar":
 		date, prob, color, value, maxi, mini, fig = calendar.DATA_cfs_calendar(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
+		for i in range(0, len(value)):
+			value[i] = value[i], var_rawb1[i, ix_cfs, iy_cfs]
 	elif model == "card":
 		date, prob, color, value, maxi, mini, fig = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
+		for i in range(0, len(value)):
+			value[i] = value[i], var_rawb1[i, ix_cfs, iy_cfs]
 	else:
 		success = json_out._get_ERROR(var_id, model) 
 		exit(1)

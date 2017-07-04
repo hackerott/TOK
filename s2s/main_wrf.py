@@ -29,7 +29,7 @@ model 	= form.getvalue("tipo")
 ##Form treatment
 #ip  	= os.environ["REMOTE_ADDR"]
 date0	= datetime.datetime.strptime(date, '%Y%m%d')
-date1	= date0 - datetime.timedelta(hours =12)
+date1	= date0 - datetime.timedelta(days = 1)
 lat0	= float(lat)
 lon0	= float(lon)
 utc0	= int(utc)

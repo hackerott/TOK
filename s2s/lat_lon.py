@@ -1,4 +1,3 @@
-import numpy as np
 import netCDF4
 import math
 import sys
@@ -55,7 +54,7 @@ def GFS_grab(gfs_file,lat0,lon0):
 	GFSfile	= netCDF4.Dataset(gfs_file, 'r')
 	latGFS	= GFSfile.variables['latitude']
 	lonGFS	= GFSfile.variables['longitude']		
-	minindexX, minindexY = _get_GFS(latGFS,lonGFS,lat0,lon0))
+	minindexX, minindexY = _get_GFS(latGFS,lonGFS,lat0,lon0)
 	return(minindexX, minindexY)
 
 
@@ -64,7 +63,7 @@ def CFS_grab(cfs_file,lat0,lon0):
     CFSfile = netCDF4.Dataset(cfs_file, 'r')
     latCFS = CFSfile.variables['latitude']
     lonCFS = CFSfile.variables['longitude']		
-	minindexX, minindexY = _get_CFS(latCFS,lonCFS,lat0,lon0))
+	minindexX, minindexY = _get_CFS(latCFS,lonCFS,lat0,lon0)
     return(minindexX, minindexY)
 
 
@@ -72,5 +71,5 @@ def WRF_grab(wrf_file, lat0, lon0):
     WRFfile = netCDF4.Dataset(wrf_file, 'r')
     latWRF = GFSfile.variables['XLAT']
     lonWRF = GFSfile.variables['XLON']	
-	minindexZ, minindexX, minindexY = _get_WRF(latWRF,lonWRF,lat0,lon0))
+	minindexZ, minindexX, minindexY = _get_WRF(latWRF,lonWRF,lat0,lon0)
     return(minindexX, minindexY)

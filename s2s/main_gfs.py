@@ -56,7 +56,7 @@ Validation will be inserted after, using flask to genarete a session token
 
 ###############################################################################
 ## get files, lat_lon, id and limits
-ens1, ens2 = gfs_var._get_FILE(date0, date1)
+ens1, ens2 = gfs_var._get_FILE()
 ix_gfs, iy_gfs = lat_lon.gfs_grab(ens1, lat, lon)
 var_id = gfs_var._get_ID(var)
 PRO, TOP, BOT = gfs_var._get_LIM(var)
