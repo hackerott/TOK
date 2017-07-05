@@ -13,7 +13,7 @@ from math import pi
 #######################################
 import prob_area
 import prob_time
-import figure
+# import figure
 #######################################
 """
 Each variable should have botton and top limits to calculate the alert level, as also the limit for indecision, where the alert color should be truncated (ex: whem max prob is below X%, set color to y).
@@ -71,12 +71,13 @@ def DATA_gfs_table(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 			value.append((2*value_t  +  value_a)/3)
 
 		
-		f1 = figure._get_table(value[i], CFS)
+		# f1 = figure._get_table(value[i], CFS)
 		prob.append(prob_c[argmax(prob_c)])		
 		maxi.append(max(max_v))
 		mini.append(min(min_v))
-		
-		fig.append(f1)
+		fig.append('Null')		
+		# fig.append(f1)
+
 		if b <= max_i - 24:
 			# a += 24
 			# b += 24

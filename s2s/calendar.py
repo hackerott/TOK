@@ -13,7 +13,7 @@ from math import pi
 #######################################
 import prob_area
 import prob_time
-import figure
+# import figure
 #######################################
 """
 Each variable should have botton and top limits to calculate the alert level, as also the limit for indecision, where the alert color should be truncated (ex: whem max prob is below X%, set color to y).
@@ -82,10 +82,11 @@ def DATA_cfs_calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCF
 		maxi.append(max(max_v))
 		mini.append(min(min_v))
 		date.append(d1)
+		fig.append('Null')
 		#fig.append(f1)
 		a += 4
 		b += 4
-	fig = figure._get_CFS()	
+#	fig = figure._get_CFS()	
 
 	return(date, prob, color, value, maxi, mini, fig)
 

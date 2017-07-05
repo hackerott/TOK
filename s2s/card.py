@@ -13,7 +13,7 @@ from math import pi
 #######################################
 import prob_area
 import prob_time
-import figure
+#import figure
 #######################################
 """
 Use date an time of request to present value as 'now' in GFS and WRF
@@ -74,6 +74,7 @@ def DATA_cfs_card(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, iz, ixCF
 		mini.append(min(min_v))
 		date.append(d1)
 	#	fig.append(f1)
+		fig.append('Null')
 		a += 4
 		b += 4
 	for i in range(0, max_i):
