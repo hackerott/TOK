@@ -15,7 +15,9 @@ def _get_NCVAR(var):
 		'radiacao'	: 'dswrfsfc',
 		'umidade'	: ['spfh2m', 'tmp2m', 'pressfc'], 
 		'vento'		: ['ugrd10m', 'vgrd10m'],
-		'nuvem'		: 'tcdcclm'
+		'nuvem'		: 'tcdcclm',
+		'time'		: 'time'
+
 		}.get(var, 'Null')
 #######################################
 ## return ID for each var
@@ -32,10 +34,10 @@ def _get_ID(var):
 ## return limits for each var 
 def _get_LIM(var):
 	DIC = {
-		'chuva'		: [0.4, 10, 0.5]
-		'vento'		: [0.4, 7, 2]
-		'temp'		: [0.4, 27, 20]
-		'radiacao'	: [0.4, 1400, 800]
+		'chuva'		: [0.4, 10, 0.5],
+		'vento'		: [0.4, 7, 2],
+		'temp'		: [0.4, 27, 20],
+		'radiacao'	: [0.4, 1400, 800],
 		'umidade'	: [0.4, 0.3, 0.7]
 		}
 	out =  DIC.get(var, ['Null', 'Null', 'Null'])
@@ -43,7 +45,7 @@ def _get_LIM(var):
 ##############################################################################
 ## Checkin nc files
 def _get_FILE():
-	# date = datetime.datetime.now()
+	date = datetime.datetime.now()
 	# if date.hour >= 12:
 	date1 = date.replace(hour=00)
 	date2 = date1  - datetime.timedelta(days = 1)
@@ -63,12 +65,13 @@ def _get_FILE():
 			success = json_out._get_ERROR('file', 'GFS') 			
 			exit(1)	
 
-	return(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8)
+	return(ens1, ens2, date1)
 ##############################################################################
 ## Variables
 def _get_rain(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
+		ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc]
 	except:
 		var_raw1 = np.nan	
@@ -77,6 +80,7 @@ def _get_rain(var, ncfile):
 def _get_wind(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
+		ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_rawu = ncfile1.variables[var_nc[0]] 		
 		var_rawv = ncfile1.variables[var_nc[1]] 
 		var_raw1 = np.sqrt(np.add(np.power(var_rawu, 2), np.power(var_rawv, 2))) # wind intensity
@@ -89,6 +93,7 @@ def _get_wind(var, ncfile):
 def _get_temperature(var,  ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
+		ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc]
 		var_raw1  =np.subtract(var_raw1, 273.15)
 	except:
@@ -98,6 +103,7 @@ def _get_temperature(var,  ncfile):
 def _get_radiation(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
+		ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc]
 	except:
 		var_raw1 = np.nan
@@ -106,6 +112,7 @@ def _get_radiation(var, ncfile):
 def _get_humidity(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
+		ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_rawa = ncfile1.variables[var_nc[0]] 		
 		var_rawb = ncfile1.variables[var_nc[1]] 		
 		var_rawc = ncfile1.variables[var_nc[2]]
@@ -117,10 +124,20 @@ def _get_humidity(var, ncfile):
 def _get_cloud(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
+		ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc]
 	except:
 		var_raw1 = np.nan
 	return(var_raw1)
+def _get_time(var, ncfile):
+	try:
+		var_nc = _get_NCVAR(var)
+		ncfile = netCDF4.Dataset(ncfile, 'r')
+		var_raw1 = ncfile.variables[var_nc]
+	except:
+		var_raw1 = np.nan	
+	return(var_raw1)
+
 #######################################
 # Teturn all vars
 def _get_all(var, ncfile):

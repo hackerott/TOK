@@ -13,6 +13,7 @@ def _get_NCVAR(var):
 		'radiacao'	: '',
 		'umidade'	: '', 
 		'vento'		: '',
+		'time'		: 'TIME'
 		}.get(var, 'Null')
 
 #######################################
@@ -63,7 +64,7 @@ def _get_FILE():
 			success = json_out._get_ERROR('file', 'GFS') 			
 			exit(1)	
 
-	return(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8)
+	return(ens1, ens2, date1)
 
 ##############################################################################
 ## Variables
@@ -107,6 +108,14 @@ def _get_cloud(var, ncfile):
 		var_raw1 = ncfile.variables[var_nc]
 	except:
 		var_raw1 = np.nan
+	return(var_raw1)
+
+def _get_time(var, ncfile):
+	try:
+		var_nc = _get_NCVAR(var)
+		var_raw1 = ncfile.variables[var_nc]
+	except:
+		var_raw1 = np.nan	
 	return(var_raw1)
 
 #######################################

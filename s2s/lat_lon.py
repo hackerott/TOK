@@ -8,6 +8,7 @@ from numpy import cos, sin, arccos, power, sqrt, exp, arctan2, argmin, argmax, a
 #Functions to locate lat lon from a np.array
 ## CFS and GFS are exactly the same, keeping separated just for esthetics  
 def _get_CFS(latCFS,lonCFS,lat0,lon0):
+    rad_factor =  pi/180.0
     latvals = latCFS[:] * rad_factor
     lonvals = lonCFS[:] * rad_factor
     lat0_rad = lat0 * rad_factor
@@ -19,6 +20,7 @@ def _get_CFS(latCFS,lonCFS,lat0,lon0):
     return(minindexX, minindexY)
 
 def _get_GFS(latGFS,lonGFS,lat0,lon0):
+    rad_factor =  pi/180.0
 	latvals = latGFS[:] * rad_factor
 	lonvals = lonGFS[:] * rad_factor
 	lat0_rad = lat0 * rad_factor
@@ -50,7 +52,6 @@ def _get_WRF(latWRF, lonWRF, lat0, lon0):
 #Functions to locate lat lon from a nc file
 
 def GFS_grab(gfs_file,lat0,lon0):
-	rad_factor =  pi/180.0
 	GFSfile	= netCDF4.Dataset(gfs_file, 'r')
 	latGFS	= GFSfile.variables['latitude']
 	lonGFS	= GFSfile.variables['longitude']		
@@ -59,7 +60,6 @@ def GFS_grab(gfs_file,lat0,lon0):
 
 
 def CFS_grab(cfs_file,lat0,lon0):
-    rad_factor =  pi/180.0
     CFSfile = netCDF4.Dataset(cfs_file, 'r')
     latCFS = CFSfile.variables['latitude']
     lonCFS = CFSfile.variables['longitude']		

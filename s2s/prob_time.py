@@ -26,7 +26,10 @@ def _get_Prob(var_raw1, var_raw2, iz, ix, iy, max_i, top_lim, bot_lim):
 	prob_g = [0]*max_i
 	prob_r = [0]*max_i
 	var1   = [0]*max_i
+	var2   = [0]*max_i
 	for i in  range(0, max_i):
+		if i+iz >= max_i:
+			break
 		var1[i] =  var_raw1[i, ix, iy]
 		var2[i] =  var_raw2[i+iz, ix, iy]
 		if var1[i] < top_lim:
@@ -65,12 +68,3 @@ def _get_TIMEP(var_raw1, var_raw2, iz, ix, iy, top_lim, bot_lim):
                 min_value.append((value[i]-std_value))
 	return(prob_g, prob_r, prob_y, value, max_value, min_value)
 
-
-
-def _get_FIG(var_raw1, var_raw2, iz, ix, iy)
-
-	max_i = len(var_raw1[:, ix, iy])
-
-	value, prob_g, prob_r, prob_y = _get_Prob(var_raw1, var_raw2, ix, iy, max_i, 1, 1)
-
-	return(value)

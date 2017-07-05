@@ -25,7 +25,7 @@ This is exctly the same as calendar.
 """
 ###############################################################################
 #CFS
-def DATA_cfs_card(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, iz, ixCFS, iyCFS, date0, utc0, TOP, BOT, PRO):
+def DATA_cfs_card(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, iyCFS, date0, utc0, TOP, BOT, PRO):
 	max_i = len(time)
 	prob_t_g1, prob_t_r1, prob_t_y1, value_t1, max_t1, min_t1 = prob_time._get_TIMEP(ens1, ens5, time, 4, ixCFS, iyCFS, TOP, BOT) 
 	prob_t_g2, prob_t_r2, prob_t_y2, value_t2, max_t2, min_t2 = prob_time._get_TIMEP(ens2, ens6, time, 4, ixCFS, iyCFS, TOP, BOT)
@@ -61,15 +61,15 @@ def DATA_cfs_card(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, iz, ixCF
 		prob_y = ((2*prob_t_y + prob_a_y)/3)
 		prob_c = [prob_g, prob_r, prob_y]
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
-		if prob_c[argmax(prob_c)] < PRO:
+		if prob_c[np.argmax(prob_c)] < PRO:
 			color.append(2)
 			value.append((((2*value_t  +  value_a)/3) + (max(max_v) + min(min_v)))/3)
 			
 		else:
-			color.append((argmax(prob_c) + 1))
+			color.append((np.argmax(prob_c) + 1))
 			value.append((2*value_t  +  value_a)/3)
 	#	f1 = figure._get_card(value[i], CFS)
-		prob.append(prob_c[argmax(prob_c)])		
+		prob.append(prob_c[np.argmax(prob_c)])		
 		maxi.append(max(max_v))
 		mini.append(min(min_v))
 		date.append(d1)
@@ -87,7 +87,8 @@ def DATA_cfs_card(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, iz, ixCF
 		
 ###############################################################################
 #GFS
-def DATA_gfs_card(ens1, ens2, time, iz, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO)
+def DATA_gfs_card(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
+
 	max_i = len(time)
 	prob_t_g1, prob_t_r1, prob_t_y1, value_t1, max_t1, min_t1 = prob_time._get_TIMEP(ens1, ens2, time, 24, ixGFS, iyGFS, TOP, BOT)
 	prob_a_g1, prob_a_r1, prob_a_y1, value_a1, max_a1, min_a1 = prob_area._get_AREAP(ens1, time, ixGFS, iyGFS, TOP, BOT)
@@ -116,16 +117,16 @@ def DATA_gfs_card(ens1, ens2, time, iz, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO
 		prob_r	= ((2*prob_t_r + prob_a_r)/3)
 		prob_y	= ((2*prob_t_y + prob_a_y)/3)
 		prob_c	= [prob_g, prob_r, prob_y]
-		if prob_c[argmax(prob_c)] < PRO:
+		if prob_c[np.argmax(prob_c)] < PRO:
 			color.append(2)
 			value.append((((2*value_t  +  value_a)/3) + (max(max_v) + min(min_v)))/3)
 			
 		else:
-			color.append((argmax(prob_c) + 1))
+			color.append((np.argmax(prob_c) + 1))
 			value.append((2*value_t  +  value_a)/3)
 	#	d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i*24) + datetime.timedelta(hours = utc0)
 	#	f1 = figure._get_card(value[i], CFS)
-		prob.append(prob_c[argmax(prob_c)])		
+		prob.append(prob_c[np.argmax(prob_c)])		
 		maxi.append(max(max_v))
 		mini.append(min(min_v))
 	#	date.append(d1)
@@ -151,7 +152,7 @@ def DATA_gfs_card(ens1, ens2, time, iz, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO
 
 ###############################################################################
 #WRF
-def DATA_wrf_card(ens1, ens2, time, iz, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO)
+def DATA_wrf_card(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO):
 	max_i = len(time)
 	prob_t_g1, prob_t_r1, prob_t_y1, value_t1, max_t1, min_t1 = prob_time._get_TIMEP(ens1, ens2, time, 12, ixWRF, iyWRF, TOP, BOT)
 	prob_a_g1, prob_a_r1, prob_a_y1, value_a1, max_a1, min_a1 = prob_area._get_AREAP(ens1, time, ixWRF, iyWRF, TOP, BOT)
@@ -180,16 +181,16 @@ def DATA_wrf_card(ens1, ens2, time, iz, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO
 		prob_r	= ((2*prob_t_r + prob_a_r)/3)
 		prob_y	= ((2*prob_t_y + prob_a_y)/3)
 		prob_c	= [prob_g, prob_r, prob_y]
-		if prob_c[argmax(prob_c)] < PRO:
+		if prob_c[np.argmax(prob_c)] < PRO:
 			color.append(2)
 			value.append((((2*value_t  +  value_a)/3) + (max(max_v) + min(min_v)))/3)
 			
 		else:
-			color.append((argmax(prob_c) + 1))
+			color.append((np.argmax(prob_c) + 1))
 			value.append((2*value_t  +  value_a)/3)
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
 	#	f1 = figure._get_card(value[i], CFS)
-		prob.append(prob_c[argmax(prob_c)])		
+		prob.append(prob_c[np.argmax(prob_c)])		
 		maxi.append(max(max_v))
 		mini.append(min(min_v))
 		date.append(d1)

@@ -3,6 +3,7 @@
 
 import cgi
 import datetime
+import json
 # import os
 # import numpy as np
 # import netCDF4
@@ -10,20 +11,19 @@ import datetime
 # import sys
 # import cgitb
 # import calendar
-# import json
 # import base64
 
 # from math import pi
 # from numpy import cos, sin, arccos, power, sqrt, exp, arctan2, argmin, argmax, arctan
 #######################################
 # S2S imports
-import var_cfs
+import cfs_var
 import lat_lon
 import calendar
 import card
 import prob_area
 import prob_time
-import json_out
+import json_output
 
 #######################################
 ##	GET form			
@@ -56,7 +56,7 @@ Validation will be inserted after, using flask to genarete a session token
 
 ###############################################################################
 ## get files, lat_lon, id and limits
-ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8 = cfs_var._get_FILE()
+ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, date0 = cfs_var._get_FILE()
 ix_cfs, iy_cfs = lat_lon.CFS_grab(ens1, lat, lon)
 var_id = cfs_var._get_ID(var)
 PRO, TOP, BOT = cfs_var._get_LIM(var)
@@ -78,7 +78,7 @@ if var_id == 1 :
 	elif model == "card":
 		date, prob, color, value, maxi, mini, fig = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 	else:
-		success = json_out._get_ERROR(var_id, model) 
+		success = json_output._get_ERROR(var_id, model) 
 		exit(1)
 
 elif var_id == 2:
@@ -100,7 +100,7 @@ elif var_id == 2:
 		for i in range(0, len(value)):
 			value[i] = [value[i], var_rawb1[i, ix_cfs, iy_cfs]]
 	else:
-		success = json_out._get_ERROR(var_id, model) 
+		success = json_output._get_ERROR(var_id, model) 
 		exit(1)
 
 elif var_id == 3:
@@ -118,7 +118,7 @@ elif var_id == 3:
 	elif model == "card":
 		date, prob, color, value, maxi, mini, fig = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 	else:
-		success, dic = json_out._get_ERROR(var_id, model) 
+		success, dic = json_output._get_ERROR(var_id, model) 
 
 
 elif var_id == 4:
@@ -136,7 +136,7 @@ elif var_id == 4:
 	elif model == "card":
 		date, prob, color, value, maxi, mini, fig = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 	else:
-		success, dic = json_out._get_ERROR(var_id, model) 
+		success, dic = json_output._get_ERROR(var_id, model) 
 
 
 elif var_id == 5:
@@ -154,7 +154,7 @@ elif var_id == 5:
 	elif model == "card":
 		date, prob, color, value, maxi, mini, fig = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 	else:
-		success, dic = json_out._get_ERROR(var_id, model) 
+		success, dic = json_output._get_ERROR(var_id, model) 
 
 
 elif var_id == 6:
@@ -182,7 +182,7 @@ elif var_id == 6:
 		date5, prob5, color5, value5, maxi5, mini5, fig5 = card.DATA_cfs_card(humidity1, humidity2, humidity3, humidity4, humidity5, humidity6, humidity7, humidity8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
 
 	else:
-		success, dic = json_out._get_ERROR(var_id, model) 
+		success, dic = json_output._get_ERROR(var_id, model) 
 
 
 	date	= [date1, date2, date3, date4, date5]
@@ -194,12 +194,12 @@ elif var_id == 6:
 	fig		= [fig1, fig2, fig3, fig4, fig5]
 
 else:
-	success, dic = json_out._get_ERROR(var_id, model)
+	success, dic = json_output._get_ERROR(var_id, model)
 	print "Content-type: application/json\n\n"
 	print json.dumps(dic)
 	exit(1)
 
-success, dic = json_out._get_OUT(date, prob, color, value, maxi, mini, fig, model, var_id)
+success, dic = json_output._get_OUT(date, prob, color, value, maxi, mini, fig, model, var_id)
 
 if success == True:
 	print "Content-type: application/json\n\n"
