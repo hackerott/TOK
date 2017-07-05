@@ -22,21 +22,21 @@ lat 	= form.getvalue("lat")
 lon 	= form.getvalue("lon")	
 utc 	= form.getvalue("utc")	
 var 	= form.getvalue("var")	
-date 	= form.getvalue("date")
+#date 	= form.getvalue("date")
 model 	= form.getvalue("tipo")
 
 #######################################
 ##Form treatment
 #ip  	= os.environ["REMOTE_ADDR"]
-date0	= datetime.datetime.strptime(date, '%Y%m%d')
-date1	= date0 - datetime.timedelta(days = 1)
+# date0	= datetime.datetime.strptime(date, '%Y%m%d')
+# date1	= date0 - datetime.timedelta(days = 1)
 lat0	= float(lat)
 lon0	= float(lon)
 utc0	= int(utc)
 
 #######################################
 ## get files, lat_lon, id and limits
-ens1, ens2 = wrf_var._get_FILE(date0, date1)
+ens1, ens2 = wrf_var._get_FILE()
 ix_wrf, iy_wrf = lat_lon.wrf_grab(ens1, lat, lon)
 var_id = wrf_var._get_ID(var)
 PRO, TOP, BOT = wrf_var._get_LIM(var)
@@ -54,8 +54,7 @@ if var_id == 1 :
 	elif model == "table":
 		date, prob, color, value, maxi, mini, fig = table.DATA_wrf_table(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
 	else:
-		success = json_out._get_ERROR(var_id, model) 
-		exit(1)
+		success, dic = json_out._get_ERROR(var_id, model) 
 
 elif var_id == 2:
 	var_rawa1, var_rawb1 = wrf_var._get_wind(var, ens1)
@@ -64,18 +63,17 @@ elif var_id == 2:
 	if model == "calendar":
 		date, prob, color, value, maxi, mini, fig = calendar.DATA_wrf_calendar(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
 		for i in range(0, len(value)):
-			value[i] = value[i], var_rawb1[i, ix_wrf, iy_wrf]
+			value[i] = [value[i], var_rawb1[i, ix_wrf, iy_wrf]]
 	elif model == "card":
 		date, prob, color, value, maxi, mini, fig = card.DATA_wrf_card(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
 		for i in range(0, len(value)):
-			value[i] = value[i], var_rawb1[i, ix_wrf, iy_wrf]
+			value[i] = [value[i], var_rawb1[i, ix_wrf, iy_wrf]]
 	elif model == "table":
 		date, prob, color, value, maxi, mini, fig = table.DATA_wrf_table(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
 		for i in range(0, len(value)):
-			value[i] = value[i], var_rawb1[i, ix_wrf, iy_wrf]
+			value[i] = [value[i], var_rawb1[i, ix_wrf, iy_wrf]]
 	else:
-		success = json_out._get_ERROR(var_id, model) 
-		exit(1)
+		success, dic = json_out._get_ERROR(var_id, model) 
 
 elif var_id == 3:
 	var_raw1 = wrf_var._get_temperature(var, ens1)
@@ -88,8 +86,7 @@ elif var_id == 3:
 	elif model == "table":
 		date, prob, color, value, maxi, mini, fig = table.DATA_wrf_table(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
 	else:
-		success = json_out._get_ERROR(var_id, model) 
-		exit(1)
+		success, dic = json_out._get_ERROR(var_id, model) 
 
 elif var_id == 4:
 	var_raw1 = wrf_var._get_radiation(var, ens1)
@@ -102,8 +99,7 @@ elif var_id == 4:
 	elif model == "table":
 		date, prob, color, value, maxi, mini, fig = table.DATA_wrf_table(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
 	else:
-		success = json_out._get_ERROR(var_id, model) 
-		exit(1)
+		success, dic = json_out._get_ERROR(var_id, model) 
 
 elif var_id == 5:
 	var_raw1 = wrf_var._get_humidity(var, ens1)
@@ -116,8 +112,7 @@ elif var_id == 5:
 	elif model == "table":
 		date, prob, color, value, maxi, mini, fig = table.DATA_wrf_table(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
 	else:
-		success = json_out._get_ERROR(var_id, model) 
-		exit(1)
+		success, dic = json_out._get_ERROR(var_id, model) 
 
 elif var_id == 6:
 	rain1, speed1, direction1, radiation1, temperature1, humidity1 = wrf_var._get_all(var, ens1)
@@ -145,8 +140,7 @@ elif var_id == 6:
 		date5, prob5, color5, value5, maxi5, mini5, fig5 = table.DATA_wrf_table(humidity1, humidity2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
 
 	else:
-		success = json_out._get_ERROR(var_id, model) 
-		exit(1)
+		success, dic = json_out._get_ERROR(var_id, model) 
 
 	date	= [date1, date2, date3, date4, date5]
 	prob	= [prob1, prob2, prob3, prob4, prob5]
@@ -157,12 +151,18 @@ elif var_id == 6:
 	fig		= [fig1, fig2, fig3, fig4, fig5]
 
 else:
-	success = json_out._get_ERROR(var_id, model)
+	success, dic = json_out._get_ERROR(var_id, model)
+	print "Content-type: application/json\n\n"
+	print json.dumps(dic)
 	exit(1)
 
-success = json_out._get_OUT(date, prob, color, value, maxi, mini, fig, model)
+success, dic = json_out._get_OUT(date, prob, color, value, maxi, mini, fig, model, var_id)
 
 if success == True:
+	print "Content-type: application/json\n\n"
+	print json.dumps(dic)
 	exit(0)
 else:
+	print "Content-type: application/json\n\n"
+	print json.dumps(dic)
 	exit(1)

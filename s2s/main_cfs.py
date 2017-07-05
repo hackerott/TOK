@@ -33,7 +33,7 @@ lat 	= form.getvalue("lat")
 lon 	= form.getvalue("lon")	
 utc 	= form.getvalue("utc")	
 var 	= form.getvalue("var")	
-date 	= form.getvalue("date")
+#date 	= form.getvalue("date")
 model 	= form.getvalue("tipo")
 #token 	= form.getvalue("token")
 #cid 	= form.getvalue("id")
@@ -41,7 +41,8 @@ model 	= form.getvalue("tipo")
 #######################################
 ##Form treatment
 #ip  	= os.environ["REMOTE_ADDR"]
-##ate1	= date0 - datetime.timedelta(days =1) #add diference from now_date to start_date
+# date0	= datetime.datetime.strptime(date, '%Y%m%d') #add diference from now_date to start_date 
+# date1	= date0 - datetime.timedelta(days =1) #add diference from now_date to start_date
 lat0	= float(lat)
 lon0	= float(lon)
 utc0	= int(utc)
@@ -93,11 +94,11 @@ elif var_id == 2:
 	if model == "calendar":
 		date, prob, color, value, maxi, mini, fig = calendar.DATA_cfs_calendar(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
 		for i in range(0, len(value)):
-			value[i] = value[i], var_rawb1[i, ix_cfs, iy_cfs]
+			value[i] = [value[i], var_rawb1[i, ix_cfs, iy_cfs]]
 	elif model == "card":
 		date, prob, color, value, maxi, mini, fig = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 		for i in range(0, len(value)):
-			value[i] = value[i], var_rawb1[i, ix_cfs, iy_cfs]
+			value[i] = [value[i], var_rawb1[i, ix_cfs, iy_cfs]]
 	else:
 		success = json_out._get_ERROR(var_id, model) 
 		exit(1)
@@ -117,8 +118,8 @@ elif var_id == 3:
 	elif model == "card":
 		date, prob, color, value, maxi, mini, fig = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 	else:
-		success = json_out._get_ERROR(var_id, model) 
-		exit(1)
+		success, dic = json_out._get_ERROR(var_id, model) 
+
 
 elif var_id == 4:
 	var_raw1 = cfs_var._get_radiation(var, ens1)
@@ -135,8 +136,8 @@ elif var_id == 4:
 	elif model == "card":
 		date, prob, color, value, maxi, mini, fig = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 	else:
-		success = json_out._get_ERROR(var_id, model) 
-		exit(1)
+		success, dic = json_out._get_ERROR(var_id, model) 
+
 
 elif var_id == 5:
 	var_raw1 = cfs_var._get_humidity(var, ens1)
@@ -153,8 +154,8 @@ elif var_id == 5:
 	elif model == "card":
 		date, prob, color, value, maxi, mini, fig = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 	else:
-		success = json_out._get_ERROR(var_id, model) 
-		exit(1)
+		success, dic = json_out._get_ERROR(var_id, model) 
+
 
 elif var_id == 6:
 	rain1, speed1, direction1, radiation1, temperature1, humidity1 = cfs_var._get_all(var, ens1)
@@ -181,8 +182,8 @@ elif var_id == 6:
 		date5, prob5, color5, value5, maxi5, mini5, fig5 = card.DATA_cfs_card(humidity1, humidity2, humidity3, humidity4, humidity5, humidity6, humidity7, humidity8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
 
 	else:
-		success = json_out._get_ERROR(var_id, model) 
-		exit(1)
+		success, dic = json_out._get_ERROR(var_id, model) 
+
 
 	date	= [date1, date2, date3, date4, date5]
 	prob	= [prob1, prob2, prob3, prob4, prob5]
@@ -193,12 +194,18 @@ elif var_id == 6:
 	fig		= [fig1, fig2, fig3, fig4, fig5]
 
 else:
-	success = json_out._get_ERROR(var_id, model)
+	success, dic = json_out._get_ERROR(var_id, model)
+	print "Content-type: application/json\n\n"
+	print json.dumps(dic)
 	exit(1)
 
-success = json_out._get_OUT(date, prob, color, value, maxi, mini, fig, model)
+success, dic = json_out._get_OUT(date, prob, color, value, maxi, mini, fig, model, var_id)
 
 if success == True:
+	print "Content-type: application/json\n\n"
+	print json.dumps(dic)
 	exit(0)
 else:
+	print "Content-type: application/json\n\n"
+	print json.dumps(dic)
 	exit(1)
