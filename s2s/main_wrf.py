@@ -37,7 +37,7 @@ utc0	= int(utc)
 #######################################
 ## get files, lat_lon, id and limits
 ens1, ens2, date0 = wrf_var._get_FILE()
-ix_wrf, iy_wrf = lat_lon.wrf_grab(ens1, lat, lon)
+ix_wrf, iy_wrf = lat_lon.WRF_grab(ens1, lat0, lon0)
 var_id = wrf_var._get_ID(var)
 PRO, TOP, BOT = wrf_var._get_LIM(var)
 

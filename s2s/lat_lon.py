@@ -1,6 +1,8 @@
 import netCDF4
 import math
 import sys
+import numpy as np
+
 from math import pi
 from numpy import cos, sin, arccos, power, sqrt, exp, arctan2, argmin, argmax, arctan
 
@@ -69,7 +71,7 @@ def CFS_grab(cfs_file,lat0,lon0):
 
 def WRF_grab(wrf_file, lat0, lon0):
     WRFfile = netCDF4.Dataset(wrf_file, 'r')
-    latWRF = GFSfile.variables['XLAT']
-    lonWRF = GFSfile.variables['XLON']	
+    latWRF = WRFfile.variables['XLAT']
+    lonWRF = WRFfile.variables['XLONG']	
 	minindexZ, minindexX, minindexY = _get_WRF(latWRF,lonWRF,lat0,lon0)
     return(minindexX, minindexY)

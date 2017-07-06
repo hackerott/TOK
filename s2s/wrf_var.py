@@ -3,17 +3,20 @@
 
 import numpy as np
 import netCDF4
+import os
+import datetime
 
 #######################################
 ## return the nc var_names for each variable
 def _get_NCVAR(var):
 	return {
-		'chuva'		: ['RAINC', 'RAINNC'],
-		'temp'		: '',
-		'radiacao'	: '',
-		'umidade'	: '', 
-		'vento'		: '',
-		'time'		: 'TIME'
+ 				'chuva'         : ['RAINC', 'RAINNC'],
+                'temp'          : 'T2',
+                'radiacao'      : '',
+                'umidade'       : ['Q2', 'T2', 'PSFC'],
+                'vento'         : ['U10', 'V10'],
+                'time'          : 'TIME',
+                'nuvem'         : 'CLDFRA'
 		}.get(var, 'Null')
 
 #######################################
@@ -48,13 +51,13 @@ def _get_FILE():
 	if date.hour >= 12:
 		date1 = date.replace(hour=12)
 		date2 = date1  - datetime.timedelta(hours = 12)
-	ens1 = "/var/www/html/processamento/WRFD10001"+date1.strftime('%Y%m%d%H')+".nc"
-	ens2 = "/var/www/html/processamento/WRFD10001"+date2.strftime('%Y%m%d%H')+".nc"
+	ens1 = "/var/www/html/processamento/WRFD20101"+date1.strftime('%Y%m%d%H')+".nc"
+	ens2 = "/var/www/html/processamento/WRFD20101"+date2.strftime('%Y%m%d%H')+".nc"
 	while os.path.isfile(ens1) != True:
 		date1 = date1 - datetime.timedelta(hours = 12)
 		date2 = date2 - datetime.timedelta(hours = 12)
-		ens1 = "/var/www/html/processamento/WRFD10001"+date1.strftime('%Y%m%d%H')+".nc"
-		ens2 = "/var/www/html/processamento/WRFD10001"+date2.strftime('%Y%m%d%H')+".nc"
+		ens1 = "/var/www/html/processamento/WRFD20101"+date1.strftime('%Y%m%d%H')+".nc"
+		ens2 = "/var/www/html/processamento/WRFD20101"+date2.strftime('%Y%m%d%H')+".nc"
 		if os.path.isfile(ens2) != True:
 			ens1 = False
 			break
@@ -69,39 +72,60 @@ def _get_FILE():
 ##############################################################################
 ## Variables
 def _get_rain(var, ncfile):
-	var_nc = _get_NCVAR(var[0])
-	var_rawa = ncfile.variables[var_nc[0]]	
-	var_rawb = ncfile.variables[var_nc[1]]
-	var_raw1 = np.add(var_rawa, var_rawb)
+	try:
+		var_nc = _get_NCVAR(var)
+		ncfile = netCDF4.Dataset(ncfile, 'r')
+		var_rawa = ncfile.variables[var_nc[0]]	
+		var_rawb = ncfile.variables[var_nc[1]]
+		var_raw1 = np.add(var_rawa, var_rawb)
+	except:
+		var_raw1 = np.nan	
 	return(var_raw1)
 
 def _get_wind(var, ncfile):
-	var_nc = _get_NCVAR(var)
-	var_rawu = ncfile1.variables[var_nc[0]] 		
-	var_rawv = ncfile1.variables[var_nc[1]] 
-	var_raw1 = np.sqrt(np.add(np.power(var_rawu, 2), np.power(var_rawv, 2))) # wind intensity
-	var_raw2 = np.arctan2(var_rawu, var_rawv) + np.power(var_rawv, 2)
+	try:
+		var_nc = _get_NCVAR(var)
+		ncfile = netCDF4.Dataset(ncfile, 'r')
+		var_rawu = ncfile1.variables[var_nc[0]] 		
+		var_rawv = ncfile1.variables[var_nc[1]] 
+		var_raw1 = np.sqrt(np.add(np.power(var_rawu, 2), np.power(var_rawv, 2))) # wind intensity
+		var_raw2 = np.arctan2(var_rawu, var_rawv) + np.power(var_rawv, 2)
+	except:
+		var_raw1 = np.nan
+		var_raw2 = np.nan
 	return(var_raw1, var_raw2)
 
-def _get_radiation(var, ncfile):
-	var_nc = _get_NCVAR(var)
-	var_raw1 = ncfile.variables[var_nc]
-	return(var_raw1)
 
 def _get_temperature(var,  ncfile):
-	var_nc = _get_NCVAR(var)
-	var_raw1 = ncfile.variables[var_nc]
-	var_raw1  =np.subtract(var_raw1, 273.15)
+	try:
+		var_nc = _get_NCVAR(var)
+		ncfile = netCDF4.Dataset(ncfile, 'r')
+		var_raw1 = ncfile.variables[var_nc]
+		var_raw1  =np.subtract(var_raw1, 273.15)
+	except:
+		var_raw1 = np.nan
+	return(var_raw1)
+
+def _get_radiation(var, ncfile):
+	try:
+		var_nc = _get_NCVAR(var)
+		ncfile = netCDF4.Dataset(ncfile, 'r')
+		var_raw1 = ncfile.variables[var_nc]
+	except:
+		var_raw1 = np.nan
 	return(var_raw1)
 
 def _get_humidity(var, ncfile):
-	var_nc = _get_NCVAR(var)
-	var_rawa = ncfile1.variables[var_nc[0]] 		
-	var_rawb = ncfile1.variables[var_nc[1]] 		
-	var_rawc = ncfile1.variables[var_nc[2]]
-	var_raw1 = np.multiply(np.multiply(100, np.divide(var_rawa, np.divide(379.90516, var_rawc))), np.exp(np.multiply(17.29, np.divide(np.add(var_rawb, -273.15), np.add(var_rawb, -35.86))))) 
+	try:
+		var_nc = _get_NCVAR(var)
+		ncfile = netCDF4.Dataset(ncfile, 'r')
+		var_rawa = ncfile1.variables[var_nc[0]] 		
+		var_rawb = ncfile1.variables[var_nc[1]] 		
+		var_rawc = ncfile1.variables[var_nc[2]]
+		var_raw1 = np.multiply(np.multiply(100, np.divide(var_rawa, np.divide(379.90516, var_rawc))), np.exp(np.multiply(17.29, np.divide(np.add(var_rawb, -273.15), np.add(var_rawb, -35.86))))) 
+	except:
+		var_raw1 = np.nan
 	return (var_raw1)
-
 def _get_cloud(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)

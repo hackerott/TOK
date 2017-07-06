@@ -34,7 +34,7 @@ lon 	= form.getvalue("lon")
 utc 	= form.getvalue("utc")	
 var 	= form.getvalue("var")	
 #date 	= form.getvalue("date")
-model 	= form.getvalue("tipo")
+model 	= form.getvalue("model")
 #token 	= form.getvalue("token")
 #cid 	= form.getvalue("id")
 
@@ -57,7 +57,7 @@ Validation will be inserted after, using flask to genarete a session token
 ###############################################################################
 ## get files, lat_lon, id and limits
 ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, date0 = cfs_var._get_FILE()
-ix_cfs, iy_cfs = lat_lon.CFS_grab(ens1, lat, lon)
+ix_cfs, iy_cfs = lat_lon.CFS_grab(ens1, lat0, lon0)
 var_id = cfs_var._get_ID(var)
 PRO, TOP, BOT = cfs_var._get_LIM(var)
 
