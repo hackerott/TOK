@@ -54,17 +54,23 @@ def _get_Prob(var_raw1, var_raw2, iz, ix, iy, max_i, top_lim, bot_lim):
 	return (var1, prob_g, prob_r, prob_y)
 #######################################	
 # return the final values of prob for each member
-def _get_TIMEP(var_raw1, var_raw2, iz, ix, iy, top_lim, bot_lim):
-	max_i = len(var_raw1[:, ix, iy])
-
+def _get_TIMEP(var_raw1, var_raw2, time, iz, ix, iy, top_lim, bot_lim):
+#	max_i = len(var_raw1[:, ix, iy])
+	max_i = len(time)
 	value, prob_g, prob_r, prob_y = _get_Prob(var_raw1, var_raw2, iz, ix, iy, max_i, top_lim, bot_lim)
 	# max_value = np.mean(value) + np.std(value)
 	# min_value = np.mean(value) - np.std(value)
-        std_value = np.std(value)
+#        std_value = np.std(value)
+	t_quartile = np.percentile(value, 75)
+	b_quartile = np.percentile(value, 25)
+	
         max_value = []
         min_value = []
         for i in range(0, len(value)):
-                max_value.append((value[i]+std_value))
-                min_value.append((value[i]-std_value))
+#                max_value.append((value[i]+std_value))
+#                min_value.append((value[i]-std_value))
+                max_value.append((value[i]+t_quartile)/2)
+                min_value.append((value[i]+b_quartile)/2)
+		
 	return(prob_g, prob_r, prob_y, value, max_value, min_value)
 

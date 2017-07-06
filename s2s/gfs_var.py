@@ -84,7 +84,7 @@ def _get_wind(var, ncfile):
 		var_rawu = ncfile1.variables[var_nc[0]] 		
 		var_rawv = ncfile1.variables[var_nc[1]] 
 		var_raw1 = np.sqrt(np.add(np.power(var_rawu, 2), np.power(var_rawv, 2))) # wind intensity
-		var_raw2 = np.arctan2(var_rawu, var_rawv) + np.power(var_rawv, 2)
+		var_raw2 = np.add(np.multiply(np.arctan2(var_rawu, var_rawv), rp2), 180)
 	except:
 		var_raw1 = np.nan
 		var_raw2 = np.nan

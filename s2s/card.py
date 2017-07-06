@@ -78,12 +78,14 @@ def DATA_cfs_card(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, i
 		a += 4
 		b += 4
 	for i in range(0, max_i):
-		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i) + datetime.timedelta(hours = utc0)
+		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i)
 		if d1.day == tgt_day.day:
+			if d1.hour == tgt_day.hour:
 				c = i
 				v1 = ((2*value_t1[i]  +  value_a1[i])/3)
+				d2 = d1 + datetime.timedelta(hours = utc0)
 
-	return(date[c//4], prob[c//4], color[c//4], v1, maxi[c//4], mini[c//4], fig[c//4])
+	return(date[c//4], prob[c//4], color[c//4], v1, maxi[c//4], mini[c//4], fig[c//4], c)
 		
 ###############################################################################
 #GFS
@@ -142,13 +144,14 @@ def DATA_gfs_card(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 		date.append(d1)
 
 	for i in range(0, max_i):
-		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i) + datetime.timedelta(hours = utc0)
+		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i)
 		if d1.day == tgt_day.day:
 			if d1.hour  == tgt_day.hour:
 				c = i
 				v1 = ((2*value_t1[i]  +  value_a1[i])/3)
+				d2 = d1 + datetime.timedelta(hours = utc0)
 
-	return(date[c//24], prob[c//24], color[c//24], v1, maxi[c//24], mini[c//24], fig[c//24])
+	return(d2, prob[c//24], color[c//24], v1, maxi[c//24], mini[c//24], fig[c//24], c)
 
 ###############################################################################
 #WRF
@@ -167,16 +170,16 @@ def DATA_wrf_card(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO):
 	b = 24
 	tgt_day = datetime.datetime.now()
 	for i in range(0, max_i//24):
-		max_v		= max(max_t1[a:b], max_t2[a:b])
-		min_v		= min(min_t1[a:b], min_t2[a:b])
-		prob_a_g	= (np.mean(prob_a_g1[a:b]) + np.mean(prob_a_g2[a:b]))/2
-		prob_t_g 	= (np.mean(prob_t_g1[a:b]) + np.mean(prob_t_g2[a:b]))/2
-		prob_a_r 	= (np.mean(prob_a_r1[a:b]) + np.mean(prob_a_r2[a:b]))/2
-		prob_t_r	= (np.mean(prob_t_r1[a:b]) + np.mean(prob_t_r2[a:b]))/2
-		prob_a_y	= (np.mean(prob_a_y1[a:b]) + np.mean(prob_a_y2[a:b]))/2
-		prob_t_y	= (np.mean(prob_t_y1[a:b]) + np.mean(prob_t_y2[a:b]))/2
-		value_a		= (np.mean(value_a1[a:b]) + np.mean(value_a2[a:b]))/2
-		value_t 	= (np.mean(value_t1[a:b]) + np.mean(value_t2[a:b]))/2
+		max_v		= max(max_t1[a:b], max_a1[a:b])
+		min_v		= min(min_t1[a:b], min_a1[a:b])
+		prob_a_g	= (np.mean(prob_a_g1[a:b]))
+		prob_t_g 	= (np.mean(prob_t_g1[a:b]))
+		prob_a_r 	= (np.mean(prob_a_r1[a:b]))
+		prob_t_r	= (np.mean(prob_t_r1[a:b]))
+		prob_a_y	= (np.mean(prob_a_y1[a:b]))
+		prob_t_y	= (np.mean(prob_t_y1[a:b]))
+		value_a		= (np.mean(value_a1[a:b]))
+		value_t 	= (np.mean(value_t1[a:b]))
 		prob_g	= ((2*prob_t_g + prob_a_g)/3)
 		prob_r	= ((2*prob_t_r + prob_a_r)/3)
 		prob_y	= ((2*prob_t_y + prob_a_y)/3)
@@ -195,17 +198,18 @@ def DATA_wrf_card(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO):
 		mini.append(min(min_v))
 		date.append(d1)
 	#	fig.append(f1)
+		fig.append("null")
 		a += 24
 		b += 24
-
 	for i in range(0, max_i):
-		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i) + datetime.timedelta(hours = utc0)
+		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i)
 		if d1.day == tgt_day.day:
 			if d1.hour  == tgt_day.hour:
 				c = i
 				v1 = ((2*value_t1[i]  +  value_a1[i])/3)
+				d2 = d1 + datetime.timedelta(hours = utc0)
 
-	return(date[c//24], prob[c//24], color[c//24], v1, maxi[c//24], mini[c//24], fig[c//24])
+	return(d2, prob[c//24], color[c//24], v1, maxi[c//24], mini[c//24], fig[c//24], c)
 
 ###############################################################################
 """

@@ -76,7 +76,7 @@ if var_id == 1 :
 	if model == "calendar":
 		date, prob, color, value, maxi, mini, fig = calendar.DATA_cfs_calendar(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
 	elif model == "card":
-		date, prob, color, value, maxi, mini, fig = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
+		date, prob, color, value, maxi, mini, fig, i = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 	else:
 		success = json_output._get_ERROR(var_id, model) 
 		exit(1)
@@ -96,9 +96,9 @@ elif var_id == 2:
 		for i in range(0, len(value)):
 			value[i] = [value[i], var_rawb1[i, ix_cfs, iy_cfs]]
 	elif model == "card":
-		date, prob, color, value, maxi, mini, fig = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
-		for i in range(0, len(value)):
-			value[i] = [value[i], var_rawb1[i, ix_cfs, iy_cfs]]
+		date, prob, color, value, maxi, mini, fig, i = card.DATA_cfs_card(var_rawa1, var_rawa2, var_rawa3, var_rawa4, var_rawa5, var_rawa6, var_rawa7, var_rawa8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
+		value = [value, var_rawb1[i, ix_cfs, iy_cfs]]
+		
 	else:
 		success = json_output._get_ERROR(var_id, model) 
 		exit(1)
@@ -116,7 +116,7 @@ elif var_id == 3:
 	if model == "calendar":
 		date, prob, color, value, maxi, mini, fig = calendar.DATA_cfs_calendar(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
 	elif model == "card":
-		date, prob, color, value, maxi, mini, fig = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
+		date, prob, color, value, maxi, mini, fig, i = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
 
@@ -134,7 +134,7 @@ elif var_id == 4:
 	if model == "calendar":
 		date, prob, color, value, maxi, mini, fig = calendar.DATA_cfs_calendar(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
 	elif model == "card":
-		date, prob, color, value, maxi, mini, fig = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
+		date, prob, color, value, maxi, mini, fig, i = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
 
@@ -152,7 +152,7 @@ elif var_id == 5:
 	if model == "calendar":
 		date, prob, color, value, maxi, mini, fig = calendar.DATA_cfs_calendar(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
 	elif model == "card":
-		date, prob, color, value, maxi, mini, fig = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
+		date, prob, color, value, maxi, mini, fig, i = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
 
@@ -175,11 +175,11 @@ elif var_id == 6:
 		date5, prob5, color5, value5, maxi5, mini5, fig5 = calendar.DATA_cfs_calendar(humidity1, humidity2, humidity3, humidity4, humidity5, humidity6, humidity7, humidity8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
 
 	elif model == "card":
-		date1, prob1, color1, value1, maxi1, mini1, fig1 = card.DATA_cfs_card(rain1, rain2, rain3, rain4, rain5, rain6, rain7, rain8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
-		date2, prob2, color2, value2, maxi2, mini2, fig2 = card.DATA_cfs_card(speed1, speed2, speed3, speed4, speed5, speed6, speed7, speed8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
-		date3, prob3, color3, value3, maxi3, mini3, fig3 = card.DATA_cfs_card(temperature1, temperature2, temperature3, temperature4, temperature5, temperature6, temperature7, temperature8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
-		date4, prob4, color4, value4, maxi4, mini4, fig4 = card.DATA_cfs_card(radiation1, radiation2, radiation3, radiation4, radiation5, radiation6, radiation7, radiation8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
-		date5, prob5, color5, value5, maxi5, mini5, fig5 = card.DATA_cfs_card(humidity1, humidity2, humidity3, humidity4, humidity5, humidity6, humidity7, humidity8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
+		date1, prob1, color1, value1, maxi1, mini1, fig1, i = card.DATA_cfs_card(rain1, rain2, rain3, rain4, rain5, rain6, rain7, rain8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
+		date2, prob2, color2, value2, maxi2, mini2, fig2, i = card.DATA_cfs_card(speed1, speed2, speed3, speed4, speed5, speed6, speed7, speed8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
+		date3, prob3, color3, value3, maxi3, mini3, fig3, i = card.DATA_cfs_card(temperature1, temperature2, temperature3, temperature4, temperature5, temperature6, temperature7, temperature8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
+		date4, prob4, color4, value4, maxi4, mini4, fig4, i = card.DATA_cfs_card(radiation1, radiation2, radiation3, radiation4, radiation5, radiation6, radiation7, radiation8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
+		date5, prob5, color5, value5, maxi5, mini5, fig5, i = card.DATA_cfs_card(humidity1, humidity2, humidity3, humidity4, humidity5, humidity6, humidity7, humidity8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
 
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 

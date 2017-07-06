@@ -3,6 +3,8 @@
 
 import cgi
 import datetime
+import json
+import numpy as np
 
 #######################################
 # S2S imports
@@ -10,6 +12,7 @@ import wrf_var
 import lat_lon
 import calendar
 import card
+import table
 import prob_area
 import prob_time
 import json_output
@@ -23,7 +26,7 @@ lon 	= form.getvalue("lon")
 utc 	= form.getvalue("utc")	
 var 	= form.getvalue("var")	
 #date 	= form.getvalue("date")
-model 	= form.getvalue("tipo")
+model 	= form.getvalue("model")
 
 #######################################
 ##Form treatment
@@ -50,7 +53,7 @@ if var_id == 1 :
 	if model == "calendar":
 		date, prob, color, value, maxi, mini, fig = calendar.DATA_wrf_calendar(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
 	elif model == "card":
-		date, prob, color, value, maxi, mini, fig = card.DATA_wrf_card(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
+		date, prob, color, value, maxi, mini, fig, c = card.DATA_wrf_card(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
 	elif model == "table":
 		date, prob, color, value, maxi, mini, fig = table.DATA_wrf_table(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
 	else:
@@ -61,17 +64,17 @@ elif var_id == 2:
 	var_rawa2, var_rawb2 = wrf_var._get_wind(var, ens2)
 	time  	 = wrf_var._get_time('time', ens1)
 	if model == "calendar":
-		date, prob, color, value, maxi, mini, fig = calendar.DATA_wrf_calendar(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
+		date, prob, color, value, maxi, mini, fig = calendar.DATA_wrf_calendar(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
 		for i in range(0, len(value)):
 			value[i] = [value[i], var_rawb1[i, ix_wrf, iy_wrf]]
 	elif model == "card":
-		date, prob, color, value, maxi, mini, fig = card.DATA_wrf_card(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
-		for i in range(0, len(value)):
-			value[i] = [value[i], var_rawb1[i, ix_wrf, iy_wrf]]
+		date, prob, color, value, maxi, mini, fig, c = card.DATA_wrf_card(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
+		value = [value, var_rawb1[c, ix_wrf, iy_wrf]]
 	elif model == "table":
-		date, prob, color, value, maxi, mini, fig = table.DATA_wrf_table(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
+		date, prob, color, value, maxi, mini, fig = table.DATA_wrf_table(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
 		for i in range(0, len(value)):
 			value[i] = [value[i], var_rawb1[i, ix_wrf, iy_wrf]]
+		value = np.array(value)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
 
@@ -82,7 +85,7 @@ elif var_id == 3:
 	if model == "calendar":
 		date, prob, color, value, maxi, mini, fig = calendar.DATA_wrf_calendar(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
 	elif model == "card":
-		date, prob, color, value, maxi, mini, fig = card.DATA_wrf_card(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
+		date, prob, color, value, maxi, mini, fig, c = card.DATA_wrf_card(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
 	elif model == "table":
 		date, prob, color, value, maxi, mini, fig = table.DATA_wrf_table(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
 	else:
@@ -95,7 +98,7 @@ elif var_id == 4:
 	if model == "calendar":
 		date, prob, color, value, maxi, mini, fig = calendar.DATA_wrf_calendar(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
 	elif model == "card":
-		date, prob, color, value, maxi, mini, fig = card.DATA_wrf_card(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
+		date, prob, color, value, maxi, mini, fig, c = card.DATA_wrf_card(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
 	elif model == "table":
 		date, prob, color, value, maxi, mini, fig = table.DATA_wrf_table(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
 	else:
@@ -108,7 +111,7 @@ elif var_id == 5:
 	if model == "calendar":
 		date, prob, color, value, maxi, mini, fig = calendar.DATA_wrf_calendar(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
 	elif model == "card":
-		date, prob, color, value, maxi, mini, fig = card.DATA_wrf_card(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
+		date, prob, color, value, maxi, mini, fig, c = card.DATA_wrf_card(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
 	elif model == "table":
 		date, prob, color, value, maxi, mini, fig = table.DATA_wrf_table(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
 	else:
@@ -126,11 +129,11 @@ elif var_id == 6:
 		date5, prob5, color5, value5, maxi5, mini5, fig5 = calendar.DATA_wrf_calendar(humidity1, humidity2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
 
 	elif model == "card":
-		date1, prob1, color1, value1, maxi1, mini1, fig1 = card.DATA_wrf_card(rain1, rain2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
-		date2, prob2, color2, value2, maxi2, mini2, fig2 = card.DATA_wrf_card(speed1, speed2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
-		date3, prob3, color3, value3, maxi3, mini3, fig3 = card.DATA_wrf_card(temperature1, temperature2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
-		date4, prob4, color4, value4, maxi4, mini4, fig4 = card.DATA_wrf_card(radiation1, radiation2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
-		date5, prob5, color5, value5, maxi5, mini5, fig5 = card.DATA_wrf_card(humidity1, humidity2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
+		date1, prob1, color1, value1, maxi1, mini1, fig1, c = card.DATA_wrf_card(rain1, rain2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
+		date2, prob2, color2, value2, maxi2, mini2, fig2, c = card.DATA_wrf_card(speed1, speed2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
+		date3, prob3, color3, value3, maxi3, mini3, fig3, c = card.DATA_wrf_card(temperature1, temperature2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
+		date4, prob4, color4, value4, maxi4, mini4, fig4, c = card.DATA_wrf_card(radiation1, radiation2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
+		date5, prob5, color5, value5, maxi5, mini5, fig5, c = card.DATA_wrf_card(humidity1, humidity2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
 
 	elif model == "table":
 		date1, prob1, color1, value1, maxi1, mini1, fig1 = table.DATA_wrf_table(rain1, rain2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)

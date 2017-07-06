@@ -10,10 +10,10 @@ import netCDF4
 #######################################
 ## return the probabilitys for each alert level
 def _get_Prob(var_raw, ix, iy, max_i, top_lim, bot_lim):
-	prob_y = [0]*max_i
-	prob_g = [0]*max_i
-	prob_r = [0]*max_i
-	var1   = [0]*max_i
+	prob_y = [0]*(max_i)
+	prob_g = [0]*(max_i)
+	prob_r = [0]*(max_i)
+	var1   = [0]*(max_i)
 	for i in  range(0, max_i):
 		var1[i] =  var_raw[i, ix, iy]
 		if var1[i] < top_lim:
@@ -74,6 +74,7 @@ def _get_AREAP(var_raw, time, ix, iy, top_lim, bot_lim, ):
 	v_2, p_g2, p_r2, p_y2 = _get_Prob(var_raw, ix, iy+1, max_i, top_lim, bot_lim)
 	v_3, p_g3, p_r3, p_y3 = _get_Prob(var_raw, ix, iy-1, max_i, top_lim, bot_lim)
 	v_4, p_g4, p_r4, p_y4 = _get_Prob(var_raw, ix+1, iy, max_i, top_lim, bot_lim)
+
 	v_5, p_g5, p_r5, p_y5 = _get_Prob(var_raw, ix-1, iy, max_i, top_lim, bot_lim)
 	v_6, p_g6, p_r6, p_y6 = _get_Prob(var_raw, ix+1, iy+1, max_i, top_lim, bot_lim)
 	v_7, p_g7, p_r7, p_y7 = _get_Prob(var_raw, ix+1, iy-1, max_i, top_lim, bot_lim)
@@ -101,21 +102,24 @@ def _get_AREAP(var_raw, time, ix, iy, top_lim, bot_lim, ):
 
 	prob_g	= (np.add(np.divide(p_g1, 2), np.add(np.divide(np.add(np.add(np.add(p_g2, p_g3), np.add(p_g4, p_g5)), np.add(np.add(p_g6, p_g7), np.add(p_g8, p_g9))), 32), np.divide(np.add(np.add(np.add(np.add(p_g10, p_g11), np.add(p_g12, p_g13)), np.add(np.add(p_g14, p_g15), np.add(p_g16, p_g17))), np.add(np.add(np.add(p_g18, p_g19), np.add(p_g20, p_g21)), np.add(np.add(p_g22, p_g23), np.add(p_g24, p_g25)))), 64))))
 
-	prob_r	= (np.add(np.divide(p_r1, 2), np.add(np.divide(np.add(np.add(np.add(p_r2, p_r3), np.add(p_r4, p_r5)), np.add(np.add(p_r6, p_r7), np.add(p_r8, p_r9))), 32), np.divide(np.add(np.add(np.add(np.add(p_r10, p_r11), np.add(p_r12, p_r13)), np.add(np.add(p_r14, p_r15), np.add(p_r16, p_r17))), np.add(np.add(np.add(p_r18, p_r19), np.add(p_r20, p_r21)), np.add(np.add(p_r22, p_r23), np.add(p_r24, p_r25)))), 6)4)))
+	prob_r	= (np.add(np.divide(p_r1, 2), np.add(np.divide(np.add(np.add(np.add(p_r2, p_r3), np.add(p_r4, p_r5)), np.add(np.add(p_r6, p_r7), np.add(p_r8, p_r9))), 32), np.divide(np.add(np.add(np.add(np.add(p_r10, p_r11), np.add(p_r12, p_r13)), np.add(np.add(p_r14, p_r15), np.add(p_r16, p_r17))), np.add(np.add(np.add(p_r18, p_r19), np.add(p_r20, p_r21)), np.add(np.add(p_r22, p_r23), np.add(p_r24, p_r25)))), 64))))
 
-	prob_y	= (np.add(np.divide(p_y1, 2), np.add(np.divide(np.add(np.add(np.add(p_y2, p_y3), np.add(p_y4, p_y5)), np.add(np.add(p_y6, p_y7), np.add(p_y8, p_y9))), 32), np.divide(np.add(np.add(np.add(np.add(p_y10, p_y11), np.add(p_y12, p_y13)), np.add(np.add(p_y14, p_y15), np.add(p_y16, p_y17))), np.add(np.add(np.add(p_y18, p_y19), np.add(p_y20, p_y21)), np.add(np.add(p_y22, p_y23), np.add(p_y24, p_y25)))), 64)))
+	prob_y	= (np.add(np.divide(p_y1, 2), np.add(np.divide(np.add(np.add(np.add(p_y2, p_y3), np.add(p_y4, p_y5)), np.add(np.add(p_y6, p_y7), np.add(p_y8, p_y9))), 32), np.divide(np.add(np.add(np.add(np.add(p_y10, p_y11), np.add(p_y12, p_y13)), np.add(np.add(p_y14, p_y15), np.add(p_y16, p_y17))), np.add(np.add(np.add(p_y18, p_y19), np.add(p_y20, p_y21)), np.add(np.add(p_y22, p_y23), np.add(p_y24, p_y25)))), 64))))
 
 	value	= np.add(np.divide(v_1, 2), np.add(np.divide(np.add(np.add(np.add(v_2, v_3), np.add(v_4, v_5)), np.add(np.add(v_6, v_7), np.add(v_8, v_9))), 32), np.divide(np.add(np.add(np.add(np.add(v_10, v_11), np.add(v_12, v_13)), np.add(np.add(v_14, v_15), np.add(v_16, v_17))), np.add(np.add(np.add(v_18, v_19), np.add(v_20, v_21)), np.add(np.add(v_22, v_23), np.add(v_24, v_25)))), 64)))
 
 	# max_value = np.mean(value) + np.std(value)
 	# min_value = np.mean(value) - np.std(value)
-	std_value = np.std(value)
-
+	# std_value = np.std(value)
+        t_quartile = np.percentile(value, 75)
+        b_quartile = np.percentile(value, 25)
 	max_value = []
 	min_value = []
 	for i in range(0, len(value)):
-		max_value.append((value[i]+std_value))
-		min_value.append((value[i]-std_value))
+                max_value.append((value[i]+t_quartile)/2)
+                min_value.append((value[i]+b_quartile)/2)
+	#	max_value.append((value[i]+std_value))
+	#	min_value.append((value[i]-std_value))
 	# array	= [v_1, v_2, v_3, v_4, v_5, v_6, v_7, v_8, v_9, v_10, v_11, v_12, v_13, v_14, v_15, v_16, v_17, v_18, v_19, v_20, v_21, v_22, v_23, v_24, v_25] 
 	# max_index = np.divide((np.mean(array) + np.std(array)), max(array).any)
 	# min_index = np.divide((np.mean(array) - np.std(array)), min(array).any)

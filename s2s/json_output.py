@@ -39,8 +39,8 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
 		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
-					"startDate" : date[0].strftime('%Y%m%d'),
-					"endDate" : date[-1].strftime('%Y%m%d'),
+					"startDate" : date[0].strftime('%Y%m%d%H'),
+					"endDate" : date[-1].strftime('%Y%m%d%H'),
 					"units" : units,
 					"values" : values,
 					"message" : "Table OK!",
@@ -49,10 +49,14 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
 		success = True
 
 	elif var_id == 2:
-		self_value = []
-		for i in range(0, len(value[:,0])):
-			self_value.append({"speed" : value[i, 0], "direction" : value[i, 1]})
-		values = {"wind"	:	[self_value]}
+                self_value = []
+                for i in range(0, len(value)):
+                        d = {
+                                "speed" : "%.2f" %value[i,0],
+                                "direction" : "%.2f" %value[i,1]
+                        }
+                        self_value.append(d)
+                values = {"wind"        :       [self_value]}
  		units = {"wind" : {
                 "current" : "ms",
                 "label" : "wind",
@@ -70,8 +74,8 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
 		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
-					"startDate" : date[0].strftime('%Y%m%d'),
-					"endDate" : date[-1].strftime('%Y%m%d'),
+					"startDate" : date[0].strftime('%Y%m%d%H'),
+					"endDate" : date[-1].strftime('%Y%m%d%H'),
 					"units" : units,
 					"values" : values,
 					"message" : "Table OK!",
@@ -100,8 +104,8 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
        		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
-					"startDate" : date[0].strftime('%Y%m%d'),
-					"endDate" : date[-1].strftime('%Y%m%d'),
+					"startDate" : date[0].strftime('%Y%m%d%H'),
+					"endDate" : date[-1].strftime('%Y%m%d%H'),
 					"units" : units,
 					"values" : values,
 					"message" : "Table OK!",
@@ -123,8 +127,8 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
        		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
-					"startDate" : date[0].strftime('%Y%m%d'),
-					"endDate" : date[-1].strftime('%Y%m%d'),
+					"startDate" : date[0].strftime('%Y%m%d%H'),
+					"endDate" : date[-1].strftime('%Y%m%d%H'),
 					"units" : units,
 					"values" : values,
 					"message" : "Table OK!",
@@ -148,8 +152,8 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
        		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
-					"startDate" : date[0].strftime('%Y%m%d'),
-					"endDate" : date[-1].strftime('%Y%m%d'),
+					"startDate" : date[0].strftime('%Y%m%d%H'),
+					"endDate" : date[-1].strftime('%Y%m%d%H'),
 					"units" : units,
 					"values" : values,
 					"message" : "Table OK!",
@@ -233,8 +237,8 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
 		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
-					"startDate" : date[0].strftime('%Y%m%d'),
-					"endDate" : date[-1].strftime('%Y%m%d'),
+					"startDate" : date[0].strftime('%Y%m%d%H'),
+					"endDate" : date[-1].strftime('%Y%m%d%H'),
 					"units" : units,
 					"values" : values,
 					"message" : "Table OK!",
@@ -251,7 +255,10 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 
 	if var_id == 1 :
 		# for i in range(0, len(value)):
-		values = {"rain"	:	[value]}
+		values = {"rain"	:	[value], 
+			  "max"		:	[maxi],
+			  "min"		:	[mini],}
+
 		units = {"rain" : {                "current" : "mm",
                 "label" : "rain",
                 "options" : [
@@ -263,8 +270,8 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
        		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
-					"startDate" : date.strftime('%Y%m%d'),
-					"endDate" : date.strftime('%Y%m%d'),
+					"startDate" : date.strftime('%Y%m%d%H'),
+					"endDate" : date.strftime('%Y%m%d%H'),
 					"units" : units,
 					"values" : values,
 					"message" : "Card OK!",
@@ -274,28 +281,39 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 
 	elif var_id == 2:
 		self_value = []
-		for i in range(0, len(value[:,0])):
-			self_value.append({"speed" : value[i, 0], "direction" : value[i, 1]})
-		values = {"wind"	:	[self_value]}
+		a = 0
+		b = 1
+		for i in range(0, len(value)+1):
+			if b >= len(value):
+				break
+			d = {
+				"speed" : "%.2f" %value[a], 
+				"direction" : "%.2f" %value[b]
+			}
+			self_value.append(d)
+			a = b + 1
+			b = b + 2
+		values = {"wind"	:	[self_value], 
+			  "max"		:	"%.2f" %maxi,
+			  "min"		:	"%.2f"%mini,}
+
  		units = {"wind" : {
-                "current" : "ms",
-                "label" : "wind",
-                "options" : [
-                    {
-                        "id" : "ms",
-                        "label" : "m/s"
-                    },
-                    {
-                        "id" : "kmh",
-                        "label" : "km/h"
-                    }
-                ]
-                }}
+			                "current" : "ms",
+			                "label" : "wind",
+			                "options" : [
+				                    {
+				                        "id" : "ms",
+                        				"label" : "m/s"
+                    				     },
+				                    {
+				                        "id" : "kmh",
+				                        "label" : "km/h"
+                    				}]}}
        		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
-					"startDate" : date.strftime('%Y%m%d'),
-					"endDate" : date.strftime('%Y%m%d'),
+					"startDate" : date.strftime('%Y%m%d%H'),
+					"endDate" : date.strftime('%Y%m%d%H'),
 					"units" : units,
 					"values" : values,
 					"message" : "Table OK!",
@@ -305,7 +323,10 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 
 	elif var_id == 3:
 		# for i in range(0, len(value)):
-		values = {"temperature"	:	[value]}
+		values = {"temperature"	:	[value],
+			  "max"		:	"%.2f" %maxi,
+			  "min"		:	"%.2f"%mini,}
+
 		units = {
 			"temperature" : {
                 "current" : "c",
@@ -324,8 +345,8 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
        		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
-					"startDate" : date.strftime('%Y%m%d'),
-					"endDate" : date.strftime('%Y%m%d'),
+					"startDate" : date.strftime('%Y%m%d%H'),
+					"endDate" : date.strftime('%Y%m%d%H'),
 					"units" : units,
 					"values" : values,
 					"message" : "Table OK!",
@@ -335,7 +356,9 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 
 	elif var_id == 4:
 		# for i in range(0, len(value)):
-		values = {"radiation"	:	[value]	}
+		values = {"radiation"	:	[value],
+			  "max"		:	"%.2f" %maxi,
+			  "min"		:	"%.2f"%mini,}
 		units = {"radiation" : {
                 "current" : "wm2",
                 "label" : "radiation",
@@ -348,8 +371,8 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
        		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
-					"startDate" : date.strftime('%Y%m%d'),
-					"endDate" : date.strftime('%Y%m%d'),
+					"startDate" : date.strftime('%Y%m%d%H'),
+					"endDate" : date.strftime('%Y%m%d%H'),
 					"units" : units,
 					"values" : values,
 					"message" : "Table OK!",
@@ -359,7 +382,9 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 
 	elif var_id == 5:
 		# for i in range(0, len(value)):
-		values = {"humidity"	:	[value]}
+		values = {"humidity"	:	[value],
+			  "max"		:	"%.2f" %maxi,
+			  "min"		:	"%.2f"%mini,}
 		units = {"humidity" : {
                 "current" : "per",
                 "label" : "humidity",
@@ -373,8 +398,8 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
        		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
-					"startDate" : date.strftime('%Y%m%d'),
-					"endDate" : date.strftime('%Y%m%d'),
+					"startDate" : date.strftime('%Y%m%d%H'),
+					"endDate" : date.strftime('%Y%m%d%H'),
 					"units" : units,
 					"values" : values,
 					"message" : "Table OK!",
@@ -385,17 +410,27 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 	elif var_id == 6:	
 		# for i in range(0, len(value)):
 		values = {
-			{"rain"			:	[value[:0]]
+			{"rain"			:	[value[:0]],
+			  "max"		:	[maxi[:0]],
+			  "min"		:	[min[:0]]
 				},
-			{"wind"			:	[value[:1]]
+			{"wind"			:	[value[:1]],
+			  "max"		:	[maxi[:1]],
+			  "min"		:	[min[:1]]
 				},
-			{"temperature"	:	[value[:2]]
+			{"temperature"	:	[value[:2]],
+			  "max"		:	[maxi[:2]],
+			  "min"		:	[min[:2]]
 				},
-			{"radiation"	:	[value[:3]]
+			{"radiation"	:	[value[:3]],
+			  "max"		:	[maxi[:3]],
+			  "min"		:	[min[:3]]
 				},
-			{"humidity"		:	[value[:4]]
+			{"humidity"	:	[value[:4]],
+			  "max"		:	[maxi[:0]],
+			  "min"		:	[min[:0]]
 				}
-				}
+			}
 		units = {
 			"temperature" : {
                 "current" : "c",
@@ -458,8 +493,8 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
-					"startDate" : date.strftime('%Y%m%d'),
-					"endDate" : date.strftime('%Y%m%d'),
+					"startDate" : date.strftime('%Y%m%d%H'),
+					"endDate" : date.strftime('%Y%m%d%H'),
 					"units" : units,
 					"values" : values,
 					"message" : "Table OK!",
