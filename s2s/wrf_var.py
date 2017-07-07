@@ -98,7 +98,7 @@ def _get_wind(var, ncfile):
 		ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_rawu = ncfile.variables[var_nc[0]] 		
 		var_rawv = ncfile.variables[var_nc[1]] 
-                rp2 = 45.0/np.arctan(1.0)
+        rp2 = 45.0/np.arctan(1.0)
 		var_raw1 = np.sqrt(np.add(np.power(var_rawu, 2), np.power(var_rawv, 2))) # wind intensity
 		var_raw2 = np.add(np.multiply(np.arctan2(var_rawu, var_rawv), rp2), 180)
 		var_raw1 = np.around(var_raw1, decimals=2)

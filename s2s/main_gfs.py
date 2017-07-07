@@ -3,6 +3,8 @@
 
 import cgi
 import datetime
+import json
+import numpy as np
 # import os
 # import numpy as np
 # import netCDF4
@@ -10,7 +12,6 @@ import datetime
 # import sys
 # import cgitb
 # import calendar
-# import json
 # import base64
 
 # from math import pi
@@ -70,7 +71,7 @@ if var_id == 1 :
 	if model == "calendar":
 		date, prob, color, value, maxi, mini, fig = calendar.DATA_gfs_calendar(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)
 	elif model == "card":
-		date, prob, color, value, maxi, mini, fig = card.DATA_gfs_card(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
+		date, prob, color, value, maxi, mini, fig, c = card.DATA_gfs_card(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
 	elif model == "table":
 		date, prob, color, value, maxi, mini, fig = table.DATA_gfs_table(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)
 	else:
@@ -83,15 +84,15 @@ elif var_id == 2:
 	if model == "calendar":
 		date, prob, color, value, maxi, mini, fig = calendar.DATA_gfs_calendar(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)
 		for i in range(0, len(value)):
-			value[i] = [value[i], var_rawb1[i, ix_gfs, iy_gfs]]
+			value[i] = [value[i], var_rawb1[i, ix_gfs, iy_gfs]]		value = np.array(value)
 	elif model == "card":
-		date, prob, color, value, maxi, mini, fig = card.DATA_gfs_card(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
-		for i in range(0, len(value)):
-			value[i] = [value[i], var_rawb1[i, ix_gfs, iy_gfs]]
+		date, prob, color, value, maxi, mini, fig, c = card.DATA_gfs_card(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
+		value = [value, var_rawb1[c, ix_gfs, iy_gfs]]
 	elif model == "table":
 		date, prob, color, value, maxi, mini, fig = table.DATA_gfs_table(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
 		for i in range(0, len(value)):
 			value[i] = [value[i], var_rawb1[i, ix_gfs, iy_gfs]]
+		value = np.array(value)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
 
@@ -102,7 +103,7 @@ elif var_id == 3:
 	if model == "calendar":
 		date, prob, color, value, maxi, mini, fig = calendar.DATA_gfs_calendar(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)
 	elif model == "card":
-		date, prob, color, value, maxi, mini, fig = card.DATA_gfs_card(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
+		date, prob, color, value, maxi, mini, fig, c = card.DATA_gfs_card(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
 	elif model == "table":
 		date, prob, color, value, maxi, mini, fig = table.DATA_gfs_table(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
 	else:
@@ -115,7 +116,7 @@ elif var_id == 4:
 	if model == "calendar":
 		date, prob, color, value, maxi, mini, fig = calendar.DATA_gfs_calendar(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)
 	elif model == "card":
-		date, prob, color, value, maxi, mini, fig = card.DATA_gfs_card(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
+		date, prob, color, value, maxi, mini, fig, c = card.DATA_gfs_card(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
 	elif model == "table":
 		date, prob, color, value, maxi, mini, fig = table.DATA_gfs_table(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
 	else:
@@ -128,7 +129,7 @@ elif var_id == 5:
 	if model == "calendar":
 		date, prob, color, value, maxi, mini, fig = calendar.DATA_gfs_calendar(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)
 	elif model == "card":
-		date, prob, color, value, maxi, mini, fig = card.DATA_gfs_card(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
+		date, prob, color, value, maxi, mini, fig, c = card.DATA_gfs_card(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
 	elif model == "table":
 		date, prob, color, value, maxi, mini, fig = table.DATA_gfs_table(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
 	else:

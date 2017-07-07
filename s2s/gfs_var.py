@@ -87,8 +87,8 @@ def _get_wind(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
 		ncfile = netCDF4.Dataset(ncfile, 'r')
-		var_rawu = ncfile1.variables[var_nc[0]] 		
-		var_rawv = ncfile1.variables[var_nc[1]] 
+		var_rawu = ncfile.variables[var_nc[0]] 		
+		var_rawv = ncfile.variables[var_nc[1]] 
 		var_raw1 = np.sqrt(np.add(np.power(var_rawu, 2), np.power(var_rawv, 2))) # wind intensity
 		var_raw1 = np.around(var_raw1, decimals=2)
 		rp2 = 45.0/np.arctan(1.0)
@@ -123,9 +123,9 @@ def _get_humidity(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
 		ncfile = netCDF4.Dataset(ncfile, 'r')
-		var_rawa = ncfile1.variables[var_nc[0]] 		
-		var_rawb = ncfile1.variables[var_nc[1]] 		
-		var_rawc = ncfile1.variables[var_nc[2]]
+		var_rawa = ncfile.variables[var_nc[0]] 		
+		var_rawb = ncfile.variables[var_nc[1]] 		
+		var_rawc = ncfile.variables[var_nc[2]]
 		a1 = np.divide(np.subtract(var_rawb, 273.15), np.subtract(var_rawb, 35.86))
 		a2 = np.multiply(17.29, a1)
 		a3 = np.exp(a2)
