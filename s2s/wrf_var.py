@@ -82,6 +82,12 @@ def _get_rain(var, ncfile):
 		var_rawa = ncfile.variables[var_nc[0]]	
 		var_rawb = ncfile.variables[var_nc[1]]
 		var_raw1 = np.add(var_rawa, var_rawb)
+		for i in range(0, len(var_raw1)):
+			if i = 0:
+				var_raw1[i,:,:] = np.add(var_rawa[i,:,:], var_rawb[i,:,:])
+			else:
+				var_raw1[i,:,:] = np.subtract(np.add(var_rawa[i,:,:], var_rawb[i,:,:]), np.add(var_rawa[i-1,:,:], var_rawb[i-1,:,:]))
+		var_raw1 = np.around(var_raw1, decimals=2)
 	except:
 		var_raw1 = np.nan	
 	return(var_raw1)
@@ -95,6 +101,7 @@ def _get_wind(var, ncfile):
                 rp2 = 45.0/np.arctan(1.0)
 		var_raw1 = np.sqrt(np.add(np.power(var_rawu, 2), np.power(var_rawv, 2))) # wind intensity
 		var_raw2 = np.add(np.multiply(np.arctan2(var_rawu, var_rawv), rp2), 180)
+		var_raw1 = np.around(var_raw1, decimals=2)
 	except:
 		var_raw1 = np.nan
 		var_raw2 = np.nan
@@ -107,6 +114,7 @@ def _get_temperature(var,  ncfile):
 		ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc]
 		var_raw1  =np.subtract(var_raw1, 273.15)
+		var_raw1 = np.around(var_raw1, decimals=2)
 	except:
 		var_raw1 = np.nan
 	return(var_raw1)
@@ -116,6 +124,7 @@ def _get_radiation(var, ncfile):
 		var_nc = _get_NCVAR(var)
 		ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc]
+		var_raw1 = np.around(var_raw1, decimals=2)
 	except:
 		var_raw1 = np.nan
 	return(var_raw1)
@@ -134,7 +143,7 @@ def _get_humidity(var, ncfile):
 		c1 = np.multiply(b1, a3)
 		d1 = np.divide(var_rawa, c1)
 		var_raw1 = np.multiply(100, d1)
-
+		var_raw1 = np.around(var_raw1, decimals=2)
 	except:
 		var_raw1 = np.nan
 	return (var_raw1)
