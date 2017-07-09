@@ -10,8 +10,8 @@ import datetime
 ## return the nc var_names for each variable
 def _get_NCVAR(var):
 	return {
-		'chuva'		: 'pratesfc',
-		'temperatura'	: 'tmp2m',
+		'chuva'		: 'acpcpsfc',
+		'temp'		: 'tmp2m',
 		'radiacao'	: 'dswrfsfc',
 		'umidade'	: ['spfh2m', 'tmp2m', 'pressfc'], 
 		'vento'		: ['ugrd10m', 'vgrd10m'],
@@ -72,13 +72,14 @@ def _get_rain(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
 		ncfile = netCDF4.Dataset(ncfile, 'r')
-		var_raw1 = ncfile.variables[var_nc]
-		for i in range(0, len(var_raw1)):
-			if i = 0:
-				var_raw1[i,:,:] = np.add(var_rawa[i,:,:], var_rawb[i,:,:])
-			else:
-				var_raw1[i,:,:] = np.subtract(np.add(var_rawa[i,:,:], var_rawb[i,:,:]), np.add(var_rawa[i-1,:,:], var_rawb[i-1,:,:]))
-		var_raw1 = np.around(var_raw1, decimals=2)
+                var_rawa = ncfile.variables[var_nc]
+                var_raw1 = np.array(var_rawa)
+                for i in range(0, len(var_raw1)):
+                        if i == 0:
+                                var_raw1[i,:,:] = var_rawa[i,:,:]
+                        else:
+                                var_raw1[i,:,:] = np.subtract(var_rawa[i,:,:], var_rawa[i-1,:,:])
+                var_raw1 = np.around(var_raw1, decimals=2)
 	except:
 		var_raw1 = np.nan	
 	return(var_raw1)
@@ -126,13 +127,13 @@ def _get_humidity(var, ncfile):
 		var_rawa = ncfile.variables[var_nc[0]] 		
 		var_rawb = ncfile.variables[var_nc[1]] 		
 		var_rawc = ncfile.variables[var_nc[2]]
-		a1 = np.divide(np.subtract(var_rawb, 273.15), np.subtract(var_rawb, 35.86))
-		a2 = np.multiply(17.29, a1)
-		a3 = np.exp(a2)
-		b1 = np.divide(379.90516, var_rawc)
-		c1 = np.multiply(b1, a3)
-		d1 = np.divide(var_rawa, c1)
-		var_raw1 = np.multiply(100, d1)
+                a1 = np.divide(np.subtract(var_rawb, 273.15), np.subtract(var_rawb, 35.86))
+                a2 = np.multiply(17.29, a1)
+                a3 = np.exp(a2)
+                b1 = np.divide(379.90516, var_rawc)
+                c1 = np.multiply(b1, a3)
+                d1 = np.divide(var_rawa, c1)
+                var_raw1 = np.multiply(100, d1)
 		var_raw1 = np.around(var_raw1, decimals=2)
 	except:
 		var_raw1 = np.nan

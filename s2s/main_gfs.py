@@ -6,7 +6,6 @@ import datetime
 import json
 import numpy as np
 # import os
-# import numpy as np
 # import netCDF4
 # import math
 # import sys
@@ -22,6 +21,7 @@ import gfs_var
 import lat_lon
 import calendar
 import card
+import table
 import prob_area
 import prob_time
 import json_output
@@ -82,14 +82,14 @@ elif var_id == 2:
 	var_rawa2, var_rawb2 = gfs_var._get_wind(var, ens2)
 	time  	 = gfs_var._get_time('time', ens1)
 	if model == "calendar":
-		date, prob, color, value, maxi, mini, fig = calendar.DATA_gfs_calendar(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)
+		date, prob, color, value, maxi, mini, fig = calendar.DATA_gfs_calendar(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)
 		for i in range(0, len(value)):
-			value[i] = [value[i], var_rawb1[i, ix_gfs, iy_gfs]]		value = np.array(value)
+			value[i] = [value[i], var_rawb1[i, ix_gfs, iy_gfs]]
 	elif model == "card":
-		date, prob, color, value, maxi, mini, fig, c = card.DATA_gfs_card(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
+		date, prob, color, value, maxi, mini, fig, c = card.DATA_gfs_card(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
 		value = [value, var_rawb1[c, ix_gfs, iy_gfs]]
 	elif model == "table":
-		date, prob, color, value, maxi, mini, fig = table.DATA_gfs_table(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
+		date, prob, color, value, maxi, mini, fig = table.DATA_gfs_table(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
 		for i in range(0, len(value)):
 			value[i] = [value[i], var_rawb1[i, ix_gfs, iy_gfs]]
 		value = np.array(value)

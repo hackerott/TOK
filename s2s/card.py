@@ -105,16 +105,16 @@ def DATA_gfs_card(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 	b = 24
 	tgt_day = datetime.datetime.now()
 	for i in range(0, (max_i//24)+4):
-		max_v		= max(max_t1[a:b], max_t2[a:b])
-		min_v		= min(min_t1[a:b], min_t2[a:b])
-		prob_a_g	= (np.mean(prob_a_g1[a:b]) + np.mean(prob_a_g2[a:b]))/2
-		prob_t_g 	= (np.mean(prob_t_g1[a:b]) + np.mean(prob_t_g2[a:b]))/2
-		prob_a_r 	= (np.mean(prob_a_r1[a:b]) + np.mean(prob_a_r2[a:b]))/2
-		prob_t_r	= (np.mean(prob_t_r1[a:b]) + np.mean(prob_t_r2[a:b]))/2
-		prob_a_y	= (np.mean(prob_a_y1[a:b]) + np.mean(prob_a_y2[a:b]))/2
-		prob_t_y	= (np.mean(prob_t_y1[a:b]) + np.mean(prob_t_y2[a:b]))/2
-		value_a		= (np.mean(value_a1[a:b]) + np.mean(value_a2[a:b]))/2
-		value_t 	= (np.mean(value_t1[a:b]) + np.mean(value_t2[a:b]))/2
+		max_v		= max(max_t1[a:b], max_a1[a:b])
+		min_v		= min(min_t1[a:b], min_a1[a:b])
+		prob_a_g	= np.mean(prob_a_g1[a:b])
+		prob_t_g 	= np.mean(prob_t_g1[a:b])
+		prob_a_r 	= np.mean(prob_a_r1[a:b])
+		prob_t_r	= np.mean(prob_t_r1[a:b])
+		prob_a_y	= np.mean(prob_a_y1[a:b])
+		prob_t_y	= np.mean(prob_t_y1[a:b])
+		value_a		= np.mean(value_a1[a:b])
+		value_t 	= np.mean(value_t1[a:b])
 		prob_g	= ((2*prob_t_g + prob_a_g)/3)
 		prob_r	= ((2*prob_t_r + prob_a_r)/3)
 		prob_y	= ((2*prob_t_y + prob_a_y)/3)
@@ -133,6 +133,8 @@ def DATA_gfs_card(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 		mini.append(min(min_v))
 	#	date.append(d1)
 	#	fig.append(f1)
+		fig.append("null")
+
 		if b <= max_i - 24:
 			d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i*24) + datetime.timedelta(hours = utc0)
 			a += 24

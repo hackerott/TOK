@@ -44,17 +44,17 @@ def DATA_gfs_table(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 		max_v		= max(max_t1[i], max_a1[i])
 		min_v		= min(min_t1[i], min_a1[i])
 
-		prob_a_g	= (np.mean(prob_a_g1[i]) + np.mean(prob_a_g2[i]))/2
-		prob_t_g 	= (np.mean(prob_t_g1[i]) + np.mean(prob_t_g2[i]))/2
+		prob_a_g	= np.mean(prob_a_g1[i])
+		prob_t_g 	= np.mean(prob_t_g1[i])
 
-		prob_a_r 	= (np.mean(prob_a_r1[i]) + np.mean(prob_a_r2[i]))/2
-		prob_t_r	= (np.mean(prob_t_r1[i]) + np.mean(prob_t_r2[i]))/2
+		prob_a_r 	= np.mean(prob_a_r1[i])
+		prob_t_r	= np.mean(prob_t_r1[i])
 
-		prob_a_y	= (np.mean(prob_a_y1[i]) + np.mean(prob_a_y2[i]))/2
-		prob_t_y	= (np.mean(prob_t_y1[i]) + np.mean(prob_t_y2[i]))/2
+		prob_a_y	= np.mean(prob_a_y1[i])
+		prob_t_y	= np.mean(prob_t_y1[i])
 
-		value_a		= (np.mean(value_a1[i]) + np.mean(value_a2[i]))/2
-		value_t 	= (np.mean(value_t1[i]) + np.mean(value_t2[i]))/2
+		value_a		= np.mean(value_a1[i])
+		value_t 	= np.mean(value_t1[i])
 
 		prob_g	= ((2*prob_t_g + prob_a_g)/3)
 		prob_r	= ((2*prob_t_r + prob_a_r)/3)
@@ -62,19 +62,19 @@ def DATA_gfs_table(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 
 		prob_c	= [prob_g, prob_r, prob_y]
 
-		if prob_c[argmax(prob_c)] < PRO:
+		if prob_c[np.argmax(prob_c)] < PRO:
 			color.append(2)
-			value.append((((2*value_t  +  value_a)/3) + (max(max_v) + min(min_v)))/3)
+			value.append((((2*value_t  +  value_a)/3) + max_v + min_v)/3)
 
 		else:
-			color.append((argmax(prob_c) + 1))
+			color.append((np.argmax(prob_c) + 1))
 			value.append((2*value_t  +  value_a)/3)
 
 		
 		# f1 = figure._get_table(value[i], CFS)
-		prob.append(prob_c[argmax(prob_c)])		
-		maxi.append(max(max_v))
-		mini.append(min(min_v))
+		prob.append(prob_c[np.argmax(prob_c)])		
+		maxi.append(max_v)
+		mini.append(min_v)
 		fig.append('Null')		
 		# fig.append(f1)
 

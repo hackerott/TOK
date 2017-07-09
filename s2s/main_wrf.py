@@ -158,7 +158,8 @@ else:
 	print "Content-type: application/json\n\n"
 	print json.dumps(dic)
 	exit(1)
-
+#value = np.around(value, decimals=4)
+#value = np.multiply(value, 1.00)
 success, dic = json_output._get_OUT(date, prob, color, value, maxi, mini, fig, model, var_id)
 
 if success == True:
