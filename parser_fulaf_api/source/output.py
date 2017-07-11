@@ -13,10 +13,12 @@ import parser_wrf
 def RAW_out(path4, station, date_self, date_wrf, data_station, data_wrf):
 	header = '%s\n date; WRF; Station\n\n' % station
 	out = []
-	for i in range(0, len(data_wrf)+1):
-		if len(data_station) <= 1 or len(data_wrf) <= 1 or len(date_wrf) <= 1:
-			break
-		out.append('%s; %s; %s' %(date_wrf[i], data_station[i], data_wrf[i])) 
+	# for i in range(0, len(data_wrf)+1):
+		# if len(data_station) < 1 or len(data_wrf) < 1 or len(date_wrf) < 1:
+			# break
+		# out.append('%s; %s; %s' %(date_wrf[i], data_station[i], data_wrf[i])) 
+	out.append('%s; %s; %s' %(date_wrf, data_station, data_wrf)) 
+
 	folder_path = '%s/%s' % (path4, date_self)
 	if os.path.isdir(folder_path) == False:
 		os.makedirs(folder_path)
