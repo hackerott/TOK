@@ -153,6 +153,12 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	rain_wrf.append(b)
 	rain_station.append(b)
 ##Model Map
+	lon.append(0.0)
+	lat.append(0.0)
+	rain_wrf.append(15.0)
+	rain_station.append(15.0)
+	norm_error.append(0.0)
+	area_error.append(0.0)
 	fig3 = plt.figure("MODEL SIMULATION SCATTER",figsize=(16, 9))
 	ax = fig3.add_subplot(121)
 	ax.set_title("Model [mm]")
