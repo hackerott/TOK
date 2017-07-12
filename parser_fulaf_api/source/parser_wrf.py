@@ -20,7 +20,7 @@ def DATA_get(wrf_file, ix, iy, date0, date1):
 
 	lat = WRF_lat[ix, iy]
 	lon = WRF_lon[ix, iy]
-	date_f = datetime.datetime.strptime(str(date1), '%Y%m%d%H')
+	date_f = datetime.datetime.strptime(str(date1), '%Y-%m-%d %H:%M:%S')
 	date_i = datetime.datetime.strptime(str(date0), '%Y%m%d%H')
 	time_delta = date_f - date_i
 	max_i = time_delta.days // 24
