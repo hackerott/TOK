@@ -23,7 +23,7 @@ def DATA_get(wrf_file, ix, iy, date0, date1):
 	date_f = datetime.datetime.strptime(str(date1), '%Y-%m-%d %H:%M:%S')
 	date_i = datetime.datetime.strptime(str(date0), '%Y%m%d%H')
 	time_delta = date_f - date_i
-	max_i = time_delta.days // 24
+	max_i = time_delta.days * 24
 	out = WRF_rain_ncu[max_i, ix, iy] - WRF_rain_ncu[0, ix, iy]
 
 # 	for i in range(0, max_i):
