@@ -107,6 +107,7 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	plt.plot(rain_station, rain_station, c='gray')
 	plt.figtext(0.73, 0.70, "Statistical indicators:\n\n MRE: %.3f\n MAE: %.3f\n Bias: %.3f\n RMSE: %.3f\n AREA_E : %.3f\n NORM_E :%.3f" % (mre, mae, bias, rmse, mea, mne) ,bbox={'facecolor':'lightgray', 'alpha':0.5, 'pad':10}, fontsize=15, multialignment = 'left')
 	plt.savefig(file_name_scatter, dpi=300, pad_inches=0)
+
 #plot 2
 ##Absolute Error Map
 	fig2 = plt.figure("RMSE/BIAS SCATTER",figsize=(16, 9))
@@ -122,7 +123,6 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	map1.drawmapscale(lc[1]+1.3, lc[0]+0.6, lc[1]+10, lc[0]+8, 250, barstyle='fancy', fontsize = 11) 
 	map1.drawparallels(np.arange(lc[0],rc[0]+2.5,2.5), labels=[1,0,0,1])
 	map1.drawmeridians(np.arange(lc[1],rc[1]+5,5.), labels=[1,0,0,1])
-
 ##Realtive Error Map
 	color_r.append(1.0)
 	color_r.append(-1.0)
@@ -143,6 +143,7 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	map2.drawparallels(np.arange(lc[0],rc[0]+2.5,2.5), labels=[1,0,0,1])
 	map2.drawmeridians(np.arange(lc[1],rc[1]+5,5.), labels=[1,0,0,1])
 	plt.savefig(file_name_map, dpi=300, pad_inches=0)
+
 #plot 3
 	try:
 		a =  max(max(rain_wrf), max(rain_station)) # max lim of scale
@@ -158,7 +159,6 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 ##Model Map
 	lon.append(0.0)
 	lat.append(0.0)
-
 	for i in range(0, len(rain_station)):
 		if rain_station[i] > 15.0:
 			rain_station[i] = 15.0
@@ -196,6 +196,7 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	map4.drawparallels(np.arange(lc[0],rc[0]+2.5,2.5), labels=[1,0,0,1])
 	map4.drawmeridians(np.arange(lc[1],rc[1]+5,5.), labels=[1,0,0,1])
 	plt.savefig(file_name, dpi=300, pad_inches=0)
+
 #plot 4
 ## Normalized Error
 	norm_error.append(0)
@@ -213,8 +214,7 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	map5.drawmapscale(lc[1]+1.3, lc[0]+0.6, lc[1]+10, lc[0]+8, 250, barstyle='fancy', fontsize = 11) 
 	map5.drawparallels(np.arange(lc[0],rc[0]+2.5,2.5), labels=[1,0,0,1])
 	map5.drawmeridians(np.arange(lc[1],rc[1]+5,5.), labels=[1,0,0,1])
-	plt.savefig(file_name_map2, dpi=300, pad_inches=0)
-
+#	plt.savefig(file_name_map2, dpi=300, pad_inches=0)
 	area_error.append(0)
 	area_error.append(1)
 	for i in range(0, len(area_error)):
@@ -261,7 +261,7 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	map7.drawmeridians(np.arange(lc[1],rc[1]+5,5.), labels=[1,0,0,1])
 #	map7.contourf(WRF_lon, WRF_lat, out)
 	map7.pcolormesh(WRF_lon, WRF_lat, out)
-	plt.savefig(file_shaded, dpi=300, pad_inches=0)
+#	plt.savefig(file_shaded, dpi=300, pad_inches=0)
 ##Station shaded
 	ax = fig5.add_subplot(122)
 	ax.set_title("Station [mm]")

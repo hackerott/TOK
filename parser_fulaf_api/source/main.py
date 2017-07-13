@@ -40,12 +40,14 @@ date0 = datetime.datetime.strptime(str(date_start), '%Y%m%d%H')
 date1 = datetime.datetime.strptime(str(date_tgt), '%Y%m%d%H')
 #######################################
 # Time estimation and max tread count
-run_time, treads = output.TIME_out(path2, station_self)
+#run_time, treads = output.TIME_out(path2, station_self)
 mult = multiprocessing.cpu_count()
+treads = len(station_self)
 if treads >= mult * 2:
 	treads = mult * 2
 print "#######################################"
-print "\nexpected runtime: %.0f minutes %.0f seconds\n" % (run_time//60, (run_time%60))
+#print "\nexpected runtime: %.0f minutes %.0f seconds\n" % (run_time//60, (run_time%60))
+print "\nRunning on %.0i treads\n" % (treads)
 print "#######################################"
 data_wrf	= []
 date_wrf	= []
@@ -58,11 +60,11 @@ out		= []
 def DATA_get(station, gaus_test):
 	if gaus_test == "False":
 		# print "#####\nFALSE\n#####"
-		data_station, date_station, lat_station, lon_station = parser_station.DATA_get(path1, station, path2, path3, date_tgt)
+		data_station, date_station, lat_station, lon_station = parser_station.DATA_get(STATIONfile, station, path2, path3, date_tgt)
 
 		if data_station:
 			ix, iy = lat_lon.STATION_get(path3, path2, station)
-			data_wrf, date_wrf, lat_wrf, lon_wrf = parser_wrf.DATA_get(path2, ix, iy, date_start, date_tgt)
+			data_wrf, date_wrf, lat_wrf, lon_wrf = parser_wrf.DATA_get(ix, iy, WRF_rain_ncu, WRF_lat, WRF_lon, date_i, date_f)
 			output.RAW_out(path4, station, date_tgt, date_wrf, data_station, data_wrf)
 			ampl_error = calc_area_error.DATA_get(path2, ix, iy,  data_station, date_start, date_tgt, date_station)
 			return(data_station, data_wrf, date_station, date_wrf, lat_wrf, lon_wrf, lat_station, lon_station, ampl_error)
@@ -72,7 +74,7 @@ def DATA_get(station, gaus_test):
 
 	else:
 		# print "#####\nTRUE\n#####"		
-		data_station, date_station, lat_station, lon_station = parser_station.DATA_get(path1, station, path2, path3, date_tgt)
+		data_station, date_station, lat_station, lon_station = parser_station.DATA_get(STATIONfile, station, path2, path3, date_tgt)
 		ampl = 15
 		center = [100, 100]
 		sig_x = 10
@@ -92,6 +94,11 @@ def DATA_get(station, gaus_test):
 
 ################################################################################
 ## For parallel processing
+WRFfile = netCDF4.Dataset(path2, 'r')
+WRF_rain_ncu, WRF_lat, WRF_lon = parser_wrf._get_rain_WRF(WRFfile)
+date_i, date_f = parser_wrf._get_date_WRF(date0, date1, WRFfile)
+STATIONfile = np.genfromtxt(path1, delimiter=";",skip_header=500, skip_footer=11)
+
 data_out = (Parallel(n_jobs=treads, verbose=5)(delayed(DATA_get)(station, gaus_test) for station in station_self))
 
 ################################################################################
