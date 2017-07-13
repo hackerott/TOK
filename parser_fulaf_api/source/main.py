@@ -36,7 +36,8 @@ station_self	= raw_stations_name[:,0]
 station_self	= np_f.replace(station_self, 'SN', '')
 lon_self	= raw_stations_data[:,1]
 lat_self	= raw_stations_data[:,2]
-
+date0 = datetime.datetime.strptime(str(date_start), '%Y%m%d%H')
+date1 = datetime.datetime.strptime(str(date_tgt), '%Y%m%d%H')
 #######################################
 # Time estimation and max tread count
 run_time, treads = output.TIME_out(path2, station_self)
@@ -109,7 +110,7 @@ print "#######################################"
 rain_wrf, rain_station, lat, lon, lc, rc, area_erro = plot_map.DATA_get(raw_station, raw_wrf, raw_lat, raw_lon, raw_area)
 
  
-plot_map.DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro)
+plot_map.DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro, path2, date0, date1)
 
 eof = output.STAT_out(path4, date_tgt, out, out_raw)
 

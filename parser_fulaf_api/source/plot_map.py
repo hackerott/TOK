@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import scipy as sci
+import netCDF4
 from mpl_toolkits.basemap import Basemap
 
 #######################################
@@ -21,7 +22,7 @@ def DATA_get(rain_station, rain_wrf, lat, lon, area_error):
 #	lon_min = min(lon) - 1
 #	lc = [lat_min, lon_min] # lower left cornner
 #	rc = [lat_max, lon_max] # upper right cornner
-	lc = [56, 4]	
+	lc = [56, 4]
 	rc = [65, 15]
 	return(rain_wrf, rain_station, lat, lon, lc, rc, area_error)	
 ################################################################################
@@ -71,7 +72,7 @@ def get_SCATTER_plot(rain_wrf, rain_station):
 	return(color_r, color_a)
 ################################################################################
 ## create and plot RMSE scatter  
-def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_error):
+def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_error, wrf_file, date0, date1):
 	print "Setting RMSE and BIAS scale..."
 	color_r, color_a  = get_SCATTER_plot(rain_wrf, rain_station)
 	norm_error = _get_er(rain_station, rain_wrf)
@@ -88,6 +89,53 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	file_name_map2 = '%s/map_area_error.png' % (path4)
 	file_name_scatter = '%s/scatter_obs_sim.png' % (path4)
 	file_name = '%s/model_simulation.png' % (path4)
+	file_shaded = '%s/shaded.png' % (path4)
+
+#plot 0
+##############################################################
+##Model shaded
+	WRFfile = netCDF4.Dataset(wrf_file, 'r')
+	WRF_rain_ncu	= WRFfile.variables['RAINNC']
+	WRF_lat		= WRFfile.variables['XLAT_M'][:,:]
+	WRF_lon		= WRFfile.variables['XLONG_M'][:,:]
+	time_delta = date1 - date0
+	max_i = int(time_delta.days * 24)
+	out = np.subtract(WRF_rain_ncu[max_i, :, :], WRF_rain_ncu[0, :, :])
+	fig5 = plt.figure("Model Shaded/ Station points",figsize=(16, 9))
+	ax = fig5.add_subplot(121)
+	ax.set_title("Model [mm]")
+	map7 = Basemap(projection='merc',llcrnrlat=lc[0], urcrnrlat=rc[0], llcrnrlon=lc[1], urcrnrlon=rc[1],resolution='h')
+	map7.drawcoastlines()
+	map7.drawcountries(linewidth=0.5, linestyle='solid', color='k', antialiased=1, ax=None, zorder=None)
+	map7.fillcontinents(color='lightgray', zorder=0)
+	print "Drawing shades..."
+	print out.shape, WRF_lat.shape, WRF_lon.shape
+	map7.scatter(lon, lat, c=rain_wrf, s=30, marker='o', latlon=True, linewidth=0, )
+	map7.colorbar(location='right', size='5%', pad='2%')
+	map7.drawmapscale(lc[1]+1.3, lc[0]+0.6, lc[1]+10, lc[0]+8, 250, barstyle='fancy', fontsize = 11) 
+	map7.drawparallels(np.arange(lc[0],rc[0]+2.5,2.5), labels=[1,0,0,1])
+	map7.drawmeridians(np.arange(lc[1],rc[1]+5,5.), labels=[1,0,0,1])
+#	map7.contourf(WRF_lon, WRF_lat, out)
+	map7.pcolormesh(WRF_lon, WRF_lat, out)
+	plt.savefig(file_shaded, dpi=300, pad_inches=0)
+
+	ax = fig5.add_subplot(122)
+	ax.set_title("Station [mm]")
+	map8 = Basemap(projection='merc',llcrnrlat=lc[0], urcrnrlat=rc[0], llcrnrlon=lc[1], urcrnrlon=rc[1],resolution='h')
+	map8.drawcoastlines()
+	map8.drawcountries(linewidth=0.5, linestyle='solid', color='k', antialiased=1, ax=None, zorder=None)
+	map8.fillcontinents(color='lightgray', zorder=0)
+	print "Drawing points..."
+	map8.scatter(lon, lat, c=rain_station, s=30, marker='o', latlon=True, linewidth=0, )
+	map8.colorbar(location='right', size='5%', pad='2%')
+	map8.drawmapscale(lc[1]+1.3, lc[0]+0.6, lc[1]+10, lc[0]+8, 250, barstyle='fancy', fontsize = 11) 
+	map8.drawparallels(np.arange(lc[0],rc[0]+2.5,2.5), labels=[1,0,0,1])
+	map8.drawmeridians(np.arange(lc[1],rc[1]+5,5.), labels=[1,0,0,1])
+#	map8.contourf(WRF_lon, WRF_lat, out)
+	map8.pcolormesh(WRF_lon, WRF_lat, out)
+	plt.savefig(file_shaded, dpi=300, pad_inches=0)
+##############################################################
+
 #plot1
 ##SCATTER plot
 	print "Drawing Obs X Sim..."

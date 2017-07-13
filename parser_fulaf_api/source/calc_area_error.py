@@ -10,18 +10,19 @@ import datetime
 ################################################################################
 ##
 def _get_accumulated_rain(wrf, iz, ix, iy):
-	inic = iz-23
+	inic = iz-24
 	if inic < 0:
 		inic = 0
 	rain1 = []
-	for i in range(inic, iz):
-		if i == 0:
-			rain1.append(wrf[i, ix, iy])
-		else:
-			rain1.append(wrf[i, ix, iy] - wrf[i-1, ix, iy])
+#	for i in range(inic, iz):
+#		if i == 0:
+#			rain1.append(wrf[i, ix, iy])
+#		else:
+#			rain1.append(wrf[i, ix, iy] - wrf[i-1, ix, iy])
 
-	rain = sum(rain1[0:23])
+#	rain = sum(rain1[0:23])
 	# print rain, iz
+	rain = wrf[iz, ix, iy] - wrf[inic, ix, iy]
 	return(rain)
 ################################################################################
 ##
