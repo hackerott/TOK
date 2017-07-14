@@ -36,12 +36,8 @@ def _get_rmse(rain_station, rain_wrf):
 ################################################################################
 ## calculate the BIAS
 def _get_bias(rain_station, rain_wrf):
-	b = []
-	n = 0
-	for i in range(0, len(rain_station)):
-		b.append(rain_station[i] - rain_wrf[i])
-		n += 1
-	return np.divide(sum(b),n)
+	b = np.subtract(rain_station, rain_wrf)
+	return np.mean(b)
 ################################################################################
 ## calculate the Er
 def _get_er(rain_station, rain_wrf):
@@ -68,7 +64,6 @@ def get_SCATTER_plot(rain_wrf, rain_station):
  		relative_e = (rain_wrf[i]- rain_station[i])/mrs 
 		color_a.append(absolute_e)
 		color_r.append(relative_e)
-
 	return(color_r, color_a)
 ################################################################################
 ## create and plot RMSE scatter  
@@ -253,7 +248,7 @@ def DATA_plot_scatter(rain_wrf, rain_station, lat, lon, lc, rc, path4, area_erro
 	map7.drawcountries(linewidth=0.5, linestyle='solid', color='k', antialiased=1, ax=None, zorder=None)
 	map7.fillcontinents(color='lightgray', zorder=0)
 	print "Drawing shades..."
-	print out.shape, WRF_lat.shape, WRF_lon.shape
+#	print out.shape, WRF_lat.shape, WRF_lon.shape
 	map7.scatter(lon, lat, c=rain_wrf, s=30, marker='o', latlon=True, linewidth=0, )
 	map7.colorbar(location='right', size='5%', pad='2%')
 	map7.drawmapscale(lc[1]+1.3, lc[0]+0.6, lc[1]+10, lc[0]+8, 250, barstyle='fancy', fontsize = 11) 

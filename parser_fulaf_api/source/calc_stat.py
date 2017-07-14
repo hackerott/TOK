@@ -45,13 +45,14 @@ def ARRAY_split(variable):
 				var.append(b[j])
 		else:
 			var.append(a)
+#		print var[i]
 	return(var)
 
 ################################################################################
 ## Organize the data by date and location before running statiscs
 def DATA_get(data_wrf, data_station, date_wrf, date_station, lat_s, lon_s, lat_w, lon_w, date_tgt, ampl_error):
-	max_w = len(data_wrf) - 1 
-	max_s = len(data_station) - 1
+	max_w = len(data_wrf)
+	max_s = len(data_station)
 	max_i = min(max_w, max_s)
 	raw_date	= []
 	raw_wrf		= []
@@ -126,6 +127,8 @@ def DATA_get_paralel(data_out, date_tgt):
 
 	data_station	= ARRAY_split(data_np[:, 0])
 	data_wrf	= ARRAY_split(data_np[:, 1])
+#	for i in range(0, len(data_wrf)):
+#		print data_wrf[i]
 	date_station	= ARRAY_split(data_np[:, 2])
 	date_wrf	= ARRAY_split(data_np[:, 3])
 	lat_wrf 	= ARRAY_split(data_np[:, 4])
