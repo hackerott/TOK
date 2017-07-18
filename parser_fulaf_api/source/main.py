@@ -57,10 +57,10 @@ date_station	= []
 out		= []
 ################################################################################
 ## Call other func to obtain data per station
-def DATA_get(station, gaus_test):
+def DATA_get(station, gaus_test, header):
 	if gaus_test == "False":
 		# print "#####\nFALSE\n#####"
-		data_station, date_station, lat_station, lon_station = parser_station.DATA_get(path1, station, path2, path3, date_tgt)
+		data_station, date_station, lat_station, lon_station = parser_station.DATA_get(path1, station, path2, path3, date_tgt, header)
 		if data_station:
 			ix, iy = lat_lon.STATION_get(path3, path2, station)
 			data_wrf, date_wrf, lat_wrf, lon_wrf = parser_wrf.DATA_get(ix, iy, path2, date0, date1)
@@ -89,12 +89,18 @@ def DATA_get(station, gaus_test):
 			return(data_station, data_wrf, date_station, date_wrf, lat_wrf, lon_wrf, lat_station, lon_station, ampl_error)
 		else:
 			return(np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan)	
+################################################################################
+## Header counter
+with open(path1) as station_header:
+	for header, line in enumerate(station_header, 1):
+		if "St.no;Year;Mnth;Date;Time(UTC);RR_24" in line:
+			break 
 
 ################################################################################
 ## For parallel processing
 #STATIONfile = np.genfromtxt(path1, delimiter=";",skip_header=500, skip_footer=11)
 
-data_out = (Parallel(n_jobs=treads, verbose=5)(delayed(DATA_get)(station, gaus_test) for station in station_self))
+data_out = (Parallel(n_jobs=treads, verbose=5)(delayed(DATA_get)(station, gaus_test, header) for station in station_self))
 
 ################################################################################
 ##Statistics
