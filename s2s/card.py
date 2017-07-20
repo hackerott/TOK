@@ -3,8 +3,6 @@
 
 import numpy as np
 import netCDF4
-#import math
-#import sys
 import datetime
 
 from math import pi
@@ -17,10 +15,7 @@ import prob_time
 #######################################
 """
 Use date an time of request to present value as 'now' in GFS and WRF
-And date to present for 'full' day in all models
-will or not receive specific date?  or only awser for request date ???
 Does CFS has a card? or it is only for the 'first day'??
-This is exctly the same as calendar.
 
 """
 ###############################################################################
@@ -68,12 +63,10 @@ def DATA_cfs_card(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, i
 		else:
 			color.append((np.argmax(prob_c) + 1))
 			value.append((2*value_t  +  value_a)/3)
-	#	f1 = figure._get_card(value[i], CFS)
 		prob.append(prob_c[np.argmax(prob_c)])		
 		maxi.append(max(max_v))
 		mini.append(min(min_v))
 		date.append(d1)
-	#	fig.append(f1)
 		fig.append('Null')
 		a += 4
 		b += 4
@@ -82,10 +75,16 @@ def DATA_cfs_card(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, i
 		if d1.day == tgt_day.day:
 			if d1.hour == tgt_day.hour:
 				c = i
-				v1 = ((2*value_t1[i]  +  value_a1[i])/3)
 				d2 = d1 + datetime.timedelta(hours = utc0)
+				v1 = ((2*value_t1[i]  +  value_a1[i])/3)
+				v1 = np.around(v1, decimals=1)
+				if v1 < 1 and v1 > 0:
+					v1 = int((v1 * 10))/10.0
+				else:
+					v1 = int(v1)	
 
-	return(date[c//4], prob[c//4], color[c//4], v1, maxi[c//4], mini[c//4], fig[c//4], c)
+
+	return(date[c//4], prob[c//4], color[c//4], v1, maxi[c//4], mini[c//4], c)
 		
 ###############################################################################
 #GFS
@@ -100,7 +99,6 @@ def DATA_gfs_card(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 	date	= []
 	mini	= []
 	maxi	= []
-	fig		= []
 	a = 0
 	b = 24
 	tgt_day = datetime.datetime.now()
@@ -121,19 +119,25 @@ def DATA_gfs_card(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 		prob_c	= [prob_g, prob_r, prob_y]
 		if prob_c[np.argmax(prob_c)] < PRO:
 			color.append(2)
-			value.append((((2*value_t  +  value_a)/3) + (max(max_v) + min(min_v)))/3)
-			
+			result_prov = ((((2*value_t  +  value_a)/3) + max_v + min_v)/3)
+			result_prov = np.around(result_prov, decimals=1)
+			if result_prov < 1:
+				result_prov = int((result_prov * 10))/10.0
+			else:
+				result_prov = int(result_prov)
 		else:
 			color.append((np.argmax(prob_c) + 1))
-			value.append((2*value_t  +  value_a)/3)
-	#	d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i*24) + datetime.timedelta(hours = utc0)
-	#	f1 = figure._get_card(value[i], CFS)
+			result_prov = ((2*value_t  +  value_a)/3)
+			result_prov = np.around(result_prov, decimals=1)
+			if result_prov < 1:
+				result_prov = int((result_prov * 10))/10.0
+			else:
+				result_prov = int(result_prov)
+
+		value.append(result_prov)
 		prob.append(prob_c[np.argmax(prob_c)])		
 		maxi.append(max(max_v))
 		mini.append(min(min_v))
-	#	date.append(d1)
-	#	fig.append(f1)
-		fig.append("null")
 
 		if b <= max_i - 24:
 			d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i*24) + datetime.timedelta(hours = utc0)
@@ -150,10 +154,15 @@ def DATA_gfs_card(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 		if d1.day == tgt_day.day:
 			if d1.hour  == tgt_day.hour:
 				c = i
-				v1 = ((2*value_t1[i]  +  value_a1[i])/3)
 				d2 = d1 + datetime.timedelta(hours = utc0)
+				v1 = ((2*value_t1[i]  +  value_a1[i])/3)
+				v1 = np.around(v1, decimals=1)
+				if v1 < 1 and v1 > 0:
+					v1 = int((v1 * 10))/10.0
+				else:
+					v1 = int(v1)	
 
-	return(d2, prob[c//24], color[c//24], v1, maxi[c//24], mini[c//24], fig[c//24], c)
+	return(d2, prob[c//24], color[c//24], v1, maxi[c//24], mini[c//24], c)
 
 ###############################################################################
 #WRF
@@ -167,7 +176,6 @@ def DATA_wrf_card(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO):
 	date	= []
 	mini	= []
 	maxi	= []
-	fig		= []
 	a = 0
 	b = 24
 	tgt_day = datetime.datetime.now()
@@ -194,13 +202,10 @@ def DATA_wrf_card(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO):
 			color.append((np.argmax(prob_c) + 1))
 			value.append((2*value_t  +  value_a)/3)
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
-	#	f1 = figure._get_card(value[i], CFS)
 		prob.append(prob_c[np.argmax(prob_c)])		
 		maxi.append(max(max_v))
 		mini.append(min(min_v))
 		date.append(d1)
-	#	fig.append(f1)
-		fig.append("null")
 		a += 24
 		b += 24
 	for i in range(0, max_i):
@@ -208,12 +213,21 @@ def DATA_wrf_card(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO):
 		if d1.day == tgt_day.day:
 			if d1.hour  == tgt_day.hour:
 				c = i
-				v1 = ((2*value_t1[i]  +  value_a1[i])/3)
 				d2 = d1 + datetime.timedelta(hours = utc0)
-
-	return(d2, prob[c//24], color[c//24], v1, maxi[c//24], mini[c//24], fig[c//24], c)
+				v1 = ((2*value_t1[i]  +  value_a1[i])/3)
+				v1 = np.around(v1, decimals=1)
+				if v1 < 1 and v1 > 0:
+					v1 = int((v1 * 10))/10.0
+				else:
+					v1 = int(v1)	
+	return(d2, prob[c//24], color[c//24], v1, maxi[c//24], mini[c//24], c)
 
 ###############################################################################
 """
-Now part, only GFS and WRF
+Card possible days:
+	WRF: 0 - 9
+	GFS: 0 - 5 / 6 - 10
+	CFS: 9 - 34
+WRF GFS cards returning "now", CFS only for testing, it returns day 9 at request hour
+
 """
