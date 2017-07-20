@@ -10,15 +10,15 @@ import netCDF4
 
 #######################################
 ## return the nc var_names for each variable
-def _get_NCVAR(var):
-	return {
-		'chuva'		: 'pratesfc',
-		'temperatura'	: 'tmp2m',
-		'radiacao'	: 'dswrfsfc',
-		'umidade'	: ['spfh2m', 'tmp2m', 'pressfc'], 
-		'vento'		: ['ugrd10m', 'vgrd10m']
-		}.get(var, 'Null')
-
+# def _get_NCVAR(var):
+# 	return {
+# 		'chuva'		: 'pratesfc',
+# 		'temperatura'	: 'tmp2m',
+# 		'radiacao'	: 'dswrfsfc',
+# 		'umidade'	: ['spfh2m', 'tmp2m', 'pressfc'], 
+# 		'vento'		: ['ugrd10m', 'vgrd10m']
+# 		}.get(var, 'Null')
+#
 #######################################
 ## return the probabilitys for each alert level
 def _get_Prob(var_raw1, var_raw2, iz, ix, iy, max_i, top_lim, bot_lim):

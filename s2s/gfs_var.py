@@ -15,7 +15,7 @@ def _get_NCVAR(var):
 		'radiacao'	: 'dswrfsfc',
 		'umidade'	: ['spfh2m', 'tmp2m', 'pressfc'], 
 		'vento'		: ['ugrd10m', 'vgrd10m'],
-		'nuvem'		: 'tcdcclm',
+		'figura'	: ['tcdcclm',''],
 		'time'		: 'time'
 
 		}.get(var, 'Null')
@@ -28,13 +28,15 @@ def _get_ID(var):
 		'temp'		: 3,
 		'radiacao'	: 4,
 		'umidade'	: 5, 
-		'all'		: 6
+		'figura'	: 6,  
+		'all'		: 7
 		}.get(var, 'Null')
 #######################################
 ## return limits for each var 
 def _get_LIM(var):
 	DIC = {
 		'chuva'		: [0.4, 10, 0.5],
+		'figura'	: [0.4, 10, 0.5],
 		'vento'		: [0.4, 7, 2],
 		'temp'		: [0.4, 27, 20],
 		'radiacao'	: [0.4, 1400, 800],
@@ -72,14 +74,15 @@ def _get_rain(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
 		ncfile = netCDF4.Dataset(ncfile, 'r')
-                var_rawa = ncfile.variables[var_nc]
-                var_raw1 = np.array(var_rawa)
-                for i in range(0, len(var_raw1)):
-                        if i == 0:
-                                var_raw1[i,:,:] = var_rawa[i,:,:]
-                        else:
-                                var_raw1[i,:,:] = np.subtract(var_rawa[i,:,:], var_rawa[i-1,:,:])
-                var_raw1 = np.around(var_raw1, decimals=2)
+		var_rawa = ncfile.variables[var_nc]
+		var_raw1 = np.array(var_rawa)
+		for i in range(0, len(var_raw1)):
+	        if i == 0:
+    		    var_raw1[i,:,:] = var_rawa[i,:,:]
+			else:
+				var_raw1[i,:,:] = np.subtract(var_rawa[i,:,:], var_rawa[i-1,:,:])
+		var_raw1 = np.around(var_raw1, decimals=2)
+		var_raw1[np.where(var_raw1<0)] = 0
 	except:
 		var_raw1 = np.nan	
 	return(var_raw1)
@@ -139,14 +142,17 @@ def _get_humidity(var, ncfile):
 		var_raw1 = np.nan
 	return (var_raw1)
 
-def _get_cloud(var, ncfile):
+def _get_figure(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
 		ncfile = netCDF4.Dataset(ncfile, 'r')
-		var_raw1 = ncfile.variables[var_nc]
+		var_raw1 = ncfile.variables[var_nc[0]]
+		var_raw2 = ncfile.variables[var_nc[1]]	
 	except:
 		var_raw1 = np.nan
-	return(var_raw1)
+		var_raw2 = np.nan
+	return(var_raw1, var_raw2)
+
 def _get_time(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)

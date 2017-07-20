@@ -507,6 +507,7 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 		success, dic = _get_ERROR(var_id, model)
 			
 	return(success, dic)
+
 def _get_calendar(date, prob, color, value, maxi, mini, fig, var_id, model):
 
 	dic = {}
