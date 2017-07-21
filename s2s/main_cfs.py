@@ -120,7 +120,6 @@ elif var_id == 3:
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
 
-
 elif var_id == 4:
 	var_raw1 = cfs_var._get_radiation(var, ens1)
 	var_raw2 = cfs_var._get_radiation(var, ens2)
@@ -138,7 +137,6 @@ elif var_id == 4:
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
 
-
 elif var_id == 5:
 	var_raw1 = cfs_var._get_humidity(var, ens1)
 	var_raw2 = cfs_var._get_humidity(var, ens2)
@@ -155,7 +153,6 @@ elif var_id == 5:
 		date, prob, color, value, maxi, mini, i = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
-###################
 
 elif var_id == 6:
 	var_rawa1, var_rawb1 = cfs_var._get_figure(var, ens1)
@@ -168,13 +165,15 @@ elif var_id == 6:
 	var_rawa8, var_rawb8 = cfs_var._get_figure(var, ens8)
 	time  	 = cfs_var._get_time('time', ens1)
 	if model == "calendar":
-
-	elif model == "table":
-
+		date, prob, color, value1, maxi, mini = calendar.DATA_cfs_calendar(var_rawa1, var_rawa2, var_rawa3, var_rawa4, var_rawa5, var_rawa6, var_rawa7, var_rawa8, time, ix_cfs, iy_cfs, date0, utc0, 0.75, 0.25, 0.5)
+		date, prob, color, value2, maxi, mini = calendar.DATA_cfs_calendar(var_rawb1, var_rawb2, var_rawb3, var_rawb4, var_rawb5, var_rawb6, var_rawb7, var_rawb8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
+	elif model == "card":
+		date, prob, color, value1, maxi, mini, i = calendar.DATA_cfs_card(var_rawa1, var_rawa2, var_rawa3, var_rawa4, var_rawa5, var_rawa6, var_rawa7, var_rawa8, time, ix_cfs, iy_cfs, date0, utc0, 0.75, 0.25, 0.5)
+		date, prob, color, value2, maxi, mini, i = calendar.DATA_cfs_card(var_rawb1, var_rawb2, var_rawb3, var_rawb4, var_rawb5, var_rawb6, var_rawb7, var_rawb8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
 	else:
-		success, dic = json_output._get_ERROR(var_id, model)
-
-###################
+		success, dic = json_output._get_ERROR(var_id, model) 
+	value = figures.DATA_gfs(value1, value2, date)
+	
 elif var_id == 7:
 	rain1, speed1, direction1, radiation1, temperature1, humidity1 = cfs_var._get_all(var, ens1)
 	rain2, speed2, direction2, radiation2, temperature2, humidity2 = cfs_var._get_all(var, ens2)

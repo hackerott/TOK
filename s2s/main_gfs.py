@@ -134,27 +134,27 @@ elif var_id == 5:
 		date, prob, color, value, maxi, mini = table.DATA_gfs_table(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
-##################
+
 
 elif var_id == 6:
-	var_rawa1, var_rawb1 = cfs_var._get_figure(var, ens1)
-	var_rawa2, var_rawb2 = cfs_var._get_figure(var, ens2)
+	var_rawa1, var_rawb1 = gfs_var._get_figure(var, ens1)
+	var_rawa2, var_rawb2 = gfs_var._get_figure(var, ens2)
 	time  	 = cfs_var._get_time('time', ens1)
-
+	var_rawa1 = np.max(var_rawa1, axis=0) 
+	var_rawa2 = np.max(var_rawa2, axis=0) 
 	if model == "calendar":
-		date, prob, color, value1, maxi, mini = calendar.DATA_gfs_calendar(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
-		date, prob, color, value2, maxi, mini = calendar.DATA_gfs_calendar(var_rawb1, var_rawb2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
+		date, prob, color, value1, maxi, mini = calendar.DATA_gfs_calendar(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, 0.75, 0.25, 0.5)
+		date, prob, color, value2, maxi, mini = calendar.DATA_gfs_calendar(var_rawb1, var_rawb2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)
 	elif model == "card":
-		date, prob, color, value1, maxi, mini, c = card.DATA_gfs_card(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
-		date, prob, color, value2, maxi, mini, c = card.DATA_gfs_card(var_rawb1, var_rawb2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
+		date, prob, color, value1, maxi, mini, c = card.DATA_gfs_card(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, 0.75, 0.25, 0.5)	
+		date, prob, color, value2, maxi, mini, c = card.DATA_gfs_card(var_rawb1, var_rawb2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
 	elif model == "table":
-		date, prob, color, value1, maxi, mini = table.DATA_gfs_table(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
-		date, prob, color, value2, maxi, mini = table.DATA_gfs_table(var_rawb1, var_rawb2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
-
+		date, prob, color, value1, maxi, mini = table.DATA_gfs_table(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, 0.75, 0.25, 0.5)
+		date, prob, color, value2, maxi, mini = table.DATA_gfs_table(var_rawb1, var_rawb2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
-
-##################
+	value = figures.DATA_gfs(value1, value2, date)
+	
 elif var_id == 7:
 	rain1, speed1, direction1, radiation1, temperature1, humidity1 = gfs_var._get_all(var, ens1)
 	rain2, speed2, direction2, radiation2, temperature2, humidity2 = gfs_var._get_all(var, ens2)
