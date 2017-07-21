@@ -11,7 +11,7 @@ import lat_lon
 ################################################################################
 ##Creates the array with all data and dates from station files 
 def DATA_get(station_file, station, path2, path3, date1, header):
-	raw_data = np.genfromtxt(station_file, delimiter=";",skip_header=header, skip_footer=0)
+	raw_data = np.genfromtxt(station_file, delimiter=";",skip_header=header, skip_footer=11)
 	date1 = datetime.datetime.strptime(str(date1), '%Y%m%d%H')
 	station_self	= raw_data[:,0]
 	year		= raw_data[:,1]
