@@ -24,7 +24,39 @@ def _get_figure_url(var):
 			
 	}.get(var, 'Null')
 
-def DATA_wrf(cloud, rain, date):
-
+def DATA_cond_figure(cloud, rain, date0):
+	for i, date in date0:
+		if cloud[i] < 0.75:
+			if date.hour < 18 and date.hour > 6:
+				if rain[i] < 0.1:
+					if cloud[i] < 0.25:
+						value.append(_get_figure_url(13))
+					elif cloud[i] < 0.5:
+						value.append(_get_figure_url(14))
+					else:
+						value.append(_get_figure_url(15))
+				elif rain[i] < 3:
+					value.append(_get_figure_url(16))
+				else:
+					value.append(_get_figure_url(18))		
+			else:	
+				if rain[i] < 0.1:
+					if cloud[i] < 0.25:
+						value.append(_get_figure_url(6))
+					elif cloud[i] < 0.5:
+						value.append(_get_figure_url(7))
+					else:
+						value.append(_get_figure_url(8))
+				elif rain[i] < 3:
+					value.append(_get_figure_url(9))
+				else:
+					value.append(_get_figure_url(11))
+		else:
+			if rain[i] < 0.1:
+				value.append(_get_figure_url(1))
+			elif rain[i] < 3:
+				value.append(_get_figure_url(2))
+			else:
+				value.append(_get_figure_url(4))
 
 	return(value)
