@@ -25,14 +25,16 @@ def _get_figure_url(var):
 	}.get(var, 'Null')
 
 def DATA_cond_figure(cloud, rain, date0):
+	sunset = 18
+	sunrise = 6
 	for i, date in date0:
 		if cloud[i] < 0.75:
-			if date.hour < 18 and date.hour > 6:
+			if date.hour <= sunset and date.hour > sunrise:
 				if rain[i] < 0.1:
-					if cloud[i] < 0.25:
+					if cloud[i] < 0.10:
+						value.append(_get_figure_url(12))
+					elif cloud[i] < 0.4:
 						value.append(_get_figure_url(13))
-					elif cloud[i] < 0.5:
-						value.append(_get_figure_url(14))
 					else:
 						value.append(_get_figure_url(15))
 				elif rain[i] < 3:
@@ -41,10 +43,10 @@ def DATA_cond_figure(cloud, rain, date0):
 					value.append(_get_figure_url(18))		
 			else:	
 				if rain[i] < 0.1:
-					if cloud[i] < 0.25:
+					if cloud[i] < 0.1:
+						value.append(_get_figure_url(5))
+					elif cloud[i] < 0.4:
 						value.append(_get_figure_url(6))
-					elif cloud[i] < 0.5:
-						value.append(_get_figure_url(7))
 					else:
 						value.append(_get_figure_url(8))
 				elif rain[i] < 3:
