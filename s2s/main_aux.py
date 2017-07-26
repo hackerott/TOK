@@ -41,16 +41,22 @@ c_out = _check_cfs()
 ## Get point valid
 point = _check_point(lat0, lon0)
 
-
 #######################################
+## Get output json
+success, dic = json_output._get_AUX(utc, sun_set, sun_rise, point, w_out, g_out, c_out) 
+
+print "Content-type: application/json\n\n"
+print json.dumps(dic)
+exit(0)
+#######################################'
 ## Check WRF available variables
 def _check_wrf():
 	ens1, ens2, date0 = wrf_var._get_FILE()
-	w_rain = wrf_var._get_rain(chuva, ens2)
-	w_wind, w_dire = wrf_var._get_wind(vento, ens2)
-	w_temp = wrf_var._get_temperature(temp, ens2)
-	w_radi = wrf_var._get_radiation(radiacao, ens2)
-	w_humi = wrf_var._get_humidity(umidade, ens2)
+	w_rain = wrf_var._get_rain('chuva', ens2)
+	w_wind, w_dire = wrf_var._get_wind('vento', ens2)
+	w_temp = wrf_var._get_temperature('temp', ens2)
+	w_radi = wrf_var._get_radiation('radiacao', ens2)
+	w_humi = wrf_var._get_humidity('umidade', ens2)
 
 	if np.invert(np.isnan(w_rain)):
 		w_rain = True
@@ -78,11 +84,11 @@ def _check_wrf():
 ## Check GFS available variables
 def _check_gfs():
 	ens1, ens2, date0 = gfs_var._get_FILE()
-	g_rain = gfs_var._get_rain(chuva, ens2)
-	g_wind, g_dire = gfs_var._get_wind(vento, ens2)
-	g_temp = gfs_var._get_temperature(temp, ens2)
-	g_radi = gfs_var._get_radiation(radiacao, ens2)
-	g_humi = gfs_var._get_humidity(umidade, ens2)
+	g_rain = gfs_var._get_rain('chuva', ens2)
+	g_wind, g_dire = gfs_var._get_wind('vento', ens2)
+	g_temp = gfs_var._get_temperature('temp', ens2)
+	g_radi = gfs_var._get_radiation('radiacao', ens2)
+	g_humi = gfs_var._get_humidity('umidade', ens2)
 
 	if np.invert(np.isnan(g_rain)):
 		g_rain = True
@@ -110,11 +116,11 @@ def _check_gfs():
 ## Check CFS available variables
 def _check_cfs():
 	ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, date0 = cfs_var._get_FILE()
-	c_rain = cfs_var._get_rain(chuva, ens5)
-	c_wind, c_dire = cfs_var._get_wind(vento, ens5)
-	c_temp = cfs_var._get_temperature(temp, ens5)
-	c_radi = cfs_var._get_radiation(radiacao, ens5)
-	c_humi = cfs_var._get_humidity(umidade, ens5)
+	c_rain = cfs_var._get_rain('chuva', ens5)
+	c_wind, c_dire = cfs_var._get_wind('vento', ens5)
+	c_temp = cfs_var._get_temperature('temp', ens5)
+	c_radi = cfs_var._get_radiation('radiacao', ens5)
+	c_humi = cfs_var._get_humidity('umidade', ens5)
 
 	
 	if np.invert(np.isnan(c_rain)):
