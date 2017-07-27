@@ -523,9 +523,9 @@ def _get_ERROR(var_id, model):
 
 	return(False, dic)
 
-def _get_aux():
+def _get_AUX(utc, sun_set, sun_rise, point, w_out, g_out, c_out):
 	dic ={"data" : 
-		{"models" : 
+		{"models" :[ 
 			{"WRF" : [	{'rain' : w_out[0]},
 						{'wind' : w_out[1]},
 						{'temperature' : w_out[2]},
@@ -546,8 +546,8 @@ def _get_aux():
 						{'radiation' : c_out[3]},
 						{'humidity' : c_out[4]}
 					]
-			}
-		}, 
+			}.
+		]}, 
 		"message"	: "System is UP",
 		"status"	: 0,
 		"sun_set"	: sun_set,
@@ -556,4 +556,5 @@ def _get_aux():
 
 
 	}
+	success = True
 	return(success, dic)

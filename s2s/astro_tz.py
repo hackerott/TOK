@@ -27,8 +27,8 @@ def _get_sun(lat, lon, utc):
 	sun = ephem.Sun(observer)
 	sun_rise	= observer.next_rising(sun)
 	sun_set		= observer.next_setting(sun)
-	sun_rise = ephem.Date(sun_rise(sun, start=observer.date) + utc*ephem.hour).datetime().strftime('%H:%M')
-	sun_set  = ephem.Date( sun_set(sun, start=observer.date) + utc*ephem.hour).datetime().strftime('%H:%M')
+	sun_rise	= ephem.Date(sun_rise + utc*ephem.hour).datetime().strftime('%H:%M')
+	sun_set		= ephem.Date( sun_set + utc*ephem.hour).datetime().strftime('%H:%M')
 
 	return(sun_rise, sun_set)
 
