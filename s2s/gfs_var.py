@@ -15,7 +15,7 @@ def _get_NCVAR(var):
 		'radiacao'	: 'dswrfsfc',
 		'umidade'	: ['spfh2m', 'tmp2m', 'pressfc'], 
 		'vento'		: ['ugrd10m', 'vgrd10m'],
-		'figura'	: ['tcdcclm',''],
+		'figura'	: ['tcdcclm', 'pratesfc'],
 		'time'		: 'time'
 
 		}.get(var, 'Null')

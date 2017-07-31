@@ -26,7 +26,7 @@ lat 	= form.getvalue("lat")
 lon 	= form.getvalue("lon")	
 utc 	= form.getvalue("utc")	
 var 	= form.getvalue("var")	
-#date 	= form.getvalue("date")
+unit 	= form.getvalue("unit")
 model 	= form.getvalue("model")
 
 #######################################
@@ -188,7 +188,11 @@ if success == False:
 	exit(1)
 
 else:
-	success, dic = json_output._get_OUT(date, prob, color, value, maxi, mini, model, var_id)
+	if unit  == "imperial":
+		value, cur = units._get_imperial(value, var_id)
+	else:
+		value, cur = units._get_metric(value, var_id)
+	success, dic = json_output._get_OUT(date, prob, color, value, maxi, mini, model, var_id, cur)
 	print "Content-type: application/json\n\n"
 	print json.dumps(dic)
 	exit(0)

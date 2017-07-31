@@ -32,9 +32,9 @@ form = cgi.FieldStorage()
 					
 lat 	= form.getvalue("lat")	
 lon 	= form.getvalue("lon")	
-utc 	= form.getvalue("utc")	
+#utc 	= form.getvalue("utc")	
 var 	= form.getvalue("var")	
-#date 	= form.getvalue("date")
+unit 	= form.getvalue("unit")
 model 	= form.getvalue("model")
 #token 	= form.getvalue("token")
 #cid 	= form.getvalue("id")
@@ -47,6 +47,7 @@ model 	= form.getvalue("model")
 lat0	= float(lat)
 lon0	= float(lon)
 try:
+	utc 	= form.getvalue("utc")	
 	utc0	= int(utc)
 except:
 	utc0 = astro_tz._get_timezone(lat0, lon0)
@@ -224,7 +225,11 @@ if success == False:
 	exit(1)
 
 else:
-	success, dic = json_output._get_OUT(date, prob, color, value, maxi, mini, model, var_id)
+	if unit  == "imperial":
+		value, cur = units._get_imperial(value, var_id)
+	else:
+		value, cur = units._get_metric(value, var_id)
+	success, dic = json_output._get_OUT(date, prob, color, value, maxi, mini, model, var_id, cur)
 	print "Content-type: application/json\n\n"
 	print json.dumps(dic)
 	exit(0)

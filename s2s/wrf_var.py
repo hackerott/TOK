@@ -16,7 +16,7 @@ def _get_NCVAR(var):
 		'umidade'	: ['Q2', 'T2', 'PSFC'],
 		'vento'		: ['U10', 'V10'],
 		'time'		: 'Times',
-		'nuvem'		: 'CLDFRA'
+		'figura'	: ['CLDFRA', 'RAINC', 'RAINNC']
 		}.get(var, 'Null')
 
 #######################################
@@ -157,10 +157,19 @@ def _get_figure(var, ncfile):
 		ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc[0]]
 		var_raw2 = ncfile.variables[var_nc[1]]	
+		var_raw3 = ncfile.variables[var_nc[2]]	
+		var_rawa = np.add(var_raw2, var_raw3)
+		var_rawb = var_raw2
+		for i in range(0, len(var_raw2)):
+			if i == 0:
+				var_rawa[i,:,:] = np.add(var_raw2[i,:,:], var_raw3[i,:,:])
+			else:
+				var_rawa[i,:,:] = np.subtract(np.add(var_raw2[i,:,:], var_raw3[i,:,:]), np.add(var_raw2[i-1,:,:], var_raw3[i-1,:,:]))
+			var_rawb[i,:,:] = np.amax(var_raw1[i,:,:,:], axis=1)
 	except:
-		var_raw1 = np.nan
-		var_raw2 = np.nan
-	return(var_raw1, var_raw2)
+		var_rawa = np.nan
+		var_rawb = np.nan
+	return(var_rawb, var_rawa)
 
 def _get_time(var, ncfile):
 	try:
