@@ -64,10 +64,10 @@ def DATA_gfs_table(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 			color.append((np.argmax(prob_c) + 1))
 			result_prov = ((2*value_t  +  value_a)/3)
 			result_prov = np.around(result_prov, decimals=1)
-			if result_prov < 1 and result_prov > 0:
-				result_prov = int((result_prov * 10))/10.0
-			else:
-				result_prov = int(result_prov)
+			# if result_prov < 1 and result_prov > 0:
+			# 	result_prov = int((result_prov * 10))/10.0
+			# else:
+			# 	result_prov = int(result_prov)
 
 		value.append(result_prov)
 		prob.append(prob_c[np.argmax(prob_c)])		
@@ -128,10 +128,10 @@ def DATA_wrf_table(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO):
 			color.append((np.argmax(prob_c) + 1))
 			result_prov = ((2*value_t  +  value_a)/3)
 			result_prov = np.around(result_prov, decimals=1)
-			if result_prov < 1 and result_prov > 0:
-				result_prov = int((result_prov * 10))/10.0
-			else:
-				result_prov = int(result_prov)
+			# if result_prov < 1 and result_prov > 0:
+			# 	result_prov = int((result_prov * 10))/10.0
+			# else:
+			# 	result_prov = int(result_prov)
 
 		value.append(result_prov)
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i) + datetime.timedelta(hours = utc0)

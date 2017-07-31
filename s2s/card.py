@@ -78,10 +78,10 @@ def DATA_cfs_card(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, i
 				d2 = d1 + datetime.timedelta(hours = utc0)
 				v1 = ((2*value_t1[i]  +  value_a1[i])/3)
 				v1 = np.around(v1, decimals=1)
-				if v1 < 1 and v1 > 0:
-					v1 = int((v1 * 10))/10.0
-				else:
-					v1 = int(v1)	
+				# if v1 < 1 and v1 > 0:
+				# 	v1 = int((v1 * 10))/10.0
+				# else:
+				# 	v1 = int(v1)	
 
 
 	return(date[c//4], prob[c//4], color[c//4], v1, maxi[c//4], mini[c//4], c)
@@ -129,10 +129,6 @@ def DATA_gfs_card(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 			color.append((np.argmax(prob_c) + 1))
 			result_prov = ((2*value_t  +  value_a)/3)
 			result_prov = np.around(result_prov, decimals=1)
-			if result_prov < 1:
-				result_prov = int((result_prov * 10))/10.0
-			else:
-				result_prov = int(result_prov)
 
 		value.append(result_prov)
 		prob.append(prob_c[np.argmax(prob_c)])		
@@ -157,10 +153,10 @@ def DATA_gfs_card(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 				d2 = d1 + datetime.timedelta(hours = utc0)
 				v1 = ((2*value_t1[i]  +  value_a1[i])/3)
 				v1 = np.around(v1, decimals=1)
-				if v1 < 1 and v1 > 0:
-					v1 = int((v1 * 10))/10.0
-				else:
-					v1 = int(v1)	
+				# if v1 < 1 and v1 > 0:
+				# 	v1 = int((v1 * 10))/10.0
+				# else:
+				# 	v1 = int(v1)	
 
 	return(d2, prob[c//24], color[c//24], v1, maxi[c//24], mini[c//24], c)
 
@@ -216,10 +212,10 @@ def DATA_wrf_card(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO):
 				d2 = d1 + datetime.timedelta(hours = utc0)
 				v1 = ((2*value_t1[i]  +  value_a1[i])/3)
 				v1 = np.around(v1, decimals=1)
-				if v1 < 1 and v1 > 0:
-					v1 = int((v1 * 10))/10.0
-				else:
-					v1 = int(v1)	
+				# if v1 < 1 and v1 > 0:
+				# 	v1 = int((v1 * 10))/10.0
+				# else:
+				# 	v1 = int(v1)	
 	return(d2, prob[c//24], color[c//24], v1, maxi[c//24], mini[c//24], c)
 
 ###############################################################################

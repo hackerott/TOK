@@ -10,16 +10,16 @@ json, any other type of output cold be created, just adding new
 output scripts
 '''
 #######################################
-def _get_OUT(date, prob, color, value, maxi, mini, fig, model, var_id):
+def _get_OUT(date, prob, color, value, maxi, mini, fig, model, var_id, cur):
 
 	if model == 'card':
-		success, dic = _get_card(date, prob, color, value, maxi, mini, fig, var_id, model)
+		success, dic = _get_card(date, prob, color, value, maxi, mini, fig, var_id, model, cur)
 
 	elif model == 'table':
-		success, dic = _get_table(date, prob, color, value, maxi, mini, fig, var_id, model)
+		success, dic = _get_table(date, prob, color, value, maxi, mini, fig, var_id, mode, cur)
 
 	elif model == 'calendar':
-		success, dic = _get_calendar(date, prob, color, value, maxi, mini, fig, var_id, model)
+		success, dic = _get_calendar(date, prob, color, value, maxi, mini, fig, var_id, model, cur)
 
 	return(success, dic)
 
@@ -28,7 +28,7 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
 	if var_id == 1 :
 		# for i in range(0, len(value)):
 		values = {"rain"	:	[value]}
-		units = {"rain" : {                "current" : "mm",
+		units = {"rain" : {                "current" : cur,
                 "label" : "rain",
                 "options" : [
                     {
@@ -58,7 +58,7 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
                         self_value.append(d)
                 values = {"wind"        :       [self_value]}
  		units = {"wind" : {
-                "current" : "ms",
+                "current" : cur,
                 "label" : "wind",
                 "options" : [
                     {
@@ -88,7 +88,7 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
 		values = {"temperature"	:	[value]}
 		units = {
 			"temperature" : {
-                "current" : "c",
+                "current" : cur,
                 "label" : "Temperature",
                 "options" : [ 
                     {
@@ -116,7 +116,7 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
 		# for i in range(0, len(value)):
 		values = {"radiation"	:	[value]	}
 		units = {"radiation" : {
-                "current" : "wm2",
+                "current" : cur,
                 "label" : "radiation",
                 "options" : [
                     {
@@ -140,7 +140,7 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
 		# for i in range(0, len(value)):
 		values = {"humidity"	:	[value]}
 		units = {"humidity" : {
-                "current" : "per",
+                "current" : cur,
                 "label" : "humidity",
                 "options" : [
                     {
@@ -161,7 +161,27 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
 					}}
 		success = True
 
-	elif var_id == 6:	
+	elif var_id == 6:
+		# for i in range(0, len(value)):
+		values = {"figures"	:	[value]}
+		units = {"figures" : {
+                "current" : cur,
+                "label" : "cond_figures",
+	  		       },}
+       		dic = {"data" :{
+					"type"  : "horizontal",
+					"stepLength" : "1",
+					"startDate" : date[0].strftime('%Y-%m-%d %H:00:00'),
+					"endDate" : date[-1].strftime('%Y-%m-%d %H:00:00'),
+					"units" : units,
+					"values" : values,
+					"message" : "Table OK!",
+					"status" : 0 
+					}}
+		success = True
+
+
+	elif var_id == 7:	
 		# for i in range(0, len(value)):
 		values = {
 			{"rain"			:	[value[:0]]
@@ -259,7 +279,7 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 			  "max"		:	[maxi],
 			  "min"		:	[mini],}
 
-		units = {"rain" : {                "current" : "mm",
+		units = {"rain" : {                "current" : cur,
                 "label" : "rain",
                 "options" : [
                     {
@@ -298,7 +318,7 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 			  "min"		:	"%.2f"%mini,}
 
  		units = {"wind" : {
-			                "current" : "ms",
+			                "current" : cur,
 			                "label" : "wind",
 			                "options" : [
 				                    {
@@ -316,7 +336,7 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 					"endDate" : date.strftime('%Y-%m-%d %H:00:00'),
 					"units" : units,
 					"values" : values,
-					"message" : "Table OK!",
+					"message" : "Card OK!",
 					"status" : 0 
 					}}
 		success = True
@@ -329,7 +349,7 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 
 		units = {
 			"temperature" : {
-                "current" : "c",
+                "current" :cur,
                 "label" : "Temperature",
                 "options" : [ 
                     {
@@ -349,7 +369,7 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 					"endDate" : date.strftime('%Y-%m-%d %H:00:00'),
 					"units" : units,
 					"values" : values,
-					"message" : "Table OK!",
+					"message" : "Card OK!",
 					"status" : 0 
 					}}
 		success = True
@@ -360,7 +380,7 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 			  "max"		:	"%.2f" %maxi,
 			  "min"		:	"%.2f"%mini,}
 		units = {"radiation" : {
-                "current" : "wm2",
+                "current" : cur,
                 "label" : "radiation",
                 "options" : [
                     {
@@ -375,7 +395,7 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 					"endDate" : date.strftime('%Y-%m-%d %H:00:00'),
 					"units" : units,
 					"values" : values,
-					"message" : "Table OK!",
+					"message" : "Card OK!",
 					"status" : 0 
 					}}
 		success = True
@@ -386,7 +406,7 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 			  "max"		:	"%.2f" %maxi,
 			  "min"		:	"%.2f"%mini,}
 		units = {"humidity" : {
-                "current" : "per",
+                "current" : cur,
                 "label" : "humidity",
                 "options" : [
                     {
@@ -402,12 +422,31 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 					"endDate" : date.strftime('%Y-%m-%d %H:00:00'),
 					"units" : units,
 					"values" : values,
-					"message" : "Table OK!",
+					"message" : "Card OK!",
 					"status" : 0 
 					}}
 		success = True
 
-	elif var_id == 6:	
+	elif var_id == 6:
+		# for i in range(0, len(value)):
+		values = {"figures"	:	[value]}
+		units = {"figures" : {
+                "current" : "",
+                "label" : "cond_figures",
+	  		       },}
+       		dic = {"data" :{
+					"type"  : "horizontal",
+					"stepLength" : "1",
+					"startDate" : date[0].strftime('%Y-%m-%d %H:00:00'),
+					"endDate" : date[-1].strftime('%Y-%m-%d %H:00:00'),
+					"units" : units,
+					"values" : values,
+					"message" : "Card OK!",
+					"status" : 0 
+					}}
+		success = True
+
+	elif var_id == 7:	
 		# for i in range(0, len(value)):
 		values = {
 			{"rain"			:	[value[:0]],
@@ -497,7 +536,7 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 					"endDate" : date.strftime('%Y-%m-%d %H:00:00'),
 					"units" : units,
 					"values" : values,
-					"message" : "Table OK!",
+					"message" : "Card OK!",
 					"status" : 0 
 					}
 				}

@@ -16,7 +16,8 @@ import table
 import prob_area
 import prob_time
 import json_output
-
+import astro_tz
+import cond_figures
 #######################################
 ##	GET form			
 form = cgi.FieldStorage()
@@ -35,7 +36,10 @@ model 	= form.getvalue("model")
 # date1	= date0 - datetime.timedelta(days = 1)
 lat0	= float(lat)
 lon0	= float(lon)
-utc0	= int(utc)
+try:
+	utc0	= int(utc)
+except:
+	utc0 = astro_tz._get_timezone(lat0, lon0)
 
 #######################################
 ## get files, lat_lon, id and limits
@@ -134,7 +138,8 @@ elif var_id == 6:
 		date, prob, color, value2, maxi, mini = table.DATA_wrf_table(var_rawb1, var_rawb2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
-	value = figures.DATA_wrf(value1, value2, date)
+	sunset, sunrise = astro_tz._get_sun(lat0, lon0, utc0)
+	value = cond_figures.DATA_cond_figure(value1, value2, date, sunset, sunrise)
 	
 elif var_id == 7:
 	rain1, speed1, direction1, radiation1, temperature1, humidity1 = wrf_var._get_all(var, ens1)

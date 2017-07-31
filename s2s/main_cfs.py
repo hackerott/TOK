@@ -24,7 +24,8 @@ import card
 import prob_area
 import prob_time
 import json_output
-
+import astro_tz
+import cond_figures
 #######################################
 ##	GET form			
 form = cgi.FieldStorage()
@@ -45,8 +46,10 @@ model 	= form.getvalue("model")
 # date1	= date0 - datetime.timedelta(days =1) #add diference from now_date to start_date
 lat0	= float(lat)
 lon0	= float(lon)
-utc0	= int(utc)
-
+try:
+	utc0	= int(utc)
+except:
+	utc0 = astro_tz._get_timezone(lat0, lon0)
 #######################################
 """
 Validation will be inserted after, using flask to genarete a session token
@@ -172,7 +175,8 @@ elif var_id == 6:
 		date, prob, color, value2, maxi, mini, i = calendar.DATA_cfs_card(var_rawb1, var_rawb2, var_rawb3, var_rawb4, var_rawb5, var_rawb6, var_rawb7, var_rawb8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
-	value = figures.DATA_gfs(value1, value2, date)
+	sunset, sunrise = astro_tz._get_sun(lat0, lon0, utc0)
+	value = cond_figures.DATA_cond_figure(value1, value2, date, sunset, sunrise)
 	
 elif var_id == 7:
 	rain1, speed1, direction1, radiation1, temperature1, humidity1 = cfs_var._get_all(var, ens1)

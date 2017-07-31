@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
+import astro_tz
+
 def _get_figure_url(var):
 	return{
 			"1"	:	"http://50.112.50.113/figuras/images_sky/clo.png",
@@ -24,9 +26,9 @@ def _get_figure_url(var):
 			
 	}.get(var, 'Null')
 
-def DATA_cond_figure(cloud, rain, date0):
-	sunset = 18
-	sunrise = 6
+def DATA_cond_figure(cloud, rain, date, sunset, sunrise):
+	sunset = sunset.hour
+	sunrise = sunrise.hour
 	for i, date in date0:
 		if cloud[i] < 0.75:
 			if date.hour <= sunset and date.hour > sunrise:
