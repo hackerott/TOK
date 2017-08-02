@@ -10,7 +10,7 @@ import ephem
 def _get_timezone(lat, lon):
 	
 	tf = tz.TimezoneFinder()
-	loc = tf.timezone_at(lng=lat, lat=lon)
+	loc = tf.timezone_at(lng=lon, lat=lat)
 	local = pytz.timezone(loc)
 	off_set = datetime.datetime.now(local)
 	utc = off_set.utcoffset().total_seconds()//3600

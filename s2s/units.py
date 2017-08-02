@@ -7,24 +7,24 @@ import numpy as np
 ## return the variables end value in imperial system 
 def _get_imperial(value, var_id):
 	if var_id == 1:
-		value = np.multiple(value, 0.036)
+		value = np.multiply(value, 0.036)
 		cur = "inches"
 	elif var_id == 2:
-		value = np.multiple(value, 2,23694)
+		value = np.multiply(value, 2,23694)
 		cur = "mph"
 	elif var_id == 3:	
-		value = np.add(np.multiple(value, 1.8), 32)
+		value = np.add(np.multiply(value, 1.8), 32)
 		cur = "F"
 	elif var_id == 4:	
-#		value = np.multiple(value, )
+#		value = np.multiply(value, )
 		cur = "watts"
 	elif var_id == 5:	
-#		value = np.multiple(value,
+#		value = np.multiply(value,
 		cur = "%"
-	out = []
 	else:
 		cur = ""
 		return(value, cur)
+	out = []
 	for val in value:
 		if val < 1 and val > 0:
 			val = int((val *10))/10.0

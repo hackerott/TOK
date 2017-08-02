@@ -27,6 +27,7 @@ import prob_time
 import json_output
 import astro_tz
 import cond_figures
+import units
 #######################################
 ##	GET form			
 form = cgi.FieldStorage()
@@ -66,7 +67,7 @@ ens1, ens2, date0 = gfs_var._get_FILE()
 ix_gfs, iy_gfs = lat_lon.GFS_grab(ens1, lat0, lon0)
 var_id = gfs_var._get_ID(var)
 PRO, TOP, BOT = gfs_var._get_LIM(var)
-
+success = True
 ###############################################################################
 ##
 if var_id == 1 :

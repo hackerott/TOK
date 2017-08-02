@@ -48,7 +48,7 @@ def _data_station(station_file, date0):
    			a = i
    			break
 
-	out = date_v[a], rain_v[a], temp_v[a], tmax_v[a], tmin_v[a], radi_v[a], wind_v[a], dire_v[a]
+	out = [date_v[a], rain_v[a], temp_v[a], tmax_v[a], tmin_v[a], radi_v[a], wind_v[a], dire_v[a]]
 	return(out)
 
 

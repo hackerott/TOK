@@ -18,13 +18,14 @@ import prob_time
 import json_output
 import astro_tz
 import cond_figures
+import units
 #######################################
 ##	GET form			
 form = cgi.FieldStorage()
 					
 lat 	= form.getvalue("lat")	
 lon 	= form.getvalue("lon")	
-utc 	= form.getvalue("utc")	
+#utc 	= form.getvalue("utc")	
 var 	= form.getvalue("var")	
 unit 	= form.getvalue("unit")
 model 	= form.getvalue("model")
@@ -37,6 +38,7 @@ model 	= form.getvalue("model")
 lat0	= float(lat)
 lon0	= float(lon)
 try:
+	utc 	= form.getvalue("utc")	
 	utc0	= int(utc)
 except:
 	utc0 = astro_tz._get_timezone(lat0, lon0)
@@ -47,7 +49,7 @@ ens1, ens2, date0 = wrf_var._get_FILE()
 ix_wrf, iy_wrf = lat_lon.WRF_grab(ens1, lat0, lon0)
 var_id = wrf_var._get_ID(var)
 PRO, TOP, BOT = wrf_var._get_LIM(var)
-
+success = True
 ###############################################################################
 ##
 if var_id == 1 :
