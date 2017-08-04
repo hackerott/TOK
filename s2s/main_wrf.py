@@ -124,8 +124,8 @@ elif var_id == 5:
 		success, dic = json_output._get_ERROR(var_id, model) 
 
 elif var_id == 6:
-	var_rawa1, var_rawb1 = wrf_var._get_figure(var, ens1)
-	var_rawa2, var_rawb2 = wrf_var._get_figure(var, ens2)
+	var_rawa1, var_rawb1 = wrf_var._get_figure(var, ens1, ix_wrf, iy_wrf)
+	var_rawa2, var_rawb2 = wrf_var._get_figure(var, ens2, ix_wrf, iy_wrf)
 	time  	 = cfs_var._get_time('time', ens1)
 	var_rawa1 = np.max(var_rawa1, axis=0) 
 	var_rawa2 = np.max(var_rawa2, axis=0) 

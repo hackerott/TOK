@@ -10,6 +10,17 @@ json, any other type of output cold be created, just adding new
 output scripts
 '''
 #######################################
+def _get_Name(var):
+	return {
+	1	:	'RAIN',
+	2	:	'WIND',
+	3	:	'TEMP',
+	4	:	'RADIATION',
+	5	:	'HUMIDITY',
+	6	:	'FIGURES',  
+	7	:	'all'
+		}.get(var, 'Null')
+#######################################
 def _get_OUT(date, prob, color, value, maxi, mini, fig, model, var_id, cur):
 
 	if model == 'card':
@@ -23,6 +34,7 @@ def _get_OUT(date, prob, color, value, maxi, mini, fig, model, var_id, cur):
 
 	return(success, dic)
 
+
 def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
 
 	if var_id == 1 :
@@ -32,8 +44,12 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
                 "label" : "rain",
                 "options" : [
                     {
-                        "id" : "mm",
+                        "id" : "metric",
                         "label" : "mm"
+                    },
+                    {
+                        "id" : "imperial",
+                        "label" : "inch"
                     }
                 ]}}
 		dic = {"data" :{
@@ -62,12 +78,12 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
                 "label" : "wind",
                 "options" : [
                     {
-                        "id" : "ms",
+                        "id" : "metric",
                         "label" : "m/s"
                     },
                     {
-                        "id" : "kmh",
-                        "label" : "km/h"
+                        "id" : "imperial",
+                        "label" : "mph"
                     }
                 ]
                 }}
@@ -92,11 +108,11 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
                 "label" : "Temperature",
                 "options" : [ 
                     {
-                        "id" : "c",
+                        "id" : "metric",
                         "label" : "˚C"
                     },
                     {
-                        "id" : "f",
+                        "id" : "imperial",
                         "label" : "˚F"
                     }
                 ]
@@ -120,7 +136,7 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
                 "label" : "radiation",
                 "options" : [
                     {
-                        "id" : "wm2",
+                        "id" : "metric",
                         "label" : "W/m²"
                     }
                 ]},}
@@ -144,7 +160,7 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
                 "label" : "humidity",
                 "options" : [
                     {
-                        "id" : "per",
+                        "id" : "metric",
                         "label" : "%"
                     }
                 ]
@@ -165,7 +181,7 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
 		# for i in range(0, len(value)):
 		values = {"figures"	:	[value]}
 		units = {"figures" : {
-                "current" : cur,
+                "current" : "metric",
                 "label" : "cond_figures",
 	  		       },}
        		dic = {"data" :{
@@ -283,9 +299,14 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
                 "label" : "rain",
                 "options" : [
                     {
-                        "id" : "mm",
+                        "id" : "metric",
                         "label" : "mm"
+                    },
+                    {
+                        "id" : "imperial",
+                        "label" : "inch"
                     }
+                ]}}
                 ]}}
        		dic = {"data" :{
 					"type"  : "horizontal",
@@ -322,12 +343,12 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 			                "label" : "wind",
 			                "options" : [
 				                    {
-				                        "id" : "ms",
+				                        "id" : "metric",
                         				"label" : "m/s"
                     				     },
 				                    {
-				                        "id" : "kmh",
-				                        "label" : "km/h"
+				                        "id" : "imperial",
+				                        "label" : "mph"
                     				}]}}
        		dic = {"data" :{
 					"type"  : "horizontal",
@@ -353,11 +374,11 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
                 "label" : "Temperature",
                 "options" : [ 
                     {
-                        "id" : "c",
+                        "id" : "metric",
                         "label" : "˚C"
                     },
                     {
-                        "id" : "f",
+                        "id" : "imperial",
                         "label" : "˚F"
                     }
                 ]
@@ -384,7 +405,7 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
                 "label" : "radiation",
                 "options" : [
                     {
-                        "id" : "wm2",
+                        "id" : "metric",
                         "label" : "W/m²"
                     }
                 ]},}
@@ -410,7 +431,7 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
                 "label" : "humidity",
                 "options" : [
                     {
-                        "id" : "per",
+                        "id" : "metric",
                         "label" : "%"
                     }
                 ]
@@ -431,7 +452,7 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 		# for i in range(0, len(value)):
 		values = {"figures"	:	[value]}
 		units = {"figures" : {
-                "current" : "",
+                "current" : cur,
                 "label" : "cond_figures",
 	  		       },}
        		dic = {"data" :{
@@ -556,9 +577,23 @@ def _get_calendar(date, prob, color, value, maxi, mini, fig, var_id, model):
 
 	return(success, dic)
 
-def _get_ERROR(var_id, model):
 
-	dic = {}
+def _get_ERROR(var_id, model):
+	var = _get_Name(var_id)
+	if model == "calendar":
+		mess = "%s Calendar  not working" %(var)
+	elif model == "card":
+		mess = "%s Card  not working" %(var)
+	elif model == "table":
+		mess = "%s Table not working" %(var)
+	else:
+		mess = "Sytem is Down"
+
+	dic = {
+			"message"	: mess,
+			"status"	: 1,
+			"time"		: datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%s')
+			}
 
 	return(False, dic)
 
