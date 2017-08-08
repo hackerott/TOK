@@ -307,7 +307,7 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
                         "label" : "inch"
                     }
                 ]}}
-                ]}}
+                
        		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
@@ -568,15 +568,227 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 			
 	return(success, dic)
 
-def _get_calendar(date, prob, color, value, maxi, mini, fig, var_id, model):
+def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cur):
 
 	dic = {}
-#	else:
-#		success, dic = _get_ERROR(var_id, model)
-	success, dic = _get_ERROR(var_id, model)
+	values = []
+	success = True
+	if var_id == 1:
+		for val, i in value:
+			resp	=	{
+        	        	"main" : {
+            	        			"color" : alert[i],
+                	    			"value" : { val }
+                    			},
+	                	"otherValues" : {
+    	                					"max" : maxi[i], 
+        	            					"min" : mini[i]
+            	    					},
+                		"percentage" : {
+                    					"value" : prob[i],
+                    					"color" : color[i]
+                						}
+	            		}
+			values.append(resp)
 
-	return(success, dic)
+		units = {"rain" : {                "current" : cur,
+        	        "options" : [
+            	        {
+                	        "id" : "metric",
+                    	    "label" : "mm"
+                    	},
+                    	{
+                        	"id" : "imperial",
+                        	"label" : "inch"
+                    	}
+                	]}}
 
+     	dic = {"data" : {
+							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
+							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
+							"type" : "rain", 
+							"success" : 0,
+							"message" : "Calendário carregado com sucesso"
+							"units"	  : units,
+							"data" : values      
+							}
+				}
+
+	elif var_id == 2:
+		for val, i in value:
+			resp	=	{
+        	        	"main" : {
+            	        			"color" : alert[i],
+                	    			"value" : { "speed" : val[0],
+                                                "direction" : val[1]
+                                               }
+                    			},
+	                	"otherValues" : {
+    	                					"max" : maxi[i], 
+        	            					"min" : mini[i]
+            	    					},
+                		"percentage" : {
+                    					"value" : prob[i],
+                    					"color" : color[i]
+                						}
+	            		}
+			values.append(resp)
+
+		units = {"wind" : {                "current" : cur,
+        	        "options" : [
+            	        {
+                	        "id" : "metric",
+                    	    "label" : "m/s"
+                    	},
+                    	{
+                        	"id" : "imperial",
+                        	"label" : "mph"
+                    	}
+                	]}}
+
+     	dic = {"data" : {
+							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
+							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
+							"type" : "wind"
+							"success" : 0,
+							"message" : "Calendário carregado com sucesso"
+							"units"	  : units,
+							"data" : values      
+							}
+				}
+
+	elif var_id == 3:
+		for val, i in value:
+			resp	=	{
+        	        	"main" : {
+            	        			"color" : alert[i],
+                	    			"value" : { val }
+                    			},
+	                	"otherValues" : {
+    	                					"max" : maxi[i], 
+        	            					"min" : mini[i]
+            	    					},
+                		"percentage" : {
+                    					"value" : prob[i],
+                    					"color" : color[i]
+                						}
+	            		}
+			values.append(resp)
+
+		units = {"temp" : {                "current" : cur,
+        	        "options" : [
+            	        {
+                	        "id" : "metric",
+                    	    "label" : "ºC"
+                    	},
+                    	{
+                        	"id" : "imperial",
+                        	"label" : "ºF"
+                    	}
+                	]}}
+
+     	dic = {"data" : {
+							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
+							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
+							"type" : "temp"
+							"success" : 0,
+							"message" : "Calendário carregado com sucesso"
+							"units"	  : units,
+							"data" : values      
+							}
+				}
+	elif var_id == 4:
+		for val, i in value:
+			resp	=	{
+        	        	"main" : {
+            	        			"color" : alert[i],
+                	    			"value" : { val }
+                    			},
+	                	"otherValues" : {
+    	                					"max" : maxi[i], 
+        	            					"min" : mini[i]
+            	    					},
+                		"percentage" : {
+                    					"value" : prob[i],
+                    					"color" : color[i]
+                						}
+	            		}
+			values.append(resp)
+
+		units = {"radiation" : {                "current" : cur,
+        	        "options" : [
+            	        {
+                	        "id" : "metric",
+                    	    "label" : "W"
+                    	},
+                	]}}
+
+     	dic = {"data" : {
+							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
+							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
+							"type" : "radiation"
+							"success" : 0,
+							"message" : "Calendário carregado com sucesso"
+							"units"	  : units,
+							"data" : values      
+							}
+				}
+	elif var_id == 5:
+		for val, i in value:
+			resp	=	{
+        	        	"main" : {
+            	        			"color" : alert[i],
+                	    			"value" : { val }
+                    			},
+	                	"otherValues" : {
+    	                					"max" : maxi[i], 
+        	            					"min" : mini[i]
+            	    					},
+                		"percentage" : {
+                    					"value" : prob[i],
+                    					"color" : color[i]
+                						}
+	            		}
+			values.append(resp)
+
+		units = {"humidity" : {                "current" : cur,
+        	        "options" : [
+            	        {
+                	        "id" : "metric",
+                    	    "label" : "%"
+                    	},
+                	]}}
+
+     	dic = {"data" : {
+							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
+							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
+							"type" : "humidity"
+							"success" : 1,
+							"message" : "Calendário carregado com sucesso"
+							"units"	  : units,
+							"data" : values      
+							}
+				}
+	elif var_id == 6:
+		values = {"figures"	:	[value]}
+		units = {"figures" : {
+                "current" : cur,
+                "label" : "cond_figures",
+	  		       },}
+       		dic = {"data" :{
+					"type"  : "horizontal",
+					"stepLength" : "1",
+					"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
+					"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
+					"units" : units,
+					"values" : values,
+					"message" : "Card OK!",
+					"status" : 0 
+					}}
+	else:
+		success, dic = _get_ERROR(var_id, model)				
+
+	return(sucess, dic)
 
 def _get_ERROR(var_id, model):
 	var = _get_Name(var_id)
