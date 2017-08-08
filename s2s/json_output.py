@@ -21,7 +21,7 @@ def _get_Name(var):
 	7	:	'all'
 		}.get(var, 'Null')
 #######################################
-def _get_OUT(date, prob, color, value, maxi, mini, fig, model, var_id, cur):
+def _get_OUT(date, prob, alert, color, value, maxi, mini, fig, model, var_id, cur):
 
 	if model == 'card':
 		success, dic = _get_card(date, prob, color, value, maxi, mini, fig, var_id, model, cur)
@@ -30,7 +30,7 @@ def _get_OUT(date, prob, color, value, maxi, mini, fig, model, var_id, cur):
 		success, dic = _get_table(date, prob, color, value, maxi, mini, fig, var_id, mode, cur)
 
 	elif model == 'calendar':
-		success, dic = _get_calendar(date, prob, color, value, maxi, mini, fig, var_id, model, cur)
+		success, dic = _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cur)
 
 	return(success, dic)
 
