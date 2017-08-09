@@ -231,8 +231,9 @@ else:
 		value, cur = units._get_imperial(value, var_id)
 	else:
 		value, cur = units._get_metric(value, var_id)
+
 	alert = color._get_ALERT(alert)
-	color = color._get_GFS(prob)
+	color = color._get_CFS(prob)
 	success, dic = json_output._get_OUT(date, prob, alert, color, value, maxi, mini, model, var_id, cur)
 	print "Content-type: application/json\n\n"
 	print json.dumps(dic)

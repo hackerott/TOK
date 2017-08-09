@@ -43,7 +43,7 @@ def _get_CFS(value):
 			color.append(_get_color(1))
 	return(color)
 
-def _get_alert(value)
+def _get_ALERT(value)
 	for val, i in value:
 		value[i] = _get_color(val)
 	return(value)

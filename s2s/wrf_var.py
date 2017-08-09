@@ -73,7 +73,8 @@ def _get_FILE():
 			ens1 = False
 			success = json_out._get_ERROR('file', 'GFS') 			
 			exit(1)	
-
+	ens1 = netCDF4.Dataset(ens1, 'r')
+	ens2 = netCDF4.Dataset(ens1, 'r')
 	return(ens1, ens2, date1)
 
 ##############################################################################
@@ -81,7 +82,7 @@ def _get_FILE():
 def _get_rain(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
-		ncfile = netCDF4.Dataset(ncfile, 'r')
+		# ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_rawa = ncfile.variables[var_nc[0]]	
 		var_rawb = ncfile.variables[var_nc[1]]
 		var_raw1 = np.add(var_rawa, var_rawb)
@@ -99,7 +100,7 @@ def _get_rain(var, ncfile):
 def _get_wind(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
-		ncfile = netCDF4.Dataset(ncfile, 'r')
+		# ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_rawu = ncfile.variables[var_nc[0]] 		
 		var_rawv = ncfile.variables[var_nc[1]] 
                 rp2 = 45.0/np.arctan(1.0)
@@ -115,7 +116,7 @@ def _get_wind(var, ncfile):
 def _get_temperature(var,  ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
-		ncfile = netCDF4.Dataset(ncfile, 'r')
+		# ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc]
 		var_raw1  =np.subtract(var_raw1, 273.15)
 		var_raw1 = np.around(var_raw1, decimals=2)
@@ -126,7 +127,7 @@ def _get_temperature(var,  ncfile):
 def _get_radiation(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
-		ncfile = netCDF4.Dataset(ncfile, 'r')
+		# ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc]
 		var_raw1 = np.around(var_raw1, decimals=2)
 	except:
@@ -136,7 +137,7 @@ def _get_radiation(var, ncfile):
 def _get_humidity(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
-		ncfile = netCDF4.Dataset(ncfile, 'r')
+		# ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_rawa = ncfile.variables[var_nc[0]] 		
 		var_rawb = ncfile.variables[var_nc[1]] 		
 		var_rawc = ncfile.variables[var_nc[2]]
@@ -155,7 +156,7 @@ def _get_humidity(var, ncfile):
 def _get_figure(var, ncfile, ix, iy):
 	try:
 		var_nc = _get_NCVAR(var)
-		ncfile = netCDF4.Dataset(ncfile, 'r')
+		# ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc[0]]
 		var_raw2 = ncfile.variables[var_nc[1]]	
 		var_raw3 = ncfile.variables[var_nc[2]]	
@@ -180,7 +181,7 @@ def _get_figure(var, ncfile, ix, iy):
 def _get_time(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
-                ncfile = netCDF4.Dataset(ncfile, 'r')
+        # ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc]
 	except:
 		var_raw1 = np.nan	
@@ -190,7 +191,7 @@ def _get_time(var, ncfile):
 # Return all vars
 def _get_all(var, ncfile):
 	rain				= _get_rain('chuva', ncfile)
-	speed, direction		= _get_wind('vento', ncfile)			
+	speed, direction	= _get_wind('vento', ncfile)			
 	radiation			= _get_radiation('radiacao', ncfile)
 	temperature			= _get_temperature('temperatura', ncfile)
 	humidity			= _get_humidity('umidade', ncfile)

@@ -50,7 +50,6 @@ def _get_FILE():
 	# if date.hour >= 12:
 	date1 = date.replace(hour=00)
 	date2 = date1  - datetime.timedelta(days = 1)
-	
 	ens1 = "/var/www/html/processamento/CFSD10001E1"+date1.strftime('%Y%m%d')+"00.nc"
 	ens2 = "/var/www/html/processamento/CFSD10001E2"+date1.strftime('%Y%m%d')+"00.nc"
 	ens3 = "/var/www/html/processamento/CFSD10001E3"+date1.strftime('%Y%m%d')+"00.nc"
@@ -79,7 +78,14 @@ def _get_FILE():
 			ens1 = False
 			success = json_out._get_ERROR('file', 'CFS') 			
 			exit(1)	
-
+	ens1 = netCDF4.Dataset(ens1, 'r')
+	ens2 = netCDF4.Dataset(ens2, 'r')
+	ens3 = netCDF4.Dataset(ens3, 'r')
+	ens4 = netCDF4.Dataset(ens4, 'r')
+	ens5 = netCDF4.Dataset(ens5, 'r')
+	ens6 = netCDF4.Dataset(ens6, 'r')
+	ens7 = netCDF4.Dataset(ens7, 'r')
+	ens8 = netCDF4.Dataset(ens8, 'r')
 	return(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, date1)
 ##############################################################################
 # Variables
