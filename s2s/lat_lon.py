@@ -53,24 +53,21 @@ def _get_WRF(latWRF, lonWRF, lat0, lon0):
 ###############################################################################
 #Functions to locate lat lon from a nc file
 
-def GFS_grab(gfs_file,lat0,lon0):
-	GFSfile	= netCDF4.Dataset(gfs_file, 'r')
+def GFS_grab(GFSfile,lat0,lon0):
 	latGFS	= GFSfile.variables['latitude']
 	lonGFS	= GFSfile.variables['longitude']		
 	minindexX, minindexY = _get_GFS(latGFS,lonGFS,lat0,lon0)
 	return(minindexX, minindexY)
 
 
-def CFS_grab(cfs_file,lat0,lon0):
-	CFSfile = netCDF4.Dataset(cfs_file, 'r')
+def CFS_grab(CFSfile,lat0,lon0):
 	latCFS = CFSfile.variables['latitude']
 	lonCFS = CFSfile.variables['longitude']		
 	minindexX, minindexY = _get_CFS(latCFS,lonCFS,lat0,lon0)
 	return(minindexX, minindexY)
 
 
-def WRF_grab(wrf_file, lat0, lon0):
-	WRFfile = netCDF4.Dataset(wrf_file, 'r')
+def WRF_grab(WRFfile, lat0, lon0):
 	latWRF = WRFfile.variables['XLAT']
 	lonWRF = WRFfile.variables['XLONG']	
 	minindexZ, minindexX, minindexY = _get_WRF(latWRF,lonWRF,lat0,lon0)
