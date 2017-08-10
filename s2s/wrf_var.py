@@ -41,7 +41,7 @@ def _get_LIM(var):
 		'vento'		: [0.4, 7, 2],
 		'temp'		: [0.4, 27, 20],
 		'radiacao'	: [0.4, 1400, 800],
-		'umidade'	: [0.4, 0.3, 0.7]
+		'umidade'	: [0.4, 0.3, 0.7],
 		'figura'	: [0.4, 10, 0.5],
 		}
 	out =  DIC.get(var, ['Null', 'Null', 'Null'])
@@ -74,7 +74,7 @@ def _get_FILE():
 			success = json_out._get_ERROR('file', 'GFS') 			
 			exit(1)	
 	ens1 = netCDF4.Dataset(ens1, 'r')
-	ens2 = netCDF4.Dataset(ens1, 'r')
+	ens2 = netCDF4.Dataset(ens2, 'r')
 	return(ens1, ens2, date1)
 
 ##############################################################################
@@ -161,15 +161,13 @@ def _get_figure(var, ncfile, ix, iy):
 		var_raw2 = ncfile.variables[var_nc[1]]	
 		var_raw3 = ncfile.variables[var_nc[2]]	
 		var_rawa = np.add(var_raw2, var_raw3)
-		var_rawb = var_raw3
+		var_rawb = np.array(var_raw3)
 		for i in range(0, len(var_raw2)):
 			if i == 0:
 				var_rawa[i,:,:] = np.add(var_raw2[i,:,:], var_raw3[i,:,:])
 			else:
 				var_rawa[i,:,:] = np.subtract(np.add(var_raw2[i,:,:], var_raw3[i,:,:]), np.add(var_raw2[i-1,:,:], var_raw3[i-1,:,:]))
-		for i in range(0, var_raw1.shape(0)):
-			# for i in range(0, var_raw1,shape(2)):
-			# 	for i in range(0, var_raw1.shape(3)):
+		for i in range(0, len(var_raw2)):
 			for x in range(ix-4, ix+4):
 				for y in range(iy-4, iy+4):
 					var_rawb[i,x,y] = max(var_raw1[i,:,x,y])

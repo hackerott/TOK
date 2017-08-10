@@ -10,16 +10,20 @@ def _get_imperial(value, var_id):
 	if var_id == 1:
 		value = np.multiply(value, 0.036)
 	elif var_id == 2:
-		value_1 = np.multiply(value[0,:], 2,23694)
-		out = []
-		for val, i in value_1:
-			if val < 1 and val > 0:
-				val = int((val *10))/10.0
-				val = [val, int(value[1, i])] 
-			else:
-				val = [int(val), int(value[1, i])] #probably add to much error
-			out.append(val)
-		return(out, cur)
+		try:
+			value_1 = np.multiply(value[:,0], 2.23694)
+			out = []
+			for val, i in value_1:
+				if val < 1 and val > 0:
+					val = int((val *10))/10.0
+					val = [val, int(value[i,1])] 
+				else:
+					val = [int(val), int(value[i,1])] #probably add to much error
+				out.append(val)
+			out = np.array(out)
+			return(out, cur)
+		except:
+			value = np.multiply(value, 2.23694)
 	elif var_id == 3:	
 		value = np.add(np.multiply(value, 1.8), 32)
 	elif var_id <= 5:	
@@ -40,20 +44,25 @@ def _get_imperial(value, var_id):
 ## return the variables end value metric
 def _get_metric(value, var_id):
 	cur = "metric"
-	if var_id <= 5:
+	out = []
+	if var_id == 2:	
+		try:
+			for i in range(0, len(value)):
+				if value[i,0] < 1 and value[i,0] > 0:
+					val = int((value[i, 0]*10))/10.0
+					val = [val, int(value[i, 1])] 
+				else:
+					val = [int(value[i, 0]), int(value[i, 1])] #probably add to much error
+				out.append(val)
+			out = np.array(out)
+			return(out, cur)
+		except:
+			value = value
+	elif var_id <= 5:
 		value = value
-	elif var_id == 2:	
-		for val, i in value[0,:]:
-			if val < 1 and val > 0:
-				val = int((val *10))/10.0
-				val = [val, int(value[1, i])] 
-			else:
-				val = [int(val), int(value[1, i])] #probably add to much error
-			out.append(val)
-		return(out, cur)
+
 	else:
 		return(value, cur)
-	out = []
 	for val in value:
 		if val < 1 and val > 0:
 			val = int((val *10))/10.0

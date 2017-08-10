@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
+import datetime
 import astro_tz
 
 def _get_figure_url(var):
@@ -27,8 +28,8 @@ def _get_figure_url(var):
 	}.get(var, 'Null')
 
 def DATA_cond_figure(cloud, rain, date, sunset, sunrise):
-	sunset = sunset.hour
-	sunrise = sunrise.hour
+	sunset = sunset.
+	sunrise = sunrise.
 	for i, date in date0:
 		if cloud[i] < 0.75:
 			if date.hour <= sunset and date.hour > sunrise:

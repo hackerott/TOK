@@ -68,7 +68,7 @@ def _get_FILE():
 			success = json_out._get_ERROR('file', 'GFS') 			
 			exit(1)	
 	ens1 = netCDF4.Dataset(ens1, 'r')
-	ens2 = netCDF4.Dataset(ens1, 'r')
+	ens2 = netCDF4.Dataset(ens2, 'r')
 	return(ens1, ens2, date1)
 ##############################################################################
 ## Variables

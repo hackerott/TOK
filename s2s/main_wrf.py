@@ -128,8 +128,8 @@ elif var_id == 6:
 	var_rawa1, var_rawb1 = wrf_var._get_figure(var, ens1, ix_wrf, iy_wrf)
 	var_rawa2, var_rawb2 = wrf_var._get_figure(var, ens2, ix_wrf, iy_wrf)
 	time  	 = cfs_var._get_time('time', ens1)
-	var_rawa1 = np.max(var_rawa1, axis=0) 
-	var_rawa2 = np.max(var_rawa2, axis=0) 
+	# var_rawa1 = np.max(var_rawa1, axis=0) 
+	# var_rawa2 = np.max(var_rawa2, axis=0) 
 	if model == "calendar":
 		date, prob, alert, value1, maxi, mini = calendar.DATA_wrf_calendar(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, 0.75, 0.25, 0.5, var_id)
 		date, prob, alert, value2, maxi, mini = calendar.DATA_wrf_calendar(var_rawb1, var_rawb2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)

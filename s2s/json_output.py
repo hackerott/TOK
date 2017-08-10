@@ -574,18 +574,19 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
 	values = []
 	success = True
 	if var_id == 1:
-		for val, i in value:
+		for i in range(0, len(value)):
 			resp	=	{
         	        	"main" : {
             	        			"color" : alert[i],
-                	    			"value" : { val }
+                	    			"value" : value[i]
+
                     			},
 	                	"otherValues" : {
     	                					"max" : maxi[i], 
         	            					"min" : mini[i]
             	    					},
                 		"percentage" : {
-                    					"value" : prob[i],
+                    					"value" : int(prob[i]*100),
                     					"color" : color[i]
                 						}
 	            		}
@@ -604,23 +605,23 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                 	]}}
 
 		dic = {"data" : {
-							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
-							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
+							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%S'),
+							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%S'),
 							"type" : "rain", 
 							"success" : 0,
-							"message" : "Calendário carregado com sucesso"
+							"message" : "Calendário carregado com sucesso",
 							"units"	  : units,
 							"data" : values      
 							}
 				}
 
 	elif var_id == 2:
-		for val, i in value:
+		for i in range(0, len(value)):
 			resp	=	{
         	        	"main" : {
             	        			"color" : alert[i],
-                	    			"value" : { "speed" : val[0],
-                                                "direction" : val[1]
+                	    			"value" : { "speed" : value[i, 0],
+                                                "direction" : value[i, 1]
                                                }
                     			},
 	                	"otherValues" : {
@@ -628,7 +629,7 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
         	            					"min" : mini[i]
             	    					},
                 		"percentage" : {
-                    					"value" : prob[i],
+                    					"value" : int(prob[i]*100),
                     					"color" : color[i]
                 						}
 	            		}
@@ -647,8 +648,8 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                 	]}}
 
 		dic = {"data" : {
-							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
-							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
+							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%S'),
+							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%S'),
 							"type" : "wind",
 							"success" : 0,
 							"message" : "Calendário carregado com sucesso",
@@ -658,18 +659,18 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
 				}
 
 	elif var_id == 3:
-		for val, i in value:
+		for i in range(0, len(value)):
 			resp	=	{
         	        	"main" : {
             	        			"color" : alert[i],
-                	    			"value" : { val }
+                	    			"value" : value[i]
                     			},
 	                	"otherValues" : {
     	                					"max" : maxi[i], 
         	            					"min" : mini[i]
             	    					},
                 		"percentage" : {
-                    					"value" : prob[i],
+                    					"value" : int(prob[i]*100),
                     					"color" : color[i]
                 						}
 	            		}
@@ -688,8 +689,8 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                 	]}}
 
 		dic = {"data" : {
-							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
-							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
+							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%S'),
+							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%S'),
 							"type" : "temp",
 							"success" : 0,
 							"message" : "Calendário carregado com sucesso",
@@ -698,18 +699,18 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
 							}
 				}
 	elif var_id == 4:
-		for val, i in value:
+		for i in range(0, len(value)):
 			resp	=	{
         	        	"main" : {
             	        			"color" : alert[i],
-                	    			"value" : { val }
+                	    			"value" : value[i]
                     			},
 	                	"otherValues" : {
     	                					"max" : maxi[i], 
         	            					"min" : mini[i]
             	    					},
                 		"percentage" : {
-                    					"value" : prob[i],
+                    					"value" : int(prob[i]*100),
                     					"color" : color[i]
                 						}
 	            		}
@@ -724,8 +725,8 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                 	]}}
 
 		dic = {"data" : {
-							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
-							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
+							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%S'),
+							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%S'),
 							"type" : "radiation",
 							"success" : 0,
 							"message" : "Calendário carregado com sucesso",
@@ -734,18 +735,18 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
 							}
 				}
 	elif var_id == 5:
-		for val, i in value:
+		for i in range(0, len(value)):
 			resp	=	{
         	        	"main" : {
             	        			"color" : alert[i],
-                	    			"value" : { val }
+                	    			"value" : value[i]
                     			},
 	                	"otherValues" : {
     	                					"max" : maxi[i], 
         	            					"min" : mini[i]
             	    					},
                 		"percentage" : {
-                    					"value" : prob[i],
+                    					"value" : int(prob[i]*100),
                     					"color" : color[i]
                 						}
 	            		}
@@ -760,8 +761,8 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                 	]}}
 
 		dic = {"data" : {
-							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
-							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
+							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%S'),
+							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%S'),
 							"type" : "humidity",
 							"success" : 1,
 							"message" : "Calendário carregado com sucesso",
@@ -778,33 +779,33 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
 		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
-					"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
-					"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
+					"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%S'),
+					"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%S'),
 					"units" : units,
 					"values" : values,
 					"message" : "Card OK!",
 					"status" : 0 
 					}}
+	
 	else:
 		success, dic = _get_ERROR(var_id, model)				
-
-	return(sucess, dic)
+	return(success, dic)
 
 def _get_ERROR(var_id, model):
 	var = _get_Name(var_id)
 	if model == "calendar":
-		mess = "%s Calendar  not working" %(var)
+		mess = "%S Calendar  not working" %(var)
 	elif model == "card":
-		mess = "%s Card  not working" %(var)
+		mess = "%S Card  not working" %(var)
 	elif model == "table":
-		mess = "%s Table not working" %(var)
+		mess = "%S Table not working" %(var)
 	else:
 		mess = "Sytem is Down"
 
 	dic = {
 			"message"	: mess,
 			"status"	: 1,
-			"time"		: datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%s')
+			"time"		: datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 			}
 
 	return(False, dic)

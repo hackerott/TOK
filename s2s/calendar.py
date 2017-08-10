@@ -67,7 +67,7 @@ def DATA_cfs_calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCF
 			result_prov = np.around(result_prov, decimals=1)
 
 		value.append(result_prov)
-		prob.append(prob_c[argmax(prob_c)])		
+		prob.append(prob_c[np.argmax(prob_c)])		
 		maxi.append(max(max_v))
 		mini.append(min(min_v))
 		date.append(d1)
@@ -127,7 +127,7 @@ def DATA_gfs_calendar(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO
 
 		value.append(result_prov)
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
-		prob.append(prob_c[argmax(prob_c)])		
+		prob.append(prob_c[np.argmax(prob_c)])		
 		maxi.append(max(max_v))
 		mini.append(min(min_v))
 		date.append(d1)
@@ -187,7 +187,7 @@ def DATA_wrf_calendar(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO
 
 		value.append(result_prov)
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
-		prob.append(prob_c[argmax(prob_c)])		
+		prob.append(prob_c[np.argmax(prob_c)])		
 		maxi.append(max(max_v))
 		mini.append(min(min_v))
 		date.append(d1)
