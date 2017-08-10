@@ -21,13 +21,13 @@ def _get_Name(var):
 	7	:	'all'
 		}.get(var, 'Null')
 #######################################
-def _get_OUT(date, prob, alert, color, value, maxi, mini, fig, model, var_id, cur):
+def _get_OUT(date, prob, alert, color, value, maxi, mini,  model, var_id, cur):
 
 	if model == 'card':
-		success, dic = _get_card(date, prob, color, value, maxi, mini, fig, var_id, model, cur)
+		success, dic = _get_card(date, prob, color, value, maxi, mini,  var_id, model, cur)
 
 	elif model == 'table':
-		success, dic = _get_table(date, prob, color, value, maxi, mini, fig, var_id, mode, cur)
+		success, dic = _get_table(date, prob, color, value, maxi, mini,  var_id, mode, cur)
 
 	elif model == 'calendar':
 		success, dic = _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cur)
@@ -35,7 +35,7 @@ def _get_OUT(date, prob, alert, color, value, maxi, mini, fig, model, var_id, cu
 	return(success, dic)
 
 
-def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
+def _get_table(date, prob, color, value, maxi, mini, var_id, model, cur):
 
 	if var_id == 1 :
 		# for i in range(0, len(value)):
@@ -117,7 +117,7 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
                     }
                 ]
 					            },}
-       		dic = {"data" :{
+		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
 					"startDate" : date[0].strftime('%Y-%m-%d %H:00:00'),
@@ -140,7 +140,7 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
                         "label" : "W/m²"
                     }
                 ]},}
-       		dic = {"data" :{
+		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
 					"startDate" : date[0].strftime('%Y-%m-%d %H:00:00'),
@@ -165,7 +165,7 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
                     }
                 ]
 	  		       },}
-       		dic = {"data" :{
+		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
 					"startDate" : date[0].strftime('%Y-%m-%d %H:00:00'),
@@ -184,7 +184,7 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
                 "current" : "metric",
                 "label" : "cond_figures",
 	  		       },}
-       		dic = {"data" :{
+		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
 					"startDate" : date[0].strftime('%Y-%m-%d %H:00:00'),
@@ -287,7 +287,7 @@ def _get_table(date, prob, color, value, maxi, mini, fig, var_id, model):
 
 	return(success, dic)
 
-def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
+def _get_card(date, prob, color, value, maxi, mini, var_id, model, cur):
 
 	if var_id == 1 :
 		# for i in range(0, len(value)):
@@ -308,7 +308,7 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
                     }
                 ]}}
                 
-       		dic = {"data" :{
+		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
 					"startDate" : date.strftime('%Y-%m-%d %H:00:00'),
@@ -350,7 +350,7 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
 				                        "id" : "imperial",
 				                        "label" : "mph"
                     				}]}}
-       		dic = {"data" :{
+		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
 					"startDate" : date.strftime('%Y-%m-%d %H:00:00'),
@@ -383,7 +383,7 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
                     }
                 ]
 					            },}
-       		dic = {"data" :{
+		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
 					"startDate" : date.strftime('%Y-%m-%d %H:00:00'),
@@ -409,7 +409,7 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
                         "label" : "W/m²"
                     }
                 ]},}
-       		dic = {"data" :{
+		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
 					"startDate" : date.strftime('%Y-%m-%d %H:00:00'),
@@ -436,7 +436,7 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
                     }
                 ]
 	  		       },}
-       		dic = {"data" :{
+		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
 					"startDate" : date.strftime('%Y-%m-%d %H:00:00'),
@@ -455,7 +455,7 @@ def _get_card(date, prob, color, value, maxi, mini, fig, var_id, model):
                 "current" : cur,
                 "label" : "cond_figures",
 	  		       },}
-       		dic = {"data" :{
+		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
 					"startDate" : date[0].strftime('%Y-%m-%d %H:00:00'),
@@ -603,7 +603,7 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                     	}
                 	]}}
 
-     	dic = {"data" : {
+		dic = {"data" : {
 							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
 							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
 							"type" : "rain", 
@@ -646,12 +646,12 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                     	}
                 	]}}
 
-     	dic = {"data" : {
+		dic = {"data" : {
 							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
 							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
-							"type" : "wind"
+							"type" : "wind",
 							"success" : 0,
-							"message" : "Calendário carregado com sucesso"
+							"message" : "Calendário carregado com sucesso",
 							"units"	  : units,
 							"data" : values      
 							}
@@ -687,12 +687,12 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                     	}
                 	]}}
 
-     	dic = {"data" : {
+		dic = {"data" : {
 							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
 							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
-							"type" : "temp"
+							"type" : "temp",
 							"success" : 0,
-							"message" : "Calendário carregado com sucesso"
+							"message" : "Calendário carregado com sucesso",
 							"units"	  : units,
 							"data" : values      
 							}
@@ -723,12 +723,12 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                     	},
                 	]}}
 
-     	dic = {"data" : {
+		dic = {"data" : {
 							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
 							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
-							"type" : "radiation"
+							"type" : "radiation",
 							"success" : 0,
-							"message" : "Calendário carregado com sucesso"
+							"message" : "Calendário carregado com sucesso",
 							"units"	  : units,
 							"data" : values      
 							}
@@ -759,12 +759,12 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                     	},
                 	]}}
 
-     	dic = {"data" : {
+		dic = {"data" : {
 							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
 							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
-							"type" : "humidity"
+							"type" : "humidity",
 							"success" : 1,
-							"message" : "Calendário carregado com sucesso"
+							"message" : "Calendário carregado com sucesso",
 							"units"	  : units,
 							"data" : values      
 							}
@@ -775,7 +775,7 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                 "current" : cur,
                 "label" : "cond_figures",
 	  		       },}
-       		dic = {"data" :{
+		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
 					"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
@@ -832,7 +832,7 @@ def _get_AUX(utc, sun_set, sun_rise, point, w_out, g_out, c_out):
 						{'radiation' : c_out[3]},
 						{'humidity' : c_out[4]}
 					]
-			}.
+			}
 		]}, 
 		"message"	: "System is UP",
 		"status"	: 0,

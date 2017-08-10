@@ -27,7 +27,7 @@ import json_output
 import astro_tz
 import cond_figures
 import units
-import color
+import colors
 #######################################
 ##	GET form			
 form = cgi.FieldStorage()
@@ -232,8 +232,8 @@ else:
 	else:
 		value, cur = units._get_metric(value, var_id)
 
-	alert = color._get_ALERT(alert)
-	color = color._get_CFS(prob)
+	alert = colors._get_ALERT(alert)
+	color = colors._get_CFS(prob)
 	success, dic = json_output._get_OUT(date, prob, alert, color, value, maxi, mini, model, var_id, cur)
 	print "Content-type: application/json\n\n"
 	print json.dumps(dic)

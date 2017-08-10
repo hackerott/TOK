@@ -19,7 +19,7 @@ import json_output
 import astro_tz
 import cond_figures
 import units
-import color
+import colors
 #######################################
 ##	GET form			
 form = cgi.FieldStorage()
@@ -58,7 +58,7 @@ if var_id == 1 :
 	var_raw2 = wrf_var._get_rain(var, ens2)	
 	time  	 = wrf_var._get_time('time', ens1)
 	if model == "calendar":
-		date, prob, alert, value, maxi, mini = calendar.DATA_wrf_calendar(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
+		date, prob, alert, value, maxi, mini = calendar.DATA_wrf_calendar(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
 	elif model == "card":
 		date, prob, alert, value, maxi, mini, c = card.DATA_wrf_card(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
 	elif model == "table":
@@ -71,7 +71,7 @@ elif var_id == 2:
 	var_rawa2, var_rawb2 = wrf_var._get_wind(var, ens2)
 	time  	 = wrf_var._get_time('time', ens1)
 	if model == "calendar":
-		date, prob, alert, value, maxi, mini = calendar.DATA_wrf_calendar(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
+		date, prob, alert, value, maxi, mini = calendar.DATA_wrf_calendar(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
 		for i in range(0, len(value)):
 			value[i] = [value[i], int(var_rawb1[i, ix_wrf, iy_wrf])]
 	elif model == "card":
@@ -90,7 +90,7 @@ elif var_id == 3:
 	var_raw2 = wrf_var._get_temperature(var, ens2)
 	time  	 = wrf_var._get_time('time', ens1)
 	if model == "calendar":
-		date, prob, alert, value, maxi, mini = calendar.DATA_wrf_calendar(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
+		date, prob, alert, value, maxi, mini = calendar.DATA_wrf_calendar(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
 	elif model == "card":
 		date, prob, alert, value, maxi, mini, c = card.DATA_wrf_card(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
 	elif model == "table":
@@ -103,7 +103,7 @@ elif var_id == 4:
 	var_raw2 = wrf_var._get_radiation(var, ens2)
 	time  	 = wrf_var._get_time('time', ens1)
 	if model == "calendar":
-		date, prob, alert, value, maxi, mini = calendar.DATA_wrf_calendar(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
+		date, prob, alert, value, maxi, mini = calendar.DATA_wrf_calendar(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
 	elif model == "card":
 		date, prob, alert, value, maxi, mini, c = card.DATA_wrf_card(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
 	elif model == "table":
@@ -116,7 +116,7 @@ elif var_id == 5:
 	var_raw2 = wrf_var._get_humidity(var, ens2)
 	time  	 = wrf_var._get_time('time', ens1)
 	if model == "calendar":
-		date, prob, alert, value, maxi, mini = calendar.DATA_wrf_calendar(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
+		date, prob, alert, value, maxi, mini = calendar.DATA_wrf_calendar(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
 	elif model == "card":
 		date, prob, alert, value, maxi, mini, c = card.DATA_wrf_card(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
 	elif model == "table":
@@ -131,8 +131,8 @@ elif var_id == 6:
 	var_rawa1 = np.max(var_rawa1, axis=0) 
 	var_rawa2 = np.max(var_rawa2, axis=0) 
 	if model == "calendar":
-		date, prob, alert, value1, maxi, mini = calendar.DATA_wrf_calendar(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, 0.75, 0.25, 0.5)
-		date, prob, alert, value2, maxi, mini = calendar.DATA_wrf_calendar(var_rawb1, var_rawb2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
+		date, prob, alert, value1, maxi, mini = calendar.DATA_wrf_calendar(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, 0.75, 0.25, 0.5, var_id)
+		date, prob, alert, value2, maxi, mini = calendar.DATA_wrf_calendar(var_rawb1, var_rawb2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
 	elif model == "card":
 		date, prob, alert, value1, maxi, mini, c = card.DATA_wrf_card(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, 0.75, 0.25, 0.5)	
 		date, prob, alert, value2, maxi, mini, c = card.DATA_wrf_card(var_rawb1, var_rawb2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
@@ -196,8 +196,8 @@ else:
 	else:
 		value, cur = units._get_metric(value, var_id)
 
-	alert = color._get_ALERT(alert)
-	color = color._get_WRF(prob)
+	alert = colors._get_ALERT(alert)
+	color = colors._get_WRF(prob)
 	success, dic = json_output._get_OUT(date, prob, alert, color, value, maxi, mini, model, var_id, cur)
 	print "Content-type: application/json\n\n"
 	print json.dumps(dic)
