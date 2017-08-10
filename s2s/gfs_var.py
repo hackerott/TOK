@@ -150,6 +150,7 @@ def _get_figure(var, ncfile):
 		# ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc[0]]
 		var_raw2 = ncfile.variables[var_nc[1]]	
+		var_raw1 = np.divide(var_raw1, 100)
 	except:
 		var_raw1 = np.nan
 		var_raw2 = np.nan

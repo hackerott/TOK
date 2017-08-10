@@ -34,9 +34,10 @@ def DATA_cfs_calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCF
 
 	a = 0
 	b = 4
+	result_prov = 0
 	for i in range(0, max_i//4):
-		max_v = max(max_t1[a:b], max_t2[a:b], max_t3[a:b], max_t4[a:b], max_a1[a:b], max_a2[a:b], max_a3[a:b], max_a4[a:b])
-		min_v = min(min_t1[a:b], min_t2[a:b], min_t3[a:b], min_t4[a:b], min_a1[a:b], min_a2[a:b], min_a3[a:b], min_a4[a:b])
+		max_v = max(max(max_t1[a:b]), max(max_t2[a:b]), max(max_t3[a:b]), max(max_t4[a:b]), max(max_a1[a:b]), max(max_a2[a:b]), max(max_a3[a:b]), max(max_a4[a:b]))
+		min_v = min(min(min_t1[a:b]), min(min_t2[a:b]), min(min_t3[a:b]), min(min_t4[a:b]), min(min_a1[a:b]), min(min_a2[a:b]), min(min_a3[a:b]), min(min_a4[a:b]))
 		prob_a_g = (np.mean(prob_a_g1[a:b]) + np.mean(prob_a_g2[a:b]) + np.mean(prob_a_g3[a:b]) + np.mean(prob_a_g4[a:b]))/4
 		prob_t_g = (np.mean(prob_t_g1[a:b]) + np.mean(prob_t_g2[a:b]) + np.mean(prob_t_g3[a:b]) + np.mean(prob_t_g4[a:b]))/4
 		prob_a_r = (np.mean(prob_a_r1[a:b]) + np.mean(prob_a_r2[a:b]) + np.mean(prob_a_r3[a:b]) + np.mean(prob_a_r4[a:b]))/4
@@ -45,7 +46,7 @@ def DATA_cfs_calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCF
 		prob_t_y = (np.mean(prob_t_y1[a:b]) + np.mean(prob_t_y2[a:b]) + np.mean(prob_t_y3[a:b]) + np.mean(prob_t_y4[a:b]))/4
 		if var_id == 1:
 			value_a = (np.subtract(value_a1[b], value_a1[a]) + np.subtract(value_a2[b], value_a2[a]) + np.subtract(value_a3[b], value_a3[a]) + np.subtract(value_a4[b], value_a4[a]))/4
-			value_a = (np.subtract(value_t1[b], value_t1[a]) + np.subtract(value_t2[b], value_t2[a]) + np.subtract(value_t3[b], value_t3[a]) + np.subtract(value_t4[b], value_t4[a]))/4
+			value_t = (np.subtract(value_t1[b], value_t1[a]) + np.subtract(value_t2[b], value_t2[a]) + np.subtract(value_t3[b], value_t3[a]) + np.subtract(value_t4[b], value_t4[a]))/4
 		else:	
 			value_a = (np.mean(value_a1[a:b]) + np.mean(value_a2[a:b]) + np.mean(value_a3[a:b]) + np.mean(value_a4[a:b]))/4
 			value_t = (np.mean(value_t1[a:b]) + np.mean(value_t2[a:b]) + np.mean(value_t3[a:b]) + np.mean(value_t4[a:b]))/4
@@ -92,6 +93,7 @@ def DATA_gfs_calendar(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO
 
 	a = 0
 	b = 24
+	result_prov = 0
 	for i in range(0, max_i//24):
 		max_v		= max(max(max_t1[a:b]), max(max_a1[a:b]))
 		min_v		= min(min(min_t1[a:b]), min(min_a1[a:b]))
@@ -155,6 +157,7 @@ def DATA_wrf_calendar(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO
 
 	a = 0
 	b = 24
+	result_prov = 0
 	for i in range(0, max_i//24):
 		max_v		= max(max(max_t1[a:b]), max(max_a1[a:b]))
 		min_v		= min(min(min_t1[a:b]), min(min_a1[a:b]))

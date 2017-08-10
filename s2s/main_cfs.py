@@ -4,8 +4,8 @@
 import cgi
 import datetime
 import json
+import numpy as np
 # import os
-# import numpy as np
 # import netCDF4
 # import math
 # import sys
@@ -101,6 +101,7 @@ elif var_id == 2:
 		date, prob, alert, value, maxi, mini = calendar.DATA_cfs_calendar(var_rawa1, var_rawa2, var_rawa3, var_rawa4, var_rawa5, var_rawa6, var_rawa7, var_rawa8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
 		for i in range(0, len(value)):
 			value[i] = [value[i], int(var_rawb1[i, ix_cfs, iy_cfs])]
+		value = np.array(value)
 	elif model == "card":
 		date, prob, alert, value, maxi, mini, i = card.DATA_cfs_card(var_rawa1, var_rawa2, var_rawa3, var_rawa4, var_rawa5, var_rawa6, var_rawa7, var_rawa8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 		value = [value, int(var_rawb1[i, ix_cfs, iy_cfs])]
@@ -219,9 +220,6 @@ elif var_id == 7:
 
 else:
 	success, dic = json_output._get_ERROR(var_id, model)
-	# print "Content-type: application/json\n\n"
-	# print json.dumps(dic)
-	# exit(1)
 
 if success == False:
 	print "Content-type: application/json\n\n"
@@ -229,14 +227,18 @@ if success == False:
 	exit(1)
 
 else:
-	if unit  == "imperial":
-		value, cur = units._get_imperial(value, var_id)
-		maxi, cur = units._get_imperial(maxi, var_id)
-		mini, cur = units._get_imperial(mini, var_id)
-	else:
-		value, cur = units._get_metric(value, var_id)
-		maxi, cur = units._get_metric(maxi, var_id)
-		mini, cur = units._get_metric(mini, var_id)
+"""
+Still not working on CFS, something magic is making and array appear as a sting to the units script
+but only on CFS, value when opened in units appear as a string, not a list, not np.array
+"""
+	# if unit  == "imperial":
+	# 	value, cur = units._get_imperial(value, var_id)
+	# 	maxi, cur = units._get_imperial(maxi, var_id)
+	# 	mini, cur = units._get_imperial(mini, var_id)
+	# else:
+	# 	value, cur = units._get_metric(value, var_id)
+	# 	maxi, cur = units._get_metric(maxi, var_id)
+	# 	mini, cur = units._get_metric(mini, var_id)
 
 	alert = colors._get_ALERT(alert)
 	color = colors._get_CFS(prob)

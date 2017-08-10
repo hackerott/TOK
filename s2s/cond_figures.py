@@ -67,7 +67,7 @@ def DATA_cond_figure(cloud, rain, date, sunrise, sunset):
 	sunrise = int(sunrise[:2])
 	try:
 		for i in range(0, len(date)):
-			v = _get_figure_value(cloud[i], rain[i], date[i], sunrise[i], sunset[i])
+			v = _get_figure_value(cloud[i], rain[i], date[i], sunrise, sunset)
 			value.append(v)
 	except:
 		value = _get_figure_value(cloud, rain, date, sunrise, sunset)
