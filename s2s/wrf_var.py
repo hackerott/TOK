@@ -168,6 +168,8 @@ def _get_figure(var, ncfile, ix, iy):
 			else:
 				var_rawa[i,:,:] = np.subtract(np.add(var_raw2[i,:,:], var_raw3[i,:,:]), np.add(var_raw2[i-1,:,:], var_raw3[i-1,:,:]))
 		for i in range(0, len(var_raw2)):
+			# for i in range(0, var_raw1,shape(2)):
+			# 	for i in range(0, var_raw1.shape(3)):
 			for x in range(ix-4, ix+4):
 				for y in range(iy-4, iy+4):
 					var_rawb[i,x,y] = max(var_raw1[i,:,x,y])

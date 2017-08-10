@@ -92,9 +92,11 @@ elif var_id == 2:
 		date, prob, alert, value, maxi, mini = calendar.DATA_gfs_calendar(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
 		for i in range(0, len(value)):
 			value[i] = [value[i], int(var_rawb1[i, ix_gfs, iy_gfs])]
+#		value = np.ndarray(value)
 	elif model == "card":
 		date, prob, alert, value, maxi, mini, c = card.DATA_gfs_card(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
 		value = [value, int(var_rawb1[c, ix_gfs, iy_gfs])]
+		value = np.array(value)
 	elif model == "table":
 		date, prob, alert, value, maxi, mini = table.DATA_gfs_table(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
 		for i in range(0, len(value)):
@@ -146,9 +148,7 @@ elif var_id == 5:
 elif var_id == 6:
 	var_rawa1, var_rawb1 = gfs_var._get_figure(var, ens1)
 	var_rawa2, var_rawb2 = gfs_var._get_figure(var, ens2)
-	time  	 = cfs_var._get_time('time', ens1)
-	var_rawa1 = np.max(var_rawa1, axis=0) 
-	var_rawa2 = np.max(var_rawa2, axis=0) 
+	time  	 = gfs_var._get_time('time', ens1)
 	if model == "calendar":
 		date, prob, alert, value1, maxi, mini = calendar.DATA_gfs_calendar(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, 0.75, 0.25, 0.5, var_id)
 		date, prob, alert, value2, maxi, mini = calendar.DATA_gfs_calendar(var_rawb1, var_rawb2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
@@ -208,10 +208,14 @@ if success == False:
 
 else:
 	if unit  == "imperial":
-		value, cur = units._get_imperial(value, var_id)
+		value, cur = units._get_imperial(value, int(var_id))
+		maxi, cur = units._get_imperial(maxi, var_id)
+		mini, cur = units._get_imperial(mini, var_id)
 	else:
 		value, cur = units._get_metric(value, var_id)
-
+		maxi, cur = units._get_metric(maxi, var_id)
+		mini, cur = units._get_metric(mini, var_id)
+#	cur = "metric"
 	alert = colors._get_ALERT(alert)
 	color = colors._get_GFS(prob)
 	success, dic = json_output._get_OUT(date, prob, alert, color, value, maxi, mini, model, var_id, cur)

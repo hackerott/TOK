@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
-
-import datetime
+#import datetime
 import astro_tz
 
 def _get_figure_url(var):
@@ -25,43 +24,53 @@ def _get_figure_url(var):
 			"17":	"http://50.112.50.113/figuras/images_sky/sun_s.png",
 			"18":	"http://50.112.50.113/figuras/images_sky/sun_t.png",
 			
-	}.get(var, 'Null')
+	}.get(str(var), 'Null')
 
-def DATA_cond_figure(cloud, rain, date, sunset, sunrise):
-	sunset = sunset.
-	sunrise = sunrise.
-	for i, date in date0:
-		if cloud[i] < 0.75:
-			if date.hour <= sunset and date.hour > sunrise:
-				if rain[i] < 0.1:
-					if cloud[i] < 0.10:
-						value.append(_get_figure_url(12))
-					elif cloud[i] < 0.4:
-						value.append(_get_figure_url(13))
-					else:
-						value.append(_get_figure_url(15))
-				elif rain[i] < 3:
-					value.append(_get_figure_url(16))
+def _get_figure_value(cloud, rain, date, sunrise, sunset):
+	if cloud < 0.75:
+		if date.hour > sunrise and date.hour < sunset:
+			if rain < 0.1:
+				if cloud < 0.10:
+					value = (_get_figure_url(12))
+				elif cloud < 0.4:
+					value = (_get_figure_url(13))
 				else:
-					value.append(_get_figure_url(18))		
-			else:	
-				if rain[i] < 0.1:
-					if cloud[i] < 0.1:
-						value.append(_get_figure_url(5))
-					elif cloud[i] < 0.4:
-						value.append(_get_figure_url(6))
-					else:
-						value.append(_get_figure_url(8))
-				elif rain[i] < 3:
-					value.append(_get_figure_url(9))
-				else:
-					value.append(_get_figure_url(11))
-		else:
-			if rain[i] < 0.1:
-				value.append(_get_figure_url(1))
-			elif rain[i] < 3:
-				value.append(_get_figure_url(2))
+					value = (_get_figure_url(15))
+			elif rain < 3:
+				value = (_get_figure_url(16))
 			else:
-				value.append(_get_figure_url(4))
-
+				value = (_get_figure_url(18))		
+		else:	
+			if rain < 0.1:
+				if cloud < 0.1:
+					value = (_get_figure_url(5))
+				elif cloud < 0.4:
+					value = (_get_figure_url(6))
+				else:
+					value = (_get_figure_url(8))
+			elif rain < 3:
+				value = (_get_figure_url(9))
+			else:
+				value = (_get_figure_url(11))
+	else:
+		if rain < 0.1:
+			value = (_get_figure_url(1))
+		elif rain < 3:
+			value = (_get_figure_url(2))
+		else:
+			value = (_get_figure_url(4))
 	return(value)
+
+def DATA_cond_figure(cloud, rain, date, sunrise, sunset):
+	value = []
+	sunset = int(sunset[:2])
+	sunrise = int(sunrise[:2])
+	try:
+		for i in range(0, len(date)):
+			v = _get_figure_value(cloud[i], rain[i], date[i], sunrise[i], sunset[i])
+			value.append(v)
+	except:
+		value = _get_figure_value(cloud, rain, date, sunrise, sunset)
+		
+	return(value)
+

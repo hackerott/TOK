@@ -15,7 +15,7 @@ def _get_NCVAR(var):
 		'radiacao'	: 'dswrfsfc',
 		'umidade'	: ['spfh2m', 'tmp2m', 'pressfc'], 
 		'vento'		: ['ugrd10m', 'vgrd10m'],
-		'figura'	: ['tcdcclm', 'pratesfc'],
+		'figura'	: ['tcdcclm', 'acpcpsfc'],
 		'time'		: 'time'
 
 		}.get(var, 'Null')
@@ -79,8 +79,8 @@ def _get_rain(var, ncfile):
 		var_rawa = ncfile.variables[var_nc]
 		var_raw1 = np.array(var_rawa)
 		for i in range(0, len(var_raw1)):
-	        if i == 0:
-    		    var_raw1[i,:,:] = var_rawa[i,:,:]
+		        if i == 0:
+    				var_raw1[i,:,:] = var_rawa[i,:,:]
 			else:
 				var_raw1[i,:,:] = np.subtract(var_rawa[i,:,:], var_rawa[i-1,:,:])
 		var_raw1 = np.around(var_raw1, decimals=2)

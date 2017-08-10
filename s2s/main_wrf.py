@@ -73,7 +73,8 @@ elif var_id == 2:
 	if model == "calendar":
 		date, prob, alert, value, maxi, mini = calendar.DATA_wrf_calendar(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
 		for i in range(0, len(value)):
-			value[i] = [value[i], int(var_rawb1[i, ix_wrf, iy_wrf])]
+			value[i] = [value[i], var_rawb1[i, ix_wrf, iy_wrf]]
+		value = np.array(value)
 	elif model == "card":
 		date, prob, alert, value, maxi, mini, c = card.DATA_wrf_card(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
 		value = [value, int(var_rawb1[c, ix_wrf, iy_wrf])]
@@ -127,9 +128,7 @@ elif var_id == 5:
 elif var_id == 6:
 	var_rawa1, var_rawb1 = wrf_var._get_figure(var, ens1, ix_wrf, iy_wrf)
 	var_rawa2, var_rawb2 = wrf_var._get_figure(var, ens2, ix_wrf, iy_wrf)
-	time  	 = cfs_var._get_time('time', ens1)
-	# var_rawa1 = np.max(var_rawa1, axis=0) 
-	# var_rawa2 = np.max(var_rawa2, axis=0) 
+	time  	 = wrf_var._get_time('time', ens1)
 	if model == "calendar":
 		date, prob, alert, value1, maxi, mini = calendar.DATA_wrf_calendar(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, 0.75, 0.25, 0.5, var_id)
 		date, prob, alert, value2, maxi, mini = calendar.DATA_wrf_calendar(var_rawb1, var_rawb2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
@@ -193,12 +192,19 @@ if success == False:
 else:
 	if unit  == "imperial":
 		value, cur = units._get_imperial(value, var_id)
+		maxi, cur = units._get_imperial(maxi, var_id)
+		mini, cur = units._get_imperial(mini, var_id)
 	else:
 		value, cur = units._get_metric(value, var_id)
+		maxi, cur = units._get_metric(maxi, var_id)
+		mini, cur = units._get_metric(mini, var_id)
 
 	alert = colors._get_ALERT(alert)
 	color = colors._get_WRF(prob)
 	success, dic = json_output._get_OUT(date, prob, alert, color, value, maxi, mini, model, var_id, cur)
 	print "Content-type: application/json\n\n"
+#	try:
 	print json.dumps(dic)
+#	except:
+#		print dic
 	exit(0)

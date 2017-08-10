@@ -20,10 +20,10 @@ def DATA_cfs_calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCF
 	prob_t_g2, prob_t_r2, prob_t_y2, value_t2, max_t2, min_t2 = prob_time._get_TIMEP(ens2, ens6, time, 4, ixCFS, iyCFS, TOP, BOT)
 	prob_t_g3, prob_t_r3, prob_t_y3, value_t3, max_t3, min_t3 = prob_time._get_TIMEP(ens3, ens7, time, 4, ixCFS, iyCFS, TOP, BOT)
 	prob_t_g4, prob_t_r4, prob_t_y4, value_t4, max_t4, min_t4 = prob_time._get_TIMEP(ens4, ens8, time, 4, ixCFS, iyCFS, TOP, BOT)
-	prob_a_g1, prob_a_r1, prob_a_y1, value_a1, max_a1, min_a1 = prob_area._get_AREAP(ens1, ixCFS, iyCFS, TOP, BOT)
-	prob_a_g2, prob_a_r2, prob_a_y2, value_a2, max_a2, min_a2 = prob_area._get_AREAP(ens2, ixCFS, iyCFS, TOP, BOT)
-	prob_a_g3, prob_a_r3, prob_a_y3, value_a3, max_a3, min_a3 = prob_area._get_AREAP(ens3, ixCFS, iyCFS, TOP, BOT)
-	prob_a_g4, prob_a_r4, prob_a_y4, value_a4, max_a4, min_a4 = prob_area._get_AREAP(ens4, ixCFS, iyCFS, TOP, BOT)
+	prob_a_g1, prob_a_r1, prob_a_y1, value_a1, max_a1, min_a1 = prob_area._get_AREAP(ens1, time, ixCFS, iyCFS, TOP, BOT)
+	prob_a_g2, prob_a_r2, prob_a_y2, value_a2, max_a2, min_a2 = prob_area._get_AREAP(ens2, time, ixCFS, iyCFS, TOP, BOT)
+	prob_a_g3, prob_a_r3, prob_a_y3, value_a3, max_a3, min_a3 = prob_area._get_AREAP(ens3, time, ixCFS, iyCFS, TOP, BOT)
+	prob_a_g4, prob_a_r4, prob_a_y4, value_a4, max_a4, min_a4 = prob_area._get_AREAP(ens4, time, ixCFS, iyCFS, TOP, BOT)
 
 	color	= []
 	value	= []
@@ -68,8 +68,8 @@ def DATA_cfs_calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCF
 
 		value.append(result_prov)
 		prob.append(prob_c[np.argmax(prob_c)])		
-		maxi.append(max(max_v))
-		mini.append(min(min_v))
+		maxi.append(max_v)
+		mini.append(min_v)
 		date.append(d1)
 		a += 4
 		b += 4
@@ -128,8 +128,8 @@ def DATA_gfs_calendar(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO
 		value.append(result_prov)
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
 		prob.append(prob_c[np.argmax(prob_c)])		
-		maxi.append(max(max_v))
-		mini.append(min(min_v))
+		maxi.append(max_v)
+		mini.append(min_v)
 		date.append(d1)
 		if b <= max_i - 24:
 			a += 24
@@ -188,8 +188,8 @@ def DATA_wrf_calendar(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO
 		value.append(result_prov)
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
 		prob.append(prob_c[np.argmax(prob_c)])		
-		maxi.append(max(max_v))
-		mini.append(min(min_v))
+		maxi.append(max_v)
+		mini.append(min_v)
 		date.append(d1)
 		a += 24
 		b += 24

@@ -27,7 +27,7 @@ def _get_OUT(date, prob, alert, color, value, maxi, mini,  model, var_id, cur):
 		success, dic = _get_card(date, prob, color, value, maxi, mini,  var_id, model, cur)
 
 	elif model == 'table':
-		success, dic = _get_table(date, prob, color, value, maxi, mini,  var_id, mode, cur)
+		success, dic = _get_table(date, prob, color, value, maxi, mini,  var_id, model, cur)
 
 	elif model == 'calendar':
 		success, dic = _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cur)
@@ -458,8 +458,8 @@ def _get_card(date, prob, color, value, maxi, mini, var_id, model, cur):
 		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
-					"startDate" : date[0].strftime('%Y-%m-%d %H:00:00'),
-					"endDate" : date[-1].strftime('%Y-%m-%d %H:00:00'),
+					"startDate" : date.strftime('%Y-%m-%d %H:00:00'),
+					"endDate" : date.strftime('%Y-%m-%d %H:00:00'),
 					"units" : units,
 					"values" : values,
 					"message" : "Card OK!",
@@ -605,8 +605,8 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                 	]}}
 
 		dic = {"data" : {
-							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%S'),
-							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%S'),
+							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
+							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
 							"type" : "rain", 
 							"success" : 0,
 							"message" : "Calendário carregado com sucesso",
@@ -648,8 +648,8 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                 	]}}
 
 		dic = {"data" : {
-							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%S'),
-							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%S'),
+							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
+							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
 							"type" : "wind",
 							"success" : 0,
 							"message" : "Calendário carregado com sucesso",
@@ -689,8 +689,8 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                 	]}}
 
 		dic = {"data" : {
-							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%S'),
-							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%S'),
+							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
+							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
 							"type" : "temp",
 							"success" : 0,
 							"message" : "Calendário carregado com sucesso",
@@ -725,8 +725,8 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                 	]}}
 
 		dic = {"data" : {
-							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%S'),
-							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%S'),
+							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
+							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
 							"type" : "radiation",
 							"success" : 0,
 							"message" : "Calendário carregado com sucesso",
@@ -761,8 +761,8 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                 	]}}
 
 		dic = {"data" : {
-							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%S'),
-							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%S'),
+							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
+							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
 							"type" : "humidity",
 							"success" : 1,
 							"message" : "Calendário carregado com sucesso",
@@ -779,8 +779,8 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
 		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
-					"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%S'),
-					"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%S'),
+					"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
+					"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
 					"units" : units,
 					"values" : values,
 					"message" : "Card OK!",
@@ -792,20 +792,21 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
 	return(success, dic)
 
 def _get_ERROR(var_id, model):
+	import datetime
 	var = _get_Name(var_id)
 	if model == "calendar":
-		mess = "%S Calendar  not working" %(var)
+		mess = "%s Calendar  not working" %(var)
 	elif model == "card":
-		mess = "%S Card  not working" %(var)
+		mess = "%s Card  not working" %(var)
 	elif model == "table":
-		mess = "%S Table not working" %(var)
+		mess = "%s Table not working" %(var)
 	else:
 		mess = "Sytem is Down"
 
 	dic = {
 			"message"	: mess,
 			"status"	: 1,
-			"time"		: datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+			"time"		: datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%s')
 			}
 
 	return(False, dic)
