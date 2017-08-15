@@ -605,8 +605,8 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                 	]}}
 
 		dic = {"data" : {
-							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
-							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
+							"startDate" : date[0].strftime('%Y-%m-%d 00:00:00'),
+							"endDate" : date[-1].strftime('%Y-%m-%d 00:00:00'),
 							"type" : "rain", 
 							"success" : 0,
 							"message" : "Calendário carregado com sucesso",
@@ -620,9 +620,10 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
 			resp	=	{
         	        	"main" : {
             	        			"color" : alert[i],
-                	    			"value" : { "speed" : value[i, 0],
-                                                "direction" : value[i, 1]
-                                               }
+#                	    			"value" : { "speed" : value[i, 0],
+#                                                "direction" : value[i, 1]}
+                	    			"value" : value[i, 0],
+                                               
                     			},
 	                	"otherValues" : {
     	                					"max" : maxi[i], 
@@ -648,8 +649,8 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                 	]}}
 
 		dic = {"data" : {
-							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
-							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
+							"startDate" : date[0].strftime('%Y-%m-%d 00:00:00'),
+							"endDate" : date[-1].strftime('%Y-%m-%d 00:00:00'),
 							"type" : "wind",
 							"success" : 0,
 							"message" : "Calendário carregado com sucesso",
@@ -689,8 +690,8 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                 	]}}
 
 		dic = {"data" : {
-							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
-							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
+							"startDate" : date[0].strftime('%Y-%m-%d 00:00:00'),
+							"endDate" : date[-1].strftime('%Y-%m-%d 00:00:00'),
 							"type" : "temp",
 							"success" : 0,
 							"message" : "Calendário carregado com sucesso",
@@ -725,8 +726,8 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                 	]}}
 
 		dic = {"data" : {
-							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
-							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
+							"startDate" : date[0].strftime('%Y-%m-%d 00:00:00'),
+							"endDate" : date[-1].strftime('%Y-%m-%d 00:00:00'),
 							"type" : "radiation",
 							"success" : 0,
 							"message" : "Calendário carregado com sucesso",
@@ -761,8 +762,8 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
                 	]}}
 
 		dic = {"data" : {
-							"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
-							"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
+							"startDate" : date[0].strftime('%Y-%m-%d 00:00:00'),
+							"endDate" : date[-1].strftime('%Y-%m-%d 00:00:00'),
 							"type" : "humidity",
 							"success" : 1,
 							"message" : "Calendário carregado com sucesso",
@@ -779,8 +780,8 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
 		dic = {"data" :{
 					"type"  : "horizontal",
 					"stepLength" : "1",
-					"startDate" : date[0].strftime('%Y-%m-%d %H:%M:%s'),
-					"endDate" : date[-1].strftime('%Y-%m-%d %H:%M:%s'),
+					"startDate" : date[0].strftime('%Y-%m-%d 00:00:00'),
+					"endDate" : date[-1].strftime('%Y-%m-%d 00:00:00'),
 					"units" : units,
 					"values" : values,
 					"message" : "Card OK!",
@@ -799,14 +800,14 @@ def _get_ERROR(var_id, model):
 	elif model == "card":
 		mess = "%s Card  not working" %(var)
 	elif model == "table":
-		mess = "%s Table not working" %(var)
+		mess = "%S Table not working" %(var)
 	else:
 		mess = "Sytem is Down"
 
 	dic = {
 			"message"	: mess,
 			"status"	: 1,
-			"time"		: datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%s')
+			"time"		: datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 			}
 
 	return(False, dic)

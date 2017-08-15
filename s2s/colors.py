@@ -30,9 +30,9 @@ def _get_GFS(value):
 		for i in range(0, len(value)):
 			if value[i]  >= 0.7:
 				color.append(_get_color(3))
-			elif value[i] >= 0.45:
+			elif value[i] >= 0.47:
 				color.append(_get_color(2))
-			elif value[i] < 0.45:
+			elif value[i] < 0.47:
 				color.append(_get_color(1))
 	except:
 		color = _get_color(value)
@@ -42,7 +42,7 @@ def _get_CFS(value):
 	color = []
 	try:
 		for i in range(0, len(value)):
-			if value[i]  >= 0.7:
+			if value[i]  >= 0.65:
 				color.append(_get_color(3))
 			elif value[i] >= 0.45:
 				color.append(_get_color(2))

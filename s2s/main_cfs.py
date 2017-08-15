@@ -4,8 +4,8 @@
 import cgi
 import datetime
 import json
-import numpy as np
 # import os
+import numpy as np
 # import netCDF4
 # import math
 # import sys
@@ -220,6 +220,9 @@ elif var_id == 7:
 
 else:
 	success, dic = json_output._get_ERROR(var_id, model)
+	# print "Content-type: application/json\n\n"
+	# print json.dumps(dic)
+	# exit(1)
 
 if success == False:
 	print "Content-type: application/json\n\n"
@@ -227,22 +230,18 @@ if success == False:
 	exit(1)
 
 else:
-"""
-Still not working on CFS, something magic is making and array appear as a sting to the units script
-but only on CFS, value when opened in units appear as a string, not a list, not np.array
-"""
-	# if unit  == "imperial":
-	# 	value, cur = units._get_imperial(value, var_id)
-	# 	maxi, cur = units._get_imperial(maxi, var_id)
-	# 	mini, cur = units._get_imperial(mini, var_id)
-	# else:
-	# 	value, cur = units._get_metric(value, var_id)
-	# 	maxi, cur = units._get_metric(maxi, var_id)
-	# 	mini, cur = units._get_metric(mini, var_id)
-
+	print "Content-type: application/json\n\n"
+	if unit  == "imperial":
+		value, cur = units._get_imperial(value, var_id)
+		maxi, cur = units._get_imperial(maxi, var_id)
+		mini, cur = units._get_imperial(mini, var_id)
+	else:
+		value, cur = units._get_metric(value, var_id)
+		maxi, cur = units._get_metric(maxi, var_id)
+		mini, cur = units._get_metric(mini, var_id)
+	cur = unit
 	alert = colors._get_ALERT(alert)
 	color = colors._get_CFS(prob)
 	success, dic = json_output._get_OUT(date, prob, alert, color, value, maxi, mini, model, var_id, cur)
-	print "Content-type: application/json\n\n"
 	print json.dumps(dic)
 	exit(0)

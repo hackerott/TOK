@@ -103,7 +103,7 @@ def _get_rain(var, ncfile):
 		var_raw1[np.where(var_raw1<0)] = 0
 	except:
 		var_raw1 = np.nan	
-		return(var_raw1)
+	return(var_raw1)
 
 def _get_wind(var, ncfile):
 	try:
