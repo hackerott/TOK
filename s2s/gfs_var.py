@@ -16,6 +16,7 @@ def _get_NCVAR(var):
 		'umidade'	: ['spfh2m', 'tmp2m', 'pressfc'], 
 		'vento'		: ['ugrd10m', 'vgrd10m'],
 		'figura'	: ['tcdcclm', 'acpcpsfc'],
+		'meteo'		: ['tcdcclm', 'pressfc'],
 		'time'		: 'time'
 
 		}.get(var, 'Null')
@@ -109,7 +110,7 @@ def _get_temperature(var,  ncfile):
 		var_nc = _get_NCVAR(var)
 		# ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc]
-		var_raw1  =np.subtract(var_raw1, 273.15)
+		var_raw1 = np.subtract(var_raw1, 273.15)
 		var_raw1 = np.around(var_raw1, decimals=2)
 	except:
 		var_raw1 = np.nan
@@ -143,6 +144,23 @@ def _get_humidity(var, ncfile):
 	except:
 		var_raw1 = np.nan
 	return (var_raw1)
+def _get_meteo(var, ncfile):
+	try:
+		var_nc = _get_NCVAR(var)
+		var_raw1 = ncfile.variables[var_nc[0]]
+		var_raw1 = np.divide(var_raw1, 100)
+		var_raw2 = ncfile.variables[var_nc[1]]
+		var_raw3 = _get_temperature('temp', ncfile)
+		var_raw4 = _get_humidity('umidade', ncfile)
+		var_raw5 = _get_rain('chuva', ncfile)
+		var_raw6 = _get_wind('vento'm ncfile)
+#		a = 6.112
+		gamma = np.add(np.log(np.divide(var_raw4, 100)), np.divide(np.multiply(17.67, var_raw3), np.add(var_raw3, 243.5)))
+		var_raw7 = np.divide(np.multiply(243.5, gamma), np.subtract(17.67, gamma))
+
+	except:
+		var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7 = np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan
+	return(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, 'null', 'null')
 
 def _get_figure(var, ncfile):
 	try:

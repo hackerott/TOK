@@ -28,6 +28,8 @@ import astro_tz
 import cond_figures
 import units
 import colors
+import gcard
+# import meteogram
 #######################################
 ##	GET form			
 form = cgi.FieldStorage()
@@ -184,39 +186,39 @@ elif var_id == 6:
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
 	
-elif var_id == 7:
-	rain1, speed1, direction1, radiation1, temperature1, humidity1 = cfs_var._get_all(var, ens1)
-	rain2, speed2, direction2, radiation2, temperature2, humidity2 = cfs_var._get_all(var, ens2)
-	rain3, speed3, direction3, radiation3, temperature3, humidity3 = cfs_var._get_all(var, ens3)
-	rain4, speed4, direction4, radiation4, temperature4, humidity4 = cfs_var._get_all(var, ens4)
-	rain5, speed5, direction5, radiation5, temperature5, humidity5 = cfs_var._get_all(var, ens5)
-	rain6, speed6, direction6, radiation6, temperature6, humidity6 = cfs_var._get_all(var, ens6)
-	rain7, speed7, direction7, radiation7, temperature7, humidity7 = cfs_var._get_all(var, ens7)
-	rain8, speed8, direction8, radiation8, temperature8, humidity8 = cfs_var._get_all(var, ens8)
-	time  	 = cfs_var._get_time('time', ens1)
-	if model == "calendar":
-		date1, prob1, alert1, value1, maxi1, mini1 = calendar.DATA_cfs_calendar(rain1, rain2, rain3, rain4, rain5, rain6, rain7, rain8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
-		date2, prob2, alert2, value2, maxi2, mini2 = calendar.DATA_cfs_calendar(speed1, speed2, speed3, speed4, speed5, speed6, speed7, speed8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
-		date3, prob3, alert3, value3, maxi3, mini3 = calendar.DATA_cfs_calendar(temperature1, temperature2, temperature3, temperature4, temperature5, temperature6, temperature7, temperature8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
-		date4, prob4, alert4, value4, maxi4, mini4 = calendar.DATA_cfs_calendar(radiation1, radiation2, radiation3, radiation4, radiation5, radiation6, radiation7, radiation8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
-		date5, prob5, alert5, value5, maxi5, mini5 = calendar.DATA_cfs_calendar(humidity1, humidity2, humidity3, humidity4, humidity5, humidity6, humidity7, humidity8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
+# elif var_id == 7:
+# 	rain1, speed1, direction1, radiation1, temperature1, humidity1 = cfs_var._get_all(var, ens1)
+# 	rain2, speed2, direction2, radiation2, temperature2, humidity2 = cfs_var._get_all(var, ens2)
+# 	rain3, speed3, direction3, radiation3, temperature3, humidity3 = cfs_var._get_all(var, ens3)
+# 	rain4, speed4, direction4, radiation4, temperature4, humidity4 = cfs_var._get_all(var, ens4)
+# 	rain5, speed5, direction5, radiation5, temperature5, humidity5 = cfs_var._get_all(var, ens5)
+# 	rain6, speed6, direction6, radiation6, temperature6, humidity6 = cfs_var._get_all(var, ens6)
+# 	rain7, speed7, direction7, radiation7, temperature7, humidity7 = cfs_var._get_all(var, ens7)
+# 	rain8, speed8, direction8, radiation8, temperature8, humidity8 = cfs_var._get_all(var, ens8)
+# 	time  	 = cfs_var._get_time('time', ens1)
+# 	if model == "calendar":
+# 		date1, prob1, alert1, value1, maxi1, mini1 = calendar.DATA_cfs_calendar(rain1, rain2, rain3, rain4, rain5, rain6, rain7, rain8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
+# 		date2, prob2, alert2, value2, maxi2, mini2 = calendar.DATA_cfs_calendar(speed1, speed2, speed3, speed4, speed5, speed6, speed7, speed8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
+# 		date3, prob3, alert3, value3, maxi3, mini3 = calendar.DATA_cfs_calendar(temperature1, temperature2, temperature3, temperature4, temperature5, temperature6, temperature7, temperature8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
+# 		date4, prob4, alert4, value4, maxi4, mini4 = calendar.DATA_cfs_calendar(radiation1, radiation2, radiation3, radiation4, radiation5, radiation6, radiation7, radiation8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
+# 		date5, prob5, alert5, value5, maxi5, mini5 = calendar.DATA_cfs_calendar(humidity1, humidity2, humidity3, humidity4, humidity5, humidity6, humidity7, humidity8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
 
-	elif model == "card":
-		date1, prob1, alert1, value1, maxi1, mini1, i = card.DATA_cfs_card(rain1, rain2, rain3, rain4, rain5, rain6, rain7, rain8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
-		date2, prob2, alert2, value2, maxi2, mini2, i = card.DATA_cfs_card(speed1, speed2, speed3, speed4, speed5, speed6, speed7, speed8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
-		date3, prob3, alert3, value3, maxi3, mini3, i = card.DATA_cfs_card(temperature1, temperature2, temperature3, temperature4, temperature5, temperature6, temperature7, temperature8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
-		date4, prob4, alert4, value4, maxi4, mini4, i = card.DATA_cfs_card(radiation1, radiation2, radiation3, radiation4, radiation5, radiation6, radiation7, radiation8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
-		date5, prob5, alert5, value5, maxi5, mini5, i = card.DATA_cfs_card(humidity1, humidity2, humidity3, humidity4, humidity5, humidity6, humidity7, humidity8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
+# 	elif model == "card":
+# 		date1, prob1, alert1, value1, maxi1, mini1, i = card.DATA_cfs_card(rain1, rain2, rain3, rain4, rain5, rain6, rain7, rain8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
+# 		date2, prob2, alert2, value2, maxi2, mini2, i = card.DATA_cfs_card(speed1, speed2, speed3, speed4, speed5, speed6, speed7, speed8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
+# 		date3, prob3, alert3, value3, maxi3, mini3, i = card.DATA_cfs_card(temperature1, temperature2, temperature3, temperature4, temperature5, temperature6, temperature7, temperature8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
+# 		date4, prob4, alert4, value4, maxi4, mini4, i = card.DATA_cfs_card(radiation1, radiation2, radiation3, radiation4, radiation5, radiation6, radiation7, radiation8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
+# 		date5, prob5, alert5, value5, maxi5, mini5, i = card.DATA_cfs_card(humidity1, humidity2, humidity3, humidity4, humidity5, humidity6, humidity7, humidity8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)
 
-	else:
-		success, dic = json_output._get_ERROR(var_id, model) 
+# 	else:
+# 		success, dic = json_output._get_ERROR(var_id, model) 
 
-	date	= [date1, date2, date3, date4, date5]
-	prob	= [prob1, prob2, prob3, prob4, prob5]
-	alert	= [alert1, alert2, alert3, alert4, alert5]
-	value	= [value1, value2, value3, value4, value5]
-	maxi	= [maxi1, maxi2, maxi3, maxi4, maxi5]
-	mini	= [mini1, mini2, mini3, mini4, mini5]
+# 	date	= [date1, date2, date3, date4, date5]
+# 	prob	= [prob1, prob2, prob3, prob4, prob5]
+# 	alert	= [alert1, alert2, alert3, alert4, alert5]
+# 	value	= [value1, value2, value3, value4, value5]
+# 	maxi	= [maxi1, maxi2, maxi3, maxi4, maxi5]
+# 	mini	= [mini1, mini2, mini3, mini4, mini5]
 
 else:
 	success, dic = json_output._get_ERROR(var_id, model)

@@ -39,7 +39,7 @@ def DATA_cfs_card(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, i
 	fig		= []
 	a = 0
 	b = 4
-	tgt_day = datetime.datetime.now()
+	tgt_day = datetime.datetime.now() + datetime.timedelta(days = 9)
 	for i in range(0, max_i//4):
 		max_v = max(max_t1[a:b], max_t2[a:b], max_t3[a:b], max_t4[a:b], max_a1[a:b], max_a2[a:b], max_a3[a:b], max_a4[a:b])
 		min_v = min(min_t1[a:b], min_t2[a:b], min_t3[a:b], min_t4[a:b], min_a1[a:b], min_a2[a:b], min_a3[a:b], min_a4[a:b])
@@ -55,7 +55,7 @@ def DATA_cfs_card(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, i
 		prob_r = ((2*prob_t_r + prob_a_r)/3)
 		prob_y = ((2*prob_t_y + prob_a_y)/3)
 		prob_c = [prob_g, prob_r, prob_y]
-		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
+		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days =  9 + i) + datetime.timedelta(hours = utc0)
 		if prob_c[np.argmax(prob_c)] < PRO:
 			color.append(2)
 			value.append((((2*value_t  +  value_a)/3) + (max(max_v) + min(min_v)))/3)

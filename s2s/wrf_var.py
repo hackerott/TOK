@@ -16,7 +16,8 @@ def _get_NCVAR(var):
 		'umidade'	: ['Q2', 'T2', 'PSFC'],
 		'vento'		: ['U10', 'V10'],
 		'time'		: 'Times',
-		'figura'	: ['CLDFRA', 'RAINC', 'RAINNC']
+		'figura'	: ['CLDFRA', 'RAINC', 'RAINNC'],
+		'meteo'		: ['CLDFRA', 'PSFC']
 		}.get(var, 'Null')
 
 #######################################
@@ -152,6 +153,30 @@ def _get_humidity(var, ncfile):
 	except:
 		var_raw1 = np.nan
 	return (var_raw1)
+
+def _get_meteo(var, ncfile, ix, iy):
+	try:
+		var_nc = _get_NCVAR(var)
+		var_raw2 = ncfile.variables[var_nc[1]]
+		var_rawa = ncfile.variables[var_nc[0]]
+		var_raw1 = var_raw2
+
+		for i in range(0, len(var_raw2)):
+			for x in range(ix-4, ix+4):
+				for y in range(iy-4, iy+4):
+					var_raw1[i,x,y] = max(var_rawa[i,:,x,y])
+
+		var_raw3 = _get_temperature('temp', ncfile)
+		var_raw4 = _get_humidity('umidade', ncfile)
+		var_raw5 = _get_rain('chuva', ncfile)
+		var_raw6 = _get_wind('vento'm ncfile)
+#		a = 6.112
+		gamma = np.add(np.log(np.divide(var_raw4, 100)), np.divide(np.multiply(17.67, var_raw3), np.add(var_raw3, 243.5)))
+		var_raw7 = np.divide(np.multiply(243.5, gamma), np.subtract(17.67, gamma))
+
+	except:
+		var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7 = np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan
+	return(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, 'null', 'null')
 
 def _get_figure(var, ncfile, ix, iy):
 	try:
