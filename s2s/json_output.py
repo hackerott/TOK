@@ -32,6 +32,12 @@ def _get_OUT(date, prob, alert, color, value, maxi, mini,  model, var_id, cur):
 	elif model == 'calendar':
 		success, dic = _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cur)
 
+	elif model == 'gcard':
+		success, dic = _get_gcard(date, value, var_id, model, cur)
+
+	elif model == 'meteogram':
+		success, dic = _get_meteogram(date, value)
+
 	return(success, dic)
 
 
@@ -620,8 +626,8 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
 			resp	=	{
         	        	"main" : {
             	        			"color" : alert[i],
-#                	    			"value" : { "speed" : value[i, 0],
-#                                                "direction" : value[i, 1]}
+                	    			# "value" : { "speed" : value[i, 0],
+                                                # "direction" : value[i, 1]}
                 	    			"value" : value[i, 0],
                                                
                     			},
@@ -790,6 +796,209 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
 	
 	else:
 		success, dic = _get_ERROR(var_id, model)				
+	return(success, dic)
+
+def _get_gcard(date, value, var_id, model, cur):
+	if var_id == 1 :
+		values = {"rain"	:	[value],}
+		units = {"rain" : {                "current" : cur,
+                "label" : "rain",
+                "options" : [
+                    {
+                        "id" : "metric",
+                        "label" : "mm"
+                    },
+                    {
+                        "id" : "imperial",
+                        "label" : "inch"
+                    }
+                ]}}
+		dic = {"data" :{
+					"type"  : "horizontal",
+					"stepLength" : "1",
+					"startDate" : date[0].strftime('%Y-%m-%d %H:00:00'),
+					"endDate" : date[-1].strftime('%Y-%m-%d %H:00:00'),
+					"units" : units,
+					"values" : values,
+					"message" : "Card OK!",
+					"status" : 0 
+					}}
+		success = True
+
+	elif var_id == 2:
+		values = {"wind"	:	[value],}
+ 		units = {"wind" : {
+			                "current" : cur,
+			                "label" : "wind",
+			                "options" : [
+				                    {
+				                        "id" : "metric",
+                        				"label" : "m/s"
+                    				     },
+				                    {
+				                        "id" : "imperial",
+				                        "label" : "mph"
+                    				}]}}
+		dic = {"data" :{
+					"type"  : "horizontal",
+					"stepLength" : "1",
+					"startDate" : date[0].strftime('%Y-%m-%d %H:00:00'),
+					"endDate" : date[-1].strftime('%Y-%m-%d %H:00:00'),
+					"units" : units,
+					"values" : values,
+					"message" : "Card OK!",
+					"status" : 0 
+					}}
+		success = True
+
+	elif var_id == 3:
+		self_value = []
+		a = 0
+		b = 1
+		for i in range(0, len(value)+1):
+			if b >= len(value):
+				break
+			d = {
+				"max" : "%.2f" %value[a,0], 
+				"min" : "%.2f" %value[b,1]
+			}
+			self_value.append(d)
+			a = b + 1
+			b = b + 2
+		values = {"temperature"	:	[self_value],}
+		units = {
+			"temperature" : {
+                "current" :cur,
+                "label" : "Temperature",
+                "options" : [ 
+                    {
+                        "id" : "metric",
+                        "label" : "˚C"
+                    },
+                    {
+                        "id" : "imperial",
+                        "label" : "˚F"
+                    }
+                ]
+					            },}
+		dic = {"data" :{
+					"type"  : "horizontal",
+					"stepLength" : "1",
+					"startDate" : date[0].strftime('%Y-%m-%d %H:00:00'),
+					"endDate" : date[-1].strftime('%Y-%m-%d %H:00:00'),
+					"units" : units,
+					"values" : values,
+					"message" : "Card OK!",
+					"status" : 0 
+					}}
+		success = True
+
+	elif var_id == 4:
+		values = {"radiation"	:	[value],}
+		units = {"radiation" : {
+                "current" : cur,
+                "label" : "radiation",
+                "options" : [
+                    {
+                        "id" : "metric",
+                        "label" : "W/m²"
+                    }
+                ]},}
+		dic = {"data" :{
+					"type"  : "horizontal",
+					"stepLength" : "1",
+					"startDate" : date[0].strftime('%Y-%m-%d %H:00:00'),
+					"endDate" : date[-1].strftime('%Y-%m-%d %H:00:00'),
+					"units" : units,
+					"values" : values,
+					"message" : "Card OK!",
+					"status" : 0 
+					}}
+		success = True
+
+	elif var_id == 5:
+		values = {"humidity"	:	[value],
+			  "max"		:	"%.2f" %maxi,
+			  "min"		:	"%.2f"%mini,}
+		units = {"humidity" : {
+                "current" : cur,
+                "label" : "humidity",
+                "options" : [
+                    {
+                        "id" : "metric",
+                        "label" : "%"
+                    }
+                ]
+	  		       },}
+		dic = {"data" :{
+					"type"  : "horizontal",
+					"stepLength" : "1",
+					"startDate" : date[0].strftime('%Y-%m-%d %H:00:00'),
+					"endDate" : date[-1].strftime('%Y-%m-%d %H:00:00'),
+					"units" : units,
+					"values" : values,
+					"message" : "Card OK!",
+					"status" : 0 
+					}}
+		success = True
+
+	elif var_id == 6:
+		values = {"figures"	:	[value]}
+		units = {"figures" : {
+                "current" : cur,
+                "label" : "cond_figures",
+	  		       },}
+		dic = {"data" :{
+					"type"  : "horizontal",
+					"stepLength" : "1",
+					"startDate" : date[0].strftime('%Y-%m-%d %H:00:00'),
+					"endDate" : date[-1].strftime('%Y-%m-%d %H:00:00'),
+					"units" : units,
+					"values" : values,
+					"message" : "Card OK!",
+					"status" : 0 
+					}}
+		success = True
+
+	else:
+		success, dic = _get_ERROR(var_id, model)
+			
+	return(success, dic)
+
+def _get_meteogram(date, value):
+	values = {	
+				"temp"		:	[value[:,0]],
+				"wind"		:	[value[:,1]],
+				"humidity"	:	[value[:,2]],
+				"cloud"		:	[value[:,3]],
+				"rain"		:	[value[:,4]],
+				"pressure"	:	[value[:,5]],
+				"dew"		:	[value[:,6]],
+				"cape"		:	[value[:,7]],
+				"gust"		:	[value[:,8]],
+			}
+	units = {"label"	:[	{"temp"		:	"C"},
+							{"wind"		:	"m/s"},
+							{"humidity"	:	"%"},
+							{"cloud"	:	"%"},
+							{"rain"		:	"mm"},
+							{"pressure"	:	"hPa"},
+							{"dew"		:	"C"},
+							{"cape"		:	"%"},
+							{"gust"		:	"m/s"},
+						]
+			}
+	dic = {"data" :{
+				"type"  : "horizontal",
+				"stepLength" : "1",
+				"startDate" : date[0].strftime('%Y-%m-%d %H:00:00'),
+				"endDate" : date[-1].strftime('%Y-%m-%d %H:00:00'),
+				"units" : units,
+				"values" : values,
+				"message" : "Meteogram OK!",
+				"status" : 0 
+				}}
+	success = True
 	return(success, dic)
 
 def _get_ERROR(var_id, model):
