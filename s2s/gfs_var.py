@@ -133,14 +133,15 @@ def _get_humidity(var, ncfile):
 		var_rawa = ncfile.variables[var_nc[0]] 		
 		var_rawb = ncfile.variables[var_nc[1]] 		
 		var_rawc = ncfile.variables[var_nc[2]]
-                a1 = np.divide(np.subtract(var_rawb, 273.15), np.subtract(var_rawb, 35.86))
-                a2 = np.multiply(17.29, a1)
-                a3 = np.exp(a2)
-                b1 = np.divide(379.90516, var_rawc)
-                c1 = np.multiply(b1, a3)
-                d1 = np.divide(var_rawa, c1)
-                var_raw1 = np.multiply(100, d1)
+		a1 = np.divide(np.subtract(var_rawb, 273.15), np.subtract(var_rawb, 35.86))
+		a2 = np.multiply(17.29, a1)
+		a3 = np.exp(a2)
+		b1 = np.divide(379.90516, var_rawc)
+		c1 = np.multiply(b1, a3)
+		d1 = np.divide(var_rawa, c1)
+		var_raw1 = np.multiply(100, d1)
 		var_raw1 = np.around(var_raw1, decimals=2)
+		del var_rawa, var_rawa, 
 	except:
 		var_raw1 = np.nan
 	return (var_raw1)
@@ -153,13 +154,14 @@ def _get_meteo(var, ncfile):
 		var_raw3 = _get_temperature('temp', ncfile)
 		var_raw4 = _get_humidity('umidade', ncfile)
 		var_raw5 = _get_rain('chuva', ncfile)
-		var_raw6 = _get_wind('vento'm ncfile)
+		var_raw6, dire = _get_wind('vento', ncfile)
+		del dire
 #		a = 6.112
 		gamma = np.add(np.log(np.divide(var_raw4, 100)), np.divide(np.multiply(17.67, var_raw3), np.add(var_raw3, 243.5)))
 		var_raw7 = np.divide(np.multiply(243.5, gamma), np.subtract(17.67, gamma))
-
 	except:
 		var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7 = np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan
+	ncfile.close
 	return(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, 'null', 'null')
 
 def _get_figure(var, ncfile):

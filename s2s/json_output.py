@@ -820,7 +820,7 @@ def _get_gcard(date, value, var_id, model, cur):
 					"endDate" : date[-1].strftime('%Y-%m-%d %H:00:00'),
 					"units" : units,
 					"values" : values,
-					"message" : "Card OK!",
+					"message" : "GCard OK!",
 					"status" : 0 
 					}}
 		success = True
@@ -846,21 +846,17 @@ def _get_gcard(date, value, var_id, model, cur):
 					"endDate" : date[-1].strftime('%Y-%m-%d %H:00:00'),
 					"units" : units,
 					"values" : values,
-					"message" : "Card OK!",
+					"message" : "GCard OK!",
 					"status" : 0 
 					}}
 		success = True
 
 	elif var_id == 3:
-		self_value = []
-		a = 0
-		b = 1
-		for i in range(0, len(value)+1):
-			if b >= len(value):
-				break
+		for i in range(0, len(value)):
+			val = value[i]
 			d = {
-				"max" : "%.2f" %value[a,0], 
-				"min" : "%.2f" %value[b,1]
+				"max" : ĩnt(val[0]*10)/10.0, 
+				"min" : int(val[1]*10)/10.0
 			}
 			self_value.append(d)
 			a = b + 1
@@ -888,7 +884,7 @@ def _get_gcard(date, value, var_id, model, cur):
 					"endDate" : date[-1].strftime('%Y-%m-%d %H:00:00'),
 					"units" : units,
 					"values" : values,
-					"message" : "Card OK!",
+					"message" : "GCard OK!",
 					"status" : 0 
 					}}
 		success = True
@@ -911,15 +907,13 @@ def _get_gcard(date, value, var_id, model, cur):
 					"endDate" : date[-1].strftime('%Y-%m-%d %H:00:00'),
 					"units" : units,
 					"values" : values,
-					"message" : "Card OK!",
+					"message" : "GCard OK!",
 					"status" : 0 
 					}}
 		success = True
 
 	elif var_id == 5:
-		values = {"humidity"	:	[value],
-			  "max"		:	"%.2f" %maxi,
-			  "min"		:	"%.2f"%mini,}
+		values = {"humidity"	:	[value],}
 		units = {"humidity" : {
                 "current" : cur,
                 "label" : "humidity",
@@ -937,7 +931,7 @@ def _get_gcard(date, value, var_id, model, cur):
 					"endDate" : date[-1].strftime('%Y-%m-%d %H:00:00'),
 					"units" : units,
 					"values" : values,
-					"message" : "Card OK!",
+					"message" : "GCard OK!",
 					"status" : 0 
 					}}
 		success = True
@@ -955,7 +949,7 @@ def _get_gcard(date, value, var_id, model, cur):
 					"endDate" : date[-1].strftime('%Y-%m-%d %H:00:00'),
 					"units" : units,
 					"values" : values,
-					"message" : "Card OK!",
+					"message" : "GCard OK!",
 					"status" : 0 
 					}}
 		success = True

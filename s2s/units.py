@@ -44,7 +44,10 @@ def _get_imperial(value, var_id):
 		if value < 1 and value > 0:
 			val = int((value *10))/10.0
 		else:
-			val = int(value) #probably add to much error
+			try:
+				val = int(value) #probably add to much error
+			except:
+				val = val
 		out = val
 	return(out, cur)
 #######################################'
@@ -78,9 +81,17 @@ def _get_metric(value, var_id):
 				val = int(value[i]) #probably add to much error
 			out.append(val)
 	except:
-		if value < 1 and value > 0:
-			val = int((value *10))/10.0
+		if value == 'null':
+			val = val
+		elif value < 1 and value > 0:
+			try:
+				val = int((value *10))/10.0
+			except:
+				val = val
 		else:
-			val = int(value) #probably add to much error
+			try:
+				val = int(value) #probably add to much error
+			except:
+				val = val
 		out = val
 	return(out, cur)

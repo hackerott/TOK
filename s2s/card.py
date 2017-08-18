@@ -59,11 +59,10 @@ def DATA_cfs_card(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, i
 		if prob_c[np.argmax(prob_c)] < PRO:
 			color.append(2)
 			value.append((((2*value_t  +  value_a)/3) + (max(max_v) + min(min_v)))/3)
-			
 		else:
 			color.append((np.argmax(prob_c) + 1))
 			value.append((2*value_t  +  value_a)/3)
-		prob.append(prob_c[np.argmax(prob_c)])		
+		prob.append(prob_c[np.argmax(prob_c)])
 		maxi.append(max(max_v))
 		mini.append(min(min_v))
 		date.append(d1)
@@ -81,11 +80,11 @@ def DATA_cfs_card(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, i
 				# if v1 < 1 and v1 > 0:
 				# 	v1 = int((v1 * 10))/10.0
 				# else:
-				# 	v1 = int(v1)	
+				# 	v1 = int(v1)
 
 
 	return(date[c//4], prob[c//4], color[c//4], v1, maxi[c//4], mini[c//4], c)
-		
+
 ###############################################################################
 #GFS
 def DATA_gfs_card(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):

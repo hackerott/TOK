@@ -169,7 +169,7 @@ def _get_meteo(var, ncfile, ix, iy):
 		var_raw3 = _get_temperature('temp', ncfile)
 		var_raw4 = _get_humidity('umidade', ncfile)
 		var_raw5 = _get_rain('chuva', ncfile)
-		var_raw6 = _get_wind('vento'm ncfile)
+		var_raw6 = _get_wind('vento', ncfile)
 #		a = 6.112
 		gamma = np.add(np.log(np.divide(var_raw4, 100)), np.divide(np.multiply(17.67, var_raw3), np.add(var_raw3, 243.5)))
 		var_raw7 = np.divide(np.multiply(243.5, gamma), np.subtract(17.67, gamma))

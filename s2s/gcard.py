@@ -13,21 +13,15 @@ import prob_time
 def DATA_cfs_gcard(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, iyCFS, date0, utc0, TOP, BOT, PRO, var_id):
 	max_i = len(time)
 	prob_t_g1, prob_t_r1, prob_t_y1, value_t1, max_t1, min_t1 = prob_time._get_TIMEP(ens1, ens5, time, 4, ixCFS, iyCFS, TOP, BOT) 
-	prob_t_g1, prob_t_r1, prob_t_y1 = 'null', 'null', 'null'
 	prob_t_g2, prob_t_r2, prob_t_y2, value_t2, max_t2, min_t2 = prob_time._get_TIMEP(ens2, ens6, time, 4, ixCFS, iyCFS, TOP, BOT)
-	prob_t_g2, prob_t_r2, prob_t_y2 = 'null', 'null', 'null'
 	prob_t_g3, prob_t_r3, prob_t_y3, value_t3, max_t3, min_t3 = prob_time._get_TIMEP(ens3, ens7, time, 4, ixCFS, iyCFS, TOP, BOT)
-	prob_t_g3, prob_t_r3, prob_t_y3 = 'null', 'null', 'null'
 	prob_t_g4, prob_t_r4, prob_t_y4, value_t4, max_t4, min_t4 = prob_time._get_TIMEP(ens4, ens8, time, 4, ixCFS, iyCFS, TOP, BOT)
-	prob_t_g4, prob_t_r4, prob_t_y4 = 'null', 'null', 'null'
 	prob_a_g1, prob_a_r1, prob_a_y1, value_a1, max_a1, min_a1 = prob_area._get_AREAP(ens1, time, ixCFS, iyCFS, TOP, BOT)
-	prob_a_g1, prob_a_r1, prob_a_y1 = 'null', 'null', 'null'
 	prob_a_g2, prob_a_r2, prob_a_y2, value_a2, max_a2, min_a2 = prob_area._get_AREAP(ens2, time, ixCFS, iyCFS, TOP, BOT)
-	prob_a_g2, prob_a_r2, prob_a_y2 = 'null', 'null', 'null'
 	prob_a_g3, prob_a_r3, prob_a_y3, value_a3, max_a3, min_a3 = prob_area._get_AREAP(ens3, time, ixCFS, iyCFS, TOP, BOT)
-	prob_a_g3, prob_a_r3, prob_a_y3 = 'null', 'null', 'null'
 	prob_a_g4, prob_a_r4, prob_a_y4, value_a4, max_a4, min_a4 = prob_area._get_AREAP(ens4, time, ixCFS, iyCFS, TOP, BOT)
-	prob_a_g4, prob_a_r4, prob_a_y4 = 'null', 'null', 'null'
+	del prob_a_g1, prob_a_r1, prob_a_y1, prob_a_g2, prob_a_r2, prob_a_y2, prob_a_g3, prob_a_r3, prob_a_y3, prob_a_g4, prob_a_r4, prob_a_y4, prob_t_g1, prob_t_r1, prob_t_y1, prob_t_g2, prob_t_r2, prob_t_y2, prob_t_g3, prob_t_r3, prob_t_y3, prob_t_g4, prob_t_r4, prob_t_y4
+	del ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8
 	value	= []
 	date	= []
 	value	= []
@@ -55,21 +49,21 @@ def DATA_cfs_gcard(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, 
 			value_a = (np.mean(value_a1[a:b]) + np.mean(value_a2[a:b]) + np.mean(value_a3[a:b]) + np.mean(value_a4[a:b]))/4
 			value_t = (np.mean(value_t1[a:b]) + np.mean(value_t2[a:b]) + np.mean(value_t3[a:b]) + np.mean(value_t4[a:b]))/4
 			value_p 	= ((2*value_t  +  value_a)/3)
-		value.append(value_p)
+		value.append(int(value_p*10)/10.0)
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = 9 + i) + datetime.timedelta(hours = utc0)
 		date.append(d1)
 		a += 4
 		b += 4
-	
+	del value_t1, value_a1, value_p, value_t, value_a
 	return(date, 'null', 'null', value, 'null', 'null')
 ###############################################################################
 #GFS
 def DATA_gfs_gcard(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO, var_id):
 	max_i = len(time)
 	prob_t_g1, prob_t_r1, prob_t_y1, value_t1, max_t1, min_t1 = prob_time._get_TIMEP(ens1, ens2, time, 24, ixGFS, iyGFS, TOP, BOT)
-	prob_t_g1, prob_t_r1, prob_t_y1 = 'null', 'null', 'null'
 	prob_a_g1, prob_a_r1, prob_a_y1, value_a1, max_a1, min_a1 = prob_area._get_AREAP(ens1, time, ixGFS, iyGFS, TOP, BOT)
-	prob_a_g1, prob_a_r1, prob_a_y1 = 'null', 'null', 'null'
+	del prob_a_g1, prob_a_r1, prob_a_y1, prob_t_g1, prob_t_r1, prob_t_y1 
+	del ens1, ens2  
 	value	= []
 	date	= []
 	a = 0
@@ -95,7 +89,7 @@ def DATA_gfs_gcard(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO, v
 			value_a		= np.mean(value_a1[a:b])
 			value_t 	= np.mean(value_t1[a:b])
 			value_p 	= ((2*value_t  +  value_a)/3)
-		value.append(value_p)
+		value.append(int(value_p*10)/10.0)
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
 		date.append(d1)
 		if b <= max_i - 24:
@@ -104,16 +98,17 @@ def DATA_gfs_gcard(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO, v
 		else:
 			a += 6	
 			b += 6	
-
+	del value_t1, value_a1, value_p, value_t, value_a
 	return(date, 'null', 'null', value, 'null', 'null')
 ###############################################################################
 #WRF
 def DATA_wrf_gcard(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO, var_id):
 	max_i = len(time)
 	prob_t_g1, prob_t_r1, prob_t_y1, value_t1, max_t1, min_t1 = prob_time._get_TIMEP(ens1, ens2, time, 12, ixWRF, iyWRF, TOP, BOT)
-	prob_t_g1, prob_t_r1, prob_t_y1 = 'null', 'null', 'null'
 	prob_a_g1, prob_a_r1, prob_a_y1, value_a1, max_a1, min_a1 = prob_area._get_AREAP(ens1, time, ixWRF, iyWRF, TOP, BOT)
-	prob_a_g1, prob_a_r1, prob_a_y1 = 'null', 'null', 'null'
+	del prob_a_g1, prob_a_r1, prob_a_y1, prob_t_g1, prob_t_r1, prob_t_y1 
+	del ens1, ens2  
+
 	value	= []
 	date	= []
 	a = 0
@@ -139,11 +134,11 @@ def DATA_wrf_gcard(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO, v
 			value_a		= np.mean(value_a1[a:b])
 			value_t 	= np.mean(value_t1[a:b])
 			value_p 	= ((2*value_t  +  value_a)/3)
-		value.append(value_p)
+		value.append(int(value_p*10)/10.0)
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
 		date.append(d1)
 		a += 24
 		b += 24
-	
+	del value_t1, value_a1, value_p, value_t, value_a	
 	return(date, 'null', 'null', value, 'null', 'null')	
 ###############################################################################
