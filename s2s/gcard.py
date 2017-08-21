@@ -49,12 +49,13 @@ def DATA_cfs_gcard(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, 
 			value_a = (np.mean(value_a1[a:b]) + np.mean(value_a2[a:b]) + np.mean(value_a3[a:b]) + np.mean(value_a4[a:b]))/4
 			value_t = (np.mean(value_t1[a:b]) + np.mean(value_t2[a:b]) + np.mean(value_t3[a:b]) + np.mean(value_t4[a:b]))/4
 			value_p 	= ((2*value_t  +  value_a)/3)
-		value.append(int(value_p*10)/10.0)
+		# value.append(int(value_p*10)/10.0)
+		value.append(value_p)
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = 9 + i) + datetime.timedelta(hours = utc0)
 		date.append(d1)
 		a += 4
 		b += 4
-	del value_t1, value_a1, value_p, value_t, value_a
+	del value_t1, value_a1
 	return(date, 'null', 'null', value, 'null', 'null')
 ###############################################################################
 #GFS
@@ -89,7 +90,8 @@ def DATA_gfs_gcard(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO, v
 			value_a		= np.mean(value_a1[a:b])
 			value_t 	= np.mean(value_t1[a:b])
 			value_p 	= ((2*value_t  +  value_a)/3)
-		value.append(int(value_p*10)/10.0)
+		# value.append(int(value_p*10)/10.0)
+		value.append(value_p)
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
 		date.append(d1)
 		if b <= max_i - 24:
@@ -98,7 +100,7 @@ def DATA_gfs_gcard(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO, v
 		else:
 			a += 6	
 			b += 6	
-	del value_t1, value_a1, value_p, value_t, value_a
+	del value_t1, value_a1
 	return(date, 'null', 'null', value, 'null', 'null')
 ###############################################################################
 #WRF
@@ -134,11 +136,12 @@ def DATA_wrf_gcard(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO, v
 			value_a		= np.mean(value_a1[a:b])
 			value_t 	= np.mean(value_t1[a:b])
 			value_p 	= ((2*value_t  +  value_a)/3)
-		value.append(int(value_p*10)/10.0)
+		# value.append(int(value_p*10)/10.0)
+		value.append(value_p)
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
 		date.append(d1)
 		a += 24
 		b += 24
-	del value_t1, value_a1, value_p, value_t, value_a	
+	del value_t1, value_a1
 	return(date, 'null', 'null', value, 'null', 'null')	
 ###############################################################################

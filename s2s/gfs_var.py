@@ -141,7 +141,6 @@ def _get_humidity(var, ncfile):
 		d1 = np.divide(var_rawa, c1)
 		var_raw1 = np.multiply(100, d1)
 		var_raw1 = np.around(var_raw1, decimals=2)
-		del var_rawa, var_rawa, 
 	except:
 		var_raw1 = np.nan
 	return (var_raw1)
@@ -154,15 +153,15 @@ def _get_meteo(var, ncfile):
 		var_raw3 = _get_temperature('temp', ncfile)
 		var_raw4 = _get_humidity('umidade', ncfile)
 		var_raw5 = _get_rain('chuva', ncfile)
-		var_raw6, dire = _get_wind('vento', ncfile)
-		del dire
+		var_raw6, var_raw7 = _get_wind('vento', ncfile)
+
 #		a = 6.112
 		gamma = np.add(np.log(np.divide(var_raw4, 100)), np.divide(np.multiply(17.67, var_raw3), np.add(var_raw3, 243.5)))
-		var_raw7 = np.divide(np.multiply(243.5, gamma), np.subtract(17.67, gamma))
+		var_raw8 = np.divide(np.multiply(243.5, gamma), np.subtract(17.67, gamma))
 	except:
-		var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7 = np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan
+		var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8 = np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan
 	ncfile.close
-	return(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, 'null', 'null')
+	return(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, 'null', 'null')
 
 def _get_figure(var, ncfile):
 	try:

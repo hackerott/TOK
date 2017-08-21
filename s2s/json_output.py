@@ -35,7 +35,7 @@ def _get_OUT(date, prob, alert, color, value, maxi, mini,  model, var_id, cur):
 	elif model == 'gcard':
 		success, dic = _get_gcard(date, value, var_id, model, cur)
 
-	elif model == 'meteogram':
+	elif model == 'meteo':
 		success, dic = _get_meteogram(date, value)
 
 	return(success, dic)
@@ -852,15 +852,14 @@ def _get_gcard(date, value, var_id, model, cur):
 		success = True
 
 	elif var_id == 3:
+		self_value = []
 		for i in range(0, len(value)):
 			val = value[i]
 			d = {
-				"max" : ĩnt(val[0]*10)/10.0, 
+				"max" : int(val[0]*10)/10.0, 
 				"min" : int(val[1]*10)/10.0
 			}
 			self_value.append(d)
-			a = b + 1
-			b = b + 2
 		values = {"temperature"	:	[self_value],}
 		units = {
 			"temperature" : {
@@ -960,16 +959,36 @@ def _get_gcard(date, value, var_id, model, cur):
 	return(success, dic)
 
 def _get_meteogram(date, value):
+	value0 = []
+	value1 = []
+	value2 = []
+	value3 = []
+	value4 = []
+	value5 = []
+	value6 = []
+	value7 = []
+	value8 = []
+	for i in range(0, len(value)):
+		val = value[i]
+		value0.append(val[0])
+		value1.append(val[1])
+		value2.append(val[2])
+		value3.append(val[3])
+		value4.append(val[4])
+		value5.append(val[5])
+		value6.append(val[6])
+		value7.append(val[7])
+		value8.append(val[8])
 	values = {	
-				"temp"		:	[value[:,0]],
-				"wind"		:	[value[:,1]],
-				"humidity"	:	[value[:,2]],
-				"cloud"		:	[value[:,3]],
-				"rain"		:	[value[:,4]],
-				"pressure"	:	[value[:,5]],
-				"dew"		:	[value[:,6]],
-				"cape"		:	[value[:,7]],
-				"gust"		:	[value[:,8]],
+				"temp"		:	[value0[:]],
+				"wind"		:	[value1[:]],
+				"humidity"	:	[value2[:]],
+				"cloud"		:	[value3[:]],
+				"rain"		:	[value4[:]],
+				"pressure"	:	[value5[:]],
+				"dew"		:	[value6[:]],
+				"cape"		:	[value7[:]],
+				"gust"		:	[value8[:]],
 			}
 	units = {"label"	:[	{"temp"		:	"C"},
 							{"wind"		:	"m/s"},
