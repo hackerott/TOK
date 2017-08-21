@@ -159,7 +159,7 @@ def _get_meteo(var, ncfile, ix, iy):
 		var_nc = _get_NCVAR(var)
 		var_raw2 = ncfile.variables[var_nc[1]]
 		var_rawa = ncfile.variables[var_nc[0]]
-		var_raw1 = var_raw2
+		var_raw1 = np.empty_like(var_raw2)
 
 		for i in range(0, len(var_raw2)):
 			for x in range(ix-4, ix+4):
