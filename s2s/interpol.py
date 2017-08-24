@@ -30,7 +30,11 @@ def _get_gfs_days(val, dat):
 	out = interp1d(index[not_nan], value[not_nan], bounds_error=False)
 	out = out(index)
 	out1 = []
+<<<<<<< HEAD
 	for i in range(0, len(out)):
+=======
+	for i in range(0, len(out)-2):
+>>>>>>> 9a7b5cd08a419f80abde5f30aa05ad72c1cdc692
 		out1.append(out[i])
 	return(out1, date)
 
@@ -51,9 +55,15 @@ def _get_cfs_days(val, dat):
 	value = np.array(value)
 	index = np.arange(len(value))
 	not_nan = np.logical_not(np.isnan(value))
+<<<<<<< HEAD
 	out = interp1d(index[not_nan], value[not_nan], bounds_error=False)
 	out = out(index)
 	out1 = []
 	for i in range(0, len(out)):
 		out1.append(out[i])
 	return(out1, date)
+=======
+	out = interp1d(index[not_nan], value[not_nan])
+
+	return(out, date)
+>>>>>>> 9a7b5cd08a419f80abde5f30aa05ad72c1cdc692
