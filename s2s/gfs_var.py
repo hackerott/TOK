@@ -49,7 +49,6 @@ def _get_LIM(var):
 ## Checkin nc files
 def _get_FILE():
 	date = datetime.datetime.now()
-	# if date.hour >= 12:
 	date1 = date.replace(hour=00)
 	date2 = date1  - datetime.timedelta(days = 1)
 	ens1 = "/var/www/html/processamento/GFSD10001"+date1.strftime('%Y%m%d')+"00.nc"
@@ -76,7 +75,6 @@ def _get_FILE():
 def _get_rain(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
-		# ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_rawa = ncfile.variables[var_nc]
 		var_raw1 = np.array(var_rawa)
 		for i in range(0, len(var_raw1)):
@@ -93,7 +91,6 @@ def _get_rain(var, ncfile):
 def _get_wind(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
-		# ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_rawu = ncfile.variables[var_nc[0]] 		
 		var_rawv = ncfile.variables[var_nc[1]] 
 		var_raw1 = np.sqrt(np.add(np.power(var_rawu, 2), np.power(var_rawv, 2))) # wind intensity
@@ -108,7 +105,6 @@ def _get_wind(var, ncfile):
 def _get_temperature(var,  ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
-		# ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc]
 		var_raw1 = np.subtract(var_raw1, 273.15)
 		var_raw1 = np.around(var_raw1, decimals=2)
@@ -119,7 +115,6 @@ def _get_temperature(var,  ncfile):
 def _get_radiation(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
-		# ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc]
 		var_raw1 = np.around(var_raw1, decimals=2)
 	except:
@@ -129,7 +124,6 @@ def _get_radiation(var, ncfile):
 def _get_humidity(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
-		# ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_rawa = ncfile.variables[var_nc[0]] 		
 		var_rawb = ncfile.variables[var_nc[1]] 		
 		var_rawc = ncfile.variables[var_nc[2]]
@@ -155,7 +149,6 @@ def _get_meteo(var, ncfile):
 		var_raw5 = _get_rain('chuva', ncfile)
 		var_raw6, var_raw7 = _get_wind('vento', ncfile)
 
-#		a = 6.112
 		gamma = np.add(np.log(np.divide(var_raw4, 100)), np.divide(np.multiply(17.67, var_raw3), np.add(var_raw3, 243.5)))
 		var_raw8 = np.divide(np.multiply(243.5, gamma), np.subtract(17.67, gamma))
 	except:
@@ -166,7 +159,6 @@ def _get_meteo(var, ncfile):
 def _get_figure(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
-		# ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc[0]]
 		var_raw2 = ncfile.variables[var_nc[1]]	
 		var_raw1 = np.divide(var_raw1, 100)
@@ -178,7 +170,6 @@ def _get_figure(var, ncfile):
 def _get_time(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
-		# ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc]
 	except:
 		var_raw1 = np.nan	
