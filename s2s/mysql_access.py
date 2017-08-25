@@ -6,44 +6,33 @@ def _pull_station_loc (id0):
 	id1 = int(id0)
 	db = MySQLdb.connect("localhost","root","&i1hm","s2s_db" )
 	cursor = db.cursor()
-	s_lat = "Select lat from station_tb where id='%i';" % (id1)
-	s_lon = "Select lon from station_tb where id='%i';" % (id1)
-	s_date = "Select date from station_tb where id='%i';" % (id1)
-	cursor.execute(s_lat)
-	cursor.execute(s_lon)
-	cursor.execute(s_date)
-
-	lat, lon, date = cursor.fetchall()
+	s_data = "Select lat, lon, date from station_tb where id='%i';" % (id1)   ## search all at same time
+	cursor.execute(s_data)
+	data = cursor.fetchall()
 	db.close()
-
-	return(lat[0], lon[0], date[0])
+	lat, lon, date = data[:,0], data[:,1], data[:,2]
+	return(lat, lon, date)
 #######################################
 ## receives the station id, returns station data set
 def _pull_station_data(id0, var_id):
 	db = MySQLdb.connect("localhost","root","&i1hm","s2s_db" )
 	cursor = db.cursor()
-	s_date = "Select date from data_station where id='%i';" % (id0)
-	s_datea= "Select '%i' from data_station where id='%i';" % (var_id, id0)
-	cursor.execute(s_date)
+	s_data= "Select '%i', date from data_station where id='%i';" % (var_id, id0)
 	cursor.execute(s_data)
-	date, data = cursor.fetchall()
+	data = cursor.fetchall()
 	db.close()
-	
-	return(data, date)
+	out, date = data[:,0], data[:,1]
+	return(out, date)
 #######################################
 def _pull_model_data(id0, var_id):
 	db = MySQLdb.connect("localhost","root","&i1hm","s2s_db" )
 	cursor = db.cursor()
-	s_date = "Select date from data_model where id='%i';" % (id0)
-	s_data = "Select '%i' from data_model where id='%i';" % (var_id, id0)
-	s_star = "Select '%i' from data_model where id='%i';" % (var_id, id0)
-	cursor.execute(s_date)
+	s_data = "Select '%i', date, start from data_model where id='%i';" % (var_id, id0)
 	cursor.execute(s_data)
-	cursor.execute(s_star)
-	date, data, start = cursor.fetchall()
+	data = cursor.fetchall()
 	db.close()
-	
-	return(data, date, start)
+	out, date, start = data[:,0], data[:,1], data[:,2]
+	return(out, date, start)
 #######################################
 ##
 def _push_model_data(hash1, id0):
