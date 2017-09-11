@@ -623,12 +623,13 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
 
 	elif var_id == 2:
 		for i in range(0, len(value)):
+			val = value[i]
 			resp	=	{
         	        	"main" : {
             	        			"color" : alert[i],
-                	    			# "value" : { "speed" : value[i, 0],
-                                                # "direction" : value[i, 1]}
-                	    			"value" : value[i, 0],
+                	    			"value" : { "speed" : val[0],
+                                                "direction" : val[1]},
+                	    			# "value" : value[i, 0],
                                                
                     			},
 	                	"otherValues" : {
