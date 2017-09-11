@@ -83,7 +83,6 @@ def _get_FILE():
 def _get_rain(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
-		# ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_rawa = ncfile.variables[var_nc[0]]	
 		var_rawb = ncfile.variables[var_nc[1]]
 		var_raw1 = np.add(var_rawa, var_rawb)
@@ -101,7 +100,6 @@ def _get_rain(var, ncfile):
 def _get_wind(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
-		# ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_rawu = ncfile.variables[var_nc[0]] 		
 		var_rawv = ncfile.variables[var_nc[1]] 
                 rp2 = 45.0/np.arctan(1.0)
@@ -117,7 +115,6 @@ def _get_wind(var, ncfile):
 def _get_temperature(var,  ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
-		# ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc]
 		var_raw1  =np.subtract(var_raw1, 273.15)
 		var_raw1 = np.around(var_raw1, decimals=2)
@@ -128,7 +125,6 @@ def _get_temperature(var,  ncfile):
 def _get_radiation(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
-		# ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc]
 		var_raw1 = np.around(var_raw1, decimals=2)
 	except:
@@ -138,7 +134,6 @@ def _get_radiation(var, ncfile):
 def _get_humidity(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
-		# ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_rawa = ncfile.variables[var_nc[0]] 		
 		var_rawb = ncfile.variables[var_nc[1]] 		
 		var_rawc = ncfile.variables[var_nc[2]]
@@ -192,9 +187,7 @@ def _get_figure(var, ncfile, ix, iy):
 			else:
 				var_rawa[i,:,:] = np.subtract(np.add(var_raw2[i,:,:], var_raw3[i,:,:]), np.add(var_raw2[i-1,:,:], var_raw3[i-1,:,:]))
 		for i in range(0, len(var_raw2)):
-			# for i in range(0, var_raw1,shape(2)):
-			# 	for i in range(0, var_raw1.shape(3)):
-			for x in range(ix-4, ix+4):
+		for x in range(ix-4, ix+4):
 				for y in range(iy-4, iy+4):
 					var_rawb[i,x,y] = max(var_raw1[i,:,x,y])
 	except:
@@ -205,7 +198,6 @@ def _get_figure(var, ncfile, ix, iy):
 def _get_time(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
-        # ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc]
 	except:
 		var_raw1 = np.nan	

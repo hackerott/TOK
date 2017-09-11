@@ -10,6 +10,10 @@ from numpy import cos, sin, arccos, power, sqrt, exp, arctan2, argmin, argmax, a
 #Functions to locate lat lon from a np.array
 ## CFS and GFS are exactly the same, keeping separated just for esthetics  
 def _get_CFS(latCFS,lonCFS,lat0,lon0):
+	if lon0 < 0:
+		lon0 = (360+lon0)
+	else:
+		lon0 = lon0
 	rad_factor =  pi/180.0
 	latvals = latCFS[:] * rad_factor
 	lonvals = lonCFS[:] * rad_factor
@@ -22,6 +26,10 @@ def _get_CFS(latCFS,lonCFS,lat0,lon0):
 	return(minindexX, minindexY)
 
 def _get_GFS(latGFS,lonGFS,lat0,lon0):
+	if lon0 < 0:
+		lon0 = (360+lon0)
+	else:
+		lon0 = lon0
 	rad_factor =  pi/180.0
 	latvals = latGFS[:] * rad_factor
 	lonvals = lonGFS[:] * rad_factor
