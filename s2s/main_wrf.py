@@ -155,8 +155,8 @@ elif var_id == 6:
 		date, prob, alert, value1, maxi, mini = table.DATA_wrf_table(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, 0.75, 0.25, 0.5)
 		date, prob, alert, value2, maxi, mini = table.DATA_wrf_table(var_rawb1, var_rawb2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)
 	elif model == "gcard":
-		date, prob, alert, value1, maxi, mini = gcard.DATA_wrf_gcard(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, 0.75, 0.25, 0.5, var_id)
-		date, prob, alert, value2, maxi, mini = gcard.DATA_wrf_gcard(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
+		date, prob, alert, value1, maxi, mini = gcard.DATA_wrf_gcard(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, 0.75, 0.25, 0.5, var_id)
+		date, prob, alert, value2, maxi, mini = gcard.DATA_wrf_gcard(var_rawb1, var_rawb2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
 	sunset, sunrise = astro_tz._get_sun(lat0, lon0, utc0)
