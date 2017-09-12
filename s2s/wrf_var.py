@@ -58,14 +58,14 @@ def _get_FILE():
 	else:
 		date1 = date.replace(hour=00)
 		date2 = date1  - datetime.timedelta(hours = 12)
-	ens1 = "/var/www/html/processamento/WRFD20101"+date1.strftime('%Y%m%d%H')+".nc"
-	ens2 = "/var/www/html/processamento/WRFD20101"+date2.strftime('%Y%m%d%H')+".nc"
+	ens1 = "/var/www/processamento/WRFD20101"+date1.strftime('%Y%m%d%H')+".nc"
+	ens2 = "/var/www/processamento/WRFD20101"+date2.strftime('%Y%m%d%H')+".nc"
 	brk =  0
 	while os.path.isfile(ens1) != True:
 		date1 = date1 - datetime.timedelta(hours = 12)
 		date2 = date2 - datetime.timedelta(hours = 12)
-		ens1 = "/var/www/html/processamento/WRFD20101"+date1.strftime('%Y%m%d%H')+".nc"
-		ens2 = "/var/www/html/processamento/WRFD20101"+date2.strftime('%Y%m%d%H')+".nc"
+		ens1 = "/var/www/processamento/WRFD20101"+date1.strftime('%Y%m%d%H')+".nc"
+		ens2 = "/var/www/processamento/WRFD20101"+date2.strftime('%Y%m%d%H')+".nc"
 		if os.path.isfile(ens2) != True:
 			ens1 = False
 			break
