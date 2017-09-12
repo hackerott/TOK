@@ -30,15 +30,7 @@ def _get_gfs_days(val, dat):
 	out = interp1d(index[not_nan], value[not_nan], bounds_error=False)
 	out = out(index)
 	out1 = []
-<<<<<<< HEAD
 	for i in range(0, len(out)):
-=======
-<<<<<<< HEAD
-	for i in range(0, len(out)):
-=======
-	for i in range(0, len(out)-2):
->>>>>>> 9a7b5cd08a419f80abde5f30aa05ad72c1cdc692
->>>>>>> ad3480b29c2ab6e5346ac1f22cd0d59fe412c454
 		out1.append(out[i])
 	return(out1, date)
 
@@ -47,33 +39,17 @@ def _get_gfs_days(val, dat):
 This is a really bad idea, there will be more interpoleted data then actualy data usin this function
 '''
 def _get_cfs_days(val, dat):
-	value = []
-	date = []
-	for i in range(0, len(val)):
-		value.append(int(val[i]*10)/10.0)
-		date.append(dat[i])
-		for j in range(1, 8):
-			value.append(np.nan)
-			date.append(dat[i] + datetime.timedelta(hours = i))
+        value = []
+        date = []
+        for i in range(0, len(val)):
+                value.append(int(val[i]*10)/10.0)
+                date.append(dat[i])
+                for j in range(1, 8):
+                        value.append(np.nan)
+                        date.append(dat[i] + datetime.timedelta(hours = i))
 
-	value = np.array(value)
-	index = np.arange(len(value))
-	not_nan = np.logical_not(np.isnan(value))
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> ad3480b29c2ab6e5346ac1f22cd0d59fe412c454
-	out = interp1d(index[not_nan], value[not_nan], bounds_error=False)
-	out = out(index)
-	out1 = []
-	for i in range(0, len(out)):
-		out1.append(out[i])
-	return(out1, date)
-<<<<<<< HEAD
-=======
-=======
-	out = interp1d(index[not_nan], value[not_nan])
+        index = np.arange(len(value))
+        not_nan = np.logical(np.isnan(value))
+        out = np.interp(index, index[not_nan], value[not_nan])
 
-	return(out, date)
->>>>>>> 9a7b5cd08a419f80abde5f30aa05ad72c1cdc692
->>>>>>> ad3480b29c2ab6e5346ac1f22cd0d59fe412c454
+        return(out, date)
