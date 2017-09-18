@@ -45,7 +45,6 @@ def _get_LIM(var):
 		}
 	out =  DIC.get(var, ['Null', 'Null', 'Null'])
 	return(out[0], out[1], out[2])
-
 #######################################
 ## return file path for each grid
 def _get_GFILE(var):

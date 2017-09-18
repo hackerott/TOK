@@ -52,6 +52,7 @@ model 	= form.getvalue("model")
 #date1	= date0 - datetime.timedelta(days =1)
 lat0	= float(lat)
 lon0	= float(lon)
+grid = grid_select._get_GRID(lat0, lon0, 'GFS')
 try:
 	utc 	= form.getvalue("utc")	
 	utc0	= int(utc)
@@ -67,7 +68,7 @@ Validation will be inserted after, using flask to genarete a session token
 
 ###############################################################################
 ## get files, lat_lon, id and limits
-ens1, ens2, date0 = gfs_var._get_FILE()
+ens1, ens2, date0 = gfs_var._get_FILE(grid)
 ix_gfs, iy_gfs = lat_lon.GFS_grab(ens1, lat0, lon0)
 var_id = gfs_var._get_ID(var)
 PRO, TOP, BOT = gfs_var._get_LIM(var)
@@ -218,9 +219,9 @@ else:
 	if model == "meteo":
 		time  	 = gfs_var._get_time('time', ens1)
 		clou1, pres1, temp1, humi1, rain1, wind1, dew1, cape1, gust1 = gfs_var._get_meteo('meteo', ens1)
-#		clou2, pres2, temp2, humi2, rain2, wind2, dew2, cape2, gust2 = gfs_var._get_meteo('meteo', ens2)
-		clou2, pres2, temp2, humi2, rain2, wind2, dew2, cape2, gust2 = 	clou1, pres1, temp1, humi1, rain1, wind1, dew1, cape1, gust1
-		iz = 0
+		clou2, pres2, temp2, humi2, rain2, wind2, dew2, cape2, gust2 = gfs_var._get_meteo('meteo', ens2)
+		# clou2, pres2, temp2, humi2, rain2, wind2, dew2, cape2, gust2 = 	clou1, pres1, temp1, humi1, rain1, wind1, dew1, cape1, gust1
+		# iz = 0
 		date, prob, alert, value, maxi, mini = meteogram.DATA_gfs_meteo(temp1, temp2, wind1, wind2, humi1, humi2, clou1, clou2, rain1, rain2, pres1, pres2, cape1, cape2, dew1, dew2, time, ix_gfs, iy_gfs, date0, utc0, iz)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model)

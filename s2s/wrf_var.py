@@ -48,9 +48,18 @@ def _get_LIM(var):
 	out =  DIC.get(var, ['Null', 'Null', 'Null'])
 	return(out[0], out[1], out[2])
 
+#######################################
+## return file path for each grid
+def _get_GFILE(var):
+	return {1	:	'/var/www/processamento/WRFD20101',
+			2	:	'/var/www/processamento/WRFD10101',
+			3	:	'/var/www/processamento/EXEMPLE_FILE',
+			}.get(var, 'Null')
+
 ##############################################################################
 ## Checkin nc files
-def _get_FILE():
+def _get_FILE(grid):
+	file = _get_GFILE(grid)
 	date = datetime.datetime.now()
 	if date.hour >= 12:
 		date1 = date.replace(hour=12)
@@ -58,14 +67,19 @@ def _get_FILE():
 	else:
 		date1 = date.replace(hour=00)
 		date2 = date1  - datetime.timedelta(hours = 12)
-	ens1 = "/var/www/processamento/WRFD20101"+date1.strftime('%Y%m%d%H')+".nc"
-	ens2 = "/var/www/processamento/WRFD20101"+date2.strftime('%Y%m%d%H')+".nc"
+	# ens1 = "/var/www/processamento/WRFD20101"+date1.strftime('%Y%m%d%H')+".nc"
+	# ens2 = "/var/www/processamento/WRFD20101"+date2.strftime('%Y%m%d%H')+".nc"
+	ens1 = file+date1.strftime('%Y%m%d%H')+".nc"
+	ens2 = file+date2.strftime('%Y%m%d%H')+".nc"
+
 	brk =  0
 	while os.path.isfile(ens1) != True:
 		date1 = date1 - datetime.timedelta(hours = 12)
 		date2 = date2 - datetime.timedelta(hours = 12)
-		ens1 = "/var/www/processamento/WRFD20101"+date1.strftime('%Y%m%d%H')+".nc"
-		ens2 = "/var/www/processamento/WRFD20101"+date2.strftime('%Y%m%d%H')+".nc"
+		# ens1 = "/var/www/processamento/WRFD20101"+date1.strftime('%Y%m%d%H')+".nc"
+		# ens2 = "/var/www/processamento/WRFD20101"+date2.strftime('%Y%m%d%H')+".nc"
+		ens1 = file+date1.strftime('%Y%m%d%H')+".nc"
+		ens2 = file+date2.strftime('%Y%m%d%H')+".nc"
 		if os.path.isfile(ens2) != True:
 			ens1 = False
 			break

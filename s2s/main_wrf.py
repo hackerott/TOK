@@ -9,6 +9,7 @@ import numpy as np
 #######################################
 # S2S imports
 import wrf_var
+import grid_select
 import lat_lon
 import calendar
 import card
@@ -40,6 +41,7 @@ model 	= form.getvalue("model")
 # date1	= date0 - datetime.timedelta(days = 1)
 lat0	= float(lat)
 lon0	= float(lon)
+grid = grid_select._get_GRID(lat0, lon0, 'WRF')
 try:
 	utc 	= form.getvalue("utc")	
 	utc0	= int(utc)
@@ -48,7 +50,7 @@ except:
 
 #######################################
 ## get files, lat_lon, id and limits
-ens1, ens2, date0 = wrf_var._get_FILE()
+ens1, ens2, date0 = wrf_var._get_FILE(grid)
 ix_wrf, iy_wrf = lat_lon.WRF_grab(ens1, lat0, lon0)
 var_id = wrf_var._get_ID(var)
 PRO, TOP, BOT = wrf_var._get_LIM(var)

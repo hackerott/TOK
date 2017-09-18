@@ -50,6 +50,7 @@ model 	= form.getvalue("model")
 # date1	= date0 - datetime.timedelta(days =1) #add diference from now_date to start_date
 lat0	= float(lat)
 lon0	= float(lon)
+grid = grid_select._get_GRID(lat0, lon0, 'CFS')
 try:
 	utc 	= form.getvalue("utc")	
 	utc0	= int(utc)
@@ -64,7 +65,7 @@ Validation will be inserted after, using flask to genarete a session token
 
 ###############################################################################
 ## get files, lat_lon, id and limits
-ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, date0 = cfs_var._get_FILE()
+ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, date0 = cfs_var._get_FILE(grid)
 ix_cfs, iy_cfs = lat_lon.CFS_grab(ens1, lat0, lon0)
 var_id = cfs_var._get_ID(var)
 PRO, TOP, BOT = cfs_var._get_LIM(var)

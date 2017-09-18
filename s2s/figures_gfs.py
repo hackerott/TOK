@@ -27,23 +27,23 @@ for i in range(0, (limit.days*24)):
 #while datetest <= enddate:
 	filename = "/var/www/html/figuras/01GFSD10001"+datetest.strftime('%Y%m%d%H')+".jpg"
 	if os.path.isfile(filename) == True:
-                windpath.append("http://50.112.50.113/figuras/01GFSD10001"+datetest.strftime('%Y%m%d%H')+".jpg")
+                windpath.append("http://breki.belgingur.is/figuras/01GFSD10001"+datetest.strftime('%Y%m%d%H')+".jpg")
 
         filename = "/var/www/html/figuras/02GFSD10001"+datetest.strftime('%Y%m%d%H')+".jpg"
         if os.path.isfile(filename) == True:
-                temppath.append("http://50.112.50.113/figuras/02GFSD10001"+datetest.strftime('%Y%m%d%H')+".jpg")
+                temppath.append("http://breki.belgingur.is/figuras/02GFSD10001"+datetest.strftime('%Y%m%d%H')+".jpg")
 
         filename = "/var/www/html/figuras/03GFSD10001"+datetest.strftime('%Y%m%d%H')+".jpg"
         if os.path.isfile(filename) == True:
-                rainpath.append("http://50.112.50.113/figuras/03GFSD10001"+datetest.strftime('%Y%m%d%H')+".jpg")
+                rainpath.append("http://breki.belgingur.is/figuras/03GFSD10001"+datetest.strftime('%Y%m%d%H')+".jpg")
 
         filename = "/var/www/html/figuras/04GFSD10001"+datetest.strftime('%Y%m%d%H')+".jpg"
         if os.path.isfile(filename) == True:
-                radiationpath.append("http://50.112.50.113/figuras/04GFSD10001"+datetest.strftime('%Y%m%d%H')+".jpg")
+                radiationpath.append("http://breki.belgingur.is/figuras/04GFSD10001"+datetest.strftime('%Y%m%d%H')+".jpg")
 
         filename = "/var/www/html/figuras/05GFSD10001"+datetest.strftime('%Y%m%d%H')+".jpg"
         if os.path.isfile(filename) == True:
-                humiditypath.append("http://50.112.50.113/figuras/05GFSD10001"+datetest.strftime('%Y%m%d%H')+".jpg")
+                humiditypath.append("http://breki.belgingur.is/figuras/05GFSD10001"+datetest.strftime('%Y%m%d%H')+".jpg")
 
 	datetest = datetest + datetime.timedelta(hours=1)
 
