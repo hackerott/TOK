@@ -87,7 +87,7 @@ if var_id == 1 :
 	elif model == "card":
 		date, prob, alert, value, maxi, mini, i = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 	elif model == "gcard":
-		date, prob, alert, value, maxi, mini = calendar.DATA_cfs_gcard(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
+		date, prob, alert, value, maxi, mini = gcard.DATA_cfs_gcard(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
 	else:
 		success = json_output._get_ERROR(var_id, model) 
 		exit(1)
@@ -111,7 +111,7 @@ elif var_id == 2:
 		date, prob, alert, value, maxi, mini, i = card.DATA_cfs_card(var_rawa1, var_rawa2, var_rawa3, var_rawa4, var_rawa5, var_rawa6, var_rawa7, var_rawa8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 		value = [value, int(var_rawb1[i, ix_cfs, iy_cfs])]
 	elif model == "gcard":
-		date, prob, alert, value, maxi, mini = calendar.DATA_cfs_gcard(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
+		date, prob, alert, value, maxi, mini = gcard.DATA_cfs_gcard(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
 	else:
 		success = json_output._get_ERROR(var_id, model) 
 		exit(1)
@@ -131,7 +131,7 @@ elif var_id == 3:
 	elif model == "card":
 		date, prob, alert, value, maxi, mini, i = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 	elif model == "gcard":
-		date, prob, alert, value, maxi, mini = calendar.DATA_cfs_gcard(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
+		date, prob, alert, value, maxi, mini = gcard.DATA_cfs_gcard(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
 
@@ -150,7 +150,7 @@ elif var_id == 4:
 	elif model == "card":
 		date, prob, alert, value, maxi, mini, i = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 	elif model == "gcard":
-		date, prob, alert, value, maxi, mini = calendar.DATA_cfs_gcard(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
+		date, prob, alert, value, maxi, mini = gcard.DATA_cfs_gcard(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
 
@@ -169,7 +169,7 @@ elif var_id == 5:
 	elif model == "card":
 		date, prob, alert, value, maxi, mini, i = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 	elif model == "gcard":
-		date, prob, alert, value, maxi, mini = calendar.DATA_cfs_gcard(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
+		date, prob, alert, value, maxi, mini = gcard.DATA_cfs_gcard(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
 
@@ -194,8 +194,8 @@ elif var_id == 6:
 		sunset, sunrise = astro_tz._get_sun(lat0, lon0, utc0)
 		value = cond_figures.DATA_cond_figure(value1, value2, date, sunset, sunrise)
 	elif model == "gcard":
-		date, prob, alert, value1, maxi, mini = calendar.DATA_cfs_gcard(var_rawa1, var_rawa2, var_rawa3, var_rawa4, var_rawa5, var_rawa6, var_rawa7, var_rawa8, time, ix_cfs, iy_cfs, date0, utc0, 0.75, 0.25, 0.5, var_id)
-		date, prob, alert, value2, maxi, mini = calendar.DATA_cfs_gcard(var_rawb1, var_rawb2, var_rawb3, var_rawb4, var_rawb5, var_rawb6, var_rawb7, var_rawb8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
+		date, prob, alert, value1, maxi, mini = gcard.DATA_cfs_gcard(var_rawa1, var_rawa2, var_rawa3, var_rawa4, var_rawa5, var_rawa6, var_rawa7, var_rawa8, time, ix_cfs, iy_cfs, date0, utc0, 0.75, 0.25, 0.5, var_id)
+		date, prob, alert, value2, maxi, mini = gcard.DATA_cfs_gcard(var_rawb1, var_rawb2, var_rawb3, var_rawb4, var_rawb5, var_rawb6, var_rawb7, var_rawb8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
 		sunset, sunrise = astro_tz._get_sun(lat0, lon0, utc0)
 		value = cond_figures.DATA_cond_figure(value1, value2, date, sunset, sunrise)
 	else:

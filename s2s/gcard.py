@@ -28,7 +28,7 @@ def DATA_cfs_gcard(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, 
 	date	= []
 	a = 0
 	b = 4
-	for i in range(0, max_i//24):
+	for i in range(0, max_i//4):
 		max_v = max(max(max_t1[a:b]), max(max_t2[a:b]), max(max_t3[a:b]), max(max_t4[a:b]),max(max_a1[a:b]), max(max_a2[a:b]), max(max_a3[a:b]),max(max_a4[a:b]))
 		min_v = min(min(min_t1[a:b]), min(min_t2[a:b]), min(min_t3[a:b]), min(min_t4[a:b]), min(min_a1[a:b]), min(min_a2[a:b]), min(min_a3[a:b]), min(min_a4[a:b]))
 		if var_id == 1:
@@ -69,7 +69,7 @@ def DATA_gfs_gcard(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO, v
 	date	= []
 	a = 0
 	b = 24
-	for i in range(0, max_i//24):
+	for i in range(0, (max_i//24)+((max_i-24)//8)):
 		max_v		= max(max(max_t1[a:b]), max(max_a1[a:b]))
 		min_v		= min(min(min_t1[a:b]), min(min_a1[a:b]))
 		if var_id == 1:
