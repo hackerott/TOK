@@ -48,8 +48,8 @@ def _get_LIM(var):
 #######################################
 ## return file path for each grid
 def _get_GFILE(var):
-	return {1	:	'/var/www/processamento/GFSD10101',
-			2	:	'/var/www/processamento/GFSD20101',
+	return {1	:	'/var/www/processamento/GFSD1010',
+			2	:	'/var/www/processamento/GFSD2010',
 			3	:	'/var/www/processamento/EXEMPLE_FILE',
 			}.get(var, 'Null')
 
@@ -62,16 +62,16 @@ def _get_FILE(grid):
 	date2 = date1  - datetime.timedelta(days = 1)
 	# ens1 = "/var/www/processamento/GFSD10001"+date1.strftime('%Y%m%d')+"00.nc"
 	# ens2 = "/var/www/processamento/GFSD10001"+date2.strftime('%Y%m%d')+"00.nc"
-	ens1 = file+date1.strftime('%Y%m%d')+"00.nc"
-	ens2 = file+date2.strftime('%Y%m%d')+"00.nc"
+	ens1 = file+'1'+date1.strftime('%Y%m%d')+"00.nc"
+	ens2 = file+'1'+date2.strftime('%Y%m%d')+"00.nc"
 	brk = 0
 	while os.path.isfile(ens1) != True:
 		date1 = date1 - datetime.timedelta(days = 1)
 		date2 = date2 - datetime.timedelta(days = 1)
 		# ens1 = "/var/www/processamento/GFSD10001"+date1.strftime('%Y%m%d')+"00.nc"
 		# ens2 = "/var/www/processamento/GFSD10001"+date2.strftime('%Y%m%d')+"00.nc"
-		ens1 = file+date1.strftime('%Y%m%d')+"00.nc"
-		ens2 = file+date2.strftime('%Y%m%d')+"00.nc"
+		ens1 = file+'1'+date1.strftime('%Y%m%d')+"00.nc"
+		ens2 = file+'1'+date2.strftime('%Y%m%d')+"00.nc"
 		if os.path.isfile(ens2) != True:
 			ens1 = False
 			break
