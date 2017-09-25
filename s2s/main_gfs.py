@@ -32,6 +32,7 @@ import colors
 import meteogram
 import gcard
 import interpol
+import grid_select
 #######################################
 ##	GET form			
 form = cgi.FieldStorage()
@@ -53,6 +54,7 @@ model 	= form.getvalue("model")
 lat0	= float(lat)
 lon0	= float(lon)
 grid = grid_select._get_GRID(lat0, lon0, 'GFS')
+grid = 1
 try:
 	utc 	= form.getvalue("utc")	
 	utc0	= int(utc)

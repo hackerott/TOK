@@ -29,6 +29,7 @@ import cond_figures
 import units
 import colors
 import gcard
+import grid_select
 # import meteogram
 #######################################
 ##	GET form			
