@@ -56,7 +56,7 @@ def DATA_cfs_calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCF
 		prob_y = ((2*prob_t_y + prob_a_y)/3)
 
 		prob_c = [prob_g, prob_r, prob_y]
-		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = 9 + i) + datetime.timedelta(hours = utc0)
+		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = 8 + i) + datetime.timedelta(hours = utc0)
 		if prob_c[np.argmax(prob_c)] < PRO:
 			color.append(2)
 			result_prov = ((((2*value_t  +  value_a)/3) + max_v + min_v)/3)

@@ -44,6 +44,7 @@ def _get_GRID(lat, lon, model):
 		if lat >= rc_lat[i] and lat <= lc_lat[i]:
 			if  lon >= rc_lon[i] and lon <= lc_lon[i]:	
 				grid = i
+				break
 		else:
 			grid = 0		
 	return(grid+1)

@@ -7,23 +7,24 @@ from scipy.interpolate import interp1d
 
 #######################################
 def _get_gfs_days(val, dat):
-	ds = int(len(val) - 24)
-	tgt_date = dat[0] + datetime.timedelta(hours = ds)
-	value = []
-	date = []
-	for i in range(0, len(val)):
-		if dat[i] == dat[-1]:
-			date.append(dat[i])
-			value.append(int(val[i]*10)/10.0)
-			break
-		elif dat[i] >= tgt_date:
-			for j in range(1, 3):
-				value.append(np.nan)
-				date.append(dat[i] + datetime.timedelta(hours = j))
-			value.append(int(val[i]*10)/10.0)
-		else:
-			value.append(int(val[i]*10)/10.0)
-			date.append(dat[i])
+	# ds = int(len(val) - 24)
+	# tgt_date = dat[0] + datetime.timedelta(hours = ds)
+	# value = []
+	# date = []
+	# for i in range(0, len(val)):
+	# 	if dat[i] == dat[-1]:
+	# 		date.append(dat[i])
+	# 		value.append(int(val[i]*10)/10.0)
+	# 		break
+	# 	elif dat[i] >= tgt_date:
+	# 		for j in range(1, 3):
+	# 			value.append(np.nan)
+	# 			date.append(dat[i] + datetime.timedelta(hours = j))
+	# 		value.append(int(val[i]*10)/10.0)
+	# 	else:
+	# 		value.append(int(val[i]*10)/10.0)
+	# 		date.append(dat[i])
+	date = dat
 	value = np.array(value)
 	index = np.arange(len(value))
 	not_nan = np.logical_not(np.isnan(value))

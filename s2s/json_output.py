@@ -74,8 +74,8 @@ def _get_table(date, prob, color, value, maxi, mini, var_id, model, cur):
                 self_value = []
                 for i in range(0, len(value)):
                         d = {
-                                "speed" : "%.2f" %value[i,0],
-                                "direction" : "%.2f" %value[i,1]
+                                "speed" : "%.0f" %value[i,0],
+                                "direction" : "%.0f" %value[i,1]
                         }
                         self_value.append(d)
                 values = {"wind"        :       [self_value]}
@@ -334,15 +334,15 @@ def _get_card(date, prob, color, value, maxi, mini, var_id, model, cur):
 			if b >= len(value):
 				break
 			d = {
-				"speed" : "%.2f" %value[a], 
-				"direction" : "%.2f" %value[b]
+				"speed" : "%.0f" %value[a], 
+				"direction" : "%.0f" %value[b]
 			}
 			self_value.append(d)
 			a = b + 1
 			b = b + 2
 		values = {"wind"	:	[self_value], 
-			  "max"		:	"%.2f" %maxi,
-			  "min"		:	"%.2f"%mini,}
+			  "max"		:	"%.0f" %maxi,
+			  "min"		:	"%.0f"%mini,}
 
  		units = {"wind" : {
 			                "current" : cur,
@@ -371,8 +371,8 @@ def _get_card(date, prob, color, value, maxi, mini, var_id, model, cur):
 	elif var_id == 3:
 		# for i in range(0, len(value)):
 		values = {"temperature"	:	[value],
-			  "max"		:	"%.2f" %maxi,
-			  "min"		:	"%.2f"%mini,}
+			  "max"		:	"%.0f" %maxi,
+			  "min"		:	"%.0f"%mini,}
 
 		units = {
 			"temperature" : {
@@ -404,8 +404,8 @@ def _get_card(date, prob, color, value, maxi, mini, var_id, model, cur):
 	elif var_id == 4:
 		# for i in range(0, len(value)):
 		values = {"radiation"	:	[value],
-			  "max"		:	"%.2f" %maxi,
-			  "min"		:	"%.2f"%mini,}
+			  "max"		:	"%.0f" %maxi,
+			  "min"		:	"%.0f"%mini,}
 		units = {"radiation" : {
                 "current" : cur,
                 "label" : "radiation",
@@ -430,8 +430,8 @@ def _get_card(date, prob, color, value, maxi, mini, var_id, model, cur):
 	elif var_id == 5:
 		# for i in range(0, len(value)):
 		values = {"humidity"	:	[value],
-			  "max"		:	"%.2f" %maxi,
-			  "min"		:	"%.2f"%mini,}
+			  "max"		:	"%.0f" %maxi,
+			  "min"		:	"%.0f"%mini,}
 		units = {"humidity" : {
                 "current" : cur,
                 "label" : "humidity",

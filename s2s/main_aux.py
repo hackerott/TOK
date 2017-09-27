@@ -139,7 +139,7 @@ def _check_point(lat0, lon0):
 #######################################
 ## Get timezone
 utc = astro_tz._get_timezone(lat0, lon0)
-
+grid = grid_select._get_GRID(lat0, lon0, 'WRF')
 ## Get sun set and rise
 sun_rise, sun_set = astro_tz._get_sun(lat0, lon0, utc)
 
@@ -148,11 +148,11 @@ sun_rise, sun_set = astro_tz._get_sun(lat0, lon0, utc)
 Needs some kind of paralelism, or async operation, gfs and cfs takes more then 5 seconds
 '''
 
-wens1, wens2, date0 = wrf_var._get_FILE()
+wens1, wens2, date0 = wrf_var._get_FILE(grid)
 wens1, date0 = 0, 0
-gens1, gens2, date0 = gfs_var._get_FILE()
+gens1, gens2, date0 = gfs_var._get_FILE(grid)
 gens1, date0 = 0, 0
-cens1, cens2, cens3, cens4, cens5, cens6, cens7, cens8, date0 = cfs_var._get_FILE()
+cens1, cens2, cens3, cens4, cens5, cens6, cens7, cens8, date0 = cfs_var._get_FILE(grid)
 cens1, cens2, cens3, cens4, cens6, cens7, cens8, date0 = 0, 0, 0, 0, 0, 0, 0, 0 
 
 w_out = _check_wrf(wens2)

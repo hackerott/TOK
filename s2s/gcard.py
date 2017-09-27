@@ -51,7 +51,7 @@ def DATA_cfs_gcard(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, 
 			value_p 	= ((2*value_t  +  value_a)/3)
 		# value.append(int(value_p*10)/10.0)
 		value.append(value_p)
-		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = 9 + i) + datetime.timedelta(hours = utc0)
+		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = 8 + i) + datetime.timedelta(hours = utc0)
 		date.append(d1)
 		a += 4
 		b += 4
