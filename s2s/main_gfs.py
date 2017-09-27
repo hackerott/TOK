@@ -54,7 +54,6 @@ model 	= form.getvalue("model")
 lat0	= float(lat)
 lon0	= float(lon)
 grid = grid_select._get_GRID(lat0, lon0, 'GFS')
-grid = 1
 try:
 	utc 	= form.getvalue("utc")	
 	utc0	= int(utc)

@@ -55,8 +55,8 @@ def _get_TIMEP(var_raw1, var_raw2, time, iz, ix, iy, top_lim, bot_lim):
 	max_value = []
 	min_value = []
 	for i in range(0, len(value)):
-		max_value.append(np.mean(value[i],t_quartile))
-		min_value.append(np.mean(value[i],b_quartile))
+		max_value.append(np.mean([value[i],t_quartile]))
+		min_value.append(np.mean([value[i],b_quartile]))
 
 		
 	return(prob_g, prob_r, prob_y, value, max_value, min_value)

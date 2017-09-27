@@ -59,14 +59,6 @@ def _get_FILE(grid):
 	# if date.hour >= 12:
 	date1 = date.replace(hour=00)
 	date2 = date1  - datetime.timedelta(days = 1)
-	# ens1 = "/var/www/processamento/CFSD10001E1"+date1.strftime('%Y%m%d')+"00.nc"
-	# ens2 = "/var/www/processamento/CFSD10001E2"+date1.strftime('%Y%m%d')+"00.nc"
-	# ens3 = "/var/www/processamento/CFSD10001E3"+date1.strftime('%Y%m%d')+"00.nc"
-	# ens4 = "/var/www/processamento/CFSD10001E4"+date1.strftime('%Y%m%d')+"00.nc"
-	# ens5 = "/var/www/processamento/CFSD10001E1"+date2.strftime('%Y%m%d')+"00.nc"
-	# ens6 = "/var/www/processamento/CFSD10001E2"+date2.strftime('%Y%m%d')+"00.nc"
-	# ens7 = "/var/www/processamento/CFSD10001E3"+date2.strftime('%Y%m%d')+"00.nc"
-	# ens8 = "/var/www/processamento/CFSD10001E4"+date2.strftime('%Y%m%d')+"00.nc"
 	ens1 = file+"E1"+date1.strftime('%Y%m%d')+"00.nc"
 	ens2 = file+"E2"+date1.strftime('%Y%m%d')+"00.nc"
 	ens3 = file+"E3"+date1.strftime('%Y%m%d')+"00.nc"
@@ -79,14 +71,6 @@ def _get_FILE(grid):
 	while os.path.isfile(ens1) != True:
 		date1 = date1 - datetime.timedelta(days = 1)
 		date2 = date2 - datetime.timedelta(days = 1)
-		# ens1 = "/var/www/processamento/CFSD10001E1"+date1.strftime('%Y%m%d')+"00.nc"
-		# ens2 = "/var/www/processamento/CFSD10001E2"+date1.strftime('%Y%m%d')+"00.nc"
-		# ens3 = "/var/www/processamento/CFSD10001E3"+date1.strftime('%Y%m%d')+"00.nc"
-		# ens4 = "/var/www/processamento/CFSD10001E4"+date1.strftime('%Y%m%d')+"00.nc"
-		# ens5 = "/var/www/processamento/CFSD10001E1"+date2.strftime('%Y%m%d')+"00.nc"
-		# ens6 = "/var/www/processamento/CFSD10001E2"+date2.strftime('%Y%m%d')+"00.nc"
-		# ens7 = "/var/www/processamento/CFSD10001E3"+date2.strftime('%Y%m%d')+"00.nc"
-		# ens8 = "/var/www/processamento/CFSD10001E4"+date2.strftime('%Y%m%d')+"00.nc"
 		ens1 = file+"E1"+date1.strftime('%Y%m%d')+"00.nc"
 		ens2 = file+"E2"+date1.strftime('%Y%m%d')+"00.nc"
 		ens3 = file+"E3"+date1.strftime('%Y%m%d')+"00.nc"

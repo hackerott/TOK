@@ -60,16 +60,12 @@ def _get_FILE(grid):
 	date = datetime.datetime.now()
 	date1 = date.replace(hour=00)
 	date2 = date1  - datetime.timedelta(days = 1)
-	# ens1 = "/var/www/processamento/GFSD10001"+date1.strftime('%Y%m%d')+"00.nc"
-	# ens2 = "/var/www/processamento/GFSD10001"+date2.strftime('%Y%m%d')+"00.nc"
 	ens1 = file+date1.strftime('%Y%m%d')+"00.nc"
 	ens2 = file+date2.strftime('%Y%m%d')+"00.nc"
 	brk = 0
 	while os.path.isfile(ens1) != True:
 		date1 = date1 - datetime.timedelta(days = 1)
 		date2 = date2 - datetime.timedelta(days = 1)
-		# ens1 = "/var/www/processamento/GFSD10001"+date1.strftime('%Y%m%d')+"00.nc"
-		# ens2 = "/var/www/processamento/GFSD10001"+date2.strftime('%Y%m%d')+"00.nc"
 		ens1 = file+date1.strftime('%Y%m%d')+"00.nc"
 		ens2 = file+date2.strftime('%Y%m%d')+"00.nc"
 		if os.path.isfile(ens2) != True:
