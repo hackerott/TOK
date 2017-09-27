@@ -88,8 +88,8 @@ def _get_AREAP(var_raw, time, ix, iy, top_lim, bot_lim, ):
 	max_value = []
 	min_value = []
 	for i in range(0, len(value)):
-		max_value.append(np.mean(value[i],t_quartile))
-		min_value.append(np.mean(value[i],b_quartile))
+		max_value.append(np.mean([value[i],t_quartile]))
+		min_value.append(np.mean([value[i],b_quartile]))
 	
 	# array	= [v_1, v_2, v_3, v_4, v_5, v_6, v_7, v_8, v_9, v_10, v_11, v_12, v_13, v_14, v_15, v_16, v_17, v_18, v_19, v_20, v_21, v_22, v_23, v_24, v_25] 
 	# max_index = np.divide((np.mean(array) + np.std(array)), max(array).any)
