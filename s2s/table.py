@@ -102,8 +102,8 @@ def DATA_wrf_table(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO):
 	fig		= []
 
 	for i in range(0, max_i):
-		max_v		= np.nanmax(max_t1[i], max_a1[i])
-		min_v		= np.nanmin(min_t1[i], min_a1[i])
+		max_v		= np.nanmax([max_t1[i], max_a1[i]])
+		min_v		= np.nanmin([min_t1[i], min_a1[i]])
 		prob_a_g	= np.mean(prob_a_g1[i])
 		prob_t_g 	= np.mean(prob_t_g1[i])
 		prob_a_r 	= np.mean(prob_a_r1[i])

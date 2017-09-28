@@ -82,7 +82,7 @@ elif var_id == 2:
 		date, prob, alert, value, maxi, mini = calendar.DATA_wrf_calendar(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
 		value1, date = interpol._get_wrf_days(value, date)
 		value2, date = interpol._get_wrf_days(var_rawb1[:, ix_wrf, iy_wrf], date)
-		for i in range(0, len(value)):
+		for i in range(0, min(len(value1), len(value2))):
 			value[i] = [value1[i], value2[i]]
 		value = np.array(value)
 	elif model == "card":
@@ -90,8 +90,10 @@ elif var_id == 2:
 		value = [value, int(var_rawb1[c, ix_wrf, iy_wrf])]
 	elif model == "table":
 		date, prob, alert, value, maxi, mini = table.DATA_wrf_table(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
-		for i in range(0, len(value)):
-			value[i] = [value[i], int(var_rawb1[i, ix_wrf, iy_wrf])]
+		value1, date = interpol._get_wrf_days(value, date)
+		value2, date = interpol._get_wrf_days(var_rawb1[:, ix_wrf, iy_wrf], date)
+		for i in range(0, min(len(value1), len(value2))):
+			value[i] = [value1[i], value2[i]]
 		value = np.array(value)
 	elif model == "gcard":
 		date, prob, alert, value, maxi, mini = gcard.DATA_wrf_gcard(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
