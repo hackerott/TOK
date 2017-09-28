@@ -72,15 +72,17 @@ if var_id == 1 :
 		date, prob, alert, value, maxi, mini = gcard.DATA_wrf_gcard(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
-
+	value, date = interpol._get_wrf_days(value, date)
 elif var_id == 2:
 	var_rawa1, var_rawb1 = wrf_var._get_wind(var, ens1)
 	var_rawa2, var_rawb2 = wrf_var._get_wind(var, ens2)
 	time  	 = wrf_var._get_time('time', ens1)
 	if model == "calendar":
 		date, prob, alert, value, maxi, mini = calendar.DATA_wrf_calendar(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
+		value1, date = interpol._get_wrf_days(value, date)
+		value2, date = interpol._get_wrf_days(var_rawb1[:, ix_wrf, iy_wrf], date)
 		for i in range(0, len(value)):
-			value[i] = [value[i], var_rawb1[i, ix_wrf, iy_wrf]]
+			value[i] = [value1[i], value2[i]]
 		value = np.array(value)
 	elif model == "card":
 		date, prob, alert, value, maxi, mini, c = card.DATA_wrf_card(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
@@ -94,8 +96,7 @@ elif var_id == 2:
 		date, prob, alert, value, maxi, mini = gcard.DATA_wrf_gcard(var_rawa1, var_rawa2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
 		# for i in range(0, len(value)):
 		# 	value[i] = [value[i], int(var_rawb1[i, ix_wrf, iy_wrf])]
-		value = np.array(value)
-
+		# value = np.array(value)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
 
@@ -113,6 +114,7 @@ elif var_id == 3:
 		date, prob, alert, value, maxi, mini = gcard.DATA_wrf_gcard(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
+	value, date = interpol._get_wrf_days(value, date)
 
 elif var_id == 4:
 	var_raw1 = wrf_var._get_radiation(var, ens1)
@@ -128,6 +130,7 @@ elif var_id == 4:
 		date, prob, alert, value, maxi, mini = gcard.DATA_wrf_gcard(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
+	value, date = interpol._get_wrf_days(value, date)
 
 elif var_id == 5:
 	var_raw1 = wrf_var._get_humidity(var, ens1)
@@ -143,6 +146,7 @@ elif var_id == 5:
 		date, prob, alert, value, maxi, mini = gcard.DATA_wrf_gcard(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
+	value, date = interpol._get_wrf_days(value, date)
 
 elif var_id == 6:
 	var_rawa1, var_rawb1 = wrf_var._get_figure(var, ens1, ix_wrf, iy_wrf)
@@ -162,6 +166,8 @@ elif var_id == 6:
 		date, prob, alert, value2, maxi, mini = gcard.DATA_wrf_gcard(var_rawb1, var_rawb2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
+	value1, date = interpol._get_wrf_days(value1, date)
+	value2, date = interpol._get_wrf_days(value2, date)
 	sunset, sunrise = astro_tz._get_sun(lat0, lon0, utc0)
 	value = cond_figures.DATA_cond_figure(value1, value2, date, sunset, sunrise)
 	

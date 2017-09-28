@@ -17,21 +17,15 @@ def _get_Prob(var_raw, ix, iy, max_i, top_lim, bot_lim):
 		if var1[i] > -99.99:
 			if var1[i] < top_lim:
 				prob_y[i] += 1	
-
 			if var1[i] < bot_lim:
 				prob_g[i] += 1
-	
 			if var1[i] >= top_lim:
 				prob_r[i] += 1
-		elif var1[i] > 9999.99 :
-			prob_y[i] += 0
-			prob_g[i] += 0
-			prob_r[i] += 0
+		elif var1[i] < -99.99:
+			var1[i] = np.nan
+		elif var1[i] > 9999.99:
 			var1[i] = np.nan
 		else:
-			prob_y[i] += 0
-			prob_g[i] += 0
-			prob_r[i] += 0
 			var1[i] = np.nan
 
 	return (var1, prob_g, prob_r, prob_y)
@@ -88,8 +82,8 @@ def _get_AREAP(var_raw, time, ix, iy, top_lim, bot_lim, ):
 
 	value	= np.add(np.divide(v_1, 2), np.add(np.divide(np.add(np.add(np.add(v_2, v_3), np.add(v_4, v_5)), np.add(np.add(v_6, v_7), np.add(v_8, v_9))), 32), np.divide(np.add(np.add(np.add(np.add(v_10, v_11), np.add(v_12, v_13)), np.add(np.add(v_14, v_15), np.add(v_16, v_17))), np.add(np.add(np.add(v_18, v_19), np.add(v_20, v_21)), np.add(np.add(v_22, v_23), np.add(v_24, v_25)))), 64)))
 
-	t_quartile = np.percentile(value, 75)
-	b_quartile = np.percentile(value, 25)
+	t_quartile = np.nanpercentile(value, 75)
+	b_quartile = np.nanpercentile(value, 25)
 	max_value = []
 	min_value = []
 	for i in range(0, len(value)):

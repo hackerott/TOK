@@ -108,12 +108,18 @@ elif var_id == 2:
 	elif model == "table":
 		date, prob, alert, value, maxi, mini = table.DATA_gfs_table(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
 		value1, date = interpol._get_gfs_days(value, date)
-		value2, date = interpol._get_gfs_days(var_rawb1[:, ix_wrf, iy_wrf], date)
+		value2, date = interpol._get_gfs_days(var_rawb1[:, ix_gfs, iy_gfs], date)
 		for i in range(0, len(value)):
 			value[i] = [value1[i], int(var2[i])]
 		value = np.array(value)
 	elif model == "gcard":
 		date, prob, alert, value, maxi, mini = gcard.DATA_gfs_gcard(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
+		value1, date = interpol._get_gfs_days(value, date)
+		# value2, date = interpol._get_gfs_days(var_rawb1[:, ix_gfs, iy_gfs], date)
+		# for i in range(0, len(value)):
+		# 	value[i] = [value1[i], int(var2[i])]
+		# value = np.array(value)
+		value = np.array(value1)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
 

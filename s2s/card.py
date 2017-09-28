@@ -41,8 +41,8 @@ def DATA_cfs_card(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, i
 	b = 4
 	tgt_day = datetime.datetime.now() + datetime.timedelta(days = 0)
 	for i in range(0, max_i//4):
-		max_v = max(max_t1[a:b], max_t2[a:b], max_t3[a:b], max_t4[a:b], max_a1[a:b], max_a2[a:b], max_a3[a:b], max_a4[a:b])
-		min_v = min(min_t1[a:b], min_t2[a:b], min_t3[a:b], min_t4[a:b], min_a1[a:b], min_a2[a:b], min_a3[a:b], min_a4[a:b])
+		max_v = np.nanmax(max_t1[a:b], max_t2[a:b], max_t3[a:b], max_t4[a:b], max_a1[a:b], max_a2[a:b], max_a3[a:b], max_a4[a:b])
+		min_v = np.nanmin(min_t1[a:b], min_t2[a:b], min_t3[a:b], min_t4[a:b], min_a1[a:b], min_a2[a:b], min_a3[a:b], min_a4[a:b])
 		prob_a_g = (np.mean(prob_a_g1[a:b]) + np.mean(prob_a_g2[a:b]) + np.mean(prob_a_g3[a:b]) + np.mean(prob_a_g4[a:b]))/4
 		prob_t_g = (np.mean(prob_t_g1[a:b]) + np.mean(prob_t_g2[a:b]) + np.mean(prob_t_g3[a:b]) + np.mean(prob_t_g4[a:b]))/4
 		prob_a_r = (np.mean(prob_a_r1[a:b]) + np.mean(prob_a_r2[a:b]) + np.mean(prob_a_r3[a:b]) + np.mean(prob_a_r4[a:b]))/4
@@ -102,8 +102,8 @@ def DATA_gfs_card(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 	b = 24
 	tgt_day = datetime.datetime.now()
 	for i in range(0, (max_i//24)+4):
-		max_v		= max(max_t1[a:b], max_a1[a:b])
-		min_v		= min(min_t1[a:b], min_a1[a:b])
+		max_v		= np.nanmax(max_t1[a:b], max_a1[a:b])
+		min_v		= np.nanmin(min_t1[a:b], min_a1[a:b])
 		prob_a_g	= np.mean(prob_a_g1[a:b])
 		prob_t_g 	= np.mean(prob_t_g1[a:b])
 		prob_a_r 	= np.mean(prob_a_r1[a:b])
@@ -171,8 +171,8 @@ def DATA_wrf_card(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO):
 	b = 24
 	tgt_day = datetime.datetime.now()
 	for i in range(0, max_i//24):
-		max_v		= max(max_t1[a:b], max_a1[a:b])
-		min_v		= min(min_t1[a:b], min_a1[a:b])
+		max_v		= np.nanmax(max_t1[a:b], max_a1[a:b])
+		min_v		= np.nanmin(min_t1[a:b], min_a1[a:b])
 		prob_a_g	= (np.mean(prob_a_g1[a:b]))
 		prob_t_g 	= (np.mean(prob_t_g1[a:b]))
 		prob_a_r 	= (np.mean(prob_a_r1[a:b]))
@@ -216,9 +216,9 @@ def DATA_wrf_card(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO):
 ###############################################################################
 """
 Card possible days:
-	WRF: 0 - 9
-	GFS: 0 - 5 / 6 - 10
-	CFS: 9 - 34
+	WRF: 0 - 7
+	GFS: 0 - 4 / 5 - 7
+	CFS: 8 - 38
 WRF GFS cards returning "now", CFS only for testing, it returns day 9 at request hour
 
 """
