@@ -74,6 +74,7 @@ if var_id == 1 :
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
 	value, date = interpol._get_wrf_days(value, date)
+
 elif var_id == 2:
 	var_rawa1, var_rawb1 = wrf_var._get_wind(var, ens1)
 	var_rawa2, var_rawb2 = wrf_var._get_wind(var, ens2)
