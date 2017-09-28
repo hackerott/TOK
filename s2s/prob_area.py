@@ -23,6 +23,11 @@ def _get_Prob(var_raw, ix, iy, max_i, top_lim, bot_lim):
 	
 			if var1[i] >= top_lim:
 				prob_r[i] += 1
+		elif var1[i] > 9999.99 :
+			prob_y[i] += 0
+			prob_g[i] += 0
+			prob_r[i] += 0
+			var1[i] = np.nan
 		else:
 			prob_y[i] += 0
 			prob_g[i] += 0
@@ -88,8 +93,10 @@ def _get_AREAP(var_raw, time, ix, iy, top_lim, bot_lim, ):
 	max_value = []
 	min_value = []
 	for i in range(0, len(value)):
-		max_value.append(np.mean([value[i],t_quartile]))
-		min_value.append(np.mean([value[i],b_quartile]))
+#		max_value.append(np.mean([value[i],t_quartile]))
+#		min_value.append(np.mean([value[i],b_quartile]))
+		max_value.append(np.divide(np.add(value[i],t_quartile), 2))
+		min_value.append(np.divide(np.add(value[i],b_quartile), 2))
 	
 	# array	= [v_1, v_2, v_3, v_4, v_5, v_6, v_7, v_8, v_9, v_10, v_11, v_12, v_13, v_14, v_15, v_16, v_17, v_18, v_19, v_20, v_21, v_22, v_23, v_24, v_25] 
 	# max_index = np.divide((np.mean(array) + np.std(array)), max(array).any)

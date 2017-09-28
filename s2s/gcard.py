@@ -70,8 +70,11 @@ def DATA_gfs_gcard(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO, v
 	a = 0
 	b = 24
 	for i in range(0, (max_i//24)+((max_i-24)//8)):
-		max_v		= max(max(max_t1[a:b]), max(max_a1[a:b]))
-		min_v		= min(min(min_t1[a:b]), min(min_a1[a:b]))
+		max_v		= (max_t1[a])
+		min_v		= (min_t1[a])
+#		max_v =  max(max_a1[a:b]))
+#		max_v		= max(max(max_t1[a:b]), max(max_a1[a:b]))
+#		min_v		= min(min(min_t1[a:b]), min(min_a1[a:b]))
 		if var_id == 1:
 			value_a		= (np.subtract(value_a1[b], value_a1[a]))
 			value_t 	= (np.subtract(value_t1[b], value_t1[a]))

@@ -41,11 +41,11 @@ def _get_Prob(var_raw1, var_raw2, iz, ix, iy, max_i, top_lim, bot_lim):
 	prob_y = np.divide(prob_y, 3)
 	prob_g = np.divide(prob_g, 3)
 	prob_r = np.divide(prob_r, 3)
-	var1 = np.divide(np.add(np.multiply(var1, 2), var2), 3)	
+	var1 = np.divide(np.add(np.multiply(var1, 2), var2), 3)
 
 	return (var1, prob_g, prob_r, prob_y)
 
-#######################################	
+#######################################
 # return the final values of prob for each member
 def _get_TIMEP(var_raw1, var_raw2, time, iz, ix, iy, top_lim, bot_lim):
 	max_i = len(time)
@@ -55,9 +55,14 @@ def _get_TIMEP(var_raw1, var_raw2, time, iz, ix, iy, top_lim, bot_lim):
 	max_value = []
 	min_value = []
 	for i in range(0, len(value)):
-		max_value.append(np.mean([value[i],t_quartile]))
-		min_value.append(np.mean([value[i],b_quartile]))
+#               max_value.append(np.mean([value[i],t_quartile]))
+#               min_value.append(np.mean([value[i],b_quartile]))
+                max_value.append(np.divide(np.add(value[i],t_quartile), 2))
+                min_value.append(np.divide(np.add(value[i],b_quartile), 2))
+#		if t_quartile:
+#			value[i] = 998
+#			max_value[i] = 998
+#			min_value[i] = -998
 
-		
 	return(prob_g, prob_r, prob_y, value, max_value, min_value)
 
