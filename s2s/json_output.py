@@ -622,7 +622,7 @@ def _get_calendar(date, prob, alert, color, value, maxi, mini, var_id, model, cu
 				}
 
 	elif var_id == 2:
-		for i in range(0, len(value)):
+		for i in range(0, len(alert)):
 			val = value[i]
 			resp	=	{
         	        	"main" : {
