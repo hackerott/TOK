@@ -18,7 +18,51 @@ def _get_Prob(var_raw1, var_raw2, iz, ix, iy, max_i, top_lim, bot_lim):
 			break
 		var1[i] =  var_raw1[i, ix, iy]
 		var2[i] =  var_raw2[i+iz, ix, iy]
-		if var1[i] > -99.99 and var2[i] > -99.99:  
+		if var1[i] < -99.99 and var2[i] < -99.99:
+			var1[i] = np.nan
+			var2[i] = np.nan
+
+		elif var1[i] > -99.99 and var1[i] < -99.99:  
+			if var1[i] < top_lim:
+				prob_y[i] += 2	
+			if var1[i] < bot_lim:
+				prob_g[i] += 2
+			if var1[i] >= top_lim:
+				prob_r[i] += 2
+			var2[i] = np.nan
+
+		elif var1[i] < -99.99 and var1[i] > -99.99:  
+			if var1[i] < top_lim:
+				prob_y[i] += 1	
+			if var1[i] < bot_lim:
+				prob_g[i] += 1
+			if var1[i] >= top_lim:
+				prob_r[i] += 1
+			var1[i] = np.nan
+
+		elif var1[i] > 99999.99  and var2[i] > 99999.99:
+			var1[i] = np.nan
+			var2[i] = np.nan
+
+		elif var1[i] < 99999.99 and var1[i] > 99999.99:  
+			if var1[i] < top_lim:
+				prob_y[i] += 2	
+			if var1[i] < bot_lim:
+				prob_g[i] += 2
+			if var1[i] >= top_lim:
+				prob_r[i] += 2
+			var2[i] = np.nan
+
+		elif var1[i] > 99999.99 and var1[i] < 99999.99:  
+			if var1[i] < top_lim:
+				prob_y[i] += 1	
+			if var1[i] < bot_lim:
+				prob_g[i] += 1
+			if var1[i] >= top_lim:
+				prob_r[i] += 1
+			var1[i] = np.nan
+
+		else:
 			if var1[i] < top_lim:
 				prob_y[i] += 2	
 			if var1[i] < bot_lim:
@@ -31,44 +75,7 @@ def _get_Prob(var_raw1, var_raw2, iz, ix, iy, max_i, top_lim, bot_lim):
 				prob_g[i] += 1
 			if var2[i] >= top_lim:
 				prob_r[i] += 1
-		elif var1[i] > -99.99 and var1[i] < -99.99:  
-			if var1[i] < top_lim:
-				prob_y[i] += 2	
-			if var1[i] < bot_lim:
-				prob_g[i] += 2
-			if var1[i] >= top_lim:
-				prob_r[i] += 2
-			var2[i] = np.nan
-		elif var1[i] < -99.99 and var1[i] > -99.99:  
-			if var1[i] < top_lim:
-				prob_y[i] += 1	
-			if var1[i] < bot_lim:
-				prob_g[i] += 1
-			if var1[i] >= top_lim:
-				prob_r[i] += 1
-			var1[i] = np.nan
-		elif var1[i] < 99999.99 and var1[i] > 99999.99:  
-			if var1[i] < top_lim:
-				prob_y[i] += 2	
-			if var1[i] < bot_lim:
-				prob_g[i] += 2
-			if var1[i] >= top_lim:
-				prob_r[i] += 2
-			var2[i] = np.nan
-		elif var1[i] > 99999.99 and var1[i] < 99999.99:  
-			if var1[i] < top_lim:
-				prob_y[i] += 1	
-			if var1[i] < bot_lim:
-				prob_g[i] += 1
-			if var1[i] >= top_lim:
-				prob_r[i] += 1
-			var1[i] = np.nan
-		elif var1[i] > 99999.99  and var2[i] > 99999.99:
-			var1[i] = np.nan
-			var2[i] = np.nan
-		else:
-			var1[i] = np.nan
-			var2[i] = np.nan
+
 	prob_y = np.divide(prob_y, 3)
 	prob_g = np.divide(prob_g, 3)
 	prob_r = np.divide(prob_r, 3)

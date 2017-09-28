@@ -14,19 +14,17 @@ def _get_Prob(var_raw, ix, iy, max_i, top_lim, bot_lim):
 	var1	= [0]*(max_i)
 	for i in  range(0, max_i):
 		var1[i] =  var_raw[i, ix, iy]
-		if var1[i] > -99.99:
+		if var1[i] < -99.99:
+			var1[i] = np.nan
+		elif var1[i] > 99999.99:
+			var1[i] = np.nan
+		else:
 			if var1[i] < top_lim:
 				prob_y[i] += 1	
 			if var1[i] < bot_lim:
 				prob_g[i] += 1
 			if var1[i] >= top_lim:
 				prob_r[i] += 1
-		elif var1[i] < -99.99:
-			var1[i] = np.nan
-		elif var1[i] > 99999.99:
-			var1[i] = np.nan
-		else:
-			var1[i] = np.nan
 
 	return (var1, prob_g, prob_r, prob_y)
 
