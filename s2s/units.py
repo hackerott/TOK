@@ -83,7 +83,7 @@ def _get_metric(value, var_id):
 			out.append(val)
 	except:
 		for val in value:
-			if val < 1 and val > 0:
+			if val.any() < 1 and val.any() > 0:
 				try:
 					val = int((val *10))/10.0
 				except:
