@@ -120,8 +120,6 @@ elif var_id == 3:
 		date, prob, alert, value, maxi, mini = gcard.DATA_wrf_gcard(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
-	
-
 
 elif var_id == 4:
 	var_raw1 = wrf_var._get_radiation(var, ens1)
