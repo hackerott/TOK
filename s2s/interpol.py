@@ -25,7 +25,7 @@ def _get_gfs_days(val, dat):
 		out = value
 	out1 = []
 	date = []
-	for i in range(0, len(out)):
+	for i in range(0, len(dat)):
 		if np.invert(np.isnan(out[i])):
 			out1.append(out[i])
 			date.append(dat[i])
@@ -71,7 +71,7 @@ def _get_wrf_days(val, dat):
 		out = value
 	out1 = []
 	date = []
-	for i in range(0, len(out)):
+	for i in range(0, len(dat)):
 		if np.invert(np.isnan(out[i])):
 			out1.append(out[i])
 			date.append(dat[i])
