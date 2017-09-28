@@ -69,27 +69,27 @@ def DATA_gfs_gcard(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO, v
 	date	= []
 	a = 0
 	b = 24
-	for i in range(0, (max_i//24)):
-		max_v		= np.nanmax([np.nanmax(max_t1[a:b]), np.nanmax(max_a1[a:b])])
-		min_v		= np.nanmin([np.nanmin(min_t1[a:b]), np.nanmin(min_a1[a:b])])
+	for i in range(0, max_i//24):
+		max_v	= max(np.nanmax(max_t1[a:b]), np.nanmax(max_a1[a:b]))
+		min_v	= min(np.nanmin(min_t1[a:b]), np.nanmin(min_a1[a:b]))
 		if var_id == 1:
-			value_a		= (np.subtract(value_a1[b], value_a1[a]))
-			value_t 	= (np.subtract(value_t1[b], value_t1[a]))
-			value_p 	= ((2*value_t  +  value_a)/3)
+			value_a	= (np.subtract(value_a1[b], value_a1[a]))
+			value_t	= (np.subtract(value_t1[b], value_t1[a]))
+			value_p	= ((2*value_t  +  value_a)/3)
 		elif var_id == 2:
 			value_p = max_v
 		elif var_id == 3:
 			value_p = [max_v, min_v]
 		elif var_id == 4:
-			value_a		= np.mean(value_a1[a:b])
-			value_t 	= np.mean(value_t1[a:b])
-			value_p 	= ((2*value_t  +  value_a)/3)
+			value_a	= np.mean(value_a1[a:b])
+			value_t	= np.mean(value_t1[a:b])
+			value_p	= ((2*value_t  +  value_a)/3)
 		elif var_id == 5:
 			value_p = min_v
 		elif var_id == 6:
-			value_a		= np.mean(value_a1[a:b])
-			value_t 	= np.mean(value_t1[a:b])
-			value_p 	= ((2*value_t  +  value_a)/3)
+			value_a	= np.mean(value_a1[a:b])
+			value_t	= np.mean(value_t1[a:b])
+			value_p	= ((2*value_t  +  value_a)/3)
 		# value.append(int(value_p*10)/10.0)
 		value.append(value_p)
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
@@ -112,8 +112,8 @@ def DATA_wrf_gcard(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO, v
 	a = 0
 	b = 24
 	for i in range(0, max_i//24):
-		max_v		= max(np.nanmax(max_t1[a:b]), np.nanmax(max_a1[a:b]))
-		min_v		= min(np.nanmin(min_t1[a:b]), np.nanmin(min_a1[a:b]))
+		max_v	= max(np.nanmax(max_t1[a:b]), np.nanmax(max_a1[a:b]))
+		min_v	= min(np.nanmin(min_t1[a:b]), np.nanmin(min_a1[a:b]))
 		if var_id == 1:
 			value_a		= (np.subtract(value_a1[b], value_a1[a]))
 			value_t 	= (np.subtract(value_t1[b], value_t1[a]))
