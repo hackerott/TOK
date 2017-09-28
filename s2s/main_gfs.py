@@ -100,7 +100,7 @@ elif var_id == 2:
 		date, prob, alert, value, maxi, mini = calendar.DATA_gfs_calendar(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
 		for i in range(0, len(value)):
 			value[i] = [value[i], int(var_rawb1[i, ix_gfs, iy_gfs])]
-		value = np.ndarray(value)
+		value = np.array(value)
 	elif model == "card":
 		date, prob, alert, value, maxi, mini, c = card.DATA_gfs_card(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
 		value = [value, int(var_rawb1[c, ix_gfs, iy_gfs])]
