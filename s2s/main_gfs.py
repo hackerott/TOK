@@ -86,12 +86,11 @@ if var_id == 1 :
 		date, prob, alert, value, maxi, mini, c = card.DATA_gfs_card(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
 	elif model == "table":
 		date, prob, alert, value, maxi, mini = table.DATA_gfs_table(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)
-		value, date = interpol._get_gfs_days(value, date)
 	elif model == "gcard":
 		date, prob, alert, value, maxi, mini = gcard.DATA_gfs_gcard(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
-		value, date = interpol._get_gfs_days(value, date)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
+	value, date = interpol._get_gfs_days(value, date)
 
 elif var_id == 2:
 	var_rawa1, var_rawb1 = gfs_var._get_wind(var, ens1)
@@ -101,7 +100,7 @@ elif var_id == 2:
 		date, prob, alert, value, maxi, mini = calendar.DATA_gfs_calendar(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
 		for i in range(0, len(value)):
 			value[i] = [value[i], int(var_rawb1[i, ix_gfs, iy_gfs])]
-#		value = np.ndarray(value)
+		value = np.ndarray(value)
 	elif model == "card":
 		date, prob, alert, value, maxi, mini, c = card.DATA_gfs_card(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
 		value = [value, int(var_rawb1[c, ix_gfs, iy_gfs])]
@@ -156,7 +155,8 @@ elif var_id == 4:
 		date, prob, alert, value, maxi, mini = gcard.DATA_gfs_gcard(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
-
+	value, date = interpol._get_gfs_days(value, date)
+	
 elif var_id == 5:
 	var_raw1 = gfs_var._get_humidity(var, ens1)
 	var_raw2 = gfs_var._get_humidity(var, ens2)
@@ -172,7 +172,8 @@ elif var_id == 5:
 		date, prob, alert, value, maxi, mini = gcard.DATA_gfs_gcard(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
-
+	value, date = interpol._get_gfs_days(value, date)
+	
 elif var_id == 6:
 	var_rawa1, var_rawb1 = gfs_var._get_figure(var, ens1)
 	var_rawa2, var_rawb2 = gfs_var._get_figure(var, ens2)
@@ -189,10 +190,12 @@ elif var_id == 6:
 		value1, date = interpol._get_gfs_days(value1, date)
 		value2, date = interpol._get_gfs_days(value2, date)
 	elif model == "gcard":
-		date, prob, alert, value1, maxi, mini = gcard.DATA_gfs_gcard(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, 0.75, 0.25, 0.5, var_id)
-		date, prob, alert, value2, maxi, mini = gcard.DATA_gfs_gcard(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
+		date, prob, alert, value1, maxi, mini = gcard.DATA_gfs_gcard(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, 0.75, 0.25, 0.5, var_id)
+		date, prob, alert, value2, maxi, mini = gcard.DATA_gfs_gcard(var_rawb1, var_rawb2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
+	value1, date = interpol._get_gfs_days(value1, date)
+	value2, date = interpol._get_gfs_days(value2, date)
 	sunset, sunrise = astro_tz._get_sun(lat0, lon0, utc0)
 	value = cond_figures.DATA_cond_figure(value1, value2, date, sunset, sunrise)
 # elif var_id == 7:
