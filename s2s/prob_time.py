@@ -81,19 +81,19 @@ def _get_Prob(var_raw1, var_raw2, iz, ix, iy, max_i, top_lim, bot_lim):
 def _get_TIMEP(var_raw1, var_raw2, time, iz, ix, iy, top_lim, bot_lim):
 	max_i = len(time)
 	value, prob_g, prob_r, prob_y = _get_Prob(var_raw1, var_raw2, iz, ix, iy, max_i, top_lim, bot_lim)
-	t_quartile = np.percentile(value, 75)
-	b_quartile = np.percentile(value, 25)
+	t_quartile = np.nanpercentile(value, 75)
+	b_quartile = np.nanpercentile(value, 25)
 	max_value = []
 	min_value = []
 	for i in range(0, len(value)):
-#               max_value.append(np.mean([value[i],t_quartile]))
-#               min_value.append(np.mean([value[i],b_quartile]))
-                max_value.append(np.divide(np.add(value[i],t_quartile), 2))
-                min_value.append(np.divide(np.add(value[i],b_quartile), 2))
-#		if t_quartile:
-#			value[i] = 998
-#			max_value[i] = 998
-#			min_value[i] = -998
+		# max_value.append(np.mean([value[i],t_quartile]))
+		# min_value.append(np.mean([value[i],b_quartile]))
+		max_value.append(np.divide(np.add(value[i],t_quartile), 2))
+		min_value.append(np.divide(np.add(value[i],b_quartile), 2))
+		if np.isnan(max_value[-1]):
+			max_value[-1] = t_quartile
+		if np.isnan(min_value[-1]):
+			min_value[-1] = b_quartile
 
 	return(prob_g, prob_r, prob_y, value, max_value, min_value)
 

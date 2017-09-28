@@ -91,7 +91,14 @@ def _get_AREAP(var_raw, time, ix, iy, top_lim, bot_lim, ):
 #		min_value.append(np.mean([value[i],b_quartile]))
 		max_value.append(np.divide(np.add(value[i],t_quartile), 2))
 		min_value.append(np.divide(np.add(value[i],b_quartile), 2))
-	
+		if np.isnan(max_value[-1]):
+			max_value[-1] = t_quartile
+		if np.isnan(min_value[-1]):
+			min_value[-1] = b_quartile
+		
+	return(prob_g, prob_r, prob_y, value, max_value, min_value)
+
+''' Bias test
 	# array	= [v_1, v_2, v_3, v_4, v_5, v_6, v_7, v_8, v_9, v_10, v_11, v_12, v_13, v_14, v_15, v_16, v_17, v_18, v_19, v_20, v_21, v_22, v_23, v_24, v_25] 
 	# max_index = np.divide((np.mean(array) + np.std(array)), max(array).any)
 	# min_index = np.divide((np.mean(array) - np.std(array)), min(array).any)
@@ -103,5 +110,4 @@ def _get_AREAP(var_raw, time, ix, iy, top_lim, bot_lim, ):
 	# 	print "vies positivo/positive bias"
 	# if val_index < 1 and min_index > 1:
 	# 	print "vies negativo/negative bias"
-
-	return(prob_g, prob_r, prob_y, value, max_value, min_value)
+'''
