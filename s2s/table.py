@@ -59,7 +59,10 @@ def DATA_gfs_table(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 			if result_prov < 1 and result_prov > 0:
 				result_prov = int((result_prov * 10))/10.0
 			else:
-				result_prov = int(result_prov)
+				try:
+					result_prov = int(result_prov)
+				except:
+					result_prov = result_prov
 		else:
 			color.append((np.argmax(prob_c) + 1))
 			result_prov = ((2*value_t  +  value_a)/3)

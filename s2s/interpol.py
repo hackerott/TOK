@@ -7,20 +7,26 @@ from scipy.interpolate import interp1d
 
 #######################################
 def _get_gfs_days(val, dat):
+	value = []
 	for i in range(0, len(val)):
-		if val[i] < -999.9:
+		if val[i] > 999.9:
 			value.append(np.nan)
 		else:
 			value.append(val[i])
-	date = dat
 	value = np.array(value)
 	index = np.arange(len(value))
-	not_nan = np.logical_not(np.isnan(value))
-	out = interp1d(index[not_nan], value[not_nan], bounds_error=False)
-	out = out(index)
+	try:
+		not_nan = np.logical_not(np.isnan(value))
+		out = interp1d(index[not_nan], value[not_nan], bounds_error=False)
+		out = out(index)
+	except:
+		out = value
 	out1 = []
+	date = []
 	for i in range(0, len(out)):
-		out1.append(out[i])
+		if np.invert(np.isnan(out[i])):
+			out1.append(out[i])
+			date.append(dat[i])
 	return(out1, date)
 
 #######################################
