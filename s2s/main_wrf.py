@@ -109,15 +109,19 @@ elif var_id == 3:
 	time  	 = wrf_var._get_time('time', ens1)
 	if model == "calendar":
 		date, prob, alert, value, maxi, mini = calendar.DATA_wrf_calendar(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
+		value, date = interpol._get_wrf_days(value, date)
 	elif model == "card":
 		date, prob, alert, value, maxi, mini, c = card.DATA_wrf_card(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
+		value, date = interpol._get_wrf_days(value, date)
 	elif model == "table":
 		date, prob, alert, value, maxi, mini = table.DATA_wrf_table(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO)	
+		value, date = interpol._get_wrf_days(value, date)
 	elif model == "gcard":
 		date, prob, alert, value, maxi, mini = gcard.DATA_wrf_gcard(var_raw1, var_raw2, time, ix_wrf, iy_wrf, date0, utc0, TOP, BOT, PRO, var_id)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model) 
-	value, date = interpol._get_wrf_days(value, date)
+	
+
 
 elif var_id == 4:
 	var_raw1 = wrf_var._get_radiation(var, ens1)
