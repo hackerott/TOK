@@ -94,4 +94,5 @@ def _get_metric(value, var_id):
 				except:
 					val = val
 			out.append(val)
+			out = np.array(out)
 	return(out, cur)
