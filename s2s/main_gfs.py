@@ -111,7 +111,7 @@ elif var_id == 2:
 #		value2, date = interpol._get_gfs_days(var_rawb1[:, ix_gfs, iy_gfs], date)
 #		for i in range(0, min(len(value1), len(value2))):
 #			value[i] = [value1[i], int(value2[i])]
-		for i in range(0, len(value1)):
+		for i in range(0, len(value)):
 			value[i] = [value[i], var_rawb1[i, ix_gfs, iy_gfs]]
 		value = np.array(value)
 	elif model == "gcard":
