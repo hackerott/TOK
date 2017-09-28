@@ -132,12 +132,9 @@ def DATA_gfs_calendar(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO
 		maxi.append(max_v)
 		mini.append(min_v)
 		date.append(d1)
-		if b <= max_i - 24:
-			a += 24
-			b += 24
-		else:
-			a += 6	
-			b += 6	
+		a += 24
+		b += 24
+		
 	return(date, prob, color, value, maxi, mini)	
 
 ###############################################################################

@@ -69,7 +69,7 @@ def DATA_gfs_gcard(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO, v
 	date	= []
 	a = 0
 	b = 24
-	for i in range(0, (max_i//24)+((max_i-24)//8)):
+	for i in range(0, (max_i//24)):
 		max_v		= max(np.nanmax(max_t1[a:b]), np.nanmax(max_a1[a:b]))
 		min_v		= min(np.nanmin(min_t1[a:b]), np.nanmin(min_a1[a:b]))
 		if var_id == 1:
@@ -94,12 +94,8 @@ def DATA_gfs_gcard(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO, v
 		value.append(value_p)
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
 		date.append(d1)
-		if b <= max_i - 24:
-			a += 24
-			b += 24
-		else:
-			a += 6	
-			b += 6	
+		a += 24
+		b += 24
 	del value_t1, value_a1
 	return(date, 'null', 'null', value, 'null', 'null')
 ###############################################################################

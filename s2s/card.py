@@ -101,7 +101,7 @@ def DATA_gfs_card(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 	a = 0
 	b = 24
 	tgt_day = datetime.datetime.now()
-	for i in range(0, (max_i//24)+4):
+	for i in range(0, max_i//24):
 		max_v		= np.nanmax(max_t1[a:b], max_a1[a:b])
 		min_v		= np.nanmin(min_t1[a:b], min_a1[a:b])
 		prob_a_g	= np.mean(prob_a_g1[a:b])
@@ -130,14 +130,9 @@ def DATA_gfs_card(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 		maxi.append(max(max_v))
 		mini.append(min(min_v))
 
-		if b <= max_i - 24:
-			d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i*24) + datetime.timedelta(hours = utc0)
-			a += 24
-			b += 24
-		else:
-			d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i*24) + datetime.timedelta(hours = utc0)
-			a += 6	
-			b += 6
+		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i*24) + datetime.timedelta(hours = utc0)
+		a += 24
+		b += 24
 		date.append(d1)
 
 	for i in range(0, max_i):
