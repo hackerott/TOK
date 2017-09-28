@@ -23,7 +23,7 @@ def _get_Prob(var_raw, ix, iy, max_i, top_lim, bot_lim):
 				prob_r[i] += 1
 		elif var1[i] < -99.99:
 			var1[i] = np.nan
-		elif var1[i] > 9999.99:
+		elif var1[i] > 99999.99:
 			var1[i] = np.nan
 		else:
 			var1[i] = np.nan
