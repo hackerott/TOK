@@ -23,6 +23,7 @@ import units
 import colors
 import meteogram
 import gcard
+import interpol
 import grid_select
 #######################################
 ##	GET form			
