@@ -73,6 +73,7 @@ def _get_metric(value, var_id):
 
 	else:
 		return(value, cur)
+	
 	try:
 		for i in range(0, len(value)):
 			if value[i] < 1 and value[i] > 0:
@@ -81,9 +82,7 @@ def _get_metric(value, var_id):
 				val = int(value[i]) #probably add to much error
 			out.append(val)
 	except:
-		if value == 'null':
-			val = value
-		elif value < 1 and value > 0:
+		if value < 1 and value > 0:
 			try:
 				val = int((value *10))/10.0
 			except:
