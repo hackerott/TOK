@@ -93,7 +93,10 @@ def _get_AREAP(var_raw, time, ix, iy, top_lim, bot_lim, ):
 			max_value[-1] = t_quartile
 		if np.isnan(min_value[-1]):
 			min_value[-1] = b_quartile
-		
+		if max_value[-1] > 9999.99:
+			max_value[-1] = t_quartile
+		if min_value[-1] < -99.99:
+			min_value[-1] = b_quartile
 	return(prob_g, prob_r, prob_y, value, max_value, min_value)
 
 ''' Bias test
