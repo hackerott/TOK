@@ -370,7 +370,8 @@ def _get_card(date, prob, color, value, maxi, mini, var_id, model, cur):
 
 	elif var_id == 3:
 		# for i in range(0, len(value)):
-		values = {"temperature"	:	value[-1],
+		val = int(value)
+		values = {"temperature"	:	"%.0f," %value,
 			  "max"		:	"%.0f" %maxi,
 			  "min"		:	"%.0f"%mini,}
 
@@ -403,7 +404,7 @@ def _get_card(date, prob, color, value, maxi, mini, var_id, model, cur):
 
 	elif var_id == 4:
 		# for i in range(0, len(value)):
-		values = {"radiation"	:	"%.0f," %value[],
+		values = {"radiation"	:	"%.0f," %value,
 			  "max"		:	"%.0f" %maxi,
 			  "min"		:	"%.0f"%mini,}
 		units = {"radiation" : {
@@ -429,7 +430,7 @@ def _get_card(date, prob, color, value, maxi, mini, var_id, model, cur):
 
 	elif var_id == 5:
 		# for i in range(0, len(value)):
-		values = {"humidity"	:	"%.0f" %value[-1],
+		values = {"humidity"	:	"%.0f" %value,
 			  "max"		:	"%.0f" %maxi,
 			  "min"		:	"%.0f"%mini,}
 		units = {"humidity" : {
