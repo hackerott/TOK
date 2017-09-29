@@ -82,20 +82,23 @@ def _get_metric(value, var_id):
 				val = int(value[i]) #probably add to much error
 			out.append(val)
 	except:
-		for val in value:
-			try:
-				if val.any() < 1 and val.any() > 0:
-					try:
-						val = int((val *10))/10.0
-					except:
-						val = val
-				else:
-					try:
-						val = int(val) #probably add to much error
-					except:
-						val = val
-				out.append(val)
-			except:
-				out.append(val)
+		try:
+			for val in value:
+				try:
+					if val.any() < 1 and val.any() > 0:
+						try:
+							val = int((val *10))/10.0
+						except:
+							val = val
+					else:
+						try:
+							val = int(val) #probably add to much error
+						except:
+							val = val
+					out.append(val)
+				except:
+					out.append(val)
+		except:
+			out = value			
 		out = np.array(out)
 	return(out, cur)
