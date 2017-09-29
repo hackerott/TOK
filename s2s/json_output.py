@@ -457,7 +457,7 @@ def _get_card(date, prob, color, value, maxi, mini, var_id, model, cur):
 
 	elif var_id == 6:
 		# for i in range(0, len(value)):
-		values = {"figures"	:	'%s', %value,}
+		values = {"figures"	:	'%s' %value,}
 		units = {"figures" : {
                 "current" : cur,
                 "label" : "cond_figures",
