@@ -7,28 +7,34 @@ from scipy.interpolate import interp1d
 
 #######################################
 def _get_gfs_days(val, dat):
-	value = []
-	for i in range(0, len(val)):
-		if val[i] > 9999.99:
-			value.append(np.nan)
-		elif val[i] < -99.99:
-			value.append(np.nan)
-		else:
-			value.append(val[i])
-	value = np.array(value)
-	index = np.arange(len(value))
 	try:
-		not_nan = np.logical_not(np.isnan(value))
-		out = interp1d(index[not_nan], value[not_nan], bounds_error=False)
-		out = out(index)
+		value = []
+		for i in range(0, len(val)):
+			if val[i] > 9999.99:
+				value.append(np.nan)
+			elif val[i] < -99.99:
+				value.append(np.nan)
+			else:
+				value.append(val[i])
+		value = np.array(value)
+		index = np.arange(len(value))
+		try:
+			not_nan = np.logical_not(np.isnan(value))
+			out = interp1d(index[not_nan], value[not_nan], bounds_error=False)
+			out = out(index)
+		except:
+			out = value
+		out1 = []
+		date = []
+		for i in range(0, len(dat)):
+			if np.invert(np.isnan(out[i])):
+				out1.append(out[i])
+				date.append(dat[i])
 	except:
-		out = value
-	out1 = []
-	date = []
-	for i in range(0, len(dat)):
-		if np.invert(np.isnan(out[i])):
-			out1.append(out[i])
-			date.append(dat[i])
+		if np.invert(np.isnan(val)):
+			out1 = val
+		else:
+			out1 = 'Null'
 	return(out1, date)
 
 #######################################
@@ -53,28 +59,34 @@ def _get_cfs_days(val, dat):
 
 #######################################
 def _get_wrf_days(val, dat):
-	value = []
-	for i in range(0, len(val)):
-		if val[i] > 9999.99:
-			value.append(np.nan)
-		elif val[i] < -99.99:
-			value.append(np.nan)
-		else:
-			value.append(val[i])
-	value = np.array(value)
-	index = np.arange(len(value))
 	try:
-		not_nan = np.logical_not(np.isnan(value))
-		out = interp1d(index[not_nan], value[not_nan], bounds_error=False)
-		out = out(index)
+		value = []
+		for i in range(0, len(val)):
+			if val[i] > 9999.99:
+				value.append(np.nan)
+			elif val[i] < -99.99:
+				value.append(np.nan)
+			else:
+				value.append(val[i])
+		value = np.array(value)
+		index = np.arange(len(value))
+		try:
+			not_nan = np.logical_not(np.isnan(value))
+			out = interp1d(index[not_nan], value[not_nan], bounds_error=False)
+			out = out(index)
+		except:
+			out = value
+		out1 = []
+		date = []
+		for i in range(0, len(dat)):
+			if np.invert(np.isnan(out[i])):
+				out1.append(out[i])
+				date.append(dat[i])
 	except:
-		out = value
-	out1 = []
-	date = []
-	for i in range(0, len(dat)):
-		if np.invert(np.isnan(out[i])):
-			out1.append(out[i])
-			date.append(dat[i])
+		if np.invert(np.isnan(val)):
+			out1 = val
+		else:
+			out1 = 'Null'
 	return(out1, date)
 
 #######################################
