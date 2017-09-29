@@ -259,5 +259,4 @@ else:
 	color = colors._get_CFS(prob)
 	success, dic = json_output._get_OUT(date, prob, alert, color, value, maxi, mini, model, var_id, cur)
 	print json.dumps(dic)
-#	print dic
 	exit(0)
