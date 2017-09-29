@@ -63,8 +63,8 @@ def DATA_cfs_card(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, i
 			color.append((np.argmax(prob_c) + 1))
 			value.append((2*value_t  +  value_a)/3)
 		prob.append(prob_c[np.argmax(prob_c)])
-		maxi.append(max(max_v))
-		mini.append(min(min_v))
+		maxi.append(max_v)
+		mini.append(min_v)
 		date.append(d1)
 		fig.append('Null')
 		a += 4
@@ -127,8 +127,8 @@ def DATA_gfs_card(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 
 		value.append(result_prov)
 		prob.append(prob_c[np.argmax(prob_c)])		
-		maxi.append(max(max_v))
-		mini.append(min(min_v))
+		maxi.append(max_v)
+		mini.append(min_v)
 
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i*24) + datetime.timedelta(hours = utc0)
 		a += 24
@@ -189,8 +189,8 @@ def DATA_wrf_card(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO):
 			value.append((2*value_t  +  value_a)/3)
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
 		prob.append(prob_c[np.argmax(prob_c)])		
-		maxi.append(max(max_v))
-		mini.append(min(min_v))
+		maxi.append(max_v)
+		mini.append(min_v)
 		date.append(d1)
 		a += 24
 		b += 24
