@@ -370,12 +370,9 @@ def _get_card(date, prob, color, value, maxi, mini, var_id, model, cur):
 
 	elif var_id == 3:
 		# for i in range(0, len(value)):
-#		values = {"temperature"	:	"%.0f" %value[-1],
-		values = {"temperature"	:	0,
-#			  "max"		:	"%.0f" %maxi,
-			  "max"		:	0,
-#			  "min"		:	"%.0f"%mini,}
-			  "min"		:	0,}
+		values = {"temperature"	:	"%.0f" %value,
+			  "max"		:	"%.0f" %maxi,
+			  "min"		:	"%.0f"%mini,}
 
 		units = {
 			"temperature" : {
@@ -399,7 +396,7 @@ def _get_card(date, prob, color, value, maxi, mini, var_id, model, cur):
 					"endDate" : date.strftime('%Y-%m-%d %H:00:00'),
 					"units" : units,
 					"values" : values,
-					"message" : "Card OK!",
+					"message" : "Card OK!################################",
 					"status" : 0 
 					}}
 		success = True
