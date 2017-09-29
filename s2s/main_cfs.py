@@ -255,7 +255,6 @@ else:
 		value, cur = units._get_metric(value, var_id)
 		maxi, cur = units._get_metric(maxi, var_id)
 		mini, cur = units._get_metric(mini, var_id)
-	cur = unit
 	alert = colors._get_ALERT(alert)
 	color = colors._get_CFS(prob)
 	success, dic = json_output._get_OUT(date, prob, alert, color, value, maxi, mini, model, var_id, cur)
