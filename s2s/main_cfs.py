@@ -91,7 +91,6 @@ if var_id == 1 :
 		date, prob, alert, value, maxi, mini = gcard.DATA_cfs_gcard(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
 	else:
 		success = json_output._get_ERROR(var_id, model) 
-		exit(1)
 
 elif var_id == 2:
 	var_rawa1, var_rawb1 = cfs_var._get_wind(var, ens1)
@@ -115,7 +114,6 @@ elif var_id == 2:
 		date, prob, alert, value, maxi, mini = gcard.DATA_cfs_gcard(var_rawa1, var_rawa2, var_rawa3, var_rawa4, var_rawa5, var_rawa6, var_rawa7, var_rawa8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
 	else:
 		success = json_output._get_ERROR(var_id, model) 
-		exit(1)
 
 elif var_id == 3:
 	var_raw1 = cfs_var._get_temperature(var, ens1)
