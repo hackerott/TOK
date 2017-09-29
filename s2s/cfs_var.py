@@ -142,7 +142,6 @@ def _get_temperature(var,  ncfile):
 def _get_radiation(var, ncfile):
 	try:
 		var_nc = _get_NCVAR(var)
-		ncfile = netCDF4.Dataset(ncfile, 'r')
 		var_raw1 = ncfile.variables[var_nc]
 		var_raw1 = np.around(var_raw1, decimals=2)
 	except:
