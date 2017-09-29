@@ -297,9 +297,9 @@ def _get_card(date, prob, color, value, maxi, mini, var_id, model, cur):
 
 	if var_id == 1 :
 		# for i in range(0, len(value)):
-		values = {"rain"	:	[value], 
-			  "max"		:	[maxi],
-			  "min"		:	[mini],}
+		values = {"rain"	:	value, 
+			  "max"		:	"%.0f" %maxi,
+			  "min"		:	"%.0f" %mini,}
 
 		units = {"rain" : {                "current" : cur,
                 "label" : "rain",
@@ -370,7 +370,7 @@ def _get_card(date, prob, color, value, maxi, mini, var_id, model, cur):
 
 	elif var_id == 3:
 		# for i in range(0, len(value)):
-		values = {"temperature"	:	[value],
+		values = {"temperature"	:	value,
 			  "max"		:	"%.0f" %maxi,
 			  "min"		:	"%.0f"%mini,}
 
@@ -403,7 +403,7 @@ def _get_card(date, prob, color, value, maxi, mini, var_id, model, cur):
 
 	elif var_id == 4:
 		# for i in range(0, len(value)):
-		values = {"radiation"	:	[value],
+		values = {"radiation"	:	value,
 			  "max"		:	"%.0f" %maxi,
 			  "min"		:	"%.0f"%mini,}
 		units = {"radiation" : {
@@ -429,7 +429,7 @@ def _get_card(date, prob, color, value, maxi, mini, var_id, model, cur):
 
 	elif var_id == 5:
 		# for i in range(0, len(value)):
-		values = {"humidity"	:	[value],
+		values = {"humidity"	:	value,
 			  "max"		:	"%.0f" %maxi,
 			  "min"		:	"%.0f"%mini,}
 		units = {"humidity" : {
@@ -456,7 +456,7 @@ def _get_card(date, prob, color, value, maxi, mini, var_id, model, cur):
 
 	elif var_id == 6:
 		# for i in range(0, len(value)):
-		values = {"figures"	:	[value]}
+		values = {"figures"	:	value}
 		units = {"figures" : {
                 "current" : cur,
                 "label" : "cond_figures",
