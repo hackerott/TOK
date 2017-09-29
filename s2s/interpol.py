@@ -35,6 +35,7 @@ def _get_gfs_days(val, dat):
 			out1 = val
 		else:
 			out1 = 'Null'
+		date = dat
 	return(out1, date)
 
 #######################################
@@ -87,6 +88,7 @@ def _get_wrf_days(val, dat):
 			out1 = val
 		else:
 			out1 = 'Null'
+		date = dat
 	return(out1, date)
 
 #######################################
