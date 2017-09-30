@@ -297,9 +297,9 @@ def _get_card(date, prob, color, value, maxi, mini, var_id, model, cur):
 
 	if var_id == 1 :
 		# for i in range(0, len(value)):
-		values = {"rain"	:	"%.0f" %value, 
-			  "max"		:	"%.0f" %maxi,
-			  "min"		:	"%.0f" %mini,}
+		values = {"rain"	:	"%.1f" %value, 
+			  "max"		:	"%.1f" %maxi,
+			  "min"		:	"%.1f" %mini,}
 
 		units = {"rain" : {                "current" : cur,
                 "label" : "rain",
