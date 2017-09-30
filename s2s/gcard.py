@@ -75,8 +75,8 @@ def DATA_gfs_gcard(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO, v
 		if var_id == 1:
 #			value_a	= (np.subtract(value_a1[b], value_a1[a]))
 #			value_t	= (np.subtract(value_t1[b], value_t1[a]))
-			value_a = np.add(value_a1[a:b]
-			value_t = np.add(value_t1[a:b]
+			value_a = np.add(value_a1[a:b])
+			value_t = np.add(value_t1[a:b])
 			value_p	= ((2*value_t  +  value_a)/3)
 		elif var_id == 2:
 			if np.isnan(max_v):
