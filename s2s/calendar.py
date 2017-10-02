@@ -36,12 +36,12 @@ def DATA_cfs_calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCF
 	b = 4
 	result_prov = 0
 	for i in range(0, max_i//4):
-		prob_a_g = (np.nanmean(prob_a_g1[a:b]) + np.nanmean(prob_a_g2[a:b]) + np.nanmean(prob_a_g3[a:b]) + np.nanmean(prob_a_g4[a:b]))/4
-		prob_t_g = (np.nanmean(prob_t_g1[a:b]) + np.nanmean(prob_t_g2[a:b]) + np.nanmean(prob_t_g3[a:b]) + np.nanmean(prob_t_g4[a:b]))/4
-		prob_a_r = (np.nanmean(prob_a_r1[a:b]) + np.nanmean(prob_a_r2[a:b]) + np.nanmean(prob_a_r3[a:b]) + np.nanmean(prob_a_r4[a:b]))/4
-		prob_t_r = (np.nanmean(prob_t_r1[a:b]) + np.nanmean(prob_t_r2[a:b]) + np.nanmean(prob_t_r3[a:b]) + np.nanmean(prob_t_r4[a:b]))/4
-		prob_a_y = (np.nanmean(prob_a_y1[a:b]) + np.nanmean(prob_a_y2[a:b]) + np.nanmean(prob_a_y3[a:b]) + np.nanmean(prob_a_y4[a:b]))/4
-		prob_t_y = (np.nanmean(prob_t_y1[a:b]) + np.nanmean(prob_t_y2[a:b]) + np.nanmean(prob_t_y3[a:b]) + np.nanmean(prob_t_y4[a:b]))/4
+		prob_a_g = ((np.nanmean(prob_a_g1[a:b]) + np.nanmax(prob_a_g1[a:b]))/2 + (np.nanmean(prob_a_g2[a:b]) + np.nanmax(prob_a_g2[a:b]))/2 + (np.nanmean(prob_a_g3[a:b]) + np.nanmax(prob_a_g3[a:b]))/2 + (np.nanmean(prob_a_g4[a:b]) + np.nanmax(prob_a_g4[a:b]))/2)/4
+		prob_t_g = ((np.nanmean(prob_t_g1[a:b]) + np.nanmax(prob_t_g1[a:b]))/2 + (np.nanmean(prob_t_g2[a:b]) + np.nanmax(prob_t_g2[a:b]))/2 + (np.nanmean(prob_t_g3[a:b]) + np.nanmax(prob_t_g3[a:b]))/2 + (np.nanmean(prob_t_g4[a:b]) + np.nanmax(prob_t_g4[a:b]))/2)/4
+		prob_a_r = ((np.nanmean(prob_a_r1[a:b]) + np.nanmax(prob_a_r1[a:b]))/2 + (np.nanmean(prob_a_r2[a:b]) + np.nanmax(prob_a_r2[a:b]))/2 + (np.nanmean(prob_a_r3[a:b]) + np.nanmax(prob_a_r3[a:b]))/2 + (np.nanmean(prob_a_r4[a:b]) + np.nanmax(prob_a_r4[a:b]))/2)/4
+		prob_t_r = ((np.nanmean(prob_t_r1[a:b]) + np.nanmax(prob_t_r1[a:b]))/2 + (np.nanmean(prob_t_r2[a:b]) + np.nanmax(prob_t_r2[a:b]))/2 + (np.nanmean(prob_t_r3[a:b]) + np.nanmax(prob_t_r3[a:b]))/2 + (np.nanmean(prob_t_r4[a:b]) + np.nanmax(prob_t_r4[a:b]))/2)/4
+		prob_a_y = ((np.nanmean(prob_a_y1[a:b]) + np.nanmax(prob_a_y1[a:b]))/2 + (np.nanmean(prob_a_y2[a:b]) + np.nanmax(prob_a_y2[a:b]))/2 + (np.nanmean(prob_a_y3[a:b]) + np.nanmax(prob_a_y3[a:b]))/2 + (np.nanmean(prob_a_y4[a:b]) + np.nanmax(prob_a_y4[a:b]))/2)/4
+		prob_t_y = ((np.nanmean(prob_t_y1[a:b]) + np.nanmax(prob_t_y1[a:b]))/2 + (np.nanmean(prob_t_y2[a:b]) + np.nanmax(prob_t_y2[a:b]))/2 + (np.nanmean(prob_t_y3[a:b]) + np.nanmax(prob_t_y3[a:b]))/2 + (np.nanmean(prob_t_y4[a:b]) + np.nanmax(prob_t_y4[a:b]))/2)/4
 		if var_id == 1:
 			value_a = (np.nansum(value_a1[a:b]) + np.nansum(value_a2[a:b]) + np.nansum(value_a3[a:b]) + np.nansum(value_a4[a:b]))/4
 			value_t = (np.nansum(value_t1[a:b]) + np.nansum(value_t2[a:b]) + np.nansum(value_t3[a:b]) + np.nansum(value_t4[a:b]))/4
@@ -152,12 +152,12 @@ def DATA_wrf_calendar(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO
 	a = 0
 	b = 24
 	for i in range(0, max_i//24):
-		prob_a_g	= (np.nanmean(prob_a_g1[a:b]))
-		prob_t_g 	= (np.nanmean(prob_t_g1[a:b]))
-		prob_a_r 	= (np.nanmean(prob_a_r1[a:b]))
-		prob_t_r	= (np.nanmean(prob_t_r1[a:b]))
-		prob_a_y	= (np.nanmean(prob_a_y1[a:b]))
-		prob_t_y	= (np.nanmean(prob_t_y1[a:b]))
+		prob_a_g	= (np.nanmean(prob_a_g1[a:b])+ np.nanmax(prob_a_g1[a:b]))/2
+		prob_t_g 	= (np.nanmean(prob_t_g1[a:b])+ np.nanmax(prob_t_g1[a:b]))/2
+		prob_a_r 	= (np.nanmean(prob_a_r1[a:b])+ np.nanmax(prob_a_r1[a:b]))/2
+		prob_t_r	= (np.nanmean(prob_t_r1[a:b])+ np.nanmax(prob_t_r1[a:b]))/2
+		prob_a_y	= (np.nanmean(prob_a_y1[a:b])+ np.nanmax(prob_a_y1[a:b]))/2
+		prob_t_y	= (np.nanmean(prob_t_y1[a:b])+ np.nanmax(prob_t_y1[a:b]))/2
 
 		if var_id == 1: # and var_id == 4:
 			value_a = np.nansum(value_a1[a:b])
