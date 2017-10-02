@@ -97,11 +97,11 @@ def DATA_gfs_calendar(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO
 	b = 24
 	for i in range(0, max_i//24):
 		prob_a_g	= (np.nanmean(prob_a_g1[a:b])+ np.nanmax(prob_a_g1[a:b]))/2
-		prob_t_g 	= (np.nanmean(prob_t_g1[a:b]))
+		prob_t_g 	= (np.nanmean(prob_t_g1[a:b])+ np.nanmax(prob_t_g1[a:b]))/2
 		prob_a_r 	= (np.nanmean(prob_a_r1[a:b])+ np.nanmax(prob_a_r1[a:b]))/2
-		prob_t_r	= (np.nanmean(prob_t_r1[a:b]))
+		prob_t_r	= (np.nanmean(prob_t_r1[a:b])+ np.nanmax(prob_t_r1[a:b]))/2
 		prob_a_y	= (np.nanmean(prob_a_y1[a:b])+ np.nanmax(prob_a_y1[a:b]))/2
-		prob_t_y	= (np.nanmean(prob_t_y1[a:b]))
+		prob_t_y	= (np.nanmean(prob_t_y1[a:b])+ np.nanmax(prob_t_y1[a:b]))/2
 
 		if var_id == 1: # and var_id == 4:
 			value_a = np.nansum(value_a1[a:b])
