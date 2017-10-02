@@ -32,8 +32,10 @@ def DATA_cfs_gcard(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, 
 		max_v = max(np.nanmax(max_t1[a:b]), np.nanmax(max_t2[a:b]), np.nanmax(max_t3[a:b]), np.nanmax(max_t4[a:b]),np.nanmax(max_a1[a:b]), np.nanmax(max_a2[a:b]), np.nanmax(max_a3[a:b]),np.nanmax(max_a4[a:b]))
 		min_v = min(np.nanmin(min_t1[a:b]), np.nanmin(min_t2[a:b]), np.nanmin(min_t3[a:b]), np.nanmin(min_t4[a:b]), np.nanmin(min_a1[a:b]), np.nanmin(min_a2[a:b]), np.nanmin(min_a3[a:b]), np.nanmin(min_a4[a:b]))
 		if var_id == 1:
-			value_a = (np.subtract(value_a1[b], value_a1[a]) + np.subtract(value_a2[b], value_a2[a]) + np.subtract(value_a3[b], value_a3[a]) + np.subtract(value_a4[b], value_a4[a]))/4
-			value_t = (np.subtract(value_t1[b], value_t1[a]) + np.subtract(value_t2[b], value_t2[a]) + np.subtract(value_t3[b], value_t3[a]) + np.subtract(value_t4[b], value_t4[a]))/4
+#			value_a = (np.subtract(value_a1[b], value_a1[a]) + np.subtract(value_a2[b], value_a2[a]) + np.subtract(value_a3[b], value_a3[a]) + np.subtract(value_a4[b], value_a4[a]))/4
+#			value_t = (np.subtract(value_t1[b], value_t1[a]) + np.subtract(value_t2[b], value_t2[a]) + np.subtract(value_t3[b], value_t3[a]) + np.subtract(value_t4[b], value_t4[a]))/4
+			value_a = (np.nansum(value_a1[a:b]) + np.nansum(value_a2[a:b]) + np.nansum(value_a3[a:b]) + np.nansum(value_a4[a:b]))/4
+			value_t = (np.nansum(value_t1[a:b]) + np.nansum(value_t2[a:b]) + np.nansum(value_t3[a:b]) + np.nansum(value_t4[a:b]))/4
 			value_p 	= ((2*value_t  +  value_a)/3)
 		elif var_id == 2:
 			value_p = max_v
@@ -75,8 +77,8 @@ def DATA_gfs_gcard(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO, v
 		if var_id == 1:
 #			value_a	= (np.subtract(value_a1[b], value_a1[a]))
 #			value_t	= (np.subtract(value_t1[b], value_t1[a]))
-			value_a = np.sum(value_a1[a:b])
-			value_t = np.sum(value_t1[a:b])
+			value_a = np.nansum(value_a1[a:b])
+			value_t = np.nansum(value_t1[a:b])
 			value_p	= ((2*value_t  +  value_a)/3)
 		elif var_id == 2:
 			if np.isnan(max_v):
@@ -122,8 +124,8 @@ def DATA_wrf_gcard(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO, v
 		if var_id == 1:
 #			value_a		= (np.subtract(value_a1[b], value_a1[a]))
 #			value_t 	= (np.subtract(value_t1[b], value_t1[a]))
-			value_a = np.sum(value_a1[a:b])
-			value_t = np.sum(value_t1[a:b])
+			value_a = np.nansum(value_a1[a:b])
+			value_t = np.nansum(value_t1[a:b])
 			value_p 	= ((2*value_t  +  value_a)/3)
 		elif var_id == 2:
 			value_p = max_v
