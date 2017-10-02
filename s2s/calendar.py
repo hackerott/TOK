@@ -36,20 +36,20 @@ def DATA_cfs_calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCF
 	b = 4
 	result_prov = 0
 	for i in range(0, max_i//4):
-		prob_a_g = (np.mean(prob_a_g1[a:b]) + np.mean(prob_a_g2[a:b]) + np.mean(prob_a_g3[a:b]) + np.mean(prob_a_g4[a:b]))/4
-		prob_t_g = (np.mean(prob_t_g1[a:b]) + np.mean(prob_t_g2[a:b]) + np.mean(prob_t_g3[a:b]) + np.mean(prob_t_g4[a:b]))/4
-		prob_a_r = (np.mean(prob_a_r1[a:b]) + np.mean(prob_a_r2[a:b]) + np.mean(prob_a_r3[a:b]) + np.mean(prob_a_r4[a:b]))/4
-		prob_t_r = (np.mean(prob_t_r1[a:b]) + np.mean(prob_t_r2[a:b]) + np.mean(prob_t_r3[a:b]) + np.mean(prob_t_r4[a:b]))/4
-		prob_a_y = (np.mean(prob_a_y1[a:b]) + np.mean(prob_a_y2[a:b]) + np.mean(prob_a_y3[a:b]) + np.mean(prob_a_y4[a:b]))/4
-		prob_t_y = (np.mean(prob_t_y1[a:b]) + np.mean(prob_t_y2[a:b]) + np.mean(prob_t_y3[a:b]) + np.mean(prob_t_y4[a:b]))/4
+		prob_a_g = (np.nanmean(prob_a_g1[a:b]) + np.nanmean(prob_a_g2[a:b]) + np.nanmean(prob_a_g3[a:b]) + np.nanmean(prob_a_g4[a:b]))/4
+		prob_t_g = (np.nanmean(prob_t_g1[a:b]) + np.nanmean(prob_t_g2[a:b]) + np.nanmean(prob_t_g3[a:b]) + np.nanmean(prob_t_g4[a:b]))/4
+		prob_a_r = (np.nanmean(prob_a_r1[a:b]) + np.nanmean(prob_a_r2[a:b]) + np.nanmean(prob_a_r3[a:b]) + np.nanmean(prob_a_r4[a:b]))/4
+		prob_t_r = (np.nanmean(prob_t_r1[a:b]) + np.nanmean(prob_t_r2[a:b]) + np.nanmean(prob_t_r3[a:b]) + np.nanmean(prob_t_r4[a:b]))/4
+		prob_a_y = (np.nanmean(prob_a_y1[a:b]) + np.nanmean(prob_a_y2[a:b]) + np.nanmean(prob_a_y3[a:b]) + np.nanmean(prob_a_y4[a:b]))/4
+		prob_t_y = (np.nanmean(prob_t_y1[a:b]) + np.nanmean(prob_t_y2[a:b]) + np.nanmean(prob_t_y3[a:b]) + np.nanmean(prob_t_y4[a:b]))/4
 		if var_id == 1:
-			value_a = (np.sum(value_a1[a:b]) + np.sum(value_a2[a:b]) + np.sum(value_a3[a:b]) + np.sum(value_a4[a:b]))/4
-			value_t = (np.sum(value_t1[a:b]) + np.sum(value_t2[a:b]) + np.sum(value_t3[a:b]) + np.sum(value_t4[a:b]))/4
+			value_a = (np.nansum(value_a1[a:b]) + np.nansum(value_a2[a:b]) + np.nansum(value_a3[a:b]) + np.nansum(value_a4[a:b]))/4
+			value_t = (np.nansum(value_t1[a:b]) + np.nansum(value_t2[a:b]) + np.nansum(value_t3[a:b]) + np.nansum(value_t4[a:b]))/4
 			max_v = max(sum(max_t1[a:b]), sum(max_t2[a:b]), sum(max_t3[a:b]), sum(max_t4[a:b]), sum(max_a1[a:b]), sum(max_a2[a:b]), sum(max_a3[a:b]), sum(max_a4[a:b]))
 			min_v = min(sum(min_t1[a:b]), sum(min_t2[a:b]), sum(min_t3[a:b]), sum(min_t4[a:b]), sum(min_a1[a:b]), sum(min_a2[a:b]), sum(min_a3[a:b]), sum(min_a4[a:b]))
 		else:	
-			value_a = (np.mean(value_a1[a:b]) + np.mean(value_a2[a:b]) + np.mean(value_a3[a:b]) + np.mean(value_a4[a:b]))/4
-			value_t = (np.mean(value_t1[a:b]) + np.mean(value_t2[a:b]) + np.mean(value_t3[a:b]) + np.mean(value_t4[a:b]))/4
+			value_a = (np.nanmean(value_a1[a:b]) + np.nanmean(value_a2[a:b]) + np.nanmean(value_a3[a:b]) + np.nanmean(value_a4[a:b]))/4
+			value_t = (np.nanmean(value_t1[a:b]) + np.nanmean(value_t2[a:b]) + np.nanmean(value_t3[a:b]) + np.nanmean(value_t4[a:b]))/4
 			max_v = max(max(max_t1[a:b]), max(max_t2[a:b]), max(max_t3[a:b]), max(max_t4[a:b]),max(max_a1[a:b]), max(max_a2[a:b]), max(max_a3[a:b]),max(max_a4[a:b]))
 			min_v = min(min(min_t1[a:b]), min(min_t2[a:b]), min(min_t3[a:b]), min(min_t4[a:b]), min(min_a1[a:b]), min(min_a2[a:b]), min(min_a3[a:b]), min(min_a4[a:b]))
 
@@ -96,21 +96,21 @@ def DATA_gfs_calendar(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO
 	a = 0
 	b = 24
 	for i in range(0, max_i//24):
-		prob_a_g	= (np.mean(prob_a_g1[a:b]))
-		prob_t_g 	= (np.mean(prob_t_g1[a:b]))
-		prob_a_r 	= (np.mean(prob_a_r1[a:b]))
-		prob_t_r	= (np.mean(prob_t_r1[a:b]))
-		prob_a_y	= (np.mean(prob_a_y1[a:b]))
-		prob_t_y	= (np.mean(prob_t_y1[a:b]))
+		prob_a_g	= (np.nanmean(prob_a_g1[a:b]))
+		prob_t_g 	= (np.nanmean(prob_t_g1[a:b]))
+		prob_a_r 	= (np.nanmean(prob_a_r1[a:b]))
+		prob_t_r	= (np.nanmean(prob_t_r1[a:b]))
+		prob_a_y	= (np.nanmean(prob_a_y1[a:b]))
+		prob_t_y	= (np.nanmean(prob_t_y1[a:b]))
 
 		if var_id == 1: # and var_id == 4:
-			value_a = np.sum(value_a1[a:b])
-			value_t = np.sum(value_t1[a:b])
+			value_a = np.nansum(value_a1[a:b])
+			value_t = np.nansum(value_t1[a:b])
 			max_v		= max(sum(max_t1[a:b]), sum(max_a1[a:b]))
 			min_v		= min(sum(min_t1[a:b]), sum(min_a1[a:b]))
 		else:	
-			value_a		= (np.mean(value_a1[a:b]))
-			value_t 	= (np.mean(value_t1[a:b]))
+			value_a		= (np.nanmean(value_a1[a:b]))
+			value_t 	= (np.nanmean(value_t1[a:b]))
 			max_v		= max(max(max_t1[a:b]), max(max_a1[a:b]))
 			min_v		= min(min(min_t1[a:b]), min(min_a1[a:b]))
 
@@ -152,22 +152,22 @@ def DATA_wrf_calendar(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO
 	a = 0
 	b = 24
 	for i in range(0, max_i//24):
-		prob_a_g	= (np.mean(prob_a_g1[a:b]))
-		prob_t_g 	= (np.mean(prob_t_g1[a:b]))
-		prob_a_r 	= (np.mean(prob_a_r1[a:b]))
-		prob_t_r	= (np.mean(prob_t_r1[a:b]))
-		prob_a_y	= (np.mean(prob_a_y1[a:b]))
-		prob_t_y	= (np.mean(prob_t_y1[a:b]))
+		prob_a_g	= (np.nanmean(prob_a_g1[a:b]))
+		prob_t_g 	= (np.nanmean(prob_t_g1[a:b]))
+		prob_a_r 	= (np.nanmean(prob_a_r1[a:b]))
+		prob_t_r	= (np.nanmean(prob_t_r1[a:b]))
+		prob_a_y	= (np.nanmean(prob_a_y1[a:b]))
+		prob_t_y	= (np.nanmean(prob_t_y1[a:b]))
 
 		if var_id == 1: # and var_id == 4:
-			value_a = np.sum(value_a1[a:b])
-			value_t = np.sum(value_t1[a:b])
+			value_a = np.nansum(value_a1[a:b])
+			value_t = np.nansum(value_t1[a:b])
 			max_v		= max(sum(max_t1[a:b]), sum(max_a1[a:b]))
 			min_v		= min(sum(min_t1[a:b]), sum(min_a1[a:b]))
 
 		else:	
-			value_a		= (np.mean(value_a1[a:b]))
-			value_t 	= (np.mean(value_t1[a:b]))
+			value_a		= (np.nanmean(value_a1[a:b]))
+			value_t 	= (np.nanmean(value_t1[a:b]))
 			max_v		= max(max(max_t1[a:b]), max(max_a1[a:b]))
 			min_v		= min(min(min_t1[a:b]), min(min_a1[a:b]))
 

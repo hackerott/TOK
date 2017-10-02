@@ -42,14 +42,14 @@ def DATA_cfs_gcard(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, 
 		elif var_id == 3:
 			value_p = [max_v, min_v]
 		elif var_id == 4:
-			value_a = (np.mean(value_a1[a:b]) + np.mean(value_a2[a:b]) + np.mean(value_a3[a:b]) + np.mean(value_a4[a:b]))/4
-			value_t = (np.mean(value_t1[a:b]) + np.mean(value_t2[a:b]) + np.mean(value_t3[a:b]) + np.mean(value_t4[a:b]))/4
+			value_a = (np.nanmean(value_a1[a:b]) + np.nanmean(value_a2[a:b]) + np.nanmean(value_a3[a:b]) + np.nanmean(value_a4[a:b]))/4
+			value_t = (np.nanmean(value_t1[a:b]) + np.nanmean(value_t2[a:b]) + np.nanmean(value_t3[a:b]) + np.nanmean(value_t4[a:b]))/4
 			value_p 	= ((2*value_t  +  value_a)/3)
 		elif var_id == 5:
 			value_p = min_v
 		elif var_id == 6:
-			value_a = (np.mean(value_a1[a:b]) + np.mean(value_a2[a:b]) + np.mean(value_a3[a:b]) + np.mean(value_a4[a:b]))/4
-			value_t = (np.mean(value_t1[a:b]) + np.mean(value_t2[a:b]) + np.mean(value_t3[a:b]) + np.mean(value_t4[a:b]))/4
+			value_a = (np.nanmean(value_a1[a:b]) + np.nanmean(value_a2[a:b]) + np.nanmean(value_a3[a:b]) + np.nanmean(value_a4[a:b]))/4
+			value_t = (np.nanmean(value_t1[a:b]) + np.nanmean(value_t2[a:b]) + np.nanmean(value_t3[a:b]) + np.nanmean(value_t4[a:b]))/4
 			value_p 	= ((2*value_t  +  value_a)/3)
 		# value.append(int(value_p*10)/10.0)
 		value.append(value_p)
@@ -88,14 +88,14 @@ def DATA_gfs_gcard(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO, v
 		elif var_id == 3:
 			value_p = [max_v, min_v]
 		elif var_id == 4:
-			value_a	= np.mean(value_a1[a:b])
-			value_t	= np.mean(value_t1[a:b])
+			value_a	= np.nanmean(value_a1[a:b])
+			value_t	= np.nanmean(value_t1[a:b])
 			value_p	= ((2*value_t  +  value_a)/3)
 		elif var_id == 5:
 			value_p = min_v
 		elif var_id == 6:
-			value_a	= np.mean(value_a1[a:b])
-			value_t	= np.mean(value_t1[a:b])
+			value_a	= np.nanmean(value_a1[a:b])
+			value_t	= np.nanmean(value_t1[a:b])
 			value_p	= ((2*value_t  +  value_a)/3)
 		# value.append(int(value_p*10)/10.0)
 		value.append(value_p)
@@ -132,14 +132,14 @@ def DATA_wrf_gcard(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO, v
 		elif var_id == 3:
 			value_p = [max_v, min_v]
 		elif var_id == 4:
-			value_a		= np.mean(value_a1[a:b])
-			value_t 	= np.mean(value_t1[a:b])
+			value_a		= np.nanmean(value_a1[a:b])
+			value_t 	= np.nanmean(value_t1[a:b])
 			value_p 	= ((2*value_t  +  value_a)/3)
 		elif var_id == 5:
 			value_p = min_v
 		elif var_id == 6:
-			value_a		= np.mean(value_a1[a:b])
-			value_t 	= np.mean(value_t1[a:b])
+			value_a		= np.nanmean(value_a1[a:b])
+			value_t 	= np.nanmean(value_t1[a:b])
 			value_p 	= ((2*value_t  +  value_a)/3)
 		# value.append(int(value_p*10)/10.0)
 		value.append(value_p)
