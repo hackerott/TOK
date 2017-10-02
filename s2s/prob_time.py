@@ -22,7 +22,7 @@ def _get_Prob(var_raw1, var_raw2, iz, ix, iy, max_i, top_lim, bot_lim):
 			var1[i] = np.nan
 			var2[i] = np.nan
 
-		elif var1[i] > -99.99 and var1[i] < -99.99:  
+		elif var1[i] > -99.99 and var2[i] < -99.99:  
 			if var1[i] < top_lim:
 				prob_y[i] += 2	
 			if var1[i] < bot_lim:
@@ -31,7 +31,7 @@ def _get_Prob(var_raw1, var_raw2, iz, ix, iy, max_i, top_lim, bot_lim):
 				prob_r[i] += 2
 			var2[i] = np.nan
 
-		elif var1[i] < -99.99 and var1[i] > -99.99:  
+		elif var1[i] < -99.99 and var2[i] > -99.99:  
 			if var1[i] < top_lim:
 				prob_y[i] += 1	
 			if var1[i] < bot_lim:
@@ -44,7 +44,7 @@ def _get_Prob(var_raw1, var_raw2, iz, ix, iy, max_i, top_lim, bot_lim):
 			var1[i] = np.nan
 			var2[i] = np.nan
 
-		elif var1[i] < 99999.99 and var1[i] > 99999.99:  
+		elif var1[i] < 99999.99 and var2[i] > 99999.99:  
 			if var1[i] < top_lim:
 				prob_y[i] += 2	
 			if var1[i] < bot_lim:
@@ -53,7 +53,7 @@ def _get_Prob(var_raw1, var_raw2, iz, ix, iy, max_i, top_lim, bot_lim):
 				prob_r[i] += 2
 			var2[i] = np.nan
 
-		elif var1[i] > 99999.99 and var1[i] < 99999.99:  
+		elif var1[i] > 99999.99 and var2[i] < 99999.99:  
 			if var2[i] < top_lim:
 				prob_y[i] += 1	
 			if var2[i] < bot_lim:
