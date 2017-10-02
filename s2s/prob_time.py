@@ -54,11 +54,11 @@ def _get_Prob(var_raw1, var_raw2, iz, ix, iy, max_i, top_lim, bot_lim):
 			var2[i] = np.nan
 
 		elif var1[i] > 99999.99 and var1[i] < 99999.99:  
-			if var1[i] < top_lim:
+			if var2[i] < top_lim:
 				prob_y[i] += 1	
-			if var1[i] < bot_lim:
+			if var2[i] < bot_lim:
 				prob_g[i] += 1
-			if var1[i] >= top_lim:
+			if var2[i] >= top_lim:
 				prob_r[i] += 1
 			var1[i] = np.nan
 

@@ -45,8 +45,8 @@ def DATA_cfs_calendar(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCF
 		if var_id == 1:
 			value_a = (np.nansum(value_a1[a:b]) + np.nansum(value_a2[a:b]) + np.nansum(value_a3[a:b]) + np.nansum(value_a4[a:b]))/4
 			value_t = (np.nansum(value_t1[a:b]) + np.nansum(value_t2[a:b]) + np.nansum(value_t3[a:b]) + np.nansum(value_t4[a:b]))/4
-			max_v = max(sum(max_t1[a:b]), sum(max_t2[a:b]), sum(max_t3[a:b]), sum(max_t4[a:b]), sum(max_a1[a:b]), sum(max_a2[a:b]), sum(max_a3[a:b]), sum(max_a4[a:b]))
-			min_v = min(sum(min_t1[a:b]), sum(min_t2[a:b]), sum(min_t3[a:b]), sum(min_t4[a:b]), sum(min_a1[a:b]), sum(min_a2[a:b]), sum(min_a3[a:b]), sum(min_a4[a:b]))
+			max_v = max(np.nansum(max_t1[a:b]), np.nansum(max_t2[a:b]), np.nansum(max_t3[a:b]), np.nansum(max_t4[a:b]), np.nansum(max_a1[a:b]), np.nansum(max_a2[a:b]), np.nansum(max_a3[a:b]), np.nansum(max_a4[a:b]))
+			min_v = min(np.nansum(min_t1[a:b]), np.nansum(min_t2[a:b]), np.nansum(min_t3[a:b]), np.nansum(min_t4[a:b]), np.nansum(min_a1[a:b]), np.nansum(min_a2[a:b]), np.nansum(min_a3[a:b]), np.nansum(min_a4[a:b]))
 		else:	
 			value_a = (np.nanmean(value_a1[a:b]) + np.nanmean(value_a2[a:b]) + np.nanmean(value_a3[a:b]) + np.nanmean(value_a4[a:b]))/4
 			value_t = (np.nanmean(value_t1[a:b]) + np.nanmean(value_t2[a:b]) + np.nanmean(value_t3[a:b]) + np.nanmean(value_t4[a:b]))/4
@@ -106,8 +106,8 @@ def DATA_gfs_calendar(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO
 		if var_id == 1: # and var_id == 4:
 			value_a = np.nansum(value_a1[a:b])
 			value_t = np.nansum(value_t1[a:b])
-			max_v		= max(sum(max_t1[a:b]), sum(max_a1[a:b]))
-			min_v		= min(sum(min_t1[a:b]), sum(min_a1[a:b]))
+			max_v		= max(np.nansum(max_t1[a:b]), np.nansum(max_a1[a:b]))
+			min_v		= min(np.nansum(min_t1[a:b]), np.nansum(min_a1[a:b]))
 		else:	
 			value_a		= (np.nanmean(value_a1[a:b]))
 			value_t 	= (np.nanmean(value_t1[a:b]))
@@ -162,8 +162,8 @@ def DATA_wrf_calendar(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO
 		if var_id == 1: # and var_id == 4:
 			value_a = np.nansum(value_a1[a:b])
 			value_t = np.nansum(value_t1[a:b])
-			max_v		= max(sum(max_t1[a:b]), sum(max_a1[a:b]))
-			min_v		= min(sum(min_t1[a:b]), sum(min_a1[a:b]))
+			max_v		= max(np.nansum(max_t1[a:b]), np.nansum(max_a1[a:b]))
+			min_v		= min(np.nansum(min_t1[a:b]), np.nansum(min_a1[a:b]))
 
 		else:	
 			value_a		= (np.nanmean(value_a1[a:b]))
