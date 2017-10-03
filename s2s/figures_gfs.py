@@ -10,7 +10,7 @@ filename = "/var/www/html/figuras/03GFSD10001"+startdate.strftime('%Y%m%d%H')+".
 while os.path.isfile(filename) != True:
 	startdate = startdate + datetime.timedelta(hours=1)
         filename = "/var/www/html/figuras/03GFSD10001"+startdate.strftime('%Y%m%d%H')+".jpg"
-enddate = datetime.datetime.now() + datetime.timedelta(days=5)
+enddate = datetime.datetime.now() + datetime.timedelta(days=10)
 filename = "/var/www/html/figuras/03GFSD10001"+enddate.strftime('%Y%m%d%H')+".jpg"
 while os.path.isfile(filename) != True:
         enddate = enddate - datetime.timedelta(hours=1)

@@ -76,13 +76,8 @@ def DATA_gfs_table(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 		prob.append(prob_c[np.argmax(prob_c)])		
 		maxi.append(max_v)
 		mini.append(min_v)
-		if b <= max_i - 24:
-			d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = b) + datetime.timedelta(hours = utc0)
-			b += 1
-		else:
-			d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = b) + datetime.timedelta(hours = utc0)
-			b += 4
-
+		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i) + datetime.timedelta(hours = utc0)
+	
 		date.append(d1)
 	return(date, prob, color, value, maxi, mini)	
 
