@@ -26,6 +26,7 @@ def _get_imperial(value, var_id):
 			value = np.multiply(value, 2.23694)
 	elif var_id == 3:	
 		if len(value[1]) > 0: ## ugly fix 
+			value = np.array(value)
 			for i, val in enumerate(value):
 				val1 = (val[0] * 1.8) + 32
 				val2 = (val[1] * 1.8) + 32
