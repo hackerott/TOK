@@ -244,11 +244,12 @@ elif var_id == 6:
 else:
 	if model == "meteo":
 		time  	 = gfs_var._get_time('time', ens1)
-		clou1, pres1, temp1, humi1, rain1, wind1, dew1, cape1, gust1 = gfs_var._get_meteo('meteo', ens1)
-		clou2, pres2, temp2, humi2, rain2, wind2, dew2, cape2, gust2 = gfs_var._get_meteo('meteo', ens2)
+		clou1, pres1, temp1, humi1, rain1, wind1, direction1, dew1, cape1, gust1 = gfs_var._get_meteo('meteo', ens1)
+		clou2, pres2, temp2, humi2, rain2, wind2, direction2, dew2, cape2, gust2 = gfs_var._get_meteo('meteo', ens2)
 		# clou2, pres2, temp2, humi2, rain2, wind2, dew2, cape2, gust2 = 	clou1, pres1, temp1, humi1, rain1, wind1, dew1, cape1, gust1
 		# iz = 0
-		date, prob, alert, value, maxi, mini = meteogram.DATA_gfs_meteo(temp1, temp2, wind1, wind2, humi1, humi2, clou1, clou2, rain1, rain2, pres1, pres2, cape1, cape2, dew1, dew2, time, ix_gfs, iy_gfs, date0, utc0, iz)
+		date, prob, alert, value, maxi, mini = meteogram.DATA_gfs_meteo(temp1, temp2, wind1, wind2, humi1, humi2, clou1, clou2, 
+															rain1, rain2, pres1, pres2, cape1, cape2, dew1, dew2, time, ix_gfs, iy_gfs, date0, utc0, 24)
 	else:
 		success, dic = json_output._get_ERROR(var_id, model)
 	# print "Content-type: application/json\n\n"
