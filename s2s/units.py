@@ -25,7 +25,13 @@ def _get_imperial(value, var_id):
 		except:
 			value = np.multiply(value, 2.23694)
 	elif var_id == 3:	
-		value = np.add(np.multiply(value, 1.8), 32)
+		if len(value[1]) > 0: ## ugly fix 
+			value1 = np.add(np.multiply(value[:,0], 1.8), 32)
+			value2 = np.add(np.multiply(value[:,1], 1.8), 32)
+			for i, val in enumerate(value1):
+				value[i] = [val, value2[i]]
+		else:
+			value = np.add(np.multiply(value, 1.8), 32)
 	elif var_id <= 5:	
 		cur = "metric"
 		value = value
