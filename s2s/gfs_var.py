@@ -184,20 +184,37 @@ def _get_humidity(var, ncfile):
 		var_raw1 = np.nan
 	return (var_raw1)
 def _get_meteo(var, ncfile):
+	var_nc = _get_NCVAR(var)
 	try:
-		var_nc = _get_NCVAR(var)
 		var_raw1 = ncfile.variables[var_nc[0]]
 		var_raw1 = np.divide(var_raw1, 100)
+	except:
+		var_raw1 = np.nan	
+	try:
 		var_raw2 = ncfile.variables[var_nc[1]]
+	except:
+		var_raw2 = np.nan
+	try:	
 		var_raw3 = _get_temperature('temp', ncfile)
+	except:
+		var_raw3 = np.nan
+	try:
 		var_raw4 = _get_humidity('umidade', ncfile)
+	except:
+		var_raw4 = np.nan
+	try:
 		var_raw5 = _get_rain('chuva', ncfile)
+	except:
+		var_raw5 = np.nan
+	try:
 		var_raw6, var_raw7 = _get_wind('vento', ncfile)
-
+	except:
+		var_raw6, var_raw7 = np.nan, np.nan
+	try:		
 		gamma = np.add(np.log(np.divide(var_raw4, 100)), np.divide(np.multiply(17.67, var_raw3), np.add(var_raw3, 243.5)))
 		var_raw8 = np.divide(np.multiply(243.5, gamma), np.subtract(17.67, gamma))
 	except:
-		var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8 = np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan
+		var_raw8 = np.nan
 	ncfile.close
 	return(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, 'null', 'null')
 
