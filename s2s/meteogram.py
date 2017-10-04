@@ -182,7 +182,7 @@ def DATA_wrf_meteo(temp1, temp2, wind1, wind2, humi1, humi2, cloud1, cloud2, rai
 	b = 0
 	cape = 'null'
 	gust = 'null'
-	max_i  = min(max_i, len(temp_p), len(wind_p), len(humi_p), len(cloud_p), len(rain_p), len(pres_p), len(dew_p))
+	max_i  = max(max_i, len(temp_p), len(wind_p), len(humi_p), len(cloud_p), len(rain_p), len(pres_p), len(dew_p))
 	for i in range(0, max_i):
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i) + datetime.timedelta(hours = utc0)
 		date.append(d1)
