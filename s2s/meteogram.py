@@ -83,13 +83,12 @@ def DATA_gfs_meteo(temp1, temp2, wind1, wind2, humi1, humi2, cloud1, cloud2, rai
 	dew_p,	fill = interpol._get_gfs_days(dew_p, fill)
 	# cape_p,	date = interpol._get_gfs_days(cape_p, fill)
 	# gust_p,	date = interpol._get_gfs_days(gust_p, fill)					
-	for i in range(0, len(fill)):
+	del fill 
+	max_i  = min(max_i, len(temp_p), len(wind_p), len(humi_p), len(cloud_p), len(rain_p), len(pres_p), len(dew_p))
+	for i in range(0, max_i):
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i) + datetime.timedelta(hours = utc0)
 		date.append(d1)
-		try:
-			value.append([int(temp_p[i]*10)/10.0, int(wind_p[i]*10)/10.0, int(humi_p[i]*10)/10.0, int(cloud_p[i]*100), int(rain_p[i]*10)/10.0, int(pres_p[i]*10)/10.0, int(dew_p[i]*10)/10.0, cape, gust])
-		except:
-			value.append([temp_p[i], wind_p[i], humi_p[i], cloud_p[i], rain_p[i], pres_p[i], dew_p[i], cape, gust])	
+		value.append([int(temp_p[i]*10)/10.0, int(wind_p[i]*10)/10.0, int(humi_p[i]*10)/10.0, int(cloud_p[i]*100), int(rain_p[i]*10)/10.0, int(pres_p[i]*10)/10.0, int(dew_p[i]*10)/10.0, cape, gust])
 	del temp_p, wind_p, humi_p, cloud_p, rain_p, pres_p, dew_p, cape, gust
 	return(date, 'null', 'null', value, 'null', 'null')
 
@@ -149,13 +148,14 @@ def DATA_wrf_meteo(temp1, temp2, wind1, wind2, humi1, humi2, cloud1, cloud2, rai
 	dew_p,	fill = interpol._get_wrf_days(dew_p, fill)
 	# cape_p,	date = interpol._get_wrf_days(cape_p, fill)
 	# gust_p,	date = interpol._get_wrf_days(gust_p, fill)
-
+	del fill
 	date	= []
 	value	= []
 	b = 0
 	cape = 'null'
 	gust = 'null'
-	for i in range(0, len(fill)):
+	max_i  = min(max_i, len(temp_p), len(wind_p), len(humi_p), len(cloud_p), len(rain_p), len(pres_p), len(dew_p))
+	for i in range(0, max_i):
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i) + datetime.timedelta(hours = utc0)
 		date.append(d1)
 		try:
