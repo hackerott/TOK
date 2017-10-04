@@ -35,10 +35,22 @@ def _get_imperial(value, var_id):
 	out = []
 	try:
 		for i in range(0, len(value)):
-			if value[i] < 1 and value[i] > 0:
-				val = int((value[i] *10))/10.0
-			else:
-				val = int(value[i]) #probably add to much error
+			if len(value[i]) > 0:
+				val = value[i]
+				if val[0] < and  val[0] > 0:
+					v1 = int(val[0]*10)/10.0
+				else:
+					v1 = int(val[0])
+				if val[1] < and  val[1] > 0:
+					v2 = int(val[1]*10)/10.0
+				else:
+					v2 = int(val[1])
+				val = [v1, v2]
+			else:	
+				if value[i] < 1 and value[i] > 0:
+					val = int((value[i] *10))/10.0
+				else:
+					val = int(value[i]) #probably add to much error
 			out.append(val)
 	except:
 		if value < 1 and value > 0:
