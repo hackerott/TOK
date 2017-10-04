@@ -27,8 +27,8 @@ def _get_imperial(value, var_id):
 	elif var_id == 3:	
 		if len(value[1]) > 0: ## ugly fix 
 			for i, val in enumerate(value):
-				val1 = np.add(np.multiply(val[0], 1.8), 32)
-				val2 = np.add(np.multiply(val[1], 1.8), 32)
+				val1 = (val[0] * 1.8) + 32
+				val2 = (val[1] * 1.8) + 32
 				value[i] = [val1, val2]
 		else:
 			value = np.add(np.multiply(value, 1.8), 32)
