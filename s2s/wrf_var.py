@@ -199,14 +199,13 @@ def _get_meteo(var, ncfile, ix, iy):
 	try:
 		var_nc = _get_NCVAR(var)
 		var_raw2 = ncfile.variables[var_nc[1]]
+		var_raw2 = np.divide(var_raw2, 100)
 		var_rawa = ncfile.variables[var_nc[0]]
 		var_raw1 = np.empty_like(var_raw2)
-
 		for i in range(0, len(var_raw2)):
 			for x in range(ix-4, ix+4):
 				for y in range(iy-4, iy+4):
 					var_raw1[i,x,y] = max(var_rawa[i,:,x,y])
-
 		var_raw3 = _get_temperature('temp', ncfile)
 		var_raw4 = _get_humidity('umidade', ncfile)
 		var_raw5 = _get_rain('chuva', ncfile)
