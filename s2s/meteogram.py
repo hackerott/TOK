@@ -88,10 +88,35 @@ def DATA_gfs_meteo(temp1, temp2, wind1, wind2, humi1, humi2, cloud1, cloud2, rai
 	for i in range(0, max_i):
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i) + datetime.timedelta(hours = utc0)
 		date.append(d1)
-		try:	
-			value.append([int(temp_p[i]*10)/10.0, int(wind_p[i]*10)/10.0, int(humi_p[i]*10)/10.0, int(cloud_p[i]*100), int(rain_p[i]*10)/10.0, int(pres_p[i]*10)/10.0, int(dew_p[i]*10)/10.0, cape, gust])
+		try:
+			tp = (int(temp_p[i]*10))/10.0
 		except:
-			value.append(['null','null','null','null','null','null','null','null','null'])	
+			tp = 'null'
+		try:
+			wd = (int(wind_p[i]*10))/10.0
+		except:
+			wd = 'null'
+		try:
+			hm = (int(humi_p[i]*10))/10.0
+		except:
+			hm = 'null'
+		try:
+			cl = (int(cloud_p[i]*10))/10.0
+		except:
+			cl = 'null'
+		try:
+			rn = (int(rain_p[i]*10))/10.0
+		except:
+			rn = 'null'
+		try:
+			pr = (int(pres_p[i]*10))/10.0
+		except:
+			pr = 'null'
+		try:
+			dw = (int(dew_p[i]*10))/10.0
+		except:
+			dw = 'null'
+		value.append([tp, wd, hm, cl, rn, pr, dw, cape, gust])
 	del temp_p, wind_p, humi_p, cloud_p, rain_p, pres_p, dew_p, cape, gust
 	return(date, 'null', 'null', value, 'null', 'null')
 
@@ -161,14 +186,35 @@ def DATA_wrf_meteo(temp1, temp2, wind1, wind2, humi1, humi2, cloud1, cloud2, rai
 	for i in range(0, max_i):
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i) + datetime.timedelta(hours = utc0)
 		date.append(d1)
-		# try:
-		# 	value.append([int(temp_p[i]*10)/10.0, int(wind_p[i]*10)/10.0, int(humi_p[i]*10)/10.0, int(cloud_p[i]*100), int(rain_p[i]*10)/10.0, int(pres_p[i]*10)/10.0, int(dew_p[i]*10)/10.0, cape, gust])
-		# except:
-		# 	value.append([temp_p[i], wind_p[i], humi_p[i], cloud_p[i], rain_p[i], pres_p[i], dew_p[i], cape, gust])	
-		try:	
-			value.append([int(temp_p[i]*10)/10.0, int(wind_p[i]*10)/10.0, int(humi_p[i]*10)/10.0, int(cloud_p[i]*100), int(rain_p[i]*10)/10.0, int(pres_p[i]*10)/10.0, int(dew_p[i]*10)/10.0, cape, gust])
+		try:
+			tp = (int(temp_p[i]*10))/10.0
 		except:
-			value.append(['null','null','null','null','null','null','null','null','null'])	
+			tp = 'null'
+		try:
+			wd = (int(wind_p[i]*10))/10.0
+		except:
+			wd = 'null'
+		try:
+			hm = (int(humi_p[i]*10))/10.0
+		except:
+			hm = 'null'
+		try:
+			cl = (int(cloud_p[i]*10))/10.0
+		except:
+			cl = 'null'
+		try:
+			rn = (int(rain_p[i]*10))/10.0
+		except:
+			rn = 'null'
+		try:
+			pr = (int(pres_p[i]*10))/10.0
+		except:
+			pr = 'null'
+		try:
+			dw = (int(dew_p[i]*10))/10.0
+		except:
+			dw = 'null'
+		value.append([tp, wd, hm, cl, rn, pr, dw, cape, gust])
 	del temp_p, wind_p, humi_p, cloud_p, rain_p, pres_p, dew_p, cape, gust
 	return(date, 'null', 'null', value, 'null', 'null')
 
