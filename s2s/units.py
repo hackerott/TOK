@@ -37,7 +37,12 @@ def _get_imperial(value, var_id):
 				out = np.array(out)
 				return(out, cur)
 		except:
-			value = np.multiply(value, 2.23694)
+			try:
+				value = np.multiply(value, 2.23694)
+			except:
+				value = value
+				cur = "metric"
+				return(out, cur)	
 	elif var_id == 3:	
 		if len(value[0]) > 0: ## ugly fix 
 			v = []
