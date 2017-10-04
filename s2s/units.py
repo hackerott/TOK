@@ -42,7 +42,6 @@ def _get_imperial(value, var_id):
 			except:
 				value = value
 				cur = "metric"
-				return(out, cur)	
 	elif var_id == 3:	
 		if len(value[0]) > 0: ## ugly fix 
 			v = []
