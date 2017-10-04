@@ -17,7 +17,19 @@ def _get_NCVAR(var):
 		'vento'		: ['U10', 'V10'],
 		'time'		: 'Times',
 		'figura'	: ['CLDFRA', 'RAINC', 'RAINNC'],
-		'meteo'		: ['CLDFRA', 'PSFC']
+		'meteo'		: ['CLDFRA', 'PSFC'],
+		'rain': ['RAINC', 'RAINNC'],
+		'temperature': 'T2',
+		'radiation': '',
+		'humidity': ['Q2', 'T2', 'PSFC'],
+		'wind': ['U10', 'V10'],
+		'figure': ['CLDFRA', 'RAINC', 'RAINNC'],
+		'rigning': ['RAINC', 'RAINNC'],
+		'hitastig': 'T2',
+		'geislun': '',
+		"raki": ['Q2', 'T2', 'PSFC'],
+		'vindur': ['U10', 'V10'],
+		'mynd': ['CLDFRA', 'RAINC', 'RAINNC'],
 		}.get(var, 'Null')
 
 #######################################
@@ -28,9 +40,22 @@ def _get_ID(var):
 		'vento'		: 2,
 		'temp'		: 3,
 		'radiacao'	: 4,
-		'umidade'	: 5,
+		'umidade'	: 5, 
 		'figura'	: 6,  
-		'all'		: 7
+		'all'		: 7,
+		'rigning'	: 1,
+		"vindur"	: 2,
+		'hitastig'	: 3,
+		"geislun"	: 4,
+		'raki'		: 5,
+		'mynd'		: 6,
+		'allt'		: 7,
+		'rain'		: 1,
+		'wind'		: 2,
+		'temperature': 3,
+		'radiation'	: 4,
+		'humidity'	: 5,
+		'figure'	: 6
 		}.get(var, 'Null')
 
 #######################################
@@ -43,7 +68,18 @@ def _get_LIM(var):
 		'temp'		: [0.4, 27, 20],
 		'radiacao'	: [0.4, 1400, 800],
 		'umidade'	: [0.4, 0.3, 0.7],
-		'figura'	: [0.4, 10, 0.5],
+		'rain'		: [0.4, 10, 0.5],
+		'figure'	: [0.4, 10, 0.5],
+		'wind'		: [0.4, 7, 2],
+		'temperature': [0.4, 27, 20],
+		'radiation'	: [0.4, 1400, 800],
+		'humidity'	: [0.4, 0.3, 0.7],	
+		'rigning'	: [0.4, 10, 0.5],
+		'mynd'		: [0.4, 10, 0.5],
+		"vindur"	: [0.4, 7, 2],
+		"hitastig"	: [0.4, 27, 20],
+		"geislun"	: [0.4, 1400, 800],
+		"raki"		: [0,4, 0,3, 0,7]
 		}
 	out =  DIC.get(var, ['Null', 'Null', 'Null'])
 	return(out[0], out[1], out[2])

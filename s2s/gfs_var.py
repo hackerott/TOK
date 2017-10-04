@@ -17,8 +17,19 @@ def _get_NCVAR(var):
 		'vento'		: ['ugrd10m', 'vgrd10m'],
 		'figura'	: ['tcdcclm', 'acpcpsfc'],
 		'meteo'		: ['tcdcclm', 'pressfc'],
+		'rain'		: 'acpcpsfc',
+		'temperature': 'tmp2m',
+		'radiation'	: 'dswrfsfc',
+		'humidity'	: ['spfh2m', 'tmp2m', 'pressfc'],
+		'wind'		: ['ugrd10m', 'vgrd10m'],
+		'figure'	: ['tcdcclm', 'acpcpsfc'],
+		'rigning'	: 'acpcpsfc',
+		'geislun'	: 'dswrfsfc',
+		'hitastig'	: 'tmp2m',
+		'raki'		: ['spfh2m', 'tmp2m', 'pressfc'],
+		'vindur'	: ['ugrd10m', 'vgrd10m'],
+		'mynd'		: ['tcdcclm', 'acpcpsfc'],
 		'time'		: 'time'
-
 		}.get(var, 'Null')
 #######################################
 ## return ID for each var
@@ -30,7 +41,20 @@ def _get_ID(var):
 		'radiacao'	: 4,
 		'umidade'	: 5, 
 		'figura'	: 6,  
-		'all'		: 7
+		'all'		: 7,
+		'rigning'	: 1,
+		"vindur"	: 2,
+		'hitastig'	: 3,
+		"geislun"	: 4,
+		'raki'		: 5,
+		'mynd'		: 6,
+		'allt'		: 7,
+		'rain'		: 1,
+		'wind'		: 2,
+		'temperature': 3,
+		'radiation'	: 4,
+		'humidity'	: 5,
+		'figure'	: 6
 		}.get(var, 'Null')
 #######################################
 ## return limits for each var 
@@ -41,7 +65,19 @@ def _get_LIM(var):
 		'vento'		: [0.4, 7, 2],
 		'temp'		: [0.4, 27, 20],
 		'radiacao'	: [0.4, 1400, 800],
-		'umidade'	: [0.4, 0.3, 0.7]
+		'umidade'	: [0.4, 0.3, 0.7],
+		'rain'		: [0.4, 10, 0.5],
+		'figure'	: [0.4, 10, 0.5],
+		'wind'		: [0.4, 7, 2],
+		'temperature': [0.4, 27, 20],
+		'radiation'	: [0.4, 1400, 800],
+		'humidity'	: [0.4, 0.3, 0.7],	
+		'rigning'	: [0.4, 10, 0.5],
+		'mynd'		: [0.4, 10, 0.5],
+		"vindur"	: [0.4, 7, 2],
+		"hitastig"	: [0.4, 27, 20],
+		"geislun"	: [0.4, 1400, 800],
+		"raki"		: [0,4, 0,3, 0,7]
 		}
 	out =  DIC.get(var, ['Null', 'Null', 'Null'])
 	return(out[0], out[1], out[2])

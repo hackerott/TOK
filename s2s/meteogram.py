@@ -13,6 +13,7 @@ from math import pi
 #######################################
 import prob_area
 import prob_time
+import interpol
 # import figure
 #######################################
 """
@@ -72,7 +73,17 @@ def DATA_gfs_meteo(temp1, temp2, wind1, wind2, humi1, humi2, cloud1, cloud2, rai
 	b = 0
 	cape = 'null'
 	gust = 'null'
-	for i in range(0, max_i):
+	fill = np.arange(max_i)
+	temp_p,	date = interpol._get_gfs_days(temp_p, fill)
+	wind_p,	date = interpol._get_gfs_days(wind_p, fill)
+	humi_p,	date = interpol._get_gfs_days(humi_p, fill)
+	cloud_p,date = interpol._get_gfs_days(cloud_p, fill)
+	rain_p,	date = interpol._get_gfs_days(rain_p, fill)
+	pres_p,	date = interpol._get_gfs_days(pres_p, fill)
+	dew_p,	date = interpol._get_gfs_days(dew_p, fill)
+	# cape_p,	date = interpol._get_gfs_days(cape_p, fill)
+	# gust_p,	date = interpol._get_gfs_days(gust_p, fill)					
+	for i in range(0, len(fill)):
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i) + datetime.timedelta(hours = utc0)
 		date.append(d1)
 		try:
@@ -128,13 +139,23 @@ def DATA_wrf_meteo(temp1, temp2, wind1, wind2, humi1, humi2, cloud1, cloud2, rai
 	# prob_a_g1, prob_a_r1, prob_a_y1, cape_a1, max_a1, min_a1	= prob_area._get_AREAP(cape1, time, ixWRF, iyWRF, TOP, BOT)
 	# prob_t_g1, prob_t_r1, prob_t_y1, gust_t1, max_t1, min_t1	= prob_time._get_TIMEP(gust1, gust2, time, iz, ixWRF, iyWRF, TOP, BOT)
 	# prob_a_g1, prob_a_r1, prob_a_y1, gust_a1, max_a1, min_a1	= prob_area._get_AREAP(gust1, time, ixWRF, iyWRF, TOP, BOT)
+	fill = np.arange(max_i)
+	temp_p,	date = interpol._get_wrf_days(temp_p, fill)
+	wind_p,	date = interpol._get_wrf_days(wind_p, fill)
+	humi_p,	date = interpol._get_wrf_days(humi_p, fill)
+	cloud_p,date = interpol._get_wrf_days(cloud_p, fill)
+	rain_p,	date = interpol._get_wrf_days(rain_p, fill)
+	pres_p,	date = interpol._get_wrf_days(pres_p, fill)
+	dew_p,	date = interpol._get_wrf_days(dew_p, fill)
+	# cape_p,	date = interpol._get_wrf_days(cape_p, fill)
+	# gust_p,	date = interpol._get_wrf_days(gust_p, fill)
 
 	date	= []
 	value	= []
 	b = 0
 	cape = 'null'
 	gust = 'null'
-	for i in range(0, max_i):
+	for i in range(0, len(fill)):
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(hours = i) + datetime.timedelta(hours = utc0)
 		date.append(d1)
 		try:
