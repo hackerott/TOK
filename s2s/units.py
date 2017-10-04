@@ -22,8 +22,10 @@ def _get_imperial(value, var_id):
 							v.append(int(val1))		
 						except:
 							v.append(val1)		
-				value = v
+				out = v
 				del v, val1	
+				out = np.array(out)
+				return(out, cur)
 			else:
 				out = []
 				for i in range(0, len(value)):
