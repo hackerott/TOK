@@ -14,7 +14,7 @@ def _get_imperial(value, var_id):
 			if len(value[0]) == 0:
 				v = []
 				for val in value:
-					val1 = (val[0] * 2.23694)
+					val1 = (val * 2.23694)
 					if val1 < 1 and val1 > 0:
 						v.append(int(val1*10)/10.0)
 					else:
