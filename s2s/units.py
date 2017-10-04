@@ -11,27 +11,63 @@ def _get_imperial(value, var_id):
 		value = np.multiply(value, 0.036)
 	elif var_id == 2:
 		try:
-			out = []
-			for i in range(0, len(value)):
-				value_1 = np.multiply(value[i,0], 2.23694)
-				if value[i,0] < 1 and value[i,0] > 0:
-					val = int((value_1*10))/10.0
-					val = [val, int(value[i,1])] 
-				else:
-					val = [int(value1), int(value[i,1])] #probably add to much error
-				out.append(val)
-			out = np.array(out)
-			return(out, cur)
+			if len(value[0]) == 0:
+				v = []
+				for val in value:
+					val1 = (val[0] * 2.23694)
+					if val1 < 1 and val1 > 0:
+						v.append(int(val1*10)/10.0)
+					else:
+						try:	
+							v.append(int(val1))		
+						except:
+							v.append(val1)		
+				value = v
+				del v, val1	
+			else:
+				out = []
+				for i in range(0, len(value)):
+					value_1 = np.multiply(value[i,0], 2.23694)
+					if value[i,0] < 1 and value[i,0] > 0:
+						val = int((value_1*10))/10.0
+						val = [val, int(value[i,1])] 
+					else:
+						val = [int(value1), int(value[i,1])] #probably add to much error
+					out.append(val)
+				out = np.array(out)
+				return(out, cur)
 		except:
 			value = np.multiply(value, 2.23694)
 	elif var_id == 3:	
-		if len(value[1]) > 0: ## ugly fix 
-			value = np.array(value)
+		if len(value[0]) > 0: ## ugly fix 
+			v = []
 			for i, val in enumerate(value):
-				val1 = (val[0] * 1.8) + 32
-				val2 = (val[1] * 1.8) + 32
-				value[i] = [val1, val2]
-		else:
+				try:
+					val1 = (val[0] * 1.8) + 32
+				except:
+					val1 = np.nan
+				try:
+					val2 = (val[1] * 1.8) + 32
+				except:
+					val2 = np.nan
+				if val1 < 1 and val1 > 0:
+					val1 = int(val1*10)/10.0	
+				else:
+					try:
+						val1 = int(val1)
+					except:
+						val1 = val1
+				if val2 < 1 and val2 > 0:
+					val2 = int(val2*10)/10.0	
+				else:
+					try:
+						val2 = int(val2)
+					except:
+						val2 = val2
+				v.append([val1, val2])
+			value = v
+			del v, val1, val2
+		else:   
 			value = np.add(np.multiply(value, 1.8), 32)
 	elif var_id <= 5:	
 		cur = "metric"
