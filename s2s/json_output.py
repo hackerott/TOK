@@ -971,7 +971,7 @@ def _get_meteogram(dat, value):
 	value8 = []
 	date=[]
 	# for i in range(0, len(value)):
-	for val, i in value:
+	for i, val in enumerate(value):
 #		val = value[i]
 		value0.append(val[0])
 		value1.append(val[1])
