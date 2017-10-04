@@ -959,7 +959,7 @@ def _get_gcard(date, value, var_id, model, cur):
 			
 	return(success, dic)
 
-def _get_meteogram(date, value):
+def _get_meteogram(dat, value):
 	value0 = []
 	value1 = []
 	value2 = []
@@ -969,8 +969,10 @@ def _get_meteogram(date, value):
 	value6 = []
 	value7 = []
 	value8 = []
-	for i in range(0, len(value)):
-		val = value[i]
+	date=[]
+	# for i in range(0, len(value)):
+	for val, i in value:
+#		val = value[i]
 		value0.append(val[0])
 		value1.append(val[1])
 		value2.append(val[2])
@@ -980,6 +982,7 @@ def _get_meteogram(date, value):
 		value6.append(val[6])
 		value7.append(val[7])
 		value8.append(val[8])
+		date.append(dat[i])
 	values = {	
 				"temp"		:	[value0[:]],
 				"wind"		:	[value1[:]],
