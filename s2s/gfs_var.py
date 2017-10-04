@@ -192,6 +192,7 @@ def _get_meteo(var, ncfile):
 		var_raw1 = np.nan	
 	try:
 		var_raw2 = ncfile.variables[var_nc[1]]
+		var_raw2 = np.divide(var_raw2, 100)
 	except:
 		var_raw2 = np.nan
 	try:	
