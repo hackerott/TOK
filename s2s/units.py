@@ -11,7 +11,8 @@ def _get_imperial(value, var_id):
 		value = np.multiply(value, 0.036)
 	elif var_id == 2:
 		try:
-			if len(value[0]) == 0:
+			if len(value[1]) == 1:
+			    try:
 				v = []
 				for val in value:
 					val1 = (val * 2.23694)
@@ -25,6 +26,9 @@ def _get_imperial(value, var_id):
 				out = v
 				del v, val1	
 				out = np.array(out)
+				return(out, cur)
+			    except:
+				out = value * 2.23694
 				return(out, cur)
 			else:
 				out = []
@@ -40,10 +44,12 @@ def _get_imperial(value, var_id):
 				return(out, cur)
 		except:
 			try:
-				value = np.multiply(value, 2.23694)
+				out = np.multiply(value, 2.23694)
+				return(out, cur)
 			except:
-				value = value
+				out = value
 				cur = "metric"
+				return(out, cur)
 	elif var_id == 3:	
 		if len(value[0]) > 0: ## ugly fix 
 			v = []
