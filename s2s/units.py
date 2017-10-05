@@ -28,7 +28,6 @@ def _get_imperial(value, var_id):
 				else:
 					val = [int(value1), int(value[i,1])] #probably add to much error
 				out.append(val)
-			out = np.array(out)
 			return(out, cur)
 		elif tp == 0:
 			try:
@@ -43,7 +42,6 @@ def _get_imperial(value, var_id):
 						except:
 							val = val
 					out.append(val)
-				out = np.array(out)		
 				return(out, cur)
 			except:
 				try:
@@ -51,7 +49,6 @@ def _get_imperial(value, var_id):
 				except:
 					out = value
 					cur = "metric"
-				out = np.array(out)		
 				return(out, cur)	
 
 	elif var_id == 3:	
