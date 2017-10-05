@@ -11,45 +11,88 @@ def _get_imperial(value, var_id):
 		value = np.multiply(value, 0.036)
 	elif var_id == 2:
 		try:
-			if len(value[1]) == 1:
-			    try:
-				v = []
-				for val in value:
-					val1 = (val * 2.23694)
-					if val1 < 1 and val1 > 0:
-						v.append(int(val1*10)/10.0)
-					else:
-						try:	
-							v.append(int(val1))		
-						except:
-							v.append(val1)		
-				out = v
-				del v, val1	
-				out = np.array(out)
-				return(out, cur)
-			    except:
-				out = value * 2.23694
-				return(out, cur)
+			if len(value[0]) > 1:
+				tp = 1
 			else:
+				tp = 0
+		except:
+			tp = 0
+
+		if tp == 1:
+			out = []
+			for i in range(0, len(value)):
+				value_1 = np.multiply(value[i,0], 2.23694)
+
+				if value[i,0] < 1 and value[i,0] > 0:
+					val = int((value_1*10))/10.0
+					val = [val, int(value[i,1])] 
+				else:
+					val = [int(value1), int(value[i,1])] #probably add to much error
+				out.append(val)
+			out = np.array(out)
+			return(out, cur)
+		elif tp == 0:
+			try:
 				out = []
 				for i in range(0, len(value)):
-					value_1 = np.multiply(value[i,0], 2.23694)
-					if value[i,0] < 1 and value[i,0] > 0:
-						val = int((value_1*10))/10.0
-						val = [val, int(value[i,1])] 
+					val = np.multiply(value[i], 2.23694)
+					if val < 1 and val > 0:
+						val = int((val*10))/10.0
 					else:
-						val = [int(value1), int(value[i,1])] #probably add to much error
+						try:
+							val = int(val) #probably add to much error
+						except:
+							val = val
 					out.append(val)
-				out = np.array(out)
-				return(out, cur)
-		except:
-			try:
-				out = np.multiply(value, 2.23694)
+				out = np.array(out)		
 				return(out, cur)
 			except:
-				out = value
-				cur = "metric"
-				return(out, cur)
+				try:
+					out = np.multiply(value, 2.23694)
+				except:
+					out = value
+					cur = "metric"
+				return(out, cur)	
+		# try:
+		# 	if len(value[1]) == 1:
+		# 	    try:
+		# 		v = []
+		# 		for val in value:
+		# 			val1 = (val * 2.23694)
+		# 			if val1 < 1 and val1 > 0:
+		# 				v.append(int(val1*10)/10.0)
+		# 			else:
+		# 				try:	
+		# 					v.append(int(val1))		
+		# 				except:
+		# 					v.append(val1)		
+		# 		out = v
+		# 		del v, val1	
+		# 		out = np.array(out)
+		# 		return(out, cur)
+		# 	    except:
+		# 		out = value * 2.23694
+		# 		return(out, cur)
+		# 	else:
+		# 		out = []
+		# 		for i in range(0, len(value)):
+		# 			value_1 = np.multiply(value[i,0], 2.23694)
+		# 			if value[i,0] < 1 and value[i,0] > 0:
+		# 				val = int((value_1*10))/10.0
+		# 				val = [val, int(value[i,1])] 
+		# 			else:
+		# 				val = [int(value1), int(value[i,1])] #probably add to much error
+		# 			out.append(val)
+		# 		out = np.array(out)
+		# 		return(out, cur)
+		# except:
+		# 	try:
+		# 		out = np.multiply(value, 2.23694)
+		# 		return(out, cur)
+		# 	except:
+		# 		out = value
+		# 		cur = "metric"
+		# 		return(out, cur)
 	elif var_id == 3:	
 		if len(value[0]) > 0: ## ugly fix 
 			v = []
