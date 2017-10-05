@@ -30,6 +30,7 @@ def _get_imperial(value, var_id):
 						val = [int(value_1), int(value[i,1])] #probably add to much error
 					except:
 						val = [value_1, int(value[i,1])]
+				out = np.array(out)
 				out.append(val)
 			return(out, cur)
 		elif tp == 0:
