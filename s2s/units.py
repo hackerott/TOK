@@ -124,7 +124,7 @@ def _get_imperial(value, var_id):
 					val = val
 			out = val
 		else:
-			put = value
+			out = value
 	return(out, cur)
 #######################################'
 ## return the variables end value metric
