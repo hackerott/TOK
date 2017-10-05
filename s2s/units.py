@@ -26,7 +26,10 @@ def _get_imperial(value, var_id):
 					val = int((value_1*10))/10.0
 					val = [val, int(value[i,1])] 
 				else:
-					val = [int(value_1), int(value[i,1])] #probably add to much error
+					try:
+						val = [int(value_1), int(value[i,1])] #probably add to much error
+					except:
+						val = [value_1, int(value[i,1])]
 				out.append(val)
 			return(out, cur)
 		elif tp == 0:
