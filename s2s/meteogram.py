@@ -8,8 +8,6 @@ import sys
 import datetime
 
 from math import pi
-#from numpy import cos, sin, arccos, power, sqrt, exp, arctan2, argmin, argmax, arctan, mean
-
 #######################################
 import prob_area
 import prob_time

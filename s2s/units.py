@@ -2,7 +2,11 @@
 #-*- coding:utf-8 -*-
 
 import numpy as np
-
+#######################################'
+'''
+Needs some reformulations, ugly code, much better to call it for each method, 
+not a general one. This leaves a big mass of try and excepts.
+'''
 #######################################'
 ## return the variables end value in imperial system 
 def _get_imperial(value, var_id):

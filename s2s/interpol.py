@@ -3,9 +3,10 @@
 
 import numpy as np
 import datetime
-from scipy.interpolate import interp1d
 
+from scipy.interpolate import InterpolatedUnivariateSpline
 #######################################
+## GFS interpol
 def _get_gfs_days(val, dat):
 	try:
 		value = []
@@ -20,7 +21,7 @@ def _get_gfs_days(val, dat):
 		index = np.arange(len(value))
 		try:
 			not_nan = np.logical_not(np.isnan(value))
-			out = interp1d(index[not_nan], value[not_nan], bounds_error=False)
+			out = InterpolatedUnivariateSpline(index[not_nan], value[not_nan], k=5)
 			out = out(index)
 		except:
 			out = value
@@ -37,8 +38,8 @@ def _get_gfs_days(val, dat):
 			out1 = 'Null'
 		date = dat
 	return(out1, date)
-
 #######################################
+## CFS interpol, outdate, creates the NaN, now included in nc files
 '''
 This is a really bad idea, there will be more interpoleted data then actualy data usin this function
 '''
@@ -54,11 +55,12 @@ def _get_cfs_days(val, dat):
 
         index = np.arange(len(value))
         not_nan = np.logical(np.isnan(value))
-        out = np.interp(index, index[not_nan], value[not_nan])
+		out = InterpolatedUnivariateSpline(index[not_nan], value[not_nan], k=5)
 
         return(out, date)
 
 #######################################
+## WRF interpol, same as gfs will be removed
 def _get_wrf_days(val, dat):
 	try:
 		value = []
@@ -73,7 +75,7 @@ def _get_wrf_days(val, dat):
 		index = np.arange(len(value))
 		try:
 			not_nan = np.logical_not(np.isnan(value))
-			out = interp1d(index[not_nan], value[not_nan], bounds_error=False)
+			out = InterpolatedUnivariateSpline(index[not_nan], value[not_nan], k=5)
 			out = out(index)
 		except:
 			out = value
@@ -90,5 +92,4 @@ def _get_wrf_days(val, dat):
 			out1 = 'Null'
 		date = dat
 	return(out1, date)
-
 #######################################

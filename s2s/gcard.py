@@ -8,7 +8,6 @@ import datetime
 import prob_area
 import prob_time
 #######################################
-###############################################################################
 #CFS
 def DATA_cfs_gcard(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, iyCFS, date0, utc0, TOP, BOT, PRO, var_id):
 	max_i = len(time)
@@ -32,8 +31,6 @@ def DATA_cfs_gcard(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, 
 		max_v = max(np.nanmax(max_t1[a:b]), np.nanmax(max_t2[a:b]), np.nanmax(max_t3[a:b]), np.nanmax(max_t4[a:b]),np.nanmax(max_a1[a:b]), np.nanmax(max_a2[a:b]), np.nanmax(max_a3[a:b]),np.nanmax(max_a4[a:b]))
 		min_v = min(np.nanmin(min_t1[a:b]), np.nanmin(min_t2[a:b]), np.nanmin(min_t3[a:b]), np.nanmin(min_t4[a:b]), np.nanmin(min_a1[a:b]), np.nanmin(min_a2[a:b]), np.nanmin(min_a3[a:b]), np.nanmin(min_a4[a:b]))
 		if var_id == 1:
-#			value_a = (np.subtract(value_a1[b], value_a1[a]) + np.subtract(value_a2[b], value_a2[a]) + np.subtract(value_a3[b], value_a3[a]) + np.subtract(value_a4[b], value_a4[a]))/4
-#			value_t = (np.subtract(value_t1[b], value_t1[a]) + np.subtract(value_t2[b], value_t2[a]) + np.subtract(value_t3[b], value_t3[a]) + np.subtract(value_t4[b], value_t4[a]))/4
 			value_a = (np.nansum(value_a1[a:b]) + np.nansum(value_a2[a:b]) + np.nansum(value_a3[a:b]) + np.nansum(value_a4[a:b]))/4
 			value_t = (np.nansum(value_t1[a:b]) + np.nansum(value_t2[a:b]) + np.nansum(value_t3[a:b]) + np.nansum(value_t4[a:b]))/4
 			value_p 	= ((2*value_t  +  value_a)/3)
@@ -51,7 +48,6 @@ def DATA_cfs_gcard(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, 
 			value_a = (np.nanmean(value_a1[a:b]) + np.nanmean(value_a2[a:b]) + np.nanmean(value_a3[a:b]) + np.nanmean(value_a4[a:b]))/4
 			value_t = (np.nanmean(value_t1[a:b]) + np.nanmean(value_t2[a:b]) + np.nanmean(value_t3[a:b]) + np.nanmean(value_t4[a:b]))/4
 			value_p 	= ((2*value_t  +  value_a)/3)
-		# value.append(int(value_p*10)/10.0)
 		value.append(value_p)
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = 8 + i) + datetime.timedelta(hours = utc0)
 		date.append(d1)
@@ -75,8 +71,6 @@ def DATA_gfs_gcard(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO, v
 		max_v	= max(np.nanmax(max_t1[a:b]), np.nanmax(max_a1[a:b]))
 		min_v	= min(np.nanmin(min_t1[a:b]), np.nanmin(min_a1[a:b]))
 		if var_id == 1:
-#			value_a	= (np.subtract(value_a1[b], value_a1[a]))
-#			value_t	= (np.subtract(value_t1[b], value_t1[a]))
 			value_a = np.nansum(value_a1[a:b])
 			value_t = np.nansum(value_t1[a:b])
 			value_p	= ((2*value_t  +  value_a)/3)
@@ -97,7 +91,6 @@ def DATA_gfs_gcard(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO, v
 			value_a	= np.nanmean(value_a1[a:b])
 			value_t	= np.nanmean(value_t1[a:b])
 			value_p	= ((2*value_t  +  value_a)/3)
-		# value.append(int(value_p*10)/10.0)
 		value.append(value_p)
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
 		date.append(d1)
@@ -122,8 +115,6 @@ def DATA_wrf_gcard(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO, v
 		max_v	= max(np.nanmax(max_t1[a:b]), np.nanmax(max_a1[a:b]))
 		min_v	= min(np.nanmin(min_t1[a:b]), np.nanmin(min_a1[a:b]))
 		if var_id == 1:
-#			value_a		= (np.subtract(value_a1[b], value_a1[a]))
-#			value_t 	= (np.subtract(value_t1[b], value_t1[a]))
 			value_a = np.nansum(value_a1[a:b])
 			value_t = np.nansum(value_t1[a:b])
 			value_p 	= ((2*value_t  +  value_a)/3)
@@ -141,7 +132,6 @@ def DATA_wrf_gcard(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO, v
 			value_a		= np.nanmean(value_a1[a:b])
 			value_t 	= np.nanmean(value_t1[a:b])
 			value_p 	= ((2*value_t  +  value_a)/3)
-		# value.append(int(value_p*10)/10.0)
 		value.append(value_p)
 		d1 = date0 + datetime.timedelta(hours = 0) + datetime.timedelta(days = i) + datetime.timedelta(hours = utc0)
 		date.append(d1)
