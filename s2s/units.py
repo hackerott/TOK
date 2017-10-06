@@ -59,8 +59,15 @@ def _get_imperial(value, var_id):
 					cur = "metric"
 				return(out, cur)	
 
-	elif var_id == 3:	
-		if len(value[0]) > 0: ## ugly fix 
+	elif var_id == 3:
+		try:
+			if len(value[0]) > 1:
+				tp = 1
+			else:
+				tp = 0
+		except:
+			tp = 0
+		if tp = 1: ## ugly fix 
 			v = []
 			for i, val in enumerate(value):
 				try:
