@@ -109,27 +109,27 @@ def _get_imperial(value, var_id):
 	elif var_id == 4:       
 		for i in range(0, len(value)):
 			val = value[i]
-				if val < 1 and val >= 0:
-					value[i] = int(val*10)/10.0
-				elif val < 20:
-					value[i] = int(0)
-				else:   
-					try:
-						value[i] = int(val)
-					except:
-						value = value
+			if val < 1 and val >= 0:
+				value[i] = int(val*10)/10.0
+			elif val < 20:
+				value[i] = int(0)
+			else:   
+				try:
+					value[i] = int(val)
+				except:
+					value = value
 		cur = "metric"
 
 	elif var_id == 5:	
 		for i in range(0, len(value)):
 			val = value[i]
-				if val < 1 and val >= 0:
-					value[i] = int(val*10)/10.0
-				else:   
-					try:
-						value[i] = int(val)
-					except:
-						value = value
+			if val < 1 and val >= 0:
+				value[i] = int(val*10)/10.0
+			else:   
+				try:
+					value[i] = int(val)
+				except:
+					value = value
 		cur = "metric"
 
 	else:
