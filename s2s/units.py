@@ -97,7 +97,14 @@ def _get_imperial(value, var_id):
 			del v, val1, val2
 		else:   
 			value = np.add(np.multiply(value, 1.8), 32)
-
+			for val in enumerate(value):
+				if val < 1 and val >= 0:
+					value[i] = int(val*10)/10.0
+				else:
+					try:
+						value[i] = int(val)
+					except:
+						value[i] = val	
 	elif var_id <= 5:	
 		cur = "metric"
 		value = value
