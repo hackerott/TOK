@@ -44,21 +44,19 @@ def _get_gfs_days(val, dat):
 This is a really bad idea, there will be more interpoleted data then actualy data usin this function
 '''
 def _get_cfs_days(val, dat):
-        value = []
-        date = []
-        for i in range(0, len(val)):
-                value.append(int(val[i]*10)/10.0)
-                date.append(dat[i])
-                for j in range(1, 8):
-                        value.append(np.nan)
-                        date.append(dat[i] + datetime.timedelta(hours = i))
+	value = []
+	date = []
+	for i in range(0, len(val)):
+		value.append(int(val[i]*10)/10.0)
+		date.append(dat[i])
+			for j in range(1, 8):
+				value.append(np.nan)
+				date.append(dat[i] + datetime.timedelta(hours = i))
 
-        index = np.arange(len(value))
-        not_nan = np.logical(np.isnan(value))
-		out = InterpolatedUnivariateSpline(index[not_nan], value[not_nan], k=5)
-
-        return(out, date)
-
+	index = np.arange(len(value))
+	not_nan = np.logical(np.isnan(value))
+	out = InterpolatedUnivariateSpline(index[not_nan], value[not_nan], k=5)
+	return(out, date)
 #######################################
 ## WRF interpol, same as gfs will be removed
 def _get_wrf_days(val, dat):
