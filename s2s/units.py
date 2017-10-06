@@ -97,7 +97,8 @@ def _get_imperial(value, var_id):
 			del v, val1, val2
 		else:   
 			value = np.add(np.multiply(value, 1.8), 32)
-			for val, i in enumerate(value):
+			for i in range(0, len(value)):
+				val = value[i]
 				if val < 1 and val >= 0:
 					value[i] = int(val*10)/10.0
 				else:
