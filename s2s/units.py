@@ -67,7 +67,7 @@ def _get_imperial(value, var_id):
 				tp = 0
 		except:
 			tp = 0
-		if tp = 1: ## ugly fix 
+		if tp == 1: ## ugly fix 
 			v = []
 			for i, val in enumerate(value):
 				try:
