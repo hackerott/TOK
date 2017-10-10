@@ -33,6 +33,17 @@ lon 	= form.getvalue("lon")
 var 	= form.getvalue("var")	
 unit 	= form.getvalue("unit")
 model 	= form.getvalue("model")
+#######################################
+##Form treatment
+#ip  	= os.environ["REMOTE_ADDR"]
+lat0	= float(lat)
+lon0	= float(lon)
+grid = grid_select._get_GRID(lat0, lon0, 'GFS')
+try:
+	utc 	= form.getvalue("utc")	
+	utc0	= int(utc)
+except:
+	utc0 = astro_tz._get_timezone(lat0, lon0)
 ###############################################################################
 ## get files, lat_lon, id and limits
 ens1, ens2, date0 = gfs_var._get_FILE(grid)
