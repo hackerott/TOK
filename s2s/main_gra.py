@@ -4,6 +4,7 @@ import cgi
 import datetime
 #import json
 import io
+import matplotlib
 import numpy as np
 import matplotlib.pyplot as plt
 #######################################
