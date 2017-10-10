@@ -3,9 +3,11 @@
 import cgi
 import datetime
 import io
+import base64
 import numpy as np
 
-import sys 
+import sys
+reload(sys)
 sys.setdefaultencoding('utf8')
 import matplotlib
 matplotlib.use('Agg')
@@ -61,6 +63,8 @@ if var_id == 1 :
 	var_raw2 = gfs_var._get_rain(var, ens2)	
 	time  	 = gfs_var._get_time('time', ens1)
 	date, prob, alert, value, maxi, mini = table.DATA_gfs_table(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)
+	maxi_i,	date_i = interpol._get_gfs_days(maxi, date)
+	mini_i,	date_i = interpol._get_gfs_days(mini, date)
 	value_i,	date_i = interpol._get_gfs_days(value, date)
 
 elif var_id == 2:
@@ -69,6 +73,8 @@ elif var_id == 2:
 	time  	 = gfs_var._get_time('time', ens1)
 	date, prob, alert, value2, maxi, mini = table.DATA_gfs_table(var_rawb2, var_rawb2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)    
 	date, prob, alert, value1, maxi, mini = table.DATA_gfs_table(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)
+	maxi_i,	date_i = interpol._get_gfs_days(maxi, date)
+	mini_i,	date_i = interpol._get_gfs_days(mini, date)
 	value_i, date_i = interpol._get_gfs_days(value1, date)
 	value_i2, date_i2 = interpol._get_gfs_days(value2, date)
 
@@ -77,6 +83,8 @@ elif var_id == 3:
 	var_raw2 = gfs_var._get_temperature(var, ens2)
 	time  	 = gfs_var._get_time('time', ens1)
 	date, prob, alert, value, maxi, mini = table.DATA_gfs_table(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)
+	maxi_i,	date_i = interpol._get_gfs_days(maxi, date)
+	mini_i,	date_i = interpol._get_gfs_days(mini, date)
 	value_i, date_i = interpol._get_gfs_days(value, date)
 
 elif var_id == 4:
@@ -84,6 +92,8 @@ elif var_id == 4:
 	var_raw2 = gfs_var._get_radiation(var, ens2)
 	time  	 = gfs_var._get_time('time', ens1)
 	date, prob, alert, value, maxi, mini = table.DATA_gfs_table(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)
+	maxi_i,	date_i = interpol._get_gfs_days(maxi, date)
+	mini_i,	date_i = interpol._get_gfs_days(mini, date)
 	value_i, date_i = interpol._get_gfs_days(value, date)
 
 elif var_id == 5:
@@ -91,25 +101,19 @@ elif var_id == 5:
 	var_raw2 = gfs_var._get_humidity(var, ens2)
 	time  	 = gfs_var._get_time('time', ens1)
 	date, prob, alert, value, maxi, mini = table.DATA_gfs_table(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)
+	maxi_i,	date_i = interpol._get_gfs_days(maxi, date)
+	mini_i,	date_i = interpol._get_gfs_days(mini, date)
 	value_i, date_i = interpol._get_gfs_days(value, date)
 
 def titulo(var1):
 	return {
-		'chuva'		: 'resposta acumulada (mm)',
-		'temperatura': 'Temperatura (C)',
+		'chuva'		: 'Chuva acumulada (mm)',
+		'temp'		: 'Temperatura (C)',
 		'radiacao'	: 'Radiacao  (w/m2)',
 		'umidade'	: 'Umidade relativa (%)',
 		'vento'		: 'Velocidade do Vento (m/s)'
 		}.get(var1, 'Null')
 
-def label_x(var1):
-	return {
-		'chuva'		: 'Acumulado por dia',
-		'temperatura'	: 'Maxima e minima',
-		'radiacao'	: 'Acumulado',
-		'umidade'	: 'Maxima e minima',
-		'vento'		: 'Maximo e direçao da maxima'
-		}.get(var1, 'Null')
 
 def label_y(var1):
 	return {
@@ -120,22 +124,33 @@ def label_y(var1):
 		'vento'		: 'm/s'
 		}.get(var1, 'Null')
 
-lim_y = (max(maxi) + 1)
+lim_yt = (max(maxi) + 1)
+lim_yb = (min(mini) - 1)
 lim_x = (len(date) - 1)
+index = np.arange(len(date))
+index_i = np.arange(len(date_i))
 
 plt.figure(var, figsize=(9, 6))
 plt.title(titulo(var))
 plt.ylabel(label_y(var))
-plt.xlabel(label_x(var))
-plt.plot(date, value, color='black')
-plt.plot(date, maxi, color='blue')
-plt.plot(date, mini, color='green')
-plt.plot(date_i, value_i, color='red')
-plt.ylim(0, lim_y)
+plt.plot(index, value, color='black')
+plt.plot(index, maxi_i, '-', color='darkblue')
+plt.plot(index, mini_i, '-', color='darkgreen')
+plt.plot(index, maxi, color='blue' )
+plt.plot(index, mini, color='green')
+plt.plot(index_i, value_i, color='red')
 
-buf = io.BytesIO()
-plt.savefig(buf, format='png')
-print "Content-type: image/png\n\n"
-print buf.read()
+plt.ylim(lim_yb, lim_yt)
+#plt.xlim(0, lim_x)
+
+buf = io.BytesIO()   
+plt.savefig(buf, dpi=200, format='png')
+print """Content-type: text/html\n\n
+        <html>
+        <title>Tempo Ok! %s </title>
+        <body>
+        <img src="data:image/png;base64,%s"/>
+        </body></html>"""  % (var, base64.encodestring(buf.getvalue()))
+
 buf.close()
 exit(0)
