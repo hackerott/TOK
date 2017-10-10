@@ -6,6 +6,7 @@ import datetime
 import io
 import matplotlib
 import numpy as np
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 #######################################
 # S2S imports
@@ -120,7 +121,6 @@ def label_y(var1):
 lim_y = (max(maxi) + 1)
 lim_x = (len(date) - 1)
 
-matplotlib.use('Agg')
 plt.figure(var, figsize=(9, 6))
 plt.title(titulo(var))
 plt.ylabel(label_y(var))
