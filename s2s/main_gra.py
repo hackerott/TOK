@@ -2,10 +2,12 @@
 #-*- coding:utf-8 -*-
 import cgi
 import datetime
-#import json
 import io
-import matplotlib
 import numpy as np
+
+import sys 
+sys.setdefaultencoding('utf8')
+import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 #######################################
