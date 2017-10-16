@@ -54,7 +54,7 @@ except:
 ###############################################################################
 ## get files, lat_lon, id and limits
 g_ens1, g_ens2, date0 = gfs_var._get_FILE(grid)
-c_ens1, c_ens2, c_ens3, c_ens4, c_ens5, c_ens6, c_ens7, ens8, date0 = cfs_var._get_FILE(grid)
+c_ens1, c_ens2, c_ens3, c_ens4, c_ens5, c_ens6, c_ens7, c_ens8, date1 = cfs_var._get_FILE(grid)
 ix_gfs, iy_gfs = lat_lon.GFS_grab(g_ens1, lat0, lon0)
 ix_cfs, iy_cfs = lat_lon.GFS_grab(c_ens1, lat0, lon0)
 var_id = gfs_var._get_ID(var)
@@ -75,7 +75,7 @@ if var_id == 1 :
 	var_raw7 = cfs_var._get_rain(var, c_ens7)
 	var_raw8 = cfs_var._get_rain(var, c_ens8)
 	time  	 = cfs_var._get_time('time', c_ens1)
-	c_date, prob, alert, c_value, maxi, mini = table.DATA_cfs_table(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
+	c_date, prob, alert, c_value, maxi, mini = table.DATA_cfs_table(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date1, utc0, TOP, BOT, PRO, var_id)
 	del prob, alert, maxi, mini
 	del var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time
 
@@ -94,26 +94,59 @@ elif var_id == 3:
 	var_raw7 = cfs_var._get_temperature(var, c_ens7)
 	var_raw8 = cfs_var._get_temperature(var, c_ens8)
 	time  	 = cfs_var._get_time('time', c_ens1)
-	c_date, prob, alert, c_value, maxi, mini = table.DATA_cfs_table(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
+	c_date, prob, alert, c_value, maxi, mini = table.DATA_cfs_table(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date1, utc0, TOP, BOT, PRO, var_id)
 	del prob, alert, maxi, mini
 	del var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time
 
 g_value, g_date = interpol._get_gfs_days(g_value, g_date)
 
-date	= []
-value	= []
+# date	= []
+# value	= []
+# for i in range(0, len(g_date)+len(c_date)):
+# 	if i < len(g_date):
+# 		value.append(g_value[i])
+# 		date.apend(g_date[i])
+# 	else:
+# 		value.append(c_value[(i-len(g_date))])
+# 		date.append(c_date[(i-len(g_date))])
+date    = []
+value   = []
+a = 0
+b = 24
+c = 0
+d = 4
 for i in range(0, len(g_date)+len(c_date)):
-	if i <= len(g_date):
-		value.append(g_value[i])
-		date.apend(g_date[i])
+	if var_id == 3:
+		if b <= (len(g_date)-24):
+			value.append(np.mean(g_value[a:b]))
+			date.append(g_date[b])
+			a += 24
+			b += 24
+		else:
+			value.append(np.mean(c_value[c:d]))
+			date.append(c_date[d])
+			c += 4
+			d += 4
+			if d >= len(c_date):
+				break
 	else:
-		value.append(c_value[(i-len(g_date))])
-		date.append(c_date[(i-len(g_date))])
+		if b <= (len(g_date)-24):
+			value.append(np.nansum(g_value[a:b]))
+			date.append(g_date[b])
+			a += 24
+			b += 24
+		else:
+			value.append(np.nansum(c_value[c:d]))
+			date.append(c_date[d])
+			c += 4
+			d += 4
+			if d >= len(c_date):
+				break
 
 X_array = np.arange(len(date))
 for i in range(0, len(X_array)):
 	d = date[i] - date[0]
-	X_array[i] = d.days*24
+	X_array[i] = d.days*24 + d.seconds//3600
 
 def titulo(var1):
 	return {
@@ -135,7 +168,7 @@ def label_y(var1):
 
 lim_yt = (max(value) + 1)
 lim_yb = (min(value) - 1)
-lim_x = (len(date) - 1)
+lim_x = (X_array[-1] - 1)
 #index = np.arange(len(date))
 index = X_array
 plt.figure(var, figsize=(9, 6))
