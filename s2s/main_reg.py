@@ -117,41 +117,48 @@ for i in range(0, len(X_array)):
 	d = date[i] - date[0]
 	X_array[i] = d.days*24 + d.seconds//3600
 
-(ar,br) = polyfit(X_array,value,1)
-value_r = polyval([ar,br], X_array)
-# date    = []
-# value   = []
-# a = 0
-# b = 24
-# c = 0
-# d = 4
-# for i in range(0, len(g_date)+len(c_date)):
-# 	if var_id == 3:
-# 		if b <= (len(g_date)-24):
-# 			value.append(np.nanmean(g_value[a:b]))
-# 			date.append(g_date[b])
-# 			a += 24
-# 			b += 24
-# 		else:
-# 			value.append(np.nanmean(c_value[c:d]))
-# 			date.append(c_date[d])
-# 			c += 4
-# 			d += 4
-# 			if d >= len(c_date):
-# 				break
-# 	else:
-# 		if b <= (len(g_date)-24):
-# 			value.append(np.nansum(g_value[a:b]))
-# 			date.append(g_date[b])
-# 			a += 24
-# 			b += 24
-# 		else:
-# 			value.append(np.nansum(c_value[c:d]))
-# 			date.append(c_date[d])
-# 			c += 4
-# 			d += 4
-# 			if d >= len(c_date):
-# 				break
+value_r = polyfit(X_array, value, 99) #100 is the limit without blowing memory
+p = np.poly1d(value_r)
+level = p.order
+value_r = polyval(value_r, X_array)
+
+date    = []
+value   = []
+a = 0
+b = 24
+c = 0
+d = 4
+for i in range(0, len(g_date)+len(c_date)):
+	if var_id == 3:
+		if b <= (len(g_date)-24):
+			value.append(np.nanmean(g_value[a:b]))
+			date.append(g_date[b])
+			a += 24
+			b += 24
+		else:
+			value.append(np.nanmean(c_value[c:d]))
+			date.append(c_date[d])
+			c += 4
+			d += 4
+			if d >= len(c_date):
+				break
+	else:
+		if b <= (len(g_date)-24):
+			value.append(np.nansum(g_value[a:b]))
+			date.append(g_date[b])
+			a += 24
+			b += 24
+		else:
+			value.append(np.nansum(c_value[c:d]))
+			date.append(c_date[d])
+			c += 4
+			d += 4
+			if d >= len(c_date):
+				break
+X_array_m = np.arange(len(date))
+for i in range(0, len(X_array_m)):
+	d = date[i] - date[0]
+	X_array[i] = d.days*24 + d.seconds//3600
 
 
 def titulo(var1):
@@ -176,19 +183,19 @@ lim_yt = (max(value) + 1)
 lim_yb = (min(value) - 1)
 lim_x = (X_array[-1] - 1)
 #index = np.arange(len(date))
-index = X_array
+index1 = X_array
+index2 = X_array_m
 plt.figure(var, figsize=(9, 6))
 plt.title(titulo(var))
 plt.ylabel(label_y(var))
-plt.plot(index, value, color='black')
-plt.scatter(index, value, color='black')
-plt.plot(index, value_r, color='red')
-plt.scatter(index, value_r, color='red')
-
-# plt.plot(index_i, value_i, color='red')
+plt.plot(index1, value, color='black')
+plt.scatter(index1, value, color='black')
+plt.plot(index2, value_r, color='red')
+#plt.scatter(index2, value_r, color='red')
 
 plt.ylim(lim_yb, lim_yt)
 plt.xlim(0, lim_x)
+plt.xlabel(level)
 
 buf = io.BytesIO()   
 plt.savefig(buf, dpi=200, format='png')
