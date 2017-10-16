@@ -107,7 +107,7 @@ value	= []
 for i in range(0, len(g_date)+len(c_date)):
 	if i < len(g_date):
 		value.append(g_value[i])
-		date.apend(g_date[i])
+		date.append(g_date[i])
 	else:
 		value.append(c_value[(i-len(g_date))])
 		date.append(c_date[(i-len(g_date))])

@@ -60,7 +60,7 @@ def DATA_gfs_table(ens1, ens2, time, ixGFS, iyGFS, date0, utc0, TOP, BOT, PRO):
 			color.append((np.argmax(prob_c) + 1))
 			result_prov = ((2*value_t  +  value_a)/3)
 			result_prov = np.around(result_prov, decimals=2)
-		if result_prov < 1 and result_prov => 0:
+		if result_prov < 1 and result_prov >= 0:
 			result_prov = int((result_prov * 100))/100.0
 		else:
 			try:
@@ -118,7 +118,7 @@ def DATA_wrf_table(ens1, ens2, time, ixWRF, iyWRF, date0, utc0, TOP, BOT, PRO):
 			color.append((np.argmax(prob_c) + 1))
 			result_prov = ((2*value_t  +  value_a)/3)
 			result_prov = np.around(result_prov, decimals=2)
-		if result_prov < 1 and result_prov => 0:
+		if result_prov < 1 and result_prov >= 0:
 				result_prov = int((result_prov * 100))/100.0
 		else:
 			try:
