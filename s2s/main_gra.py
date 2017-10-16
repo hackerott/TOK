@@ -105,6 +105,12 @@ elif var_id == 5:
 	mini_i,	date_i = interpol._get_gfs_days(mini, date)
 	value_i, date_i = interpol._get_gfs_days(value, date)
 
+else:
+	time  	 = gfs_var._get_time('time', ens1)
+	clou1, pres1, temp1, humi1, rain1, wind1, direction1, dew1, cape1, gust1 = gfs_var._get_meteo('meteo', ens1)
+	clou2, pres2, temp2, humi2, rain2, wind2, direction2, dew2, cape2, gust2 = gfs_var._get_meteo('meteo', ens2)
+
+
 def titulo(var1):
 	return {
 		'chuva'		: 'Chuva acumulada (mm)',
@@ -123,9 +129,10 @@ def label_y(var1):
 		'umidade'	: '%',
 		'vento'		: 'm/s'
 		}.get(var1, 'Null')
-
-lim_yt = (max(maxi) + 1)
-lim_yb = (min(mini) - 1)
+lim_yt = (max(value_i) + 1)
+lim_yb = (min(value_i) - 1)
+# lim_yt = (max(maxi) + 1)
+# lim_yb = (min(mini) - 1)
 lim_x = (len(date) - 1)
 index = np.arange(len(date))
 index_i = np.arange(len(date_i))
@@ -134,14 +141,14 @@ plt.figure(var, figsize=(9, 6))
 plt.title(titulo(var))
 plt.ylabel(label_y(var))
 plt.plot(index, value, color='black')
-plt.plot(index, maxi_i, '-', color='darkblue')
-plt.plot(index, mini_i, '-', color='darkgreen')
-plt.plot(index, maxi, color='blue' )
-plt.plot(index, mini, color='green')
+# plt.plot(index, maxi_i, '-', color='darkblue')
+# plt.plot(index, mini_i, '-', color='darkgreen')
+# plt.plot(index, maxi, color='blue' )
+# plt.plot(index, mini, color='green')
 plt.plot(index_i, value_i, color='red')
 
 plt.ylim(lim_yb, lim_yt)
-#plt.xlim(0, lim_x)
+plt.xlim(0, lim_x)
 
 buf = io.BytesIO()   
 plt.savefig(buf, dpi=200, format='png')
