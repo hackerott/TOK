@@ -12,6 +12,8 @@ sys.setdefaultencoding('utf8')
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+
+from scipy import polyfit, polyval
 #######################################
 # S2S imports
 import gfs_var
@@ -100,53 +102,57 @@ elif var_id == 3:
 
 g_value, g_date = interpol._get_gfs_days(g_value, g_date)
 
-# date	= []
-# value	= []
-# for i in range(0, len(g_date)+len(c_date)):
-# 	if i < len(g_date):
-# 		value.append(g_value[i])
-# 		date.apend(g_date[i])
-# 	else:
-# 		value.append(c_value[(i-len(g_date))])
-# 		date.append(c_date[(i-len(g_date))])
-date    = []
-value   = []
-a = 0
-b = 24
-c = 0
-d = 4
+date	= []
+value	= []
 for i in range(0, len(g_date)+len(c_date)):
-	if var_id == 3:
-		if b <= (len(g_date)-24):
-			value.append(np.mean(g_value[a:b]))
-			date.append(g_date[b])
-			a += 24
-			b += 24
-		else:
-			value.append(np.mean(c_value[c:d]))
-			date.append(c_date[d])
-			c += 4
-			d += 4
-			if d >= len(c_date):
-				break
+	if i < len(g_date):
+		value.append(g_value[i])
+		date.apend(g_date[i])
 	else:
-		if b <= (len(g_date)-24):
-			value.append(np.nansum(g_value[a:b]))
-			date.append(g_date[b])
-			a += 24
-			b += 24
-		else:
-			value.append(np.nansum(c_value[c:d]))
-			date.append(c_date[d])
-			c += 4
-			d += 4
-			if d >= len(c_date):
-				break
+		value.append(c_value[(i-len(g_date))])
+		date.append(c_date[(i-len(g_date))])
 
 X_array = np.arange(len(date))
 for i in range(0, len(X_array)):
 	d = date[i] - date[0]
 	X_array[i] = d.days*24 + d.seconds//3600
+
+(ar,br) = polyfit(X_array,value,1)
+value_r = polyval([ar,br], X_array)
+# date    = []
+# value   = []
+# a = 0
+# b = 24
+# c = 0
+# d = 4
+# for i in range(0, len(g_date)+len(c_date)):
+# 	if var_id == 3:
+# 		if b <= (len(g_date)-24):
+# 			value.append(np.nanmean(g_value[a:b]))
+# 			date.append(g_date[b])
+# 			a += 24
+# 			b += 24
+# 		else:
+# 			value.append(np.nanmean(c_value[c:d]))
+# 			date.append(c_date[d])
+# 			c += 4
+# 			d += 4
+# 			if d >= len(c_date):
+# 				break
+# 	else:
+# 		if b <= (len(g_date)-24):
+# 			value.append(np.nansum(g_value[a:b]))
+# 			date.append(g_date[b])
+# 			a += 24
+# 			b += 24
+# 		else:
+# 			value.append(np.nansum(c_value[c:d]))
+# 			date.append(c_date[d])
+# 			c += 4
+# 			d += 4
+# 			if d >= len(c_date):
+# 				break
+
 
 def titulo(var1):
 	return {
@@ -176,6 +182,9 @@ plt.title(titulo(var))
 plt.ylabel(label_y(var))
 plt.plot(index, value, color='black')
 plt.scatter(index, value, color='black')
+plt.plot(index, value_r, color='red')
+plt.scatter(index, value_r, color='red')
+
 # plt.plot(index_i, value_i, color='red')
 
 plt.ylim(lim_yb, lim_yt)
