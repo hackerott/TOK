@@ -177,8 +177,8 @@ def DATA_cfs_table(ens1, ens2, ens3, ens4, ens5, ens6, ens7, ens8, time, ixCFS, 
 		else:	
 			value_a = (np.nanmean(value_a1[i]) + np.nanmean(value_a2[i]) + np.nanmean(value_a3[i]) + np.nanmean(value_a4[i]))/4
 			value_t = (np.nanmean(value_t1[i]) + np.nanmean(value_t2[i]) + np.nanmean(value_t3[i]) + np.nanmean(value_t4[i]))/4
-			max_v = max(max(max_t1[i]), max(max_t2[i]), max(max_t3[i]), max(max_t4[i]),max(max_a1[i]), max(max_a2[i]), max(max_a3[i]),max(max_a4[i]))
-			min_v = min(min(min_t1[i]), min(min_t2[i]), min(min_t3[i]), min(min_t4[i]), min(min_a1[i]), min(min_a2[i]), min(min_a3[i]), min(min_a4[i]))
+			max_v = max((max_t1[i]), (max_t2[i]), (max_t3[i]), (max_t4[i]),(max_a1[i]), (max_a2[i]), (max_a3[i]),(max_a4[i]))
+			min_v = min((min_t1[i]), (min_t2[i]), (min_t3[i]), (min_t4[i]), (min_a1[i]), (min_a2[i]), (min_a3[i]), (min_a4[i]))
 
 		prob_g = ((2*prob_t_g + prob_a_g)/3)
 		prob_r = ((2*prob_t_r + prob_a_r)/3)

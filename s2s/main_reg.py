@@ -56,7 +56,7 @@ except:
 g_ens1, g_ens2, date0 = gfs_var._get_FILE(grid)
 c_ens1, c_ens2, c_ens3, c_ens4, c_ens5, c_ens6, c_ens7, ens8, date0 = cfs_var._get_FILE(grid)
 ix_gfs, iy_gfs = lat_lon.GFS_grab(g_ens1, lat0, lon0)
-ix_cfs, iy_cfs = lat_lon.GFS_grab(C_ens1, lat0, lon0)
+ix_cfs, iy_cfs = lat_lon.GFS_grab(c_ens1, lat0, lon0)
 var_id = gfs_var._get_ID(var)
 PRO, TOP, BOT = gfs_var._get_LIM(var)
 success = True
