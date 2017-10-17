@@ -26,6 +26,7 @@ class RidgeRegressor(object):
 		"""
 		b = np.ones((X.shape[0],1))
 		X = np.column_stack((b, X))
+		G = alpha * np.matrix(np.eye(X.shape[1]))
 #		G[0, 0] = 0  # Don't regularize bias
 		self.params = np.dot(np.linalg.inv(np.dot(X.T, X) + np.dot(G.T, G)), np.dot(X.T, y))
 
