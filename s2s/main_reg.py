@@ -182,7 +182,7 @@ Creates ridge model
 '''
 rid = ridge.RidgeRegressor()
 rid.fit(series_x, value_raw)
-fore_rid = rid.(fore_pol_x)
+fore_rid = rid.predict(fore_pol_x)
 
 ###############################################################################
 '''
