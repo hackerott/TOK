@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-#import matplotlib.pyplot as plt
-
 
 class RidgeRegressor(object):
 	"""
@@ -16,7 +14,6 @@ class RidgeRegressor(object):
 	When alpha=0 the regression is equivalent to ordinary least squares.
 	
 	"""
-
 	def fit(self, X, y, alpha=0):
 		"""
 		X: mxn matrix of m examples with n independent variables
@@ -28,7 +25,7 @@ class RidgeRegressor(object):
 		X = np.column_stack((b, X))
 		G = alpha * np.matrix(np.eye(X.shape[1]))
 #		G[0, 0] = 0  # Don't regularize bias
-		self.params = np.dot(np.linalg.inv(np.dot(X.T, X) + np.dot(G.T, G)), np.dot(X.T, y))
+		self.params = (np.dot(np.linalg.inv(np.dot(X.T, X) + np.dot(G.T, G)), np.dot(X.T, y))).T
 
 	def predict(self, X):
 		"""
@@ -38,5 +35,5 @@ class RidgeRegressor(object):
 		"""
 		b = np.ones((X.shape[0],1))
 		X = np.column_stack((b, X))
-		return np.dot(X, self.params)
+		return np.dot(X, self.params.T)
 

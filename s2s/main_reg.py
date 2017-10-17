@@ -205,16 +205,16 @@ def label_y(var1):
 		'vento'		: 'm/s'
 		}.get(var1, 'Null')
 
-lim_yt = (max(value) + 1)
-lim_yb = (min(value) - 1)
-lim_x = (series_x[-1] - 1)
+lim_yt = (max(value_mean) + 1)
+lim_yb = (min(value_mean) - 1)
+lim_x = (fore_pol_x[-1] - 1)
 index = series_x   
 indexM = mean_x
 plt.figure(var, figsize=(9, 6))
 plt.title(titulo(var))
 plt.ylabel(label_y(var))
-plt.plot(mean_x[:-2], value[:-2], color='black', label='Data')   
-plt.scatter(mean_x[:-2], value[:-2], color='black')
+plt.plot(mean_x[:-2], value_mean[:-2], color='black', label='Data')   
+plt.scatter(mean_x[:-2], value_mean[:-2], color='black')
 #plt.plot(series_x[:len(series_x)//1.25], value_pol[:len(series_x)//1.25], color='red')
 plt.scatter(fore_pol_x, fore_pol, color='green')
 plt.plot(fore_pol_x, fore_pol, color='green', label='Poly Forecast')
