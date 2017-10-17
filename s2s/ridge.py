@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 
 class RidgeRegressor(object):
@@ -24,8 +24,8 @@ class RidgeRegressor(object):
 		alpha: regularization parameter. A value of 0 will model using the
 		ordinary least squares regression.
 		"""
-		X = np.hstack((np.ones((X.shape[0], 1)), X))
-		G = alpha * np.eye(X.shape[1])
+		b = np.ones((X.shape[0],1))
+		X = np.column_stack((b, X))
 #		G[0, 0] = 0  # Don't regularize bias
 		self.params = np.dot(np.linalg.inv(np.dot(X.T, X) + np.dot(G.T, G)), np.dot(X.T, y))
 
@@ -35,6 +35,7 @@ class RidgeRegressor(object):
 		alpha: regularization parameter. Default of 0.
 		Returns
 		"""
-		X = np.hstack((np.ones((X.shape[0], 1)), X))
+		b = np.ones((X.shape[0],1))
+		X = np.column_stack((b, X))
 		return np.dot(X, self.params)
 

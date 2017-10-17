@@ -87,7 +87,6 @@ elif var_id == 3:
 	var_raw1 = gfs_var._get_temperature(var, g_ens1)
 	var_raw2 = gfs_var._get_temperature(var, g_ens2)
 	time  	 = gfs_var._get_time('time', g_ens1)
-	date, prob, alert, value, maxi, mini = table.DATA_gfs_table(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)
 	g_date, prob, alert, g_value, maxi, mini = table.DATA_gfs_table(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)
 	var_raw1 = cfs_var._get_temperature(var, c_ens1)
 	var_raw2 = cfs_var._get_temperature(var, c_ens2)	
@@ -161,7 +160,7 @@ for i in range(0, len(g_date)+len(c_date)):
 				break
 mean_x = np.arange(len(date_mean))
 for i in range(0, len(mean_x)):
-	d = date[i] - date[0]
+	d = date_mean[i] - date_mean[0]
 	mean_x[i] = d.days*24 + d.seconds//3600
 
 ###############################################################################
