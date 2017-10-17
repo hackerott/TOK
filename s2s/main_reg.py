@@ -25,6 +25,7 @@ import prob_area
 import prob_time
 import table
 import interpol
+import ridge
 # import calendar
 # import card
 # import json_output
@@ -63,6 +64,7 @@ var_id = gfs_var._get_ID(var)
 PRO, TOP, BOT = gfs_var._get_LIM(var)
 success = True
 ###############################################################################
+##Rain
 if var_id == 1 :
 	var_raw1 = gfs_var._get_rain(var, g_ens1)
 	var_raw2 = gfs_var._get_rain(var, g_ens2)	
@@ -80,7 +82,7 @@ if var_id == 1 :
 	c_date, prob, alert, c_value, maxi, mini = table.DATA_cfs_table(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date1, utc0, TOP, BOT, PRO, var_id)
 	del prob, alert, maxi, mini
 	del var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time
-
+##Temperature
 elif var_id == 3:
 	var_raw1 = gfs_var._get_temperature(var, g_ens1)
 	var_raw2 = gfs_var._get_temperature(var, g_ens2)
@@ -101,29 +103,31 @@ elif var_id == 3:
 	del var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time
 
 g_value, g_date = interpol._get_gfs_days(g_value, g_date)
-
-date	= []
-value	= []
+###############################################################################
+'''
+Creates the raw series, concataneting gfs and cfs time series
+'''
+date_raw	= []
+value_raw	= []
 for i in range(0, len(g_date)+len(c_date)):
 	if i < len(g_date):
-		value.append(g_value[i])
-		date.append(g_date[i])
+		value_raw.append(g_value[i])
+		date_raw.append(g_date[i])
 	else:
-		value.append(c_value[(i-len(g_date))])
-		date.append(c_date[(i-len(g_date))])
+		value_raw.append(c_value[(i-len(g_date))])
+		date_raw.append(c_date[(i-len(g_date))])
 
-X_array = np.arange(len(date))
-for i in range(0, len(X_array)):
-	d = date[i] - date[0]
-	X_array[i] = d.days*24 + d.seconds//3600
+series_x = np.arange(len(date_raw))
+for i in range(0, len(series_x)):
+	d = date_raw[i] - date_raw[0]
+	series_x[i] = d.days*24 + d.seconds//3600
 
-value_r = polyfit(X_array, value, 99) #100 is the limit without blowing memory
-p = np.poly1d(value_r)
-level = p.order
-value_r = polyval(value_r, X_array)
-
-date    = []
-value   = []
+###############################################################################
+'''
+Creates days mean(temp) and accumulated(rain)
+'''
+date_mean    = []
+value_mean   = []
 a = 0
 b = 24
 c = 0
@@ -131,36 +135,59 @@ d = 4
 for i in range(0, len(g_date)+len(c_date)):
 	if var_id == 3:
 		if b <= (len(g_date)-24):
-			value.append(np.nanmean(g_value[a:b]))
-			date.append(g_date[b])
+			value_mean.append(np.nanmean(g_value[a:b]))
+			date_mean.append(g_date[b])
 			a += 24
 			b += 24
 		else:
-			value.append(np.nanmean(c_value[c:d]))
-			date.append(c_date[d])
+			value_mean.append(np.nanmean(c_value[c:d]))
+			date_mean.append(c_date[d])
 			c += 4
 			d += 4
 			if d >= len(c_date):
 				break
 	else:
 		if b <= (len(g_date)-24):
-			value.append(np.nansum(g_value[a:b]))
-			date.append(g_date[b])
+			value_mean.append(np.nansum(g_value[a:b]))
+			date_mean.append(g_date[b])
 			a += 24
 			b += 24
 		else:
-			value.append(np.nansum(c_value[c:d]))
-			date.append(c_date[d])
+			value_mean.append(np.nansum(c_value[c:d]))
+			date_mean.append(c_date[d])
 			c += 4
 			d += 4
 			if d >= len(c_date):
 				break
-X_array_m = np.arange(len(date))
-for i in range(0, len(X_array_m)):
+mean_x = np.arange(len(date_mean))
+for i in range(0, len(mean_x)):
 	d = date[i] - date[0]
-	X_array[i] = d.days*24 + d.seconds//3600
+	mean_x[i] = d.days*24 + d.seconds//3600
 
+###############################################################################
+'''
+Creates polinomial model
+'''
+value_pol = polyfit(series_x, value_raw, 99) #100 is the limit without blowing memory
+pol = np.poly1d(value_pol)
+level = pol.order
+value_pol = polyval(value_pol, series_x)
+##Forecast
+fore_pol_x = np.arange(mean_x[-1]//2, (240+mean_x[-1]), 6)
+fore_pol = pol(fore_pol_x)
 
+###############################################################################
+'''
+Creates ridge model
+'''
+rid = ridge.RidgeRegressor()
+rid.fit(series_x, value_raw)
+fore_rid = rid.(fore_pol_x)
+
+###############################################################################
+'''
+Plots
+'''
 def titulo(var1):
 	return {
 		'chuva'		: 'Chuva acumulada (mm)',
@@ -181,24 +208,30 @@ def label_y(var1):
 
 lim_yt = (max(value) + 1)
 lim_yb = (min(value) - 1)
-lim_x = (X_array[-1] - 1)
-#index = np.arange(len(date))
-index1 = X_array
-index2 = X_array_m
+lim_x = (series_x[-1] - 1)
+index = series_x   
+indexM = mean_x
 plt.figure(var, figsize=(9, 6))
 plt.title(titulo(var))
 plt.ylabel(label_y(var))
-plt.plot(index1, value, color='black')
-plt.scatter(index1, value, color='black')
-plt.plot(index2, value_r, color='red')
-#plt.scatter(index2, value_r, color='red')
+plt.plot(mean_x[:-2], value[:-2], color='black', label='Data')   
+plt.scatter(mean_x[:-2], value[:-2], color='black')
+#plt.plot(series_x[:len(series_x)//1.25], value_pol[:len(series_x)//1.25], color='red')
+plt.scatter(fore_pol_x, fore_pol, color='green')
+plt.plot(fore_pol_x, fore_pol, color='green', label='Poly Forecast')
+plt.scatter(fore_pol_x, fore_rid, color='blue')
+plt.plot(fore_pol_x, fore_rid, color='blue', label='Ridge Forecast')
 
 plt.ylim(lim_yb, lim_yt)
 plt.xlim(0, lim_x)
 plt.xlabel(level)
-
+plt.legend()
 buf = io.BytesIO()   
 plt.savefig(buf, dpi=200, format='png')
+###############################################################################
+'''
+Create a html page with plot image
+'''
 print """Content-type: text/html\n\n
         <html>
         <title>Tempo Ok! %s </title>
