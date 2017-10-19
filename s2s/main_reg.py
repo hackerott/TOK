@@ -167,12 +167,12 @@ for i in range(0, len(mean_x)):
 '''
 Creates polinomial model
 '''
-value_pol = polyfit(series_x, value_raw, 99) #100 is the limit without blowing memory
+value_pol = polyfit(series_x, value_raw, 50) #100 is the limit without blowing memory
 pol = np.poly1d(value_pol)
 level = pol.order
 value_pol = polyval(value_pol, series_x)
 ##Forecast
-fore_pol_x = np.arange(mean_x[-1]//2, (240+mean_x[-1]), 6)
+fore_pol_x = np.arange(0, (240+mean_x[-1]), 24)
 fore_pol = pol(fore_pol_x)
 
 ###############################################################################
@@ -216,15 +216,15 @@ plt.ylabel(label_y(var))
 plt.plot(mean_x[:-2], value_mean[:-2], color='black', label='Data')   
 plt.scatter(mean_x[:-2], value_mean[:-2], color='black')
 #plt.plot(series_x[:len(series_x)//1.25], value_pol[:len(series_x)//1.25], color='red')
-plt.scatter(fore_pol_x, fore_pol, color='green')
+#plt.scatter(fore_pol_x, fore_pol, color='green')
 plt.plot(fore_pol_x, fore_pol, color='green', label='Poly Forecast')
-plt.scatter(fore_pol_x, fore_rid, color='blue')
+#plt.scatter(fore_pol_x, fore_rid, color='blue')
 plt.plot(fore_pol_x, fore_rid, color='blue', label='Ridge Forecast')
 
 plt.ylim(lim_yb, lim_yt)
 plt.xlim(0, lim_x)
 plt.xlabel(level)
-plt.legend()
+plt.legend(loc='lower right')
 buf = io.BytesIO()   
 plt.savefig(buf, dpi=200, format='png')
 ###############################################################################
