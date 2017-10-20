@@ -214,27 +214,42 @@ def label_y(var1):
 		'vento'		: 'm/s'
 		}.get(var1, 'Null')
 
-lim_yt = (max(value_mean) + 1)
-lim_yb = (min(value_mean) - 1)
-lim_x = (fore_pol_x[-1] - 1)
-index = series_x   
-indexM = mean_x
+lim_yt = (max(value_i) + 1)
+lim_yb = (min(value_i) - 1)
+# lim_yt = (max(maxi) + 1)
+# lim_yb = (min(mini) - 1)
+#lim_x = (len(date) - 1)
+lim_x = 239
+index = np.arange(len(date))
+index_i = np.arange(len(date_i))
+index_o = np.arange(len(time))
 plt.figure(var, figsize=(9, 6))
 plt.title(titulo(var))
 plt.ylabel(label_y(var))
-plt.plot(mean_x[:-2], value_mean[:-2], color='black', label='Data')   
-plt.scatter(mean_x[:-2], value_mean[:-2], color='black')
-#plt.plot(series_x[:len(series_x)//1.25], value_pol[:len(series_x)//1.25], color='red')
-#plt.scatter(fore_pol_x, fore_pol, color='green')
-plt.plot(fore_pol_x, fore_pol, color='green', label='Poly Forecast')
-#plt.scatter(fore_pol_x, fore_rid, color='blue')
-plt.plot(fore_pol_x, fore_rid, color='blue', label='Ridge Forecast')
-plt.plot(fore_pol_x, fore_reg, color='orange', label='Auto Reg Forecast')
+# plt.plot(index, maxi_i, '-', color='darkblue')
+# plt.plot(index, mini_i, '-', color='darkgreen')
+# plt.plot(index, maxi, color='blue' )
+# plt.plot(index, mini, color='green')
+try:
+		plt.plot(index, value, color='black', label="S2S")
+		plt.plot(index_i, value_i, color='green', label="S2S inter")
+		plt.plot(index_o, var_raw1[:, ix_gfs, iy_gfs], color='blue', label="Modelo")
+		# plt.scatter(index, value, color='black')
+		# plt.scatter(index_i, value_i, color='green')
+		# plt.scatter(index_o, var_raw1[:,ix_gfs, iy_gfs], color='blue')
+
+except:
+		plt.plot(index, value1, color='black')   
+		plt.plot(index_i, value_i, color='green')
+		plt.plot(index_o, var_rawa1[:,ix_gfs, iy_gfs], color='blue')
+		# plt.scatter(index, value1, color='black', label="S2S")
+		# plt.scatter(index_i, value_i, color='green', label="S2S inter")
+		# plt.scatter(index_o, var_rawa1[:,ix_gfs, iy_gfs], color='blue', label="Modelo")
 
 plt.ylim(lim_yb, lim_yt)
 plt.xlim(0, lim_x)
-plt.xlabel(level)
 plt.legend(loc='lower right')
+
 buf = io.BytesIO()   
 plt.savefig(buf, dpi=200, format='png')
 ###############################################################################
@@ -242,11 +257,11 @@ plt.savefig(buf, dpi=200, format='png')
 Create a html page with plot image
 '''
 print """Content-type: text/html\n\n
-        <html>
-        <title>Tempo Ok! %s </title>
-        <body>
-        <img src="data:image/png;base64,%s"/>
-        </body></html>"""  % (var, base64.encodestring(buf.getvalue()))
+		<html>
+		<title>Tempo Ok! %s </title>
+		<body>
+		<img src="data:image/png;base64,%s"/>
+		</body></html>"""  % (var, base64.encodestring(buf.getvalue()))
 
 buf.close()
 exit(0)
