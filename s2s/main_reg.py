@@ -26,6 +26,7 @@ import prob_time
 import table
 import interpol
 import ridge
+import auto_reg
 # import calendar
 # import card
 # import json_output
@@ -185,6 +186,14 @@ fore_rid = rid.predict(fore_pol_x)
 
 ###############################################################################
 '''
+Creates auto_regression model
+'''
+reg = auto_reg.AutoRegressor()
+reg.fit(series_x, value_raw)
+fore_reg = reg.predict(fore_pol_x)
+
+###############################################################################
+'''
 Plots
 '''
 def titulo(var1):
@@ -220,6 +229,7 @@ plt.scatter(mean_x[:-2], value_mean[:-2], color='black')
 plt.plot(fore_pol_x, fore_pol, color='green', label='Poly Forecast')
 #plt.scatter(fore_pol_x, fore_rid, color='blue')
 plt.plot(fore_pol_x, fore_rid, color='blue', label='Ridge Forecast')
+plt.plot(fore_pol_x, fore_reg, color='orange', label='Auto Reg Forecast')
 
 plt.ylim(lim_yb, lim_yt)
 plt.xlim(0, lim_x)
