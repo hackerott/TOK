@@ -147,9 +147,9 @@ plt.plot(index, value, color='black', label="S2S")
 # plt.plot(index, mini, color='green')
 plt.plot(index_i, value_i, color='green', label="S2S inter")
 try:
-	plt.plot(index_o, var_raw1, color='blue', label="Modelo")
+	plt.plot(index_o, var_raw1[:, ix_gfs, iy_gfs], color='blue', label="Modelo")
 except:
-	plt.plot(index_o, var_rawa1, color='blue', label="Modelo")
+	plt.plot(index_o, var_rawa1[:,ix_gfs, iy_gfs], color='blue', label="Modelo")
 plt.ylim(lim_yb, lim_yt)
 plt.xlim(0, lim_x)
 plt.legend(loc='lower right')
