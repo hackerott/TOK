@@ -136,19 +136,23 @@ lim_yb = (min(value_i) - 1)
 lim_x = (len(date) - 1)
 index = np.arange(len(date))
 index_i = np.arange(len(date_i))
-
+index_o = np.arange(len(time))
 plt.figure(var, figsize=(9, 6))
 plt.title(titulo(var))
 plt.ylabel(label_y(var))
-plt.plot(index, value, color='black')
+plt.plot(index, value, color='black', label="S2S")
 # plt.plot(index, maxi_i, '-', color='darkblue')
 # plt.plot(index, mini_i, '-', color='darkgreen')
 # plt.plot(index, maxi, color='blue' )
 # plt.plot(index, mini, color='green')
-plt.plot(index_i, value_i, color='red')
-
+plt.plot(index_i, value_i, color='green', label="S2S inter")
+try:
+	plt.plot(index_o, var_raw1, color='blue', label="Modelo")
+except:
+	plt.plot(index_o, var_rawa1, color='blue', label="Modelo")
 plt.ylim(lim_yb, lim_yt)
 plt.xlim(0, lim_x)
+plt.legend(loc='lower right')
 
 buf = io.BytesIO()   
 plt.savefig(buf, dpi=200, format='png')
