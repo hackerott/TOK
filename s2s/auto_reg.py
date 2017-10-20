@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
-from pandas import Series
+import pandas as pd
 from statsmodels.tsa.ar_model import AR
 
 class AutoRegressor(object):
@@ -13,7 +13,7 @@ class AutoRegressor(object):
 		X: independent variable
 		y: dependent
 		'''
-		series = Series(y, X)
+		series = pd.Series(y, X)
 		X = series.values
 		model=AR(X)
 		self = model.fit()
