@@ -105,11 +105,6 @@ elif var_id == 5:
 	mini_i,	date_i = interpol._get_gfs_days(mini, date)
 	value_i, date_i = interpol._get_gfs_days(value, date)
 
-else:
-	time  	 = gfs_var._get_time('time', ens1)
-	clou1, pres1, temp1, humi1, rain1, wind1, direction1, dew1, cape1, gust1 = gfs_var._get_meteo('meteo', ens1)
-	clou2, pres2, temp2, humi2, rain2, wind2, direction2, dew2, cape2, gust2 = gfs_var._get_meteo('meteo', ens2)
-
 
 def titulo(var1):
 	return {
@@ -140,15 +135,19 @@ index_o = np.arange(len(time))
 plt.figure(var, figsize=(9, 6))
 plt.title(titulo(var))
 plt.ylabel(label_y(var))
-plt.plot(index, value, color='black', label="S2S")
+
 # plt.plot(index, maxi_i, '-', color='darkblue')
 # plt.plot(index, mini_i, '-', color='darkgreen')
 # plt.plot(index, maxi, color='blue' )
 # plt.plot(index, mini, color='green')
-plt.plot(index_i, value_i, color='green', label="S2S inter")
+
 try:
+	plt.plot(index, value, color='black', label="S2S")
+	plt.plot(index_i, value_i, color='green', label="S2S inter")
 	plt.plot(index_o, var_raw1[:, ix_gfs, iy_gfs], color='blue', label="Modelo")
 except:
+	plt.plot(index, value1, color='black', label="S2S")
+	plt.plot(index_i, value_i, color='green', label="S2S inter")
 	plt.plot(index_o, var_rawa1[:,ix_gfs, iy_gfs], color='blue', label="Modelo")
 plt.ylim(lim_yb, lim_yt)
 plt.xlim(0, lim_x)
