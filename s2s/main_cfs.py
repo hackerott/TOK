@@ -9,7 +9,7 @@ import numpy as np
 # S2S imports
 import cfs_var
 import lat_lon
-import calendar
+import scalendar
 import card
 import prob_area
 import prob_time
@@ -63,7 +63,7 @@ if var_id == 1 :
 	var_raw8 = cfs_var._get_rain(var, ens8)
 	time  	 = cfs_var._get_time('time', ens1)
 	if model == "calendar":
-		date, prob, alert, value, maxi, mini = calendar.DATA_cfs_calendar(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
+		date, prob, alert, value, maxi, mini = scalendar.DATA_cfs_calendar(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
 	elif model == "card":
 		date, prob, alert, value, maxi, mini, i = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 	elif model == "gcard":
@@ -82,7 +82,7 @@ elif var_id == 2:
 	var_rawa8, var_rawb8 = cfs_var._get_wind(var, ens8)
 	time  	 = cfs_var._get_time('time', ens1)
 	if model == "calendar":
-		date, prob, alert, value, maxi, mini = calendar.DATA_cfs_calendar(var_rawa1, var_rawa2, var_rawa3, var_rawa4, var_rawa5, var_rawa6, var_rawa7, var_rawa8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
+		date, prob, alert, value, maxi, mini = scalendar.DATA_cfs_calendar(var_rawa1, var_rawa2, var_rawa3, var_rawa4, var_rawa5, var_rawa6, var_rawa7, var_rawa8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
 		for i in range(0, len(value)):
 			value[i] = [value[i], int(var_rawb1[i, ix_cfs, iy_cfs])]
 		value = np.array(value)
@@ -105,7 +105,7 @@ elif var_id == 3:
 	var_raw8 = cfs_var._get_temperature(var, ens8)
 	time  	 = cfs_var._get_time('time', ens1)
 	if model == "calendar":
-		date, prob, alert, value, maxi, mini = calendar.DATA_cfs_calendar(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
+		date, prob, alert, value, maxi, mini = scalendar.DATA_cfs_calendar(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
 	elif model == "card":
 		date, prob, alert, value, maxi, mini, i = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 	elif model == "gcard":
@@ -124,7 +124,7 @@ elif var_id == 4:
 	var_raw8 = cfs_var._get_radiation(var, ens8)
 	time  	 = cfs_var._get_time('time', ens1)
 	if model == "calendar":
-		date, prob, alert, value, maxi, mini = calendar.DATA_cfs_calendar(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
+		date, prob, alert, value, maxi, mini = scalendar.DATA_cfs_calendar(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
 	elif model == "card":
 		date, prob, alert, value, maxi, mini, i = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 	elif model == "gcard":
@@ -143,7 +143,7 @@ elif var_id == 5:
 	var_raw8 = cfs_var._get_humidity(var, ens8)
 	time  	 = cfs_var._get_time('time', ens1)
 	if model == "calendar":
-		date, prob, alert, value, maxi, mini = calendar.DATA_cfs_calendar(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
+		date, prob, alert, value, maxi, mini = scalendar.DATA_cfs_calendar(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
 	elif model == "card":
 		date, prob, alert, value, maxi, mini, i = card.DATA_cfs_card(var_raw1, var_raw2, var_raw3, var_raw4, var_raw5, var_raw6, var_raw7, var_raw8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO)	
 	elif model == "gcard":
@@ -162,8 +162,8 @@ elif var_id == 6:
 	var_rawa8, var_rawb8 = cfs_var._get_figure(var, ens8)
 	time  	 = cfs_var._get_time('time', ens1)
 	if model == "calendar":
-		date, prob, alert, value1, maxi, mini = calendar.DATA_cfs_calendar(var_rawa1, var_rawa2, var_rawa3, var_rawa4, var_rawa5, var_rawa6, var_rawa7, var_rawa8, time, ix_cfs, iy_cfs, date0, utc0, 0.75, 0.25, 0.5, var_id)
-		date, prob, alert, value2, maxi, mini = calendar.DATA_cfs_calendar(var_rawb1, var_rawb2, var_rawb3, var_rawb4, var_rawb5, var_rawb6, var_rawb7, var_rawb8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
+		date, prob, alert, value1, maxi, mini = scalendar.DATA_cfs_calendar(var_rawa1, var_rawa2, var_rawa3, var_rawa4, var_rawa5, var_rawa6, var_rawa7, var_rawa8, time, ix_cfs, iy_cfs, date0, utc0, 0.75, 0.25, 0.5, var_id)
+		date, prob, alert, value2, maxi, mini = scalendar.DATA_cfs_calendar(var_rawb1, var_rawb2, var_rawb3, var_rawb4, var_rawb5, var_rawb6, var_rawb7, var_rawb8, time, ix_cfs, iy_cfs, date0, utc0, TOP, BOT, PRO, var_id)
 		sunset, sunrise = astro_tz._get_sun(lat0, lon0, utc0)
 		value = cond_figures.DATA_cond_figure(value1, value2, date, sunset, sunrise)
 	elif model == "card":

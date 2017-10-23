@@ -27,7 +27,7 @@ import table
 import interpol
 import ridge
 import auto_reg
-# import calendar
+# import scalendar
 # import card
 # import json_output
 # import cond_figures

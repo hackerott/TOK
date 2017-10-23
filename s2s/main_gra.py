@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 # S2S imports
 import gfs_var
 import lat_lon
-import calendar
+import scalendar
 import card
 import table
 import prob_area

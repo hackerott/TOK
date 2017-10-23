@@ -9,7 +9,7 @@ import numpy as np
 # S2S imports
 import gfs_var
 import lat_lon
-import calendar
+import scalendar
 import card
 import table
 import prob_area
@@ -60,7 +60,7 @@ if var_id == 1 :
 	var_raw2 = gfs_var._get_rain(var, ens2)	
 	time  	 = gfs_var._get_time('time', ens1)
 	if model == "calendar":
-		date, prob, alert, value, maxi, mini = calendar.DATA_gfs_calendar(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
+		date, prob, alert, value, maxi, mini = scalendar.DATA_gfs_calendar(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
 		maxi,	date = interpol._get_gfs_days(maxi, date)	
 		mini,	date = interpol._get_gfs_days(mini, date)	
 	elif model == "card":
@@ -78,7 +78,7 @@ elif var_id == 2:
 	var_rawa2, var_rawb2 = gfs_var._get_wind(var, ens2)
 	time  	 = gfs_var._get_time('time', ens1)
 	if model == "calendar":
-		date, prob, alert, value, maxi, mini = calendar.DATA_gfs_calendar(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
+		date, prob, alert, value, maxi, mini = scalendar.DATA_gfs_calendar(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
 		value, date = interpol._get_gfs_days(value, date)
 		for i in range(0, len(value)):
 			value[i] = [value[i], int(var_rawb1[i, ix_gfs, iy_gfs])]
@@ -109,7 +109,7 @@ elif var_id == 3:
 	var_raw2 = gfs_var._get_temperature(var, ens2)
 	time  	 = gfs_var._get_time('time', ens1)
 	if model == "calendar":
-		date, prob, alert, value, maxi, mini = calendar.DATA_gfs_calendar(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
+		date, prob, alert, value, maxi, mini = scalendar.DATA_gfs_calendar(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
 		value, date = interpol._get_gfs_days(value, date)
 		maxi,	date = interpol._get_gfs_days(maxi, date)	
 		mini,	date = interpol._get_gfs_days(mini, date)	
@@ -129,7 +129,7 @@ elif var_id == 4:
 	var_raw2 = gfs_var._get_radiation(var, ens2)
 	time  	 = gfs_var._get_time('time', ens1)
 	if model == "calendar":
-		date, prob, alert, value, maxi, mini = calendar.DATA_gfs_calendar(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
+		date, prob, alert, value, maxi, mini = scalendar.DATA_gfs_calendar(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
 		maxi,	date = interpol._get_gfs_days(maxi, date)	
 		mini,	date = interpol._get_gfs_days(mini, date)	
 	elif model == "card":
@@ -148,7 +148,7 @@ elif var_id == 5:
 	var_raw2 = gfs_var._get_humidity(var, ens2)
 	time  	 = gfs_var._get_time('time', ens1)
 	if model == "calendar":
-		date, prob, alert, value, maxi, mini = calendar.DATA_gfs_calendar(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
+		date, prob, alert, value, maxi, mini = scalendar.DATA_gfs_calendar(var_raw1, var_raw2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
 		maxi,	date = interpol._get_gfs_days(maxi, date)	
 		mini,	date = interpol._get_gfs_days(mini, date)	
 	elif model == "card":
@@ -167,8 +167,8 @@ elif var_id == 6:
 	var_rawa2, var_rawb2 = gfs_var._get_figure(var, ens2)
 	time  	 = gfs_var._get_time('time', ens1)
 	if model == "calendar":
-		date, prob, alert, value1, maxi, mini = calendar.DATA_gfs_calendar(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, 0.75, 0.25, 0.5, var_id)
-		date, prob, alert, value2, maxi, mini = calendar.DATA_gfs_calendar(var_rawb1, var_rawb2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
+		date, prob, alert, value1, maxi, mini = scalendar.DATA_gfs_calendar(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, 0.75, 0.25, 0.5, var_id)
+		date, prob, alert, value2, maxi, mini = scalendar.DATA_gfs_calendar(var_rawb1, var_rawb2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
 	elif model == "card":
 		date, prob, alert, value1, maxi, mini, c = card.DATA_gfs_card(var_rawa1, var_rawa2, time, ix_gfs, iy_gfs, date0, utc0, 0.75, 0.25, 0.5)	
 		date, prob, alert, value2, maxi, mini, c = card.DATA_gfs_card(var_rawb1, var_rawb2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)	
@@ -225,11 +225,11 @@ Abandom code
 # 	rain2, speed2, direction2, radiation2, temperature2, humidity2 = gfs_var._get_all(var, ens2)
 # 	time  	 = gfs_var._get_time('time', ens1)
 # 	if model == "calendar":
-# 		date1, prob1, alert1, value1, maxi1, mini1 = calendar.DATA_gfs_calendar(rain1, rain2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
-# 		date2, prob2, alert2, value2, maxi2, mini2 = calendar.DATA_gfs_calendar(speed1, speed2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
-# 		date3, prob3, alert3, value3, maxi3, mini3 = calendar.DATA_gfs_calendar(temperature1, temperature2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
-# 		date4, prob4, alert4, value4, maxi4, mini4 = calendar.DATA_gfs_calendar(radiation1, radiation2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
-# 		date5, prob5, alert5, value5, maxi5, mini5 = calendar.DATA_gfs_calendar(humidity1, humidity2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
+# 		date1, prob1, alert1, value1, maxi1, mini1 = scalendar.DATA_gfs_calendar(rain1, rain2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
+# 		date2, prob2, alert2, value2, maxi2, mini2 = scalendar.DATA_gfs_calendar(speed1, speed2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
+# 		date3, prob3, alert3, value3, maxi3, mini3 = scalendar.DATA_gfs_calendar(temperature1, temperature2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
+# 		date4, prob4, alert4, value4, maxi4, mini4 = scalendar.DATA_gfs_calendar(radiation1, radiation2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
+# 		date5, prob5, alert5, value5, maxi5, mini5 = scalendar.DATA_gfs_calendar(humidity1, humidity2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO, var_id)
 # 	elif model == "card":
 # 		date1, prob1, alert1, value1, maxi1, mini1 = card.DATA_gfs_card(rain1, rain2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)
 # 		date2, prob2, alert2, value2, maxi2, mini2 = card.DATA_gfs_card(speed1, speed2, time, ix_gfs, iy_gfs, date0, utc0, TOP, BOT, PRO)
