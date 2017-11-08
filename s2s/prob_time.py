@@ -78,7 +78,7 @@ def _get_Prob(var_raw1, var_raw2, iz, ix, iy, max_i, top_lim, bot_lim):
 
 	for i in range((max_i-24), max_i):
 		var1[i] =  var_raw1[i, ix, iy]
-		if var1[i] < -99.99 or var1[i] > 99999.99:
+		if var1[i] < -99.99 or var1[i] > 9999.99:
 			var1[i] = np.nan
 		else:
 			if var1[i] < top_lim:

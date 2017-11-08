@@ -188,9 +188,10 @@ fore_rid = rid.predict(fore_pol_x)
 '''
 Creates auto_regression model
 '''
-reg = auto_reg.AutoRegressor()
-reg.fit(series_x, value_raw)
-fore_reg = reg.predict(fore_pol_x)
+# reg = auto_reg.AutoRegressor()
+# reg.fit(series_x, value_raw)
+# fore_reg = reg.predict(fore_pol_x)
+fore_reg = reg.fit(series_x, value_raw)
 
 ###############################################################################
 '''

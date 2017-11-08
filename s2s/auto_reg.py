@@ -2,21 +2,15 @@
 #-*- coding:utf-8 -*-
 
 import pandas as pd
-from statsmodels.tsa.ar_model import AR
+# import numpy as np
+# import datetime
+# from statsmodels.tsa.ar_model import AR
+from statsmodels.tsa.arima_model import ARIMA
 
-class AutoRegressor(object):
-	'''
-	Simple auto regressor class
-	'''
-	def fit(self, X, y):
-		'''
-		X: independent variable
-		y: dependent
-		'''
-		series = pd.Series(y, X)
-		X = series.values
-		model=AR(X)
-		self = model.fit()
-
-	def predict(self, X):
-		return(self.predict(start=X[0], end=X[-1], dynamic=False))
+def fit(value, date):
+	ds = pd.Series(data=value, index=date)
+	model = ARIMA(ds, order=(15,2,10))
+	model_fit = model.fit(iprint=0) 
+	predict = model_fit.predict(start=end_date[0], end=end_date[-1])
+	predict = model_fit.forecast(steps=30)
+	return predict
